@@ -209,6 +209,14 @@ test('import busy flag blocks overlapping batches and navigation does not crash 
  const a=await app();a.run("view='results';renderResults()");let resolve;const slow={name:'slow.json',size:100,text:()=>new Promise(r=>{resolve=r})};const pending=batch(a,[slow]);await batch(a,[file(validResult)]);assert.equal(a.run('results.length'),0);a.run("view='catalog';renderCatalog()");resolve(JSON.stringify(validResult));await pending;assert.equal(a.run('results.length'),1);a.run("view='results';renderResults()");assert.match(a.get('#resultError').textContent,/新增 1/);
 });
 
+test('static header links the real repository before JavaScript runs',async()=>{
+ const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+ assert.doesNotMatch(html,/源码仓库待连接/);
+ assert.doesNotMatch(html,/href="https:\/\/github\.com"/);
+ assert.match(html,/id="repoLink" href="https:\/\/github\.com\/Wfyywj\/java-agent-bench" target="_blank" rel="noopener">GitHub 源码 ↗/);
+ assert.match(html,/href="https:\/\/github\.com\/Wfyywj\/java-agent-bench">GitHub 源码</);
+});
+
 test('markup has native keyboard file/selection controls, status announcements and responsive CSS',async()=>{
  const a=await app();a.run("view='results';renderResults()");assert.match(a.get('#content').innerHTML,/id="resultFile" type="file"[^>]*multiple/);assert.doesNotMatch(a.get('#content').innerHTML,/id="resultFile"[^>]*hidden/);assert.match(a.get('#content').innerHTML,/aria-live="polite"/);
  const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),css=await readFile(new URL('../dist/style.css',import.meta.url),'utf8');assert.match(html,/class="skiplink" href="#content"/);assert.match(html,/<dialog[^>]*aria-label=/);assert.match(css,/:focus-visible/);assert.match(css,/@media\(max-width:760px\)/);assert.match(css,/prefers-reduced-motion/);
