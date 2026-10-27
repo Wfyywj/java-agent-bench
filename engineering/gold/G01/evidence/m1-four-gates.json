@@ -1,0 +1,76 @@
+{
+  "schema": "m1-four-gates/v1",
+  "task_id": "G01",
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "baseline_role": "baseline",
+  "commands": [
+    "python3 -B engineering/gold/G01/selfcheck.py"
+  ],
+  "captured_from": "verification-results.json",
+  "gates": {
+    "reference": {
+      "pass": true,
+      "run_count": 3,
+      "detail": "3 reference run(s) passed"
+    },
+    "nop_or_baseline": {
+      "pass": true,
+      "role": "baseline",
+      "variant": "baseline",
+      "mapping": "explicit-critical-check-names",
+      "critical_failures": [
+        "restart recovery durably releases"
+      ],
+      "detail": "Unfixed baseline failed at least one critical check. No separate nop fixture; baseline is this gate."
+    },
+    "mutants": {
+      "pass": true,
+      "listed": [
+        "mutant_missing_intent",
+        "mutant_wrong_key",
+        "mutant_overlap",
+        "mutant_release_noop"
+      ],
+      "results": [
+        {
+          "id": "mutant_missing_intent",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "mutant_wrong_key",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "mutant_overlap",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "mutant_release_noop",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        }
+      ],
+      "detail": "4 listed mutants failed"
+    },
+    "repeat": {
+      "pass": true,
+      "run_count": 3,
+      "agreement": "structured",
+      "sha256": "1fd58e4cdb1207b62f81d00f283a5fb9a8287dc667953446a20cb426ea144d33",
+      "source": "reference repeats inside one selfcheck",
+      "detail": "3 reference runs agreed on pass"
+    }
+  },
+  "gaps": [],
+  "pass": true,
+  "elapsed_seconds": 10.751
+}

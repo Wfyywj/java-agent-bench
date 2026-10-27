@@ -1,0 +1,78 @@
+{
+  "schema": "m1-four-gates/v1",
+  "task_id": "B02",
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "baseline_role": "baseline",
+  "commands": [
+    "python3 -B engineering/bronze/B02/run_selfcheck.py",
+    "python3 -B engineering/bronze/B02/run_selfcheck.py"
+  ],
+  "captured_from": "stdout",
+  "gates": {
+    "reference": {
+      "pass": true,
+      "run_count": 2,
+      "detail": "2 reference run(s) passed"
+    },
+    "nop_or_baseline": {
+      "pass": true,
+      "role": "baseline",
+      "variant": "baseline",
+      "mapping": "acceptance-id",
+      "critical_failures": [
+        "B02-A01_replay_restart",
+        "B02-A02_payload_conflicts"
+      ],
+      "detail": "Unfixed baseline failed at least one critical check. No separate nop fixture; baseline is this gate."
+    },
+    "mutants": {
+      "pass": true,
+      "listed": [
+        "conflict_ignored",
+        "partial_commit",
+        "damaged_available",
+        "normal_loan_state_omitted"
+      ],
+      "results": [
+        {
+          "id": "conflict_ignored",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "partial_commit",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "damaged_available",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "normal_loan_state_omitted",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        }
+      ],
+      "detail": "4 listed mutants failed"
+    },
+    "repeat": {
+      "pass": true,
+      "run_count": 2,
+      "agreement": "structured",
+      "sha256": "cb6faeb39d1616617ee4540a26e188fb7d639d49236b9edfe0acaf93df91e585",
+      "source": "two run_selfcheck.py invocations",
+      "detail": "2 reference runs agreed on pass"
+    }
+  },
+  "gaps": [],
+  "pass": true,
+  "elapsed_seconds": 54.981
+}

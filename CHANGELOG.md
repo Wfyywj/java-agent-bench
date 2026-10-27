@@ -1,5 +1,11 @@
 # Changelog
 
+## M1 four-gate check — 2026-10-27
+
+- `python3 scripts/check_engineering.py --m1` runs B02, S01, S04, S04-spring, G01, and G05 reference / baseline / mutant / repeat gates and exits non-zero on failure.
+- Per-task evidence is `evidence/m1-four-gates.json`. The aggregate is `engineering/m1-gates/evidence/summary.json`. These tasks use the unfixed baseline as the nop-or-baseline gate; there is no separate nop fixture.
+- The default `check_engineering.py` entry remains the full fixture suite. `check_fast.py` does not run these Java gates. `full_catalog_ready` stays false.
+
 ## Website entry honesty — 2026-10-27
 
 - Static header links the real GitHub repository as「GitHub 源码」before JavaScript runs.
