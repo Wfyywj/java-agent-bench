@@ -13,6 +13,8 @@
 
 已实现五档各五个有限范围的可运行工程切片；S04/S05 使用实际 H2 JDBC/SQL，仍不声称 PostgreSQL 或完整 Spring 验证。完整原设计保持 design_only。已增加真正 Spring 事务集成变体，H2 中验证实际事务代理与并发回滚；PostgreSQL/生产连接池与完整 HTTP 链路仍待实现。
 
+B02、S01、S04、S04-spring、G01、G05 的四门证据在 `engineering/m1-gates/evidence/summary.json`。发现清单把这六条实现标为 `gates_green`。`full_catalog_ready` 仍为 false。S04-spring 仍是集成切片，H2 与连接池没有被标成就绪。
+
 ### 完整任务门禁
 按题族逐题实现，不把 25 个空工程当 25 个任务。
 - 先 B02、S01、S04、G01、G05，每题提供固定基线、多文件修改、业务口径与独立验收。

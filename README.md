@@ -6,9 +6,10 @@
 
 ## 目前真正完成了什么
 
-- 25 个原创复杂场景设计，青铜/白银/黄金/钻石/王者各 5 题；覆盖需求澄清、跨仓库定位、实现、测试、Review、事故诊断。全部标记 `design_only`。
+- 25 个原创复杂场景设计，青铜/白银/黄金/钻石/王者各 5 题；覆盖需求澄清、跨仓库定位、实现、测试、Review、事故诊断。完整原设计全部标记 `design_only`。`design_only` 只说明原设计还不是完整目录就绪，不表示对应切片不可执行。
 - 25 个限定范围的可运行工程切片（见 `engineering/`），实际 CLI/HTTP/文件或 H2 流程；不是完整分布式场景。每题有原始缺陷、参考修复、独立验收与故意错误的语义变体。
-- 额外的 S04-spring 真实 Spring 事务集成变体，实际使用 @Transactional/CGLIB、JDBC/H2，不宣称 PostgreSQL 等价。
+- B02、S01、S04、G01、G05 的切片，加上 S04-spring，已有 M1 四门证据。`catalog/implementations.json` 把这六条标为 `gates_green`（`slice_kind` 仍是 `runnable_slice` 或 `runnable_integration_slice`）。`full_catalog_ready` 仍为 false，不是生产就绪，也不是安全沙箱。
+- 额外的 S04-spring 真实 Spring 事务集成变体，实际使用 @Transactional/CGLIB、JDBC/H2，不宣称 PostgreSQL 等价。四门通过也不把 H2 或连接池标成生产就绪。
 - 3 个独立可执行 Java 机制任务：租户支付幂等、并发库存预留、Outbox 租约重试。它们是内存模型，不是完整 Spring/MySQL 生产工程，也不冒充前述 25 题的实现。
 - Python 标准库验收内核：净构建、限时、限输出、补丁哈希、环境证据、结构化结果。
 - 任务浏览与详情、实验计划导出、结果 JSON 导入、协议和路线图网站。

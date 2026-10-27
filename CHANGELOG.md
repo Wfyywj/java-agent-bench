@@ -1,5 +1,11 @@
 # Changelog
 
+## M1 discovery status — 2026-10-27
+
+- `catalog/implementations.json` marks B02-slice, S01-slice, S04-slice, S04-spring, G01-slice, and G05-slice as `gates_green` when `engineering/m1-gates/evidence/summary.json` and the per-task four-gate files agree. `slice_kind` keeps `runnable_slice` or `runnable_integration_slice`. `security` stays `not_a_secure_sandbox`, `model_evaluated` stays false, and `full_catalog_ready` stays false.
+- The original 25 designs stay `status: design_only`. B02, S01, S04, G01, and G05 add `slice_implementation` pointing at those slices. `design_only` is not “nothing executable”, and `gates_green` is not full catalog ready.
+- `scripts/build_implementations.py` derives the status from the M1 evidence. The site reads that status for the five catalog cards and their slice panels.
+
 ## M1 four-gate check — 2026-10-27
 
 - `python3 scripts/check_engineering.py --m1` runs B02, S01, S04, S04-spring, G01, and G05 reference / baseline / mutant / repeat gates and exits non-zero on failure.
