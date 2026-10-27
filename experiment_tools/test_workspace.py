@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 from experiment_tools.__main__ import main
 from experiment_tools.workspace import initialize, status, doctor, ROOT
+from scripts.engineering import SECURITY_BOUNDARY
 
 
 class WorkspaceTests(unittest.TestCase):
@@ -197,6 +198,29 @@ class WorkspaceTests(unittest.TestCase):
         with patch('subprocess.run', side_effect=AssertionError('must not execute')), patch('subprocess.Popen', side_effect=AssertionError('must not execute')):
             self.init()
             status(self.work)
+
+    def test_security_boundary_on_doctor_init_and_status(self):
+        for phrase in ('NOT a secure sandbox', 'trusted code only',
+                       'do not evaluate untrusted model or third-party output',
+                       'harness/INTEGRITY.md', '非安全沙箱', '仅可信代码'):
+            self.assertIn(phrase, SECURITY_BOUNDARY)
+        report = doctor('codex')
+        self.assertEqual(report['security_boundary'], SECURITY_BOUNDARY)
+        self.assertIn('PATH presence', report['warning'])
+        self.assertEqual(report['credentials'], 'not_read')
+        created = self.init()
+        self.assertEqual(created['security_boundary'], SECURITY_BOUNDARY)
+        current = status(self.work)
+        self.assertEqual(current['security_boundary'], SECURITY_BOUNDARY)
+        self.assertIn('not evidence authentication', current['warning'])
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            code = main(['doctor', '--provider', 'codex'])
+        self.assertEqual(code, 0)
+        payload = json.loads(output.getvalue())
+        self.assertEqual(payload['command'], 'doctor')
+        self.assertEqual(payload['security_boundary'], SECURITY_BOUNDARY)
+        self.assertIn('codex', {item['name'] for item in payload['checks']})
 
     def test_doctor_never_launches(self):
         with patch('subprocess.run', side_effect=AssertionError('must not execute')), patch('shutil.which', return_value=None):

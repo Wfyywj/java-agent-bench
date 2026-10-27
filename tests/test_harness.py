@@ -1,4 +1,6 @@
+import contextlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import sys
@@ -89,6 +91,37 @@ class SafetyAndContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 bench.evaluate('R01', ROOT, timeout)
 
+    def test_evaluate_and_selfcheck_emit_integrity_warning(self):
+        integrity = (ROOT / 'harness/INTEGRITY.md').read_text()
+        self.assertIn('trusted-code local functional tool', integrity)
+        self.assertIn('not a secure competition environment', integrity)
+        spec = importlib.util.spec_from_file_location('engineering_boundary', ROOT / 'scripts/engineering.py')
+        engineering = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(engineering)
+        warning = bench.SECURITY_WARNING
+        self.assertEqual(warning, engineering.SECURITY_BOUNDARY)
+        for phrase in ('NOT a secure sandbox', 'trusted code only',
+                       'do not evaluate untrusted model or third-party output',
+                       'harness/INTEGRITY.md', '非安全沙箱', '仅可信代码', '不可信模型'):
+            self.assertIn(phrase, warning)
+        for argv in (['evaluate', 'NOPE', 'x'], ['selfcheck', 'NOPE']):
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                code = bench.main(argv)
+            self.assertEqual(code, 2, argv)
+            self.assertIn(warning, err.getvalue())
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / 'Broken.java').write_text('not Java at all')
+            err, out = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stderr(err), contextlib.redirect_stdout(out):
+                code = bench.main(['evaluate', 'R01', tmp])
+            self.assertEqual(code, 1)
+            self.assertIn(warning, err.getvalue())
+            payload = json.loads(out.getvalue())
+            self.assertEqual(payload['warning'], warning)
+            self.assertEqual(payload['security'], 'local functional evaluation; not a security sandbox')
+            self.assertFalse(payload['passed'])
+
     def test_result_schema_contract(self):
         schema = json.loads((ROOT / 'schemas/run-result.schema.json').read_text())
         result = bench.evaluate('R01', ROOT / 'tasks/R01/reference/src')
@@ -103,6 +136,7 @@ class RealJavaRegressionTests(unittest.TestCase):
         for task_id in ('R01', 'R02', 'R03'):
             with self.subTest(task_id=task_id):
                 result = bench.selfcheck(task_id)
+                self.assertEqual(result['warning'], bench.SECURITY_WARNING)
                 self.assertTrue(result['passed'], json.dumps(result, indent=2))
                 self.assertGreaterEqual(len(result['reference']['checks']), 8)
                 self.assertTrue(result['mutation_killed'])
