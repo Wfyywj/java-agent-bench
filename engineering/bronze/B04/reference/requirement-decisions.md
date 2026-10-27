@@ -1,0 +1,1 @@
+Frozen policy v3 is authoritative. Missing discount means zero, not an error. Tax is subtotal-level. No ambiguity requires invented stakeholder responses. Overflow and invalid discounts are rejected, not truncated. Candidate must remain unchanged by the reviewing agent.

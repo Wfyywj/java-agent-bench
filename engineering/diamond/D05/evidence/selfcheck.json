@@ -1,0 +1,579 @@
+{
+  "task": "D05",
+  "status": "runnable_slice",
+  "java": "21",
+  "public_development_only": true,
+  "results": [
+    {
+      "pass": true,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect",
+        "replay-a-exact-issued",
+        "cursor",
+        "replay-a-unknown-resolved",
+        "cursor",
+        "normal-b-exact-provider",
+        "normal-b-exact-issued",
+        "normal-b-no-unknown",
+        "cursor",
+        "poison-no-provider-effect",
+        "poison-exact-quarantine",
+        "poison-not-falsely-issued",
+        "crash-c-exact-provider",
+        "crash-c-exact-unknown",
+        "crash-c-no-false-confirmation",
+        "cursor",
+        "cancel-stops-new-work",
+        "cancel-exact-provider-effects",
+        "cancel-exact-issued",
+        "cancel-exact-unknown",
+        "cancel-exact-quarantine",
+        "query-before-retry-exact-attempts",
+        "cancelled",
+        "cursor",
+        "epoch",
+        "snapshot"
+      ],
+      "details": {
+        "issued": [
+          "a",
+          "b"
+        ],
+        "unknown": [
+          "c"
+        ],
+        "not_issued": [
+          "d"
+        ],
+        "quarantined": [
+          "poison"
+        ],
+        "snapshot": "cycle7-snapshot3",
+        "expected_provider_effects": {
+          "cycle7-snapshot3:a": 1,
+          "cycle7-snapshot3:b": 1,
+          "cycle7-snapshot3:c": 1
+        }
+      },
+      "state": {
+        "attempt.a": "1",
+        "attempt.b": "1",
+        "attempt.c": "1",
+        "cancelled": "true",
+        "cursor": "3",
+        "epoch": "2",
+        "members": "a,b,poison,c,d",
+        "provider.cycle7-snapshot3:a": "1",
+        "provider.cycle7-snapshot3:b": "1",
+        "provider.cycle7-snapshot3:c": "1",
+        "quarantine.poison": "invalid",
+        "result.a": "issued",
+        "result.b": "issued",
+        "snapshot": "cycle7-snapshot3",
+        "unknown.c": "true"
+      },
+      "audit": "provider-committed-before-crash cycle7-snapshot3:a\ncheckpoint 0 cycle7-snapshot3:a\ncheckpoint 1 cycle7-snapshot3:b\nprovider-committed-before-crash cycle7-snapshot3:c\n",
+      "label": "reference",
+      "repeat": 1,
+      "elapsed_seconds": 1.833
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch"
+      ],
+      "failure": "(('step', 1, 'normal'), 0, '')",
+      "label": "baseline",
+      "repeat": 1,
+      "elapsed_seconds": 1.24
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write"
+      ],
+      "failure": "replay-a-no-extra-provider-effect",
+      "label": "BLIND_RETRY",
+      "repeat": 1,
+      "elapsed_seconds": 1.276
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a"
+      ],
+      "failure": "checkpoint-not-ahead",
+      "label": "EARLY_CHECKPOINT",
+      "repeat": 1,
+      "elapsed_seconds": 0.851
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch"
+      ],
+      "failure": "(('step', 1, 'normal'), 0, '')",
+      "label": "NO_FENCE",
+      "repeat": 1,
+      "elapsed_seconds": 1.268
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect"
+      ],
+      "failure": "replay-a-exact-issued",
+      "label": "PHANTOM_RESULT",
+      "repeat": 1,
+      "elapsed_seconds": 1.164
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect",
+        "replay-a-exact-issued",
+        "cursor",
+        "replay-a-unknown-resolved",
+        "cursor"
+      ],
+      "failure": "normal-b-exact-provider",
+      "label": "SKIP_NORMAL_ISSUE",
+      "repeat": 1,
+      "elapsed_seconds": 1.278
+    },
+    {
+      "pass": true,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect",
+        "replay-a-exact-issued",
+        "cursor",
+        "replay-a-unknown-resolved",
+        "cursor",
+        "normal-b-exact-provider",
+        "normal-b-exact-issued",
+        "normal-b-no-unknown",
+        "cursor",
+        "poison-no-provider-effect",
+        "poison-exact-quarantine",
+        "poison-not-falsely-issued",
+        "crash-c-exact-provider",
+        "crash-c-exact-unknown",
+        "crash-c-no-false-confirmation",
+        "cursor",
+        "cancel-stops-new-work",
+        "cancel-exact-provider-effects",
+        "cancel-exact-issued",
+        "cancel-exact-unknown",
+        "cancel-exact-quarantine",
+        "query-before-retry-exact-attempts",
+        "cancelled",
+        "cursor",
+        "epoch",
+        "snapshot"
+      ],
+      "details": {
+        "issued": [
+          "a",
+          "b"
+        ],
+        "unknown": [
+          "c"
+        ],
+        "not_issued": [
+          "d"
+        ],
+        "quarantined": [
+          "poison"
+        ],
+        "snapshot": "cycle7-snapshot3",
+        "expected_provider_effects": {
+          "cycle7-snapshot3:a": 1,
+          "cycle7-snapshot3:b": 1,
+          "cycle7-snapshot3:c": 1
+        }
+      },
+      "state": {
+        "attempt.a": "1",
+        "attempt.b": "1",
+        "attempt.c": "1",
+        "cancelled": "true",
+        "cursor": "3",
+        "epoch": "2",
+        "members": "a,b,poison,c,d",
+        "provider.cycle7-snapshot3:a": "1",
+        "provider.cycle7-snapshot3:b": "1",
+        "provider.cycle7-snapshot3:c": "1",
+        "quarantine.poison": "invalid",
+        "result.a": "issued",
+        "result.b": "issued",
+        "snapshot": "cycle7-snapshot3",
+        "unknown.c": "true"
+      },
+      "audit": "provider-committed-before-crash cycle7-snapshot3:a\ncheckpoint 0 cycle7-snapshot3:a\ncheckpoint 1 cycle7-snapshot3:b\nprovider-committed-before-crash cycle7-snapshot3:c\n",
+      "label": "reference",
+      "repeat": 2,
+      "elapsed_seconds": 1.661
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch"
+      ],
+      "failure": "(('step', 1, 'normal'), 0, '')",
+      "label": "baseline",
+      "repeat": 2,
+      "elapsed_seconds": 1.185
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write"
+      ],
+      "failure": "replay-a-no-extra-provider-effect",
+      "label": "BLIND_RETRY",
+      "repeat": 2,
+      "elapsed_seconds": 1.155
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a"
+      ],
+      "failure": "checkpoint-not-ahead",
+      "label": "EARLY_CHECKPOINT",
+      "repeat": 2,
+      "elapsed_seconds": 0.879
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch"
+      ],
+      "failure": "(('step', 1, 'normal'), 0, '')",
+      "label": "NO_FENCE",
+      "repeat": 2,
+      "elapsed_seconds": 1.23
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect"
+      ],
+      "failure": "replay-a-exact-issued",
+      "label": "PHANTOM_RESULT",
+      "repeat": 2,
+      "elapsed_seconds": 1.046
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect",
+        "replay-a-exact-issued",
+        "cursor",
+        "replay-a-unknown-resolved",
+        "cursor"
+      ],
+      "failure": "normal-b-exact-provider",
+      "label": "SKIP_NORMAL_ISSUE",
+      "repeat": 2,
+      "elapsed_seconds": 1.124
+    },
+    {
+      "pass": true,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect",
+        "replay-a-exact-issued",
+        "cursor",
+        "replay-a-unknown-resolved",
+        "cursor",
+        "normal-b-exact-provider",
+        "normal-b-exact-issued",
+        "normal-b-no-unknown",
+        "cursor",
+        "poison-no-provider-effect",
+        "poison-exact-quarantine",
+        "poison-not-falsely-issued",
+        "crash-c-exact-provider",
+        "crash-c-exact-unknown",
+        "crash-c-no-false-confirmation",
+        "cursor",
+        "cancel-stops-new-work",
+        "cancel-exact-provider-effects",
+        "cancel-exact-issued",
+        "cancel-exact-unknown",
+        "cancel-exact-quarantine",
+        "query-before-retry-exact-attempts",
+        "cancelled",
+        "cursor",
+        "epoch",
+        "snapshot"
+      ],
+      "details": {
+        "issued": [
+          "a",
+          "b"
+        ],
+        "unknown": [
+          "c"
+        ],
+        "not_issued": [
+          "d"
+        ],
+        "quarantined": [
+          "poison"
+        ],
+        "snapshot": "cycle7-snapshot3",
+        "expected_provider_effects": {
+          "cycle7-snapshot3:a": 1,
+          "cycle7-snapshot3:b": 1,
+          "cycle7-snapshot3:c": 1
+        }
+      },
+      "state": {
+        "attempt.a": "1",
+        "attempt.b": "1",
+        "attempt.c": "1",
+        "cancelled": "true",
+        "cursor": "3",
+        "epoch": "2",
+        "members": "a,b,poison,c,d",
+        "provider.cycle7-snapshot3:a": "1",
+        "provider.cycle7-snapshot3:b": "1",
+        "provider.cycle7-snapshot3:c": "1",
+        "quarantine.poison": "invalid",
+        "result.a": "issued",
+        "result.b": "issued",
+        "snapshot": "cycle7-snapshot3",
+        "unknown.c": "true"
+      },
+      "audit": "provider-committed-before-crash cycle7-snapshot3:a\ncheckpoint 0 cycle7-snapshot3:a\ncheckpoint 1 cycle7-snapshot3:b\nprovider-committed-before-crash cycle7-snapshot3:c\n",
+      "label": "reference",
+      "repeat": 3,
+      "elapsed_seconds": 1.448
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch"
+      ],
+      "failure": "(('step', 1, 'normal'), 0, '')",
+      "label": "baseline",
+      "repeat": 3,
+      "elapsed_seconds": 1.131
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write"
+      ],
+      "failure": "replay-a-no-extra-provider-effect",
+      "label": "BLIND_RETRY",
+      "repeat": 3,
+      "elapsed_seconds": 1.09
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a"
+      ],
+      "failure": "checkpoint-not-ahead",
+      "label": "EARLY_CHECKPOINT",
+      "repeat": 3,
+      "elapsed_seconds": 0.899
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch"
+      ],
+      "failure": "(('step', 1, 'normal'), 0, '')",
+      "label": "NO_FENCE",
+      "repeat": 3,
+      "elapsed_seconds": 1.011
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect"
+      ],
+      "failure": "replay-a-exact-issued",
+      "label": "PHANTOM_RESULT",
+      "repeat": 3,
+      "elapsed_seconds": 0.986
+    },
+    {
+      "pass": false,
+      "checks": [
+        "snapshot",
+        "members",
+        "initial-provider-empty",
+        "crash-a-exact-provider",
+        "unknown.a",
+        "checkpoint-not-ahead",
+        "crash-a-not-falsely-issued",
+        "epoch",
+        "stale-worker-no-write",
+        "replay-a-no-extra-provider-effect",
+        "replay-a-exact-issued",
+        "cursor",
+        "replay-a-unknown-resolved",
+        "cursor"
+      ],
+      "failure": "normal-b-exact-provider",
+      "label": "SKIP_NORMAL_ISSUE",
+      "repeat": 3,
+      "elapsed_seconds": 1.213
+    }
+  ],
+  "selfcheck_pass": true
+}

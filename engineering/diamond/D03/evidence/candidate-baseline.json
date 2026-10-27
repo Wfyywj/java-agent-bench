@@ -1,0 +1,15 @@
+{
+  "pass": false,
+  "checks": [
+    "hit.percent",
+    "backlog"
+  ],
+  "failure": "(('apply', 'ineligible', 'false'), 0, '')",
+  "diagnosis_checks": {
+    "simulation_labeled": true,
+    "clock_evidence": false,
+    "competing_hypotheses": false,
+    "bounded_scope": false,
+    "unsupported_claims": false
+  }
+}

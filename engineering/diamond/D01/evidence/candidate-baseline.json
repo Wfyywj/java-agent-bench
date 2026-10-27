@@ -1,0 +1,8 @@
+{
+  "pass": false,
+  "checks": [
+    "east.old.a",
+    "east.phase"
+  ],
+  "failure": "(('write', 'east', 0, 'stale', 5), 0, '')"
+}

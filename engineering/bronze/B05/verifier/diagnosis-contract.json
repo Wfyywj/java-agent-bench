@@ -1,0 +1,16 @@
+{
+  "root_cause": "unclosed_input_and_staging_resources",
+  "database_timeout": "downstream_symptom_not_proven_database_root_cause",
+  "evidence": [
+    "fd-samples.csv",
+    "incident.log",
+    "thread-dump.txt",
+    "Importer.run"
+  ],
+  "excluded_remedy": "increase_database_pool_only",
+  "unproven": [
+    "actual_database_pool_exhaustion",
+    "production_fd_limit",
+    "multi_process_import_atomicity"
+  ]
+}

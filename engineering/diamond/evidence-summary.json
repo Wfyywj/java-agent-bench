@@ -1,0 +1,57 @@
+{
+  "tasks": [
+    {
+      "id": "D01",
+      "status": "runnable_slice",
+      "selfcheck_pass": true,
+      "candidate_reference_pass": true,
+      "repeat_count": 3,
+      "reference_checks": 22,
+      "baseline_rejected_repeats": 3,
+      "mutants_rejected_repeats": 9
+    },
+    {
+      "id": "D02",
+      "status": "runnable_slice",
+      "selfcheck_pass": true,
+      "candidate_reference_pass": true,
+      "repeat_count": 3,
+      "reference_checks": 568,
+      "baseline_rejected_repeats": 3,
+      "mutants_rejected_repeats": 9
+    },
+    {
+      "id": "D03",
+      "status": "runnable_slice",
+      "selfcheck_pass": true,
+      "candidate_reference_pass": true,
+      "repeat_count": 3,
+      "reference_checks": 19,
+      "baseline_rejected_repeats": 3,
+      "mutants_rejected_repeats": 9
+    },
+    {
+      "id": "D04",
+      "status": "runnable_slice",
+      "selfcheck_pass": true,
+      "candidate_reference_pass": true,
+      "repeat_count": 3,
+      "reference_checks": 17,
+      "baseline_rejected_repeats": 3,
+      "mutants_rejected_repeats": 9
+    },
+    {
+      "id": "D05",
+      "status": "runnable_slice",
+      "selfcheck_pass": true,
+      "candidate_reference_pass": true,
+      "repeat_count": 3,
+      "reference_checks": 35,
+      "baseline_rejected_repeats": 3,
+      "mutants_rejected_repeats": 15,
+      "mutant_count": 5,
+      "audit_repair": "Exact provider and controller sets; normal issuance omission and phantom result controls rejected in all three repeats."
+    }
+  ],
+  "limits": "Public development fixtures; no hidden holdout, no model pilot, no calibrated diamond or full original acceptance claims."
+}

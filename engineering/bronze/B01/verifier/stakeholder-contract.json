@@ -1,0 +1,11 @@
+{
+  "timezone": "site_config_required",
+  "cutoff": "[midnight,cutoff)",
+  "capacity": "site_and_slot",
+  "cancelled": "excluded",
+  "unknown_status": "occupies_capacity",
+  "holiday": "pending_reject",
+  "cross_midnight": "start_date",
+  "dst_overlap": "reject_pending_clarification",
+  "optional_note": "omission_allowed"
+}

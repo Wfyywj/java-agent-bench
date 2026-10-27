@@ -1,0 +1,19 @@
+{
+  "task_id": "B05",
+  "task_manifest": "engineering/bronze/B05/task.json",
+  "selfcheck_command": "python3 engineering/bronze/B05/run_selfcheck.py",
+  "candidate_command": "python3 engineering/bronze/B05/run_selfcheck.py --candidate engineering/bronze/B05/reference",
+  "run_evidence": [
+    "engineering/bronze/B05/evidence/selfcheck-1.json",
+    "engineering/bronze/B05/evidence/selfcheck-2.json"
+  ],
+  "deterministic_byte_identical": true,
+  "evidence_sha256": "a5130d74d126a9f18ed7a652fb7db5454a0a881767d0f27b1136ef9e82759e10",
+  "baseline_passed": 18,
+  "reference_passed": 28,
+  "total_checks": 28,
+  "mutants_rejected": 5,
+  "central_catalog_modified": false,
+  "publication_performed": false,
+  "version": "0.1.1"
+}

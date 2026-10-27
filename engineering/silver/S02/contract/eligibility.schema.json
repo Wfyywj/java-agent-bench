@@ -1,0 +1,19 @@
+{
+  "source_definition": true,
+  "generated_code": "none; do not patch generated clients",
+  "wire_fixture": "level|eligibilityCodes",
+  "omitted_sentinel": "~",
+  "eligibilityCodes": {
+    "type": "array",
+    "wire": "comma-separated",
+    "enum": [
+      "MEMBER",
+      "STUDENT"
+    ],
+    "empty": "explicit empty array overrides level"
+  },
+  "level": {
+    "gold": "MEMBER",
+    "otherwise": "NONE"
+  }
+}

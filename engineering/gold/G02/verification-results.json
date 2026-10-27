@@ -1,0 +1,150 @@
+{
+  "selfcheck_passed": true,
+  "repeats": 3,
+  "results": [
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true,
+      "repeat": 1
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nFAIL published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_mutable_versions",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nFAIL published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_floor_minutes",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nFAIL ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_latest_publication",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nFAIL publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_zero_amount",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nFAIL ceil minute after free\nFAIL daily cap\nFAIL midnight split cap\nFAIL spring DST elapsed 23h\nFAIL fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nFAIL bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nFAIL diff before after\nFAIL history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=8\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true,
+      "repeat": 2
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nFAIL published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_mutable_versions",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nFAIL published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_floor_minutes",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nFAIL ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_latest_publication",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nFAIL publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_zero_amount",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nFAIL ceil minute after free\nFAIL daily cap\nFAIL midnight split cap\nFAIL spring DST elapsed 23h\nFAIL fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nFAIL bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nFAIL diff before after\nFAIL history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=8\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true,
+      "repeat": 3
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nFAIL published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_mutable_versions",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nFAIL published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_floor_minutes",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nFAIL ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_latest_publication",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nPASS ceil minute after free\nPASS daily cap\nPASS midnight split cap\nPASS spring DST elapsed 23h\nPASS fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nPASS bill snapshot v1\nPASS published version immutable\nFAIL publish not effective\nPASS effective boundary\nPASS diff before after\nPASS history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_zero_amount",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS zero duration\nPASS free window exact\nFAIL ceil minute after free\nFAIL daily cap\nFAIL midnight split cap\nFAIL spring DST elapsed 23h\nFAIL fall DST elapsed 25h\nPASS reverse rejected\nPASS overflow explicit\nPASS publish admin only\nFAIL bill snapshot v1\nPASS published version immutable\nPASS publish not effective\nPASS effective boundary\nFAIL diff before after\nFAIL history not overwritten\nPASS audit actor pair\nPASS idempotent rebuild\nPASS preview no payment\nPASS no self approval\nPASS confirm replay immutable\nPASS bill identity input bound\nINVARIANTS=22 FAILURES=8\n",
+      "passed": false,
+      "repeat": 3
+    }
+  ]
+}

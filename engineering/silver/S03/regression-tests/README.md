@@ -1,0 +1,1 @@
+Run `python3 ../run_selfcheck.py` from this directory. Independent black-box scenarios and acceptance IDs live in ../fixtures/cases.json. Candidate source cannot supply its own expected outputs. Report records successful/failed/not-executed states separately.

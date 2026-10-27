@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "prompt.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-contract.json",
+      "target": "original-contract.json"
+    },
+    {
+      "source": "baseline/artifacts/architecture.md",
+      "target": "artifacts/architecture.md"
+    },
+    {
+      "source": "baseline/artifacts/contract.md",
+      "target": "artifacts/contract.md"
+    },
+    {
+      "source": "baseline/src/DurableState.java",
+      "target": "src/DurableState.java"
+    },
+    {
+      "source": "baseline/src/LedgerIdentity.java",
+      "target": "src/LedgerIdentity.java"
+    },
+    {
+      "source": "baseline/src/Main.java",
+      "target": "src/Main.java"
+    },
+    {
+      "source": "baseline/src/MigrationController.java",
+      "target": "src/MigrationController.java"
+    },
+    {
+      "source": "baseline/src/RoutePolicy.java",
+      "target": "src/RoutePolicy.java"
+    }
+  ]
+}

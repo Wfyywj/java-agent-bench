@@ -1,0 +1,2 @@
+Scope is deliberately a runnable slice, not full original catalog acceptance. Event-driven booking, capacity and payment state in separate JVM command invocations; independent Python model, reproducible seeded legal histories, asynchronous projection tick and agent-generated history mutation matrix with legal deletion shrinker.
+Assumptions: synthetic IDs, trusted local input, sequential command lock, integer amounts, explicit logical scheduling. Unknown production policies remain unresolved.

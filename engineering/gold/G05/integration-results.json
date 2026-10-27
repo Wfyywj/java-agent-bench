@@ -1,0 +1,40 @@
+[
+  {
+    "task": "G05",
+    "candidate": "/workspace/shared/java-agent-bench/engineering/gold/G05/reference",
+    "passed": true,
+    "public_development_only": true,
+    "result": {
+      "variant": "/workspace/shared/java-agent-bench/engineering/gold/G05/reference",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 0,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=16 failed=0\n"
+    }
+  },
+  {
+    "task": "G05",
+    "candidate": "/workspace/shared/java-agent-bench/engineering/gold/G05/mutants/result_defaulting",
+    "passed": false,
+    "public_development_only": true,
+    "result": {
+      "variant": "/workspace/shared/java-agent-bench/engineering/gold/G05/mutants/result_defaulting",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nFAIL I03 normal-seat-result AssertionError: lost result\nFAIL I04 normal-price-result AssertionError: lost independent result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation AssertionError: price starved\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nFAIL I09 queued-deadline-never-invokes-client AssertionError: drain failed\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: completed result mutated\nFAIL I16 burst-drains-without-loss AssertionError: burst result mismatch\nSUMMARY passed=10 failed=6\n"
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "timezone": "UNRESOLVED",
+  "cutoff": "UNRESOLVED",
+  "capacity": "UNRESOLVED",
+  "cancelled": "UNRESOLVED",
+  "unknown_status": "UNRESOLVED",
+  "holiday": "UNRESOLVED",
+  "cross_midnight": "UNRESOLVED",
+  "dst_overlap": "UNRESOLVED",
+  "optional_note": "UNRESOLVED"
+}

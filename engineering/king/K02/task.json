@@ -1,0 +1,168 @@
+{
+  "id": "K02",
+  "status": "runnable_slice",
+  "original_scope": {
+    "id": "K02",
+    "title": "跨版本隐私删除与合法保留工作流",
+    "tier": "king",
+    "category": "requirement_and_delivery",
+    "summary": "公益服务平台需要跨用户库、搜索、对象存储和分析投影删除个人资料，同时保留已被业务规则标记的审计凭据。解决需求冲突并交付可证明的删除编排，不将合成规则冒充法律意见。",
+    "brief": {
+      "context": "身份、申请、搜索同步、文件服务、分析五仓；提供明确的虚构保留政策与数据流清单，备份仅提供模拟恢复。",
+      "mission": "公益服务平台需要跨用户库、搜索、对象存储和分析投影删除个人资料，同时保留已被业务规则标记的审计凭据。解决需求冲突并交付可证明的删除编排，不将合成规则冒充法律意见。",
+      "constraints": [
+        "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+        "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+        "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+        "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+      ],
+      "inputPackagePlanned": [
+        "原创仓库固定提交快照及构建锁",
+        "需求片段、领域政策和历史接口样例",
+        "脱敏合成数据与故障夹具",
+        "公开冒烟测试；独立保留的验收用例及评分锚点"
+      ]
+    },
+    "deliverables": [
+      "提交 requirement-decisions.md：已知约束、冲突、合理假设、必须询问的问题及最终决策，不虚构用户答复。",
+      "提交 evidence-map.md：仓库/模块/符号或日志证据到结论的对应关系，记录排除的替代解释。",
+      "提交范围受控的实现补丁或该类别要求的测试/审查产物；保留既有公共契约并说明所有行为变化。",
+      "提交 regression-tests/ 与复演命令：断言与验收 ID 对应，明确实际执行、失败及未执行项。",
+      "提交 delivery-note.md：变更范围、风险、恢复或回滚步骤、依赖条件与残余未知。"
+    ],
+    "acceptance": [
+      {
+        "id": "K02-A01",
+        "criterion": "将用户标识、派生字段、附件、索引和分析投影映射至负责人及删除动作",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "K02-A02",
+        "criterion": "区分删除、匿名化和保留，按给定政策逐字段决策并列出未决冲突",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "K02-A03",
+        "criterion": "删除幂等且可恢复，部分系统失败不能标为整体完成",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "K02-A04",
+        "criterion": "并发写入和延迟旧消息不得复活已删除资料，保留最小删除标记有明确生命周期",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "K02-A05",
+        "criterion": "模拟备份恢复后重新应用删除清单，验证保留数据仍满足政策最小化",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "K02-A06",
+        "criterion": "最终证明仅含最小必要审计信息，不在日志或验证报告中重新复制个人资料",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      }
+    ],
+    "risks": {
+      "failureCases": [
+        "只删主库",
+        "删除报告泄露原数据",
+        "把虚构保留规则当法律事实"
+      ],
+      "traps": [
+        "只删主库",
+        "删除报告泄露原数据",
+        "把虚构保留规则当法律事实",
+        "测试全绿不等于任务已验证；未执行步骤须明确披露。"
+      ],
+      "invariants": [
+        "将用户标识、派生字段、附件、索引和分析投影映射至负责人及删除动作",
+        "区分删除、匿名化和保留，按给定政策逐字段决策并列出未决冲突"
+      ],
+      "criticalFailurePolicy": "若经证实违反标为 critical 的核心约束，标记 task_pass=false；维度分仍如实保留，不以总分掩盖安全或业务失败。"
+    },
+    "rubric": [
+      {
+        "dimension": "端到端不变量与政策正确性",
+        "weight": 30,
+        "evidence": "验收断言、独立参考模型或数据库状态；不能仅凭自述得分。"
+      },
+      {
+        "dimension": "联合故障与迁移验证",
+        "weight": 30,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "完整工程证据链",
+        "weight": 25,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "可运营交付与风险诚实性",
+        "weight": 15,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      }
+    ],
+    "environment": {
+      "runtimeTarget": "Java 21；依赖与服务镜像版本待可运行夹具实现时锁定，当前不声称可构建。",
+      "prerequisiteInfrastructure": [
+        "五类存储桩",
+        "合成 PII 追踪标记",
+        "备份恢复模拟器",
+        "政策 oracle"
+      ],
+      "plannedAssets": [
+        "公开 starter 仓库快照",
+        "隔离验收运行器与独立 oracle",
+        "固定 seed 数据与故障夹具",
+        "参考补丁和故障版对照",
+        "机器预算、超时及评分配置"
+      ],
+      "objectiveTestStrategy": "按字段植入可追踪合成标记，删除后扫描所有允许存储及恢复副本；重放延迟事件并验证不复活与保留最小性。",
+      "skillAxes": [
+        "跨仓数据血缘",
+        "隐私工程",
+        "工作流恢复"
+      ],
+      "networkPolicy": "依赖预热后默认离线；所有第三方、支付与消息外联以本地桩代替。",
+      "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
+    },
+    "status": "design_only",
+    "difficultyRationale": "暂定王者：需求冲突与多仓实现、独立验证、故障恢复和发布治理组合出现，要求完整交付链而非单点优秀。不是已测难度或模型能力声明。"
+  },
+  "implemented_scope": "Java21 CLI with a forced local journal, OS file locking, restart replay, phase controls and public black-box verifier.",
+  "excluded_scope": [
+    "Real multi-region or distributed quorum",
+    "Real databases, brokers, object stores, payment systems",
+    "Production authentication and legal policy",
+    "Performance or difficulty calibration",
+    "Hidden tests or secure execution sandbox"
+  ],
+  "entrypoint": "Main <journal-path> <command> [before|after]",
+  "baseline": "baseline/src",
+  "reference": "reference/src",
+  "verifier": "../verify.py",
+  "runtime": "Java 21; Python 3; no third-party dependencies",
+  "candidate_command": "python3 engineering/king/K02/run_selfcheck.py --candidate ABS_PACKAGE",
+  "agent_files": "agent-files.json",
+  "baseline_path": "baseline",
+  "minimum_checks": 21,
+  "scope_limitations": "Synthetic policy, not legal guidance. Logical projections share one journal; this does not certify deletion of raw journal or backups, actual blob erasure, cryptographic deletion, retention expiration, or independent services. Payloads are synthetic fixture values only; production PII is forbidden.",
+  "public_tests": true,
+  "secure_sandbox": false,
+  "difficulty_calibrated": false,
+  "phase_contract": "PHASES.md",
+  "coverage": "COVERAGE.md",
+  "source_files": [
+    "Domain.java",
+    "Journal.java",
+    "Main.java",
+    "Protocol.java"
+  ],
+  "check_count": 33
+}

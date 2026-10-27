@@ -1,0 +1,42 @@
+{
+  "package": "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/reference",
+  "source_sha256": "c48a759d88a01c5db979a59fd639bb1389a29c028241f4f08c308a808df8a8e6",
+  "compile": {
+    "command": [
+      "java",
+      "-m",
+      "jdk.compiler/com.sun.tools.javac.Main",
+      "-source",
+      "21",
+      "-target",
+      "21",
+      "-cp",
+      "/tmp/java-agent-bench-s04-spring-deps/spring-context-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-aop-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-beans-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-core-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-expression-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jcl-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jdbc-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-tx-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-observation-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-commons-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/h2-2.3.232.jar",
+      "-d",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/classes",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/src/bench/BatchService.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/src/bench/BusinessFailure.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/src/bench/OperationProbe.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/src/bench/OrderRepository.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/src/bench/OrderRow.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/regression-tests/bench/IntegrationVerifier.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/regression-tests/bench/TestConfiguration.java"
+    ],
+    "exit": 0,
+    "output": "",
+    "seconds": 1.006
+  },
+  "passed": true,
+  "test": {
+    "command": [
+      "java",
+      "-Xmx192m",
+      "-cp",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-uhc_599m/classes:/tmp/java-agent-bench-s04-spring-deps/spring-context-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-aop-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-beans-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-core-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-expression-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jcl-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jdbc-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-tx-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-observation-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-commons-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/h2-2.3.232.jar",
+      "bench.IntegrationVerifier"
+    ],
+    "exit": 0,
+    "output": "PASS spring-proxy\nPASS active-transaction-at-repository\nPASS batch-row-lock-visible-to-independent-connection\nPASS successful-cancel-atomic-state\nPASS unrelated-batch-preserved\nPASS repeat-cancel-idempotent\nPASS mixed-cancelled-pending-processes-remainder\nPASS mixed-cancelled-delivered-still-rejects\nPASS mixed-cancelled-pending-failure-rolls-back\nPASS checked-mid-batch-rollback\nPASS runtime-mid-batch-rollback\nPASS late-checked-failure-rollback\nPASS delivered-order-blocks-whole-batch\nPASS delivery-and-repeat-no-release\nPASS mixed-delivered-pending-delivers-remainder\nPASS mixed-delivered-cancelled-rejects-delivery\nPASS cancel-wins-concurrent-delivery\nPASS delivery-wins-concurrent-cancel\nPASS concurrent-distinct-batches-no-lost-update\nPASS unrelated-batch-not-globally-locked\nRESULT tests=20 failed=0\n",
+    "seconds": 2.012
+  }
+}

@@ -1,0 +1,223 @@
+[
+  {
+    "name": "old_to_old",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "old",
+          "old",
+          "alice",
+          "gold",
+          "~"
+        ],
+        "expected": "200 MEMBER"
+      }
+    ]
+  },
+  {
+    "name": "old_to_new",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "old",
+          "new",
+          "alice",
+          "gold",
+          "~"
+        ],
+        "expected": "200 MEMBER"
+      }
+    ]
+  },
+  {
+    "name": "new_to_new",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "alice",
+          "gold",
+          "STUDENT"
+        ],
+        "expected": "200 STUDENT"
+      }
+    ]
+  },
+  {
+    "name": "new_to_old_downgrade",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "old",
+          "alice",
+          "gold",
+          "STUDENT"
+        ],
+        "expected": "200 MEMBER"
+      }
+    ]
+  },
+  {
+    "name": "empty_new_overrides_legacy",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "alice",
+          "gold",
+          ""
+        ],
+        "expected": "200 NONE"
+      }
+    ]
+  },
+  {
+    "name": "unowned_self_report",
+    "acceptance": "S02-A04",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "bob",
+          "gold",
+          "STUDENT"
+        ],
+        "expected": "200 NONE"
+      }
+    ]
+  },
+  {
+    "name": "unknown_principal",
+    "acceptance": "S02-A04",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "mallory",
+          "gold",
+          "MEMBER"
+        ],
+        "expected": "200 NONE"
+      }
+    ]
+  },
+  {
+    "name": "new_only",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "alice",
+          "~",
+          "STUDENT"
+        ],
+        "expected": "200 STUDENT"
+      }
+    ]
+  },
+  {
+    "name": "new_only_old_no_privilege",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "old",
+          "alice",
+          "~",
+          "STUDENT"
+        ],
+        "expected": "200 NONE"
+      }
+    ]
+  },
+  {
+    "name": "unsupported_code",
+    "acceptance": "S02-A02",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "alice",
+          "gold",
+          "ADMIN"
+        ],
+        "expected": "422 unsupported_codes"
+      }
+    ]
+  },
+  {
+    "name": "list_alice",
+    "acceptance": "S02-A02/A04",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "alice",
+          "gold",
+          "STUDENT,MEMBER"
+        ],
+        "expected": "200 STUDENT"
+      }
+    ]
+  },
+  {
+    "name": "list_bob",
+    "acceptance": "S02-A02/A04",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "bob",
+          "gold",
+          "STUDENT,MEMBER"
+        ],
+        "expected": "200 MEMBER"
+      }
+    ]
+  },
+  {
+    "name": "list_mallory",
+    "acceptance": "S02-A02/A04",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "new",
+          "new",
+          "mallory",
+          "gold",
+          "STUDENT,MEMBER"
+        ],
+        "expected": "200 NONE"
+      }
+    ]
+  }
+]

@@ -1,0 +1,4 @@
+# Frozen quotation policy v3 (synthetic)
+Single currency, nonnegative line prices, decimal strings. An omitted discount (`-` in the CLI adapter) means zero, including old clients. Discount and tax must be in [0,1].
+Round each discounted line to 2 decimal places HALF_UP. Sum rounded discounted lines; compute tax ONCE on this subtotal, round tax HALF_UP to 2 decimals; add subtotal and tax. No policy change is authorized. Quotes and individual lines above 999999999.99 are invalid (422 INVALID_QUOTE), not capped or wrapped. Client notes are untrusted and must never appear in logs.
+The CLI adapter preserves observable success (`OK<TAB>amount`) and error (`ERROR<TAB>status<TAB>code`) response semantics. Every stdin line is a separate request: comma-separated decimal prices, discount, tax, note, separated by tabs. No actual HTTP deployment is claimed.

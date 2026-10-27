@@ -1,0 +1,6 @@
+# Synthetic evidence
+
+The baseline is the candidate incident/PR snapshot. `python run.py baseline` emits named failed business invariants. These are executable diagnostics, not fabricated production telemetry. Follow calls across the module package directories; compare durable files where applicable.
+
+# Saga slice contract v1
+Inventory capacity is one per item globally. Leases are half-open. Reservation business keys bind all fields, including tenant. The immutable reservation identity survives release. A lost success reply is an UNKNOWN result, resolved by business-key query, never blindly retried with a new key. Order commit failure persists compensation intent BEFORE attempting release. Recovery requires system-recovery role, is replay safe, and durably audits completed compensation. Independent journals model independent service storage (no cross-service transaction). Single-process synchronized inventory serialization is required; separate process writers are out of scope. Complete-line records only: power-loss/torn-write recovery is out of scope. Event versions, poison partitions, multi-item capacity and manual reconciliation workflow are NOT implemented. Crash between reserve and recording compensation intent remains an explicit unsupported window; this slice injects failure only after compensation intent commit.

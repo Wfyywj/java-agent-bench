@@ -1,0 +1,2 @@
+Scope is deliberately a runnable slice, not full original catalog acceptance. Frozen membership snapshot, external provider ledger in durable file, unknown result after abrupt process halt, query-before-retry, checkpoint, fence, cancellation and poison isolation.
+Assumptions: synthetic IDs, trusted local input, sequential command lock, integer amounts, explicit logical scheduling. Unknown production policies remain unresolved.

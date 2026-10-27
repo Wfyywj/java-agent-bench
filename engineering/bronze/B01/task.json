@@ -1,0 +1,68 @@
+{
+  "id": "B01",
+  "title": "社区维修预约的时间窗契约",
+  "category": "requirement_clarification",
+  "runtime": "Java 21 + Python 3 standard library",
+  "status": "public_development_fixture",
+  "entrypoint": "python3 run_selfcheck.py",
+  "candidate_entrypoint": "python3 run_selfcheck.py --candidate PATH",
+  "source_modules": [
+    "Site",
+    "Booking",
+    "BookingRepository",
+    "Scheduler",
+    "Main"
+  ],
+  "acceptance": [
+    {
+      "id": "B01-A01",
+      "criterion": "明确时区由站点配置决定，禁止使用服务器默认时区；当日截止点采用左闭右开区间并写入决策表",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B01-A02",
+      "criterion": "容量按站点、时段统计；取消记录不占容量，未知状态不得默认为取消",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B01-A03",
+      "criterion": "对运营未确认的节假日规则标记待决策，默认拒绝不明确预约而非编造政策",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B01-A04",
+      "criterion": "无效时段返回现有 422 错误结构且不写入记录；过去时段和边界时刻有独立用例",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B01-A05",
+      "criterion": "保留旧客户端省略可选备注字段的行为，并证明 Clock 固定后测试可重复",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "automated_scope": [
+    "B01-A01 explicit site timezone, half-open cutoff, cross midnight, missing config",
+    "B01-A02 persisted status-aware station/slot capacity",
+    "B01-A03 frozen structured decisions and holiday fail-closed",
+    "B01-A04 exact existing 422 body, no write, boundaries and DST",
+    "B01-A05 omitted and supplied notes persisted, injected Clock"
+  ],
+  "limitations": [
+    "CLI adapter verifies HTTP-compatible error value; does not run a live HTTP listener",
+    "Prose quality and evidence-map completeness not automatically graded",
+    "Public evaluator fixtures are not hidden; trusted code only, not secure sandbox",
+    "Repository synchronization is per object, not multi-process locking; outside B01 single-service acceptance",
+    "No model runs, scores or difficulty calibration"
+  ],
+  "budget": {
+    "subprocess_seconds": 25,
+    "output_bytes": 131072
+  },
+  "compiler": "java -m jdk.compiler/com.sun.tools.javac.Main -source 21 -target 21",
+  "version": "0.1.1"
+}

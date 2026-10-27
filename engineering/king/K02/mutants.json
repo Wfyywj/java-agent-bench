@@ -1,0 +1,20 @@
+[
+  {
+    "name": "resurrection",
+    "file": "Domain.java",
+    "old": "if(tombstones.containsKey(id))",
+    "new": "if(false)"
+  },
+  {
+    "name": "premature-completion",
+    "file": "Domain.java",
+    "old": "done.get(id).size()==4",
+    "new": "done.get(id).size()>=1"
+  },
+  {
+    "name": "restore-leak",
+    "file": "Domain.java",
+    "old": "if(!tombstones.containsKey(id)) {\n                    store",
+    "new": "if(true) {\n    store"
+  }
+]

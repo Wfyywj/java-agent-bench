@@ -1,0 +1,9 @@
+{
+  "task": "S01",
+  "finding": "Terminal overwrite and duplicate posting are independent faults: ordered-sequence checks alone do not protect terminal monotonicity; durable receipts protect restarts.",
+  "symbol_chain": "RefundService.callback -> Store.commit; Signature.valid; Main callback/get",
+  "severity": "high",
+  "reproduce": "Run baseline candidate against evaluator-owned fixtures/cases.json",
+  "alternative_explanation": "A compilation failure is not a semantic mutant kill; selfcheck separately requires every variant to compile.",
+  "limits": "No HTTP adapter, real payment dispatch, database transaction engine, distributed delivery, fsync/power-loss guarantees, or production secrets."
+}

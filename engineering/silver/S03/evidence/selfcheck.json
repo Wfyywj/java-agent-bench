@@ -1,0 +1,3391 @@
+{
+  "id": "S03",
+  "engine": "Java 21 CLI + atomic file snapshot",
+  "runtime": "openjdk 21.0.12.1 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+  "machine": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.14"
+  },
+  "limits": {
+    "compile_seconds": 45,
+    "command_seconds": 15,
+    "output_bytes": 131072,
+    "java_heap": "128m"
+  },
+  "visibility": "public development tests, not hidden",
+  "sandbox": "trusted local code; not a hostile-code security boundary",
+  "variants": {
+    "baseline": {
+      "source_sha256": "1fbdbdd4ae9541f8cec3d40ef2940c31eb4a5411551e818e188005eda7f70c53",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 11,
+          "total": 12,
+          "checks": [
+            {
+              "name": "scope_injection",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_create",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_rechecks_membership",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "download_rechecks_membership",
+              "acceptance": "S03-A03",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "403 forbidden",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_download",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "safe_fields_and_formulas",
+              "acceptance": "S03-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "expiry_boundary",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "99"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "pending_and_missing",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "409 not_ready",
+                  "expected": "409 not_ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "absent",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "different_tenant_jobs",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j2",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "workpair",
+                    "j1",
+                    "j2"
+                  ],
+                  "actual": "200 ready;200 ready",
+                  "expected": "200 ready;200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j2",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "expected": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_expiry",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "job_id_cannot_be_overwritten",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "409 duplicate_job",
+                  "expected": "409 duplicate_job",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "unknown_member_empty_scope_denied",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "mallory",
+                    "",
+                    "",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "source_sha256": "2a28d72238ff760546771f55e4df72a11dcc4d9b37e92f3eddf0abe092d60392",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 12,
+          "total": 12,
+          "checks": [
+            {
+              "name": "scope_injection",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_create",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_rechecks_membership",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "download_rechecks_membership",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_download",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "safe_fields_and_formulas",
+              "acceptance": "S03-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "expiry_boundary",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "99"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "pending_and_missing",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "409 not_ready",
+                  "expected": "409 not_ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "absent",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "different_tenant_jobs",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j2",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "workpair",
+                    "j1",
+                    "j2"
+                  ],
+                  "actual": "200 ready;200 ready",
+                  "expected": "200 ready;200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j2",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "expected": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_expiry",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "job_id_cannot_be_overwritten",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "409 duplicate_job",
+                  "expected": "409 duplicate_job",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "unknown_member_empty_scope_denied",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "mallory",
+                    "",
+                    "",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "passed": 12,
+          "total": 12,
+          "checks": [
+            {
+              "name": "scope_injection",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_create",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_rechecks_membership",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "download_rechecks_membership",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_download",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "safe_fields_and_formulas",
+              "acceptance": "S03-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "expiry_boundary",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "99"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "pending_and_missing",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "409 not_ready",
+                  "expected": "409 not_ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "absent",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "different_tenant_jobs",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j2",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "workpair",
+                    "j1",
+                    "j2"
+                  ],
+                  "actual": "200 ready;200 ready",
+                  "expected": "200 ready;200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j2",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "expected": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_expiry",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "job_id_cannot_be_overwritten",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "409 duplicate_job",
+                  "expected": "409 duplicate_job",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "unknown_member_empty_scope_denied",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "mallory",
+                    "",
+                    "",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "passed": 12,
+          "total": 12,
+          "checks": [
+            {
+              "name": "scope_injection",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_create",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_rechecks_membership",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "download_rechecks_membership",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_download",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "safe_fields_and_formulas",
+              "acceptance": "S03-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "expiry_boundary",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "99"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "pending_and_missing",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "409 not_ready",
+                  "expected": "409 not_ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "absent",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "different_tenant_jobs",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j2",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "workpair",
+                    "j1",
+                    "j2"
+                  ],
+                  "actual": "200 ready;200 ready",
+                  "expected": "200 ready;200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j2",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "expected": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_expiry",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "job_id_cannot_be_overwritten",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "409 duplicate_job",
+                  "expected": "409 duplicate_job",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "unknown_member_empty_scope_denied",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "mallory",
+                    "",
+                    "",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "stale_download_auth": {
+      "source_sha256": "1fbdbdd4ae9541f8cec3d40ef2940c31eb4a5411551e818e188005eda7f70c53",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 11,
+          "total": 12,
+          "checks": [
+            {
+              "name": "scope_injection",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_create",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_rechecks_membership",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "download_rechecks_membership",
+              "acceptance": "S03-A03",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "403 forbidden",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_download",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "safe_fields_and_formulas",
+              "acceptance": "S03-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "expiry_boundary",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "99"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "pending_and_missing",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "409 not_ready",
+                  "expected": "409 not_ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "absent",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "different_tenant_jobs",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j2",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "workpair",
+                    "j1",
+                    "j2"
+                  ],
+                  "actual": "200 ready;200 ready",
+                  "expected": "200 ready;200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j2",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "expected": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_expiry",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "job_id_cannot_be_overwritten",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "409 duplicate_job",
+                  "expected": "409 duplicate_job",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "unknown_member_empty_scope_denied",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "mallory",
+                    "",
+                    "",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "unsafe_csv": {
+      "source_sha256": "dc000a8a9092661dd974484d2a4cbe50873b43d3e7541a7a136d652634e1f1c1",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 9,
+          "total": 12,
+          "checks": [
+            {
+              "name": "scope_injection",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_create",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "worker_rechecks_membership",
+              "acceptance": "S03-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "download_rechecks_membership",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "revoke",
+                    "alice"
+                  ],
+                  "actual": "200 revoked",
+                  "expected": "200 revoked",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cross_tenant_download",
+              "acceptance": "S03-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "safe_fields_and_formulas",
+              "acceptance": "S03-A04",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t1-1,=SUM(A1)|t1-2,+cmd|t1-3,-cmd|t1-4,@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "expiry_boundary",
+              "acceptance": "S03-A05",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1"
+                  ],
+                  "actual": "200 ready",
+                  "expected": "200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "99"
+                  ],
+                  "actual": "200 id,name|t1-1,=SUM(A1)|t1-2,+cmd|t1-3,-cmd|t1-4,@cmd",
+                  "expected": "200 id,name|t1-1,'=SUM(A1)|t1-2,'+cmd|t1-3,'-cmd|t1-4,'@cmd",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "pending_and_missing",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "j1",
+                    "1"
+                  ],
+                  "actual": "409 not_ready",
+                  "expected": "409 not_ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "alice",
+                    "absent",
+                    "1"
+                  ],
+                  "actual": "404 not_found",
+                  "expected": "404 not_found",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "different_tenant_jobs",
+              "acceptance": "S03-A02",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j2",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "workpair",
+                    "j1",
+                    "j2"
+                  ],
+                  "actual": "200 ready;200 ready",
+                  "expected": "200 ready;200 ready",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "download",
+                    "bob",
+                    "j2",
+                    "1"
+                  ],
+                  "actual": "200 id,name|t2-1,=SUM(A1)|t2-2,+cmd|t2-3,-cmd|t2-4,@cmd",
+                  "expected": "200 id,name|t2-1,'=SUM(A1)|t2-2,'+cmd|t2-3,'-cmd|t2-4,'@cmd",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "worker_expiry",
+              "acceptance": "S03-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "work",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "410 expired",
+                  "expected": "410 expired",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "job_id_cannot_be_overwritten",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "alice",
+                    "t1",
+                    "t1",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "202 queued",
+                  "expected": "202 queued",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "bob",
+                    "t2",
+                    "t2",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "409 duplicate_job",
+                  "expected": "409 duplicate_job",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "unknown_member_empty_scope_denied",
+              "acceptance": "S03-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "create",
+                    "mallory",
+                    "",
+                    "",
+                    "j1",
+                    "100"
+                  ],
+                  "actual": "403 forbidden",
+                  "expected": "403 forbidden",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "selfcheck_passed": true,
+  "three_reference_runs_passed": true,
+  "elapsed_seconds": 25.535
+}

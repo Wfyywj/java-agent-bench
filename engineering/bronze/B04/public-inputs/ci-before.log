@@ -1,0 +1,5 @@
+Synthetic recorded smoke transcript; reproduce with regression-tests/smoke.py.
+input: 10,20 / discount 0 / tax 0.10
+expected: OK 33.00
+actual: OK 33.00
+1 smoke assertion passed. This does not cover decimal boundaries, nulls or logs.

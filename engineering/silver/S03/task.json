@@ -1,0 +1,75 @@
+{
+  "id": "S03",
+  "title": "多租户维修工单导出的权限闭环",
+  "status": "executable_narrowed_engineering_slice",
+  "original_scope": {
+    "context": "REST 服务、后台 worker 与本地对象存储桩；租户成员角色可在任务排队后撤销。",
+    "mission": "物业后台新增异步工单导出，列表接口有权限但下载链接可跨租户读取。修复创建、任务执行与下载全链路授权。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "S03-A01",
+      "criterion": "任务创建时校验查询范围，禁止通过过滤器注入其他租户编号",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S03-A02",
+      "criterion": "worker 使用明确租户上下文，线程复用不得继承上一任务上下文",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S03-A03",
+      "criterion": "下载时重新验证当前身份及权限，创建时授权不能永久替代下载时授权",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S03-A04",
+      "criterion": "导出文件包含允许字段且按公式注入策略处理以 =、+、-、@ 开头的文本单元格",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S03-A05",
+      "criterion": "权限撤销、任务过期和不存在任务返回契约化结果，日志不暴露对象存储密钥",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "File-backed async export command flow with create/worker/download authorization, revoked membership, explicit job scope on reused worker instance, expiry, safe synthetic CSV columns.",
+  "not_implemented_or_unmeasured": "CLI rather than REST/object-store URLs; principal is trusted adapter input, not authentication. No real object-storage signing, HTTP non-enumeration policy, cross-process worker pool or external IAM.",
+  "full_catalog_ready": false,
+  "test_visibility": "public development tests; no hidden evaluation or contamination resistance claimed",
+  "candidate_trust": "trusted local code only; process/resource limits are not a security sandbox",
+  "runtime": {
+    "language": "Java 21",
+    "compiler": "java -m jdk.compiler/com.sun.tools.javac.Main -source 21 -target 21",
+    "dependency": null
+  },
+  "baseline_directory": "baseline",
+  "reference_directory": "reference",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "selfcheck_command": "python3 run_selfcheck.py",
+  "independent_verifier": "../verifier.py",
+  "public_scenarios": 12,
+  "reference_repetitions": 3,
+  "mutants": [
+    "stale_download_auth",
+    "unsafe_csv"
+  ],
+  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator."
+}

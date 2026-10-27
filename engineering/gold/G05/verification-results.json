@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "status": "runnable_slice",
+  "public_development_only": true,
+  "repeat_count": 3,
+  "selfcheck_pass": true,
+  "results": [
+    {
+      "variant": "reference",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 0,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=16 failed=0\n"
+    },
+    {
+      "variant": "reference",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 0,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=16 failed=0\n"
+    },
+    {
+      "variant": "reference",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 0,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=16 failed=0\n"
+    },
+    {
+      "variant": "baseline",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "FAIL I01 bounded-worker-budget AssertionError: worker budget 2+1\nFAIL I02 bounded-queue-budget AssertionError: queue budget 2+2\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nFAIL I05 two-slow-workers-enter AssertionError: latch never opened\nFAIL I06 independent-price-isolation AssertionError: latch never opened\nFAIL I07 deterministic-overload-rejection AssertionError: latch never opened\nFAIL I08 running-deadline-cancels-connection AssertionError: latch never opened\nFAIL I09 queued-deadline-never-invokes-client AssertionError: latch never opened\nFAIL I10 cancelled-queue-slot-reusable AssertionError: latch never opened\nFAIL I11 downstream-error-not-success AssertionError: failure swallowed\nFAIL I12 exact-terminal-accounting AssertionError: latch never opened\nFAIL I13 shutdown-cancels-queued AssertionError: latch never opened\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: terminal counters never converged\nFAIL I16 burst-drains-without-loss AssertionError: latch never opened\nSUMMARY passed=3 failed=13\n"
+    },
+    {
+      "variant": "baseline",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "FAIL I01 bounded-worker-budget AssertionError: worker budget 2+1\nFAIL I02 bounded-queue-budget AssertionError: queue budget 2+2\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nFAIL I05 two-slow-workers-enter AssertionError: latch never opened\nFAIL I06 independent-price-isolation AssertionError: latch never opened\nFAIL I07 deterministic-overload-rejection AssertionError: latch never opened\nFAIL I08 running-deadline-cancels-connection AssertionError: latch never opened\nFAIL I09 queued-deadline-never-invokes-client AssertionError: latch never opened\nFAIL I10 cancelled-queue-slot-reusable AssertionError: latch never opened\nFAIL I11 downstream-error-not-success AssertionError: failure swallowed\nFAIL I12 exact-terminal-accounting AssertionError: latch never opened\nFAIL I13 shutdown-cancels-queued AssertionError: latch never opened\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: terminal counters never converged\nFAIL I16 burst-drains-without-loss AssertionError: latch never opened\nSUMMARY passed=3 failed=13\n"
+    },
+    {
+      "variant": "baseline",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "FAIL I01 bounded-worker-budget AssertionError: worker budget 2+1\nFAIL I02 bounded-queue-budget AssertionError: queue budget 2+2\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nFAIL I05 two-slow-workers-enter AssertionError: latch never opened\nFAIL I06 independent-price-isolation AssertionError: latch never opened\nFAIL I07 deterministic-overload-rejection AssertionError: latch never opened\nFAIL I08 running-deadline-cancels-connection AssertionError: latch never opened\nFAIL I09 queued-deadline-never-invokes-client AssertionError: latch never opened\nFAIL I10 cancelled-queue-slot-reusable AssertionError: latch never opened\nFAIL I11 downstream-error-not-success AssertionError: failure swallowed\nFAIL I12 exact-terminal-accounting AssertionError: latch never opened\nFAIL I13 shutdown-cancels-queued AssertionError: latch never opened\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: terminal counters never converged\nFAIL I16 burst-drains-without-loss AssertionError: latch never opened\nSUMMARY passed=3 failed=13\n"
+    },
+    {
+      "variant": "mutants/cancelled_queue_leak",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nFAIL I10 cancelled-queue-slot-reusable RejectedExecutionException: Task bench.Service$1@27d6c5e0[Not completed, task = bench.Verify$$Lambda/0x00007f3eb8008440@7ef20235] rejected from java.util.concurrent.ThreadPoolExecutor@7699a589[Running, pool size = 2, active threads = 2, queued tasks = 2, completed tasks = 0]\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/cancelled_queue_leak",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nFAIL I10 cancelled-queue-slot-reusable RejectedExecutionException: Task bench.Service$1@27d6c5e0[Not completed, task = bench.Verify$$Lambda/0x00007fc460008440@7ef20235] rejected from java.util.concurrent.ThreadPoolExecutor@7699a589[Running, pool size = 2, active threads = 2, queued tasks = 2, completed tasks = 0]\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/cancelled_queue_leak",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nFAIL I10 cancelled-queue-slot-reusable RejectedExecutionException: Task bench.Service$1@27d6c5e0[Not completed, task = bench.Verify$$Lambda/0x00007f50d8008440@7ef20235] rejected from java.util.concurrent.ThreadPoolExecutor@7699a589[Running, pool size = 2, active threads = 2, queued tasks = 2, completed tasks = 0]\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/lost_shutdown_futures",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nFAIL I13 shutdown-cancels-queued AssertionError: shutdown orphaned queued result\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/lost_shutdown_futures",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nFAIL I13 shutdown-cancels-queued AssertionError: shutdown orphaned queued result\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/lost_shutdown_futures",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nFAIL I13 shutdown-cancels-queued AssertionError: shutdown orphaned queued result\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/result_defaulting",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nFAIL I03 normal-seat-result AssertionError: lost result\nFAIL I04 normal-price-result AssertionError: lost independent result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation AssertionError: price starved\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nFAIL I09 queued-deadline-never-invokes-client AssertionError: drain failed\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: completed result mutated\nFAIL I16 burst-drains-without-loss AssertionError: burst result mismatch\nSUMMARY passed=10 failed=6\n"
+    },
+    {
+      "variant": "mutants/result_defaulting",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nFAIL I03 normal-seat-result AssertionError: lost result\nFAIL I04 normal-price-result AssertionError: lost independent result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation AssertionError: price starved\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nFAIL I09 queued-deadline-never-invokes-client AssertionError: drain failed\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: completed result mutated\nFAIL I16 burst-drains-without-loss AssertionError: burst result mismatch\nSUMMARY passed=10 failed=6\n"
+    },
+    {
+      "variant": "mutants/result_defaulting",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nFAIL I03 normal-seat-result AssertionError: lost result\nFAIL I04 normal-price-result AssertionError: lost independent result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation AssertionError: price starved\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nFAIL I09 queued-deadline-never-invokes-client AssertionError: drain failed\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nFAIL I15 completed-result-stable AssertionError: completed result mutated\nFAIL I16 burst-drains-without-loss AssertionError: burst result mismatch\nSUMMARY passed=10 failed=6\n"
+    },
+    {
+      "variant": "mutants/shared_bulkhead",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation TimeoutException: null\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/shared_bulkhead",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation TimeoutException: null\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/shared_bulkhead",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nPASS I02 bounded-queue-budget\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nFAIL I06 independent-price-isolation TimeoutException: null\nPASS I07 deterministic-overload-rejection\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=15 failed=1\n"
+    },
+    {
+      "variant": "mutants/unbounded_queue",
+      "repeat": 1,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nFAIL I02 bounded-queue-budget AssertionError: queue budget 2+2\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nFAIL I07 deterministic-overload-rejection AssertionError: fifth request silently accepted\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=14 failed=2\n"
+    },
+    {
+      "variant": "mutants/unbounded_queue",
+      "repeat": 2,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nFAIL I02 bounded-queue-budget AssertionError: queue budget 2+2\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nFAIL I07 deterministic-overload-rejection AssertionError: fifth request silently accepted\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=14 failed=2\n"
+    },
+    {
+      "variant": "mutants/unbounded_queue",
+      "repeat": 3,
+      "stage": "verify",
+      "incident": {
+        "exit_code": 0,
+        "failure": null,
+        "output": "parents=2 occupied_workers=2 queued_children=2 available_workers=0\nparent-A -> child-A -> shared-pool -> parent-A/B; parent-B -> child-B -> shared-pool -> parent-A/B\n"
+      },
+      "exit_code": 1,
+      "failure": null,
+      "output": "PASS I01 bounded-worker-budget\nFAIL I02 bounded-queue-budget AssertionError: queue budget 2+2\nPASS I03 normal-seat-result\nPASS I04 normal-price-result\nPASS I05 two-slow-workers-enter\nPASS I06 independent-price-isolation\nFAIL I07 deterministic-overload-rejection AssertionError: fifth request silently accepted\nPASS I08 running-deadline-cancels-connection\nPASS I09 queued-deadline-never-invokes-client\nPASS I10 cancelled-queue-slot-reusable\nPASS I11 downstream-error-not-success\nPASS I12 exact-terminal-accounting\nPASS I13 shutdown-cancels-queued\nPASS I14 shutdown-rejects-new-work\nPASS I15 completed-result-stable\nPASS I16 burst-drains-without-loss\nSUMMARY passed=14 failed=2\n"
+    }
+  ]
+}

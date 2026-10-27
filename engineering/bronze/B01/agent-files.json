@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "task.json",
+      "target": "task.json"
+    },
+    {
+      "source": "baseline/decisions.json",
+      "target": "decisions.json"
+    },
+    {
+      "source": "baseline/src/Booking.java",
+      "target": "src/Booking.java"
+    },
+    {
+      "source": "baseline/src/BookingRepository.java",
+      "target": "src/BookingRepository.java"
+    },
+    {
+      "source": "baseline/src/Main.java",
+      "target": "src/Main.java"
+    },
+    {
+      "source": "baseline/src/Scheduler.java",
+      "target": "src/Scheduler.java"
+    },
+    {
+      "source": "baseline/src/Site.java",
+      "target": "src/Site.java"
+    },
+    {
+      "source": "public-inputs/operations-mail.txt",
+      "target": "evidence/operations-mail.txt"
+    },
+    {
+      "source": "public-inputs/site.properties",
+      "target": "evidence/site.properties"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "run_selfcheck.py",
+    "selfcheck-results.json",
+    "verification-results.json",
+    "evaluation and repeatability evidence"
+  ],
+  "note": "Only named public task-input fixtures are copied; public-inputs is not evaluator result evidence. No oracle, reference solution or maintained selfcheck is supplied. Public repository remains accessible; not hidden or secure."
+}

@@ -1,0 +1,4 @@
+package events;
+import java.nio.file.*;import java.nio.channels.*;import java.nio.*;import java.util.*;import java.io.*;
+/** Single-writer durable append adapter; records are forced before acknowledgement. */
+public final class Journal {private final Path file;public Journal(Path p){file=p;} public synchronized List<String> read(){try{return Files.exists(file)?Files.readAllLines(file):List.of();}catch(IOException e){throw new UncheckedIOException(e);}} public synchronized void append(String line){try(var c=FileChannel.open(file,StandardOpenOption.CREATE,StandardOpenOption.WRITE,StandardOpenOption.APPEND)){ByteBuffer b=ByteBuffer.wrap((line+"\n").getBytes(java.nio.charset.StandardCharsets.UTF_8));while(b.hasRemaining())c.write(b);c.force(true);}catch(IOException e){throw new UncheckedIOException(e);}}}

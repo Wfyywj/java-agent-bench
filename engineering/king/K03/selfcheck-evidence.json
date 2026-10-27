@@ -1,0 +1,6721 @@
+{
+  "task": "K03",
+  "status": "runnable_slice",
+  "timestamp": "2026-10-27T03:59:10.829736+00:00",
+  "repeats": 3,
+  "all_expected": true,
+  "source_sha256": {
+    "baseline/src/Domain.java": "9dc4ee4e2a6f73b1a5f8c20a8de314a8ac6e85cfedf811d25ba36ba5fdeeb3c8",
+    "baseline/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "baseline/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "baseline/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4",
+    "reference/src/Domain.java": "e01c8a0936b768f285af0f3b112f5682fb69c7407128ef97ebe7da90c1646e31",
+    "reference/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "reference/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "reference/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4"
+  },
+  "runs": [
+    {
+      "repeat": 1,
+      "variant": "reference",
+      "checks": 50,
+      "passed": 50,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "baseline",
+      "checks": 50,
+      "passed": 32,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 16 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 66 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 2198 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 48 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 8589934592 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 6148914691236517204 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "9223372036854775806 9223372036854775806 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "legacy-rate",
+      "checks": 50,
+      "passed": 32,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 16 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 66 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 2198 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 48 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 8589934592 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 6148914691236517204 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "9223372036854775806 9223372036854775806 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "shadow-bypass",
+      "checks": 50,
+      "passed": 48,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "bill-reinterpretation",
+      "checks": 50,
+      "passed": 46,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v1",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "BILL 16 v1",
+          "pass_": false
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v1",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "narrow-long-reading",
+      "checks": 50,
+      "passed": 36,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL -2 v1",
+          "pass_": false
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 0 v1",
+          "pass_": false
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 0 v1",
+          "pass_": false
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "-2 -3 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "reference",
+      "checks": 50,
+      "passed": 50,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "baseline",
+      "checks": 50,
+      "passed": 32,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 16 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 66 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 2198 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 48 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 8589934592 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 6148914691236517204 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "9223372036854775806 9223372036854775806 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "legacy-rate",
+      "checks": 50,
+      "passed": 32,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 16 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 66 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 2198 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 48 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 8589934592 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 6148914691236517204 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "9223372036854775806 9223372036854775806 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "shadow-bypass",
+      "checks": 50,
+      "passed": 48,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "bill-reinterpretation",
+      "checks": 50,
+      "passed": 46,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v1",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "BILL 16 v1",
+          "pass_": false
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v1",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "narrow-long-reading",
+      "checks": 50,
+      "passed": 36,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL -2 v1",
+          "pass_": false
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 0 v1",
+          "pass_": false
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 0 v1",
+          "pass_": false
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "-2 -3 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "reference",
+      "checks": 50,
+      "passed": 50,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "baseline",
+      "checks": 50,
+      "passed": 32,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 16 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 66 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 2198 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 48 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 8589934592 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 6148914691236517204 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "9223372036854775806 9223372036854775806 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "legacy-rate",
+      "checks": 50,
+      "passed": 32,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 14 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 16 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 66 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 2198 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 48 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 8589934592 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 6148914691236517204 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 6148914691236517206 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v2",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "9223372036854775806 9223372036854775806 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 6 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "shadow-bypass",
+      "checks": 50,
+      "passed": 48,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "bill-reinterpretation",
+      "checks": 50,
+      "passed": 46,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 14 v1",
+          "pass_": false
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "BILL 16 v1",
+          "pass_": false
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v2",
+          "pass_": false
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "BILL 4294967296 v1",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL 9223372036854775806 v1",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "8589934592 10737418240 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 6442450944 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "BILL 9223372036854775806 v2",
+          "pass_": true
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "BILL 4294967296 v1",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "narrow-long-reading",
+      "checks": 50,
+      "passed": 36,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K03-C01",
+          "command": "status",
+          "expected": "BILLS 0 GATE true",
+          "actual": "BILLS 0 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C02",
+          "command": "shadow 4 3",
+          "expected": "14 18 BLOCKED",
+          "actual": "14 18 BLOCKED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C03",
+          "command": "status",
+          "expected": "BILLS 0 GATE false",
+          "actual": "BILLS 0 GATE false",
+          "pass_": true
+        },
+        {
+          "check": "K03-C04",
+          "command": "cutover a jan",
+          "expected": "REJECT gate",
+          "actual": "REJECT gate",
+          "pass_": true
+        },
+        {
+          "check": "K03-C05",
+          "command": "approve unknown",
+          "expected": "REJECT policy-unresolved",
+          "actual": "REJECT policy-unresolved",
+          "pass_": true
+        },
+        {
+          "check": "K03-C06",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C07",
+          "command": "shadow 4 3",
+          "expected": "14 18 ALLOWED",
+          "actual": "14 18 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "K03-C08",
+          "command": "shadow -1 3",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "K03-C09",
+          "command": "cutover a jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C10",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C11",
+          "command": "bill b jan 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C12",
+          "command": "bill a feb 4 3",
+          "expected": "BILL 14 v1",
+          "actual": "BILL 14 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C13",
+          "command": "rollback a jan",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C14",
+          "command": "bill a jan 4 3",
+          "expected": "BILL 18 v2",
+          "actual": "BILL 18 v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C15",
+          "command": "bill a jan 5 3",
+          "expected": "REJECT snapshot-conflict",
+          "actual": "REJECT snapshot-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K03-C16",
+          "command": "status",
+          "expected": "BILLS 3 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "K03-C17",
+          "command": "bill c jan 0 3",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K03-C18",
+          "command": "cutover c jan",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "K03-C19",
+          "command": "bill c jan 0 3",
+          "expected": "BILL 6 v1",
+          "actual": "BILL 6 v1",
+          "pass_": true
+        },
+        {
+          "check": "K03-C20",
+          "command": "bill d jan 1 1",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K03-C21",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 4 GATE true",
+          "pass_": true
+        },
+        {
+          "check": "oracle-0-0",
+          "command": "shadow 0 0",
+          "expected": "0 0 ALLOWED",
+          "actual": "0 0 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-1-7",
+          "command": "shadow 1 7",
+          "expected": "16 17 ALLOWED",
+          "actual": "16 17 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-31-2",
+          "command": "shadow 31 2",
+          "expected": "66 97 ALLOWED",
+          "actual": "66 97 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-999-100",
+          "command": "shadow 999 100",
+          "expected": "2198 3197 ALLOWED",
+          "actual": "2198 3197 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "oracle-5-19",
+          "command": "shadow 5 19",
+          "expected": "48 53 ALLOWED",
+          "actual": "48 53 ALLOWED",
+          "pass_": true
+        },
+        {
+          "check": "long-v1",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "long-v1-replay",
+          "command": "bill big legacy 2147483648 0",
+          "expected": "BILL 4294967296 v1",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "maximum-v1",
+          "command": "bill max legacy 4611686018427387903 0",
+          "expected": "BILL 9223372036854775806 v1",
+          "actual": "BILL -2 v1",
+          "pass_": false
+        },
+        {
+          "check": "overflow-v1",
+          "command": "bill over legacy 4611686018427387904 0",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 0 v1",
+          "pass_": false
+        },
+        {
+          "check": "addition-overflow-v1",
+          "command": "bill sum legacy 4611686018427387903 1",
+          "expected": "REJECT long overflow",
+          "actual": "BILL 0 v1",
+          "pass_": false
+        },
+        {
+          "check": "missing-long",
+          "command": "bill negative legacy -2147483648 0",
+          "expected": "REJECT missing-reading",
+          "actual": "REJECT missing-reading",
+          "pass_": true
+        },
+        {
+          "check": "approve-numeric",
+          "command": "approve peak-correction",
+          "expected": "APPROVED",
+          "actual": "APPROVED",
+          "pass_": true
+        },
+        {
+          "check": "long-shadow",
+          "command": "shadow 2147483648 2147483648",
+          "expected": "8589934592 10737418240 ALLOWED",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-long",
+          "command": "cutover big corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "long-v2",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-maximum",
+          "command": "cutover max corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "maximum-v2",
+          "command": "bill max corrected 3074457345618258602 0",
+          "expected": "BILL 9223372036854775806 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-overflow",
+          "command": "cutover over corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "overflow-v2",
+          "command": "bill over corrected 3074457345618258603 0",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "route-addition-overflow",
+          "command": "cutover sum corrected",
+          "expected": "ROUTE v2",
+          "actual": "ROUTE v2",
+          "pass_": true
+        },
+        {
+          "check": "addition-overflow-v2",
+          "command": "bill sum corrected 3074457345618258602 1",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "overflow-does-not-confirm",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "route-rollback-long",
+          "command": "rollback big corrected",
+          "expected": "ROUTE v1",
+          "actual": "ROUTE v1",
+          "pass_": true
+        },
+        {
+          "check": "long-pinned-on-rollback",
+          "command": "bill big corrected 2147483648 0",
+          "expected": "BILL 6442450944 v2",
+          "actual": "REJECT integer overflow",
+          "pass_": false
+        },
+        {
+          "check": "overflow-shadow",
+          "command": "shadow 4611686018427387903 0",
+          "expected": "REJECT long overflow",
+          "actual": "-2 -3 ALLOWED",
+          "pass_": false
+        },
+        {
+          "check": "failed-shadow-no-side-effect",
+          "command": "status",
+          "expected": "BILLS 4 GATE true",
+          "actual": "BILLS 3 GATE true",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "actual": [
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1",
+            "BILL 18 v1"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BILLS 1 GATE true",
+          "actual": "BILLS 1 GATE true",
+          "pass_": true
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Public tests and reference; not held out",
+    "Local trusted code only, not secure sandbox",
+    "No real cluster, broker or production load",
+    "No model run or difficulty calibration"
+  ]
+}

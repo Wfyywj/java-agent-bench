@@ -1,0 +1,88 @@
+{
+  "id": "G03",
+  "status": "runnable_slice",
+  "original_scope": {
+    "context": "三仓、两版协议、对象存储和上传会话表；分片可能重复、乱序或遭篡改。",
+    "mission": "巡检终端可离线七天，服务端升级附件协议后旧终端积压数据无法提交。修复 SDK、上传服务与工单服务，确保断点续传和历史协议兼容。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "G03-A01",
+      "criterion": "定位协议定义、签名计算、分片持久化与工单关联的完整依赖路径",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G03-A02",
+      "criterion": "旧版离线请求在兼容窗口内仍可完成，新协议不要求升级旧终端",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G03-A03",
+      "criterion": "重复分片只有内容哈希一致才视为成功，错误长度与哈希不得提交完成",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G03-A04",
+      "criterion": "最终工单只引用已验证完整对象，失败上传不会生成可见附件",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G03-A05",
+      "criterion": "会话过期与续传有明确规则，清理任务不得删除刚完成但尚未关联的合法对象",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G03-A06",
+      "criterion": "发布与回滚步骤覆盖服务端新旧混跑、终端积压及对象清理暂停开关",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Protocol/HMAC, filesystem fragment/object store, session lifecycle and work-order attachment modules. In-process compatibility and integrity slice; no durable upload-session database, rolling deploy, object-store integration or restart resume.",
+  "runtime": "OpenJDK 21, no third-party dependencies",
+  "modules": [
+    "protocol",
+    "upload",
+    "workorders"
+  ],
+  "variants": [
+    "reference",
+    "baseline",
+    "mutant_duplicate_overwrite",
+    "mutant_trust_disk",
+    "mutant_ignore_signature",
+    "mutant_reverse_assembly",
+    "mutant_fixed_hmac_key",
+    "mutant_constant_hash",
+    "mutant_v2_legacy_canonical"
+  ],
+  "public_tests": true,
+  "hidden_holdout": false,
+  "independence": "Verifier expected values authored directly from frozen policies, reference is separate implementation; mutants are deliberate reference patches. No independent human authorship claim.",
+  "limitations": [
+    "Not full catalog acceptance; no database/Redis/Kafka/object storage integration",
+    "Not a security sandbox: arbitrary candidate Java executes with caller permissions; run untrusted submissions only in external disposable network-disabled container",
+    "No model runs or difficulty calibration"
+  ],
+  "command": "python run.py reference; python selfcheck.py",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "baseline_path": "baseline",
+  "agent_files_manifest": "agent-files.json"
+}

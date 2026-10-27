@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "checks": [
+    "approved.a",
+    "forbidden-dependency-0",
+    "forbidden-dependency-1",
+    "forbidden-dependency-2",
+    "forbidden-permission-0",
+    "forbidden-permission-1",
+    "forbidden-permission-2",
+    "legacy-rejected",
+    "unapproved-no-result",
+    "cpu-budget",
+    "input-budget",
+    "no-network-language",
+    "harmless-boundary-proof",
+    "good-tenant-after-bad",
+    "result.a",
+    "sensitive-input-not-audited",
+    "dependency-provenance-audited"
+  ],
+  "details": null,
+  "state": {
+    "approved.a": "true",
+    "result.a": "41"
+  },
+  "audit": "review a locked=builtin-expression@1#original-2026 permissions=compute\nexecute a redacted-input steps=1\n"
+}

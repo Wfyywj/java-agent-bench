@@ -1,0 +1,90 @@
+[
+  {
+    "group": "org.springframework",
+    "artifact": "spring-context",
+    "version": "6.2.12",
+    "file": "spring-context-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-context/6.2.12/spring-context-6.2.12.jar",
+    "sha256": "0439fb9cb09a8b8d04c4e37dcba592e489b690882c56940aa33b58cf3f0b69cb"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-aop",
+    "version": "6.2.12",
+    "file": "spring-aop-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-aop/6.2.12/spring-aop-6.2.12.jar",
+    "sha256": "befc1dc092de62dab3aae3c7a0e11f797c6060fffc2121e1fe8fb95c94272655"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-beans",
+    "version": "6.2.12",
+    "file": "spring-beans-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-beans/6.2.12/spring-beans-6.2.12.jar",
+    "sha256": "26ab8ce28a42fe951b0a4ebaf8dbe97478effca833a7b2f51b45d6540fe7179f"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-core",
+    "version": "6.2.12",
+    "file": "spring-core-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-core/6.2.12/spring-core-6.2.12.jar",
+    "sha256": "bddc5a5be2d94191ebcfbadc672fa4d81e6ab51e38a9eaf41d5d035cb17548d4"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-expression",
+    "version": "6.2.12",
+    "file": "spring-expression-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-expression/6.2.12/spring-expression-6.2.12.jar",
+    "sha256": "62e68f4f18b8c5580180de6ef8578b1d1fc170ed993b5a7d59b946b63e5ebefd"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-jcl",
+    "version": "6.2.12",
+    "file": "spring-jcl-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-jcl/6.2.12/spring-jcl-6.2.12.jar",
+    "sha256": "8244ee2a515291f41ed4f99aa89b4cd41fc13961c21d7c271a381210f6075fed"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-jdbc",
+    "version": "6.2.12",
+    "file": "spring-jdbc-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-jdbc/6.2.12/spring-jdbc-6.2.12.jar",
+    "sha256": "13bed660294c76846a460daac301b2b16919e708c28d172b03300bf36567f9de"
+  },
+  {
+    "group": "org.springframework",
+    "artifact": "spring-tx",
+    "version": "6.2.12",
+    "file": "spring-tx-6.2.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/springframework/spring-tx/6.2.12/spring-tx-6.2.12.jar",
+    "sha256": "cb4100d58122ab77b8d6a01ecb5852ade5d654a70887fd50a0e54d0071699295"
+  },
+  {
+    "group": "io.micrometer",
+    "artifact": "micrometer-observation",
+    "version": "1.14.12",
+    "file": "micrometer-observation-1.14.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/io/micrometer/micrometer-observation/1.14.12/micrometer-observation-1.14.12.jar",
+    "sha256": "430be17d568533f3bb4234d1a7ab3018509967c582c2212770e81bcf933a99b8"
+  },
+  {
+    "group": "io.micrometer",
+    "artifact": "micrometer-commons",
+    "version": "1.14.12",
+    "file": "micrometer-commons-1.14.12.jar",
+    "url": "https://repo.maven.apache.org/maven2/io/micrometer/micrometer-commons/1.14.12/micrometer-commons-1.14.12.jar",
+    "sha256": "83408660d54149650da3658fa65b055158115ac91c900b3812022e1a24a35483"
+  },
+  {
+    "group": "com.h2database",
+    "artifact": "h2",
+    "version": "2.3.232",
+    "file": "h2-2.3.232.jar",
+    "url": "https://repo.maven.apache.org/maven2/com/h2database/h2/2.3.232/h2-2.3.232.jar",
+    "sha256": "8dae62d22db8982c3dcb3826edb9c727c5d302063a67eef7d63d82de401f07d3"
+  }
+]

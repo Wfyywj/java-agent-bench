@@ -1,0 +1,1 @@
+Run `python3 run_selfcheck.py --candidate reference` from B01. Acceptance-ID-labeled independent verifier/ContractTest.java covers the frozen contract; no candidate test is trusted as oracle. Full selfcheck also checks baseline and five semantic/decision mutants. Actual execution evidence is recorded in selfcheck-results.json.

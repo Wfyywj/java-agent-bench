@@ -1,0 +1,6 @@
+# Synthetic evidence
+
+The baseline is the candidate incident/PR snapshot. `python run.py baseline` emits named failed business invariants. These are executable diagnostics, not fabricated production telemetry. Follow calls across the module package directories; compare durable files where applicable.
+
+# Offline upload protocol slice v1
+Compatibility accepts protocol 1 and 2, binding session to its initial version. HMAC-SHA256 canonical forms are `session:part:sha256` for v1 and `v2\nsession\npart\nsha256` for v2; key and signatures are synthetic fixture inputs. Fragments may arrive out of order; same index replay succeeds only with identical SHA-256. Length, hash, signature, version and index validate BEFORE write. Session expiry is exclusive: now >= expires rejects. Completion requires every index, rereads and hashes disk chunks, concatenates in index order and checks whole object SHA-256. Only complete objects can be linked. Complete-but-unlinked objects survive cleanup; incomplete expired chunks can be deleted unless cleanup paused. Session metadata is in memory: restart resumability and production object-store atomicity are NOT implemented. Completed sessions cannot accept more chunks. No renewal endpoint is supplied; expired sessions require a new ID.

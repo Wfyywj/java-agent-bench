@@ -1,0 +1,7 @@
+Synthetic reproducible incident, frozen 2026-10-27
+warehouse_export rows=44 north=36 group_size_same_second=12 order=descending_file_id
+GET /boxes?tenant=north&limit=3&direction=asc -> 200 ids=BOX011,BOX010,BOX009
+GET /boxes?tenant=north&limit=3&direction=asc&cursor=<returned> -> 200 ids=BOX023,BOX022,BOX021
+Observed: nine records sharing first-page timestamp were skipped.
+Repository export contains all IDs BOX000..BOX035; ingestion loss hypothesis contradicted.
+No database/production trace supplied; reproduce locally using baseline Java service.

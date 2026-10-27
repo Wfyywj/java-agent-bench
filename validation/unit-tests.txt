@@ -1,0 +1,39 @@
+test_all_bronze_prepare_whitelists_exclude_grading_assets (test_bronze_protocol.BronzeCandidateProtocolTests.test_all_bronze_prepare_whitelists_exclude_grading_assets) ... ok
+test_b02_missing_source_is_invalid_input_not_measured_failure (test_bronze_protocol.BronzeCandidateProtocolTests.test_b02_missing_source_is_invalid_input_not_measured_failure) ... ok
+test_b02_reference_passes_and_baseline_is_measured_failure (test_bronze_protocol.BronzeCandidateProtocolTests.test_b02_reference_passes_and_baseline_is_measured_failure) ... ok
+test_b03_accepts_standard_package_root (test_bronze_protocol.BronzeCandidateProtocolTests.test_b03_accepts_standard_package_root) ... ok
+test_b04_missing_review_is_invalid_input (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_missing_review_is_invalid_input) ... ok
+test_b04_rejects_unjustified_blocker_hidden_among_suggestions (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_rejects_unjustified_blocker_hidden_among_suggestions) ... ok
+test_b04_reviews_artifact_without_compiling_submitted_source (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_reviews_artifact_without_compiling_submitted_source) ... ok
+test_evaluation_json_wrapper (test_engineering_launcher.LauncherTests.test_evaluation_json_wrapper) ... ok
+test_gate_before_execution (test_engineering_launcher.LauncherTests.test_gate_before_execution) ... ok
+test_hashes_stable (test_engineering_launcher.LauncherTests.test_hashes_stable) ... ok
+test_invalid_id (test_engineering_launcher.LauncherTests.test_invalid_id) ... ok
+test_invalid_report_not_pass (test_engineering_launcher.LauncherTests.test_invalid_report_not_pass) ... ok
+test_no_overwrite (test_engineering_launcher.LauncherTests.test_no_overwrite) ... ok
+test_path_escape (test_engineering_launcher.LauncherTests.test_path_escape) ... ok
+test_prepare_only_allowlist (test_engineering_launcher.LauncherTests.test_prepare_only_allowlist) ... ok
+test_reject_inside_repo (test_engineering_launcher.LauncherTests.test_reject_inside_repo) ... ok
+test_reject_reference_whitelist (test_engineering_launcher.LauncherTests.test_reject_reference_whitelist) ... ok
+test_reject_source_symlink (test_engineering_launcher.LauncherTests.test_reject_source_symlink) ... ok
+test_all_baselines_fail_references_pass_and_mutants_are_killed (test_harness.RealJavaRegressionTests.test_all_baselines_fail_references_pass_and_mutants_are_killed) ... ok
+test_compile_failure_is_reported (test_harness.SafetyAndContractTests.test_compile_failure_is_reported) ... ok
+test_confined_rejects_absolute_and_parent (test_harness.SafetyAndContractTests.test_confined_rejects_absolute_and_parent) ... ok
+test_missing_java_rejected (test_harness.SafetyAndContractTests.test_missing_java_rejected) ... ok
+test_output_limit_terminates_chatty_process (test_harness.SafetyAndContractTests.test_output_limit_terminates_chatty_process) ... ok
+test_patch_hash_stable_and_sensitive (test_harness.SafetyAndContractTests.test_patch_hash_stable_and_sensitive) ... ok
+test_prepare_is_sanitized_and_non_overwriting (test_harness.SafetyAndContractTests.test_prepare_is_sanitized_and_non_overwriting) ... ok
+test_reject_source_symlink (test_harness.SafetyAndContractTests.test_reject_source_symlink) ... ok
+test_reject_task_traversal (test_harness.SafetyAndContractTests.test_reject_task_traversal) ... ok
+test_result_schema_contract (test_harness.SafetyAndContractTests.test_result_schema_contract) ... ok
+test_shell_metacharacters_are_data (test_harness.SafetyAndContractTests.test_shell_metacharacters_are_data) ... ok
+test_timeout_kills_process (test_harness.SafetyAndContractTests.test_timeout_kills_process) ... ok
+test_timeout_limit_rejected (test_harness.SafetyAndContractTests.test_timeout_limit_rejected) ... ok
+test_all_25_slice_whitelists (test_registry.RegistryTests.test_all_25_slice_whitelists) ... ok
+test_catalog_and_slice_identity (test_registry.RegistryTests.test_catalog_and_slice_identity) ... ok
+test_published_catalog_matches_source (test_registry.RegistryTests.test_published_catalog_matches_source) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 26.562s
+
+OK

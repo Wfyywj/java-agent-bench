@@ -1,0 +1,7 @@
+{
+  "S03-A01": "behavioral authorization including tenant injection/empty scope",
+  "S03-A02": "behavioral reused worker instance with explicit scope; not pooled distributed workers",
+  "S03-A03": "behavioral revoked/current identity at download CLI, no HTTP auth adapter",
+  "S03-A04": "behavioral synthetic safe-field/formula fixture; no full CSV dialect coverage",
+  "S03-A05": "behavioral revoked/expired/missing errors; no real object credentials"
+}

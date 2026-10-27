@@ -1,0 +1,32 @@
+--- pre-pr/QuoteCalculator.java
++++ candidate/QuoteCalculator.java
+@@ -3,14 +3,15 @@
+ public final class QuoteCalculator {
+     private static final BigDecimal MAX = new BigDecimal("999999999.99");
+     public static BigDecimal total(Quote quote) {
+-        BigDecimal discount = quote.discount() == null ? BigDecimal.ZERO : quote.discount();
++        BigDecimal discount = quote.discount();
+         validate(quote, discount);
+-        BigDecimal subtotal = BigDecimal.ZERO;
++        double running = 0;
+         for (BigDecimal line : quote.lines()) {
+-            subtotal = subtotal.add(line.multiply(BigDecimal.ONE.subtract(discount)).setScale(2, RoundingMode.HALF_UP));
++            double discounted = Math.round(line.doubleValue() * (1 - discount.doubleValue()) * 100) / 100.0;
++            double tax = Math.round(discounted * quote.tax().doubleValue() * 100) / 100.0;
++            running += discounted + tax;
+         }
+-        BigDecimal tax = subtotal.multiply(quote.tax()).setScale(2, RoundingMode.HALF_UP);
+-        BigDecimal total = subtotal.add(tax).setScale(2, RoundingMode.HALF_UP);
++        BigDecimal total = BigDecimal.valueOf(running).setScale(2, RoundingMode.HALF_UP);
+         if (total.compareTo(MAX) > 0) throw new IllegalArgumentException("overflow");
+         return total;
+     }
+--- pre-pr/AuditLog.java
++++ candidate/AuditLog.java
+@@ -1,5 +1,5 @@
+ public final class AuditLog {
+     public static void rejected(Quote quote) {
+-        System.err.println("quote_rejected code=INVALID_QUOTE");
++        System.err.println("quote_rejected note=" + (quote == null ? "" : quote.note()));
+     }
+ }

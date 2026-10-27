@@ -1,0 +1,3047 @@
+{
+  "id": "S01",
+  "engine": "Java 21 CLI + atomic file snapshot",
+  "runtime": "openjdk 21.0.12.1 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+  "machine": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.14"
+  },
+  "limits": {
+    "compile_seconds": 45,
+    "command_seconds": 15,
+    "output_bytes": 131072,
+    "java_heap": "128m"
+  },
+  "visibility": "public development tests, not hidden",
+  "sandbox": "trusted local code; not a hostile-code security boundary",
+  "variants": {
+    "baseline": {
+      "source_sha256": "36610f194430800d9d58aca381c937a453e61849a1d9e5fa75276de2248de6fa",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 8,
+          "total": 10,
+          "checks": [
+            {
+              "name": "terminal_and_out_of_order",
+              "acceptance": "S01-A01",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "SUCCEEDED",
+                    "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "PROCESSING",
+                    "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "4",
+                    "PROCESSING",
+                    "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 stale",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "duplicate_after_restart",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "conflicting_terminal",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "FAILED",
+                    "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+                    "none"
+                  ],
+                  "actual": "409 manual_review",
+                  "expected": "409 manual_review",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|true",
+                  "expected": "SUCCEEDED|1|true",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "invalid_signature_no_write",
+              "acceptance": "S01-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "00",
+                    "none"
+                  ],
+                  "actual": "401 invalid_signature",
+                  "expected": "401 invalid_signature",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "precommit_retry",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "before"
+                  ],
+                  "actual": "503 retry",
+                  "expected": "503 retry",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "postcommit_lost_response",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "after"
+                  ],
+                  "actual": "503 response_lost",
+                  "expected": "503 response_lost",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_after_success",
+              "acceptance": "S01-A05",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "CANCELLED",
+                    "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 stale",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "bad_sequence_and_unknown",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "-",
+                    "SUCCEEDED",
+                    "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+                    "none"
+                  ],
+                  "actual": "422 invalid_sequence",
+                  "expected": "422 invalid_sequence",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "missing",
+                    "1",
+                    "SUCCEEDED",
+                    "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+                    "none"
+                  ],
+                  "actual": "404 unknown_refund",
+                  "expected": "404 unknown_refund",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "same_sequence_conflict",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "PROCESSING",
+                    "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "409 event_conflict",
+                  "expected": "409 event_conflict",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "success_over_cancellation_request",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "CANCELLED",
+                    "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "source_sha256": "5574a20538bd359a50152fe8ad4ccd830b657254be54d5ef64ec7a9ce288fe05",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 10,
+          "total": 10,
+          "checks": [
+            {
+              "name": "terminal_and_out_of_order",
+              "acceptance": "S01-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "SUCCEEDED",
+                    "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "PROCESSING",
+                    "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "4",
+                    "PROCESSING",
+                    "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_after_restart",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "conflicting_terminal",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "FAILED",
+                    "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+                    "none"
+                  ],
+                  "actual": "409 manual_review",
+                  "expected": "409 manual_review",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|true",
+                  "expected": "SUCCEEDED|1|true",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "invalid_signature_no_write",
+              "acceptance": "S01-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "00",
+                    "none"
+                  ],
+                  "actual": "401 invalid_signature",
+                  "expected": "401 invalid_signature",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "precommit_retry",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "before"
+                  ],
+                  "actual": "503 retry",
+                  "expected": "503 retry",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "postcommit_lost_response",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "after"
+                  ],
+                  "actual": "503 response_lost",
+                  "expected": "503 response_lost",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_after_success",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "CANCELLED",
+                    "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "bad_sequence_and_unknown",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "-",
+                    "SUCCEEDED",
+                    "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+                    "none"
+                  ],
+                  "actual": "422 invalid_sequence",
+                  "expected": "422 invalid_sequence",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "missing",
+                    "1",
+                    "SUCCEEDED",
+                    "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+                    "none"
+                  ],
+                  "actual": "404 unknown_refund",
+                  "expected": "404 unknown_refund",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "same_sequence_conflict",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "PROCESSING",
+                    "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "409 event_conflict",
+                  "expected": "409 event_conflict",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "success_over_cancellation_request",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "CANCELLED",
+                    "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "passed": 10,
+          "total": 10,
+          "checks": [
+            {
+              "name": "terminal_and_out_of_order",
+              "acceptance": "S01-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "SUCCEEDED",
+                    "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "PROCESSING",
+                    "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "4",
+                    "PROCESSING",
+                    "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_after_restart",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "conflicting_terminal",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "FAILED",
+                    "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+                    "none"
+                  ],
+                  "actual": "409 manual_review",
+                  "expected": "409 manual_review",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|true",
+                  "expected": "SUCCEEDED|1|true",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "invalid_signature_no_write",
+              "acceptance": "S01-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "00",
+                    "none"
+                  ],
+                  "actual": "401 invalid_signature",
+                  "expected": "401 invalid_signature",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "precommit_retry",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "before"
+                  ],
+                  "actual": "503 retry",
+                  "expected": "503 retry",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "postcommit_lost_response",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "after"
+                  ],
+                  "actual": "503 response_lost",
+                  "expected": "503 response_lost",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_after_success",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "CANCELLED",
+                    "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "bad_sequence_and_unknown",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "-",
+                    "SUCCEEDED",
+                    "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+                    "none"
+                  ],
+                  "actual": "422 invalid_sequence",
+                  "expected": "422 invalid_sequence",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "missing",
+                    "1",
+                    "SUCCEEDED",
+                    "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+                    "none"
+                  ],
+                  "actual": "404 unknown_refund",
+                  "expected": "404 unknown_refund",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "same_sequence_conflict",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "PROCESSING",
+                    "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "409 event_conflict",
+                  "expected": "409 event_conflict",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "success_over_cancellation_request",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "CANCELLED",
+                    "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "passed": 10,
+          "total": 10,
+          "checks": [
+            {
+              "name": "terminal_and_out_of_order",
+              "acceptance": "S01-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "SUCCEEDED",
+                    "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "PROCESSING",
+                    "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "4",
+                    "PROCESSING",
+                    "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_after_restart",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "conflicting_terminal",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "FAILED",
+                    "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+                    "none"
+                  ],
+                  "actual": "409 manual_review",
+                  "expected": "409 manual_review",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|true",
+                  "expected": "SUCCEEDED|1|true",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "invalid_signature_no_write",
+              "acceptance": "S01-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "00",
+                    "none"
+                  ],
+                  "actual": "401 invalid_signature",
+                  "expected": "401 invalid_signature",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "precommit_retry",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "before"
+                  ],
+                  "actual": "503 retry",
+                  "expected": "503 retry",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "postcommit_lost_response",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "after"
+                  ],
+                  "actual": "503 response_lost",
+                  "expected": "503 response_lost",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_after_success",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "CANCELLED",
+                    "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "bad_sequence_and_unknown",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "-",
+                    "SUCCEEDED",
+                    "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+                    "none"
+                  ],
+                  "actual": "422 invalid_sequence",
+                  "expected": "422 invalid_sequence",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "missing",
+                    "1",
+                    "SUCCEEDED",
+                    "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+                    "none"
+                  ],
+                  "actual": "404 unknown_refund",
+                  "expected": "404 unknown_refund",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "same_sequence_conflict",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "PROCESSING",
+                    "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "409 event_conflict",
+                  "expected": "409 event_conflict",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "success_over_cancellation_request",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "CANCELLED",
+                    "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "double_booking": {
+      "source_sha256": "24c1a55fc57abaee8a70152638c06248233cdfdd1301a57f6237f6396725e660",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 8,
+          "total": 10,
+          "checks": [
+            {
+              "name": "terminal_and_out_of_order",
+              "acceptance": "S01-A01",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "SUCCEEDED",
+                    "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "PROCESSING",
+                    "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "4",
+                    "PROCESSING",
+                    "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_after_restart",
+              "acceptance": "S01-A02",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|2|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "conflicting_terminal",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "FAILED",
+                    "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+                    "none"
+                  ],
+                  "actual": "409 manual_review",
+                  "expected": "409 manual_review",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|true",
+                  "expected": "SUCCEEDED|1|true",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "invalid_signature_no_write",
+              "acceptance": "S01-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "00",
+                    "none"
+                  ],
+                  "actual": "401 invalid_signature",
+                  "expected": "401 invalid_signature",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "precommit_retry",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "before"
+                  ],
+                  "actual": "503 retry",
+                  "expected": "503 retry",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "postcommit_lost_response",
+              "acceptance": "S01-A04",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "after"
+                  ],
+                  "actual": "503 response_lost",
+                  "expected": "503 response_lost",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|2|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "cancel_after_success",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "CANCELLED",
+                    "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "bad_sequence_and_unknown",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "-",
+                    "SUCCEEDED",
+                    "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+                    "none"
+                  ],
+                  "actual": "422 invalid_sequence",
+                  "expected": "422 invalid_sequence",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "missing",
+                    "1",
+                    "SUCCEEDED",
+                    "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+                    "none"
+                  ],
+                  "actual": "404 unknown_refund",
+                  "expected": "404 unknown_refund",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "same_sequence_conflict",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "PROCESSING",
+                    "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "409 event_conflict",
+                  "expected": "409 event_conflict",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "success_over_cancellation_request",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "CANCELLED",
+                    "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "terminal_regression": {
+      "source_sha256": "36610f194430800d9d58aca381c937a453e61849a1d9e5fa75276de2248de6fa",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 8,
+          "total": 10,
+          "checks": [
+            {
+              "name": "terminal_and_out_of_order",
+              "acceptance": "S01-A01",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "SUCCEEDED",
+                    "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "PROCESSING",
+                    "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+                    "none"
+                  ],
+                  "actual": "200 stale",
+                  "expected": "200 stale",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "4",
+                    "PROCESSING",
+                    "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 stale",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "duplicate_after_restart",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "conflicting_terminal",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "3",
+                    "FAILED",
+                    "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+                    "none"
+                  ],
+                  "actual": "409 manual_review",
+                  "expected": "409 manual_review",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|true",
+                  "expected": "SUCCEEDED|1|true",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "invalid_signature_no_write",
+              "acceptance": "S01-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "00",
+                    "none"
+                  ],
+                  "actual": "401 invalid_signature",
+                  "expected": "401 invalid_signature",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "precommit_retry",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "before"
+                  ],
+                  "actual": "503 retry",
+                  "expected": "503 retry",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "postcommit_lost_response",
+              "acceptance": "S01-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "after"
+                  ],
+                  "actual": "503 response_lost",
+                  "expected": "503 response_lost",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_after_success",
+              "acceptance": "S01-A05",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "CANCELLED",
+                    "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 stale",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "bad_sequence_and_unknown",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "-",
+                    "SUCCEEDED",
+                    "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+                    "none"
+                  ],
+                  "actual": "422 invalid_sequence",
+                  "expected": "422 invalid_sequence",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "missing",
+                    "1",
+                    "SUCCEEDED",
+                    "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+                    "none"
+                  ],
+                  "actual": "404 unknown_refund",
+                  "expected": "404 unknown_refund",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "PENDING|0|false",
+                  "expected": "PENDING|0|false",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "same_sequence_conflict",
+              "acceptance": "S01-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "PROCESSING",
+                    "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "SUCCEEDED",
+                    "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+                    "none"
+                  ],
+                  "actual": "409 event_conflict",
+                  "expected": "409 event_conflict",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "success_over_cancellation_request",
+              "acceptance": "S01-A05",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "1",
+                    "CANCELLED",
+                    "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "callback",
+                    "r1",
+                    "2",
+                    "SUCCEEDED",
+                    "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+                    "none"
+                  ],
+                  "actual": "200 applied",
+                  "expected": "200 applied",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get",
+                    "r1"
+                  ],
+                  "actual": "SUCCEEDED|1|false",
+                  "expected": "SUCCEEDED|1|false",
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "selfcheck_passed": true,
+  "three_reference_runs_passed": true,
+  "elapsed_seconds": 27.401
+}

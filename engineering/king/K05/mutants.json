@@ -1,0 +1,26 @@
+[
+  {
+    "name": "over-refund",
+    "file": "Domain.java",
+    "old": "amount<=0||amount>item.gross-item.refunded",
+    "new": "amount<=0"
+  },
+  {
+    "name": "incompatible-producer",
+    "file": "Domain.java",
+    "old": "v>consumer",
+    "new": "false"
+  },
+  {
+    "name": "duplicate-payment",
+    "file": "Domain.java",
+    "old": "if(payments.get(id).equals(\"PAID\"))return \"PAID\";",
+    "new": ""
+  },
+  {
+    "name": "cross-item-token-collision",
+    "file": "Domain.java",
+    "old": "payload=id+\":\"+x[3]",
+    "new": "payload=x[3]"
+  }
+]

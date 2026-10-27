@@ -1,0 +1,5 @@
+L	loan1	tenantA	bat1	BORROWED
+L	loan2	tenantA	ball2	BORROWED
+L	loan3	tenantB	mat3	BORROWED
+L	loan4	tenantA	cone4	AVAILABLE
+L	loan5	tenantA	net5	RETIRED

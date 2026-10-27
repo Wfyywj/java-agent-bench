@@ -1,0 +1,53 @@
+{
+  "findings": [
+    {
+      "id": "decimal-half",
+      "kind": "money_precision",
+      "severity": "blocking",
+      "location": "QuoteCalculator.java:Math.round",
+      "case": "decimal-half",
+      "observed": "OK\t1.00",
+      "expected": "OK\t1.01"
+    },
+    {
+      "id": "tax-location",
+      "kind": "rounding_location",
+      "severity": "blocking",
+      "location": "QuoteCalculator.java:double tax",
+      "case": "tax-location",
+      "observed": "OK\t0.12",
+      "expected": "OK\t0.11"
+    },
+    {
+      "id": "legacy-null",
+      "kind": "null_compatibility",
+      "severity": "blocking",
+      "location": "QuoteCalculator.java:quote.discount()",
+      "case": "legacy-null",
+      "observed": "ERROR\t500\tINTERNAL",
+      "expected": "OK\t10.00"
+    },
+    {
+      "id": "note-log",
+      "kind": "privacy",
+      "severity": "blocking",
+      "location": "AuditLog.java:System.err.println",
+      "case": "invalid-discount",
+      "observed": "note present in stderr",
+      "expected": "note absent from stderr"
+    }
+  ],
+  "checked_safe": [
+    "invalid-discount",
+    "negative-discount",
+    "overflow"
+  ],
+  "nonblocking": [
+    {
+      "kind": "readability",
+      "severity": "suggestion",
+      "location": "QuoteCalculator.java:running",
+      "message": "Prefer a domain-specific subtotal variable name; not a correctness blocker."
+    }
+  ]
+}

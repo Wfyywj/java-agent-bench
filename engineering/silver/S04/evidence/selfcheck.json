@@ -1,0 +1,1417 @@
+{
+  "id": "S04",
+  "engine": "H2 2.3.232",
+  "runtime": "openjdk 21.0.12.1 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+  "machine": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.14"
+  },
+  "limits": {
+    "compile_seconds": 45,
+    "command_seconds": 15,
+    "output_bytes": 131072,
+    "java_heap": "128m"
+  },
+  "visibility": "public development tests, not hidden",
+  "sandbox": "trusted local code; not a hostile-code security boundary",
+  "variants": {
+    "baseline": {
+      "source_sha256": "3c899492c378af1de097f90f1e697ec6cd86fe79f73e8a5bb7023fd1480cade0",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 5,
+          "total": 6,
+          "checks": [
+            {
+              "name": "all_or_nothing_middle",
+              "acceptance": "S04-A01/A02",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "middle"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|CANCELLED|PENDING|7",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "checked_failure_surrogate",
+              "acceptance": "S04-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "checked"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_no_inventory_inflation",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "shipped_blocks_entire_batch",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "200 shipped",
+                  "expected": "200 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "409 shipped",
+                  "expected": "409 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|SHIPPED|PENDING|5",
+                  "expected": "OPEN|SHIPPED|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_blocks_ship",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "409 cancelled",
+                  "expected": "409 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "concurrent_ship_cancel",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "race"
+                  ],
+                  "actual": "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5",
+                  "expected": [
+                    "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                    "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+                  ],
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "reference": {
+      "source_sha256": "3ff8cebc21120e2d6e11d0a38f933e31e7e49b35c07fe9e3c825a51c9b41c9bb",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 6,
+          "total": 6,
+          "checks": [
+            {
+              "name": "all_or_nothing_middle",
+              "acceptance": "S04-A01/A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "middle"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "checked_failure_surrogate",
+              "acceptance": "S04-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "checked"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_no_inventory_inflation",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "shipped_blocks_entire_batch",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "200 shipped",
+                  "expected": "200 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "409 shipped",
+                  "expected": "409 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|SHIPPED|PENDING|5",
+                  "expected": "OPEN|SHIPPED|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_blocks_ship",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "409 cancelled",
+                  "expected": "409 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "concurrent_ship_cancel",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "race"
+                  ],
+                  "actual": "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": [
+                    "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                    "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+                  ],
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "passed": 6,
+          "total": 6,
+          "checks": [
+            {
+              "name": "all_or_nothing_middle",
+              "acceptance": "S04-A01/A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "middle"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "checked_failure_surrogate",
+              "acceptance": "S04-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "checked"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_no_inventory_inflation",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "shipped_blocks_entire_batch",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "200 shipped",
+                  "expected": "200 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "409 shipped",
+                  "expected": "409 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|SHIPPED|PENDING|5",
+                  "expected": "OPEN|SHIPPED|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_blocks_ship",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "409 cancelled",
+                  "expected": "409 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "concurrent_ship_cancel",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "race"
+                  ],
+                  "actual": "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5",
+                  "expected": [
+                    "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                    "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+                  ],
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "passed": 6,
+          "total": 6,
+          "checks": [
+            {
+              "name": "all_or_nothing_middle",
+              "acceptance": "S04-A01/A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "middle"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "checked_failure_surrogate",
+              "acceptance": "S04-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "checked"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_no_inventory_inflation",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "shipped_blocks_entire_batch",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "200 shipped",
+                  "expected": "200 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "409 shipped",
+                  "expected": "409 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|SHIPPED|PENDING|5",
+                  "expected": "OPEN|SHIPPED|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_blocks_ship",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "409 cancelled",
+                  "expected": "409 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "concurrent_ship_cancel",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "race"
+                  ],
+                  "actual": "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": [
+                    "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                    "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+                  ],
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "partial_commit": {
+      "source_sha256": "3c899492c378af1de097f90f1e697ec6cd86fe79f73e8a5bb7023fd1480cade0",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 5,
+          "total": 6,
+          "checks": [
+            {
+              "name": "all_or_nothing_middle",
+              "acceptance": "S04-A01/A02",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "middle"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|CANCELLED|PENDING|7",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "checked_failure_surrogate",
+              "acceptance": "S04-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "checked"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_no_inventory_inflation",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "shipped_blocks_entire_batch",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "200 shipped",
+                  "expected": "200 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "409 shipped",
+                  "expected": "409 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|SHIPPED|PENDING|5",
+                  "expected": "OPEN|SHIPPED|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_blocks_ship",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "409 cancelled",
+                  "expected": "409 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "concurrent_ship_cancel",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "race"
+                  ],
+                  "actual": "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5",
+                  "expected": [
+                    "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                    "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+                  ],
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "repeat_inventory_change": {
+      "source_sha256": "e89b13b268d73cd2913b07471c9642c8bf50d5b9f3027c31def7b65fbff199d5",
+      "compiled": true,
+      "runs": [
+        {
+          "passed": 5,
+          "total": 6,
+          "checks": [
+            {
+              "name": "all_or_nothing_middle",
+              "acceptance": "S04-A01/A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "middle"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "checked_failure_surrogate",
+              "acceptance": "S04-A02",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "checked"
+                  ],
+                  "actual": "503 rolled_back",
+                  "expected": "503 rolled_back",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|PENDING|PENDING|5",
+                  "expected": "OPEN|PENDING|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "duplicate_no_inventory_inflation",
+              "acceptance": "S04-A03",
+              "passed": false,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 duplicate",
+                  "expected": "200 duplicate",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|9",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": false
+                }
+              ]
+            },
+            {
+              "name": "shipped_blocks_entire_batch",
+              "acceptance": "S04-A03",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "200 shipped",
+                  "expected": "200 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "409 shipped",
+                  "expected": "409 shipped",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "OPEN|SHIPPED|PENDING|5",
+                  "expected": "OPEN|SHIPPED|PENDING|5",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "cancel_blocks_ship",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "cancel",
+                    "none"
+                  ],
+                  "actual": "200 cancelled",
+                  "expected": "200 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "ship"
+                  ],
+                  "actual": "409 cancelled",
+                  "expected": "409 cancelled",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "get"
+                  ],
+                  "actual": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": "CANCELLED|CANCELLED|CANCELLED|10",
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "name": "concurrent_ship_cancel",
+              "acceptance": "S04-A04",
+              "passed": true,
+              "steps": [
+                {
+                  "args": [
+                    "init"
+                  ],
+                  "actual": "200 initialized",
+                  "expected": "200 initialized",
+                  "passed": true
+                },
+                {
+                  "args": [
+                    "race"
+                  ],
+                  "actual": "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                  "expected": [
+                    "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+                    "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+                  ],
+                  "passed": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "selfcheck_passed": true,
+  "three_reference_runs_passed": true,
+  "elapsed_seconds": 44.499
+}

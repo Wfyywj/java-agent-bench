@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "prompt.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-contract.json",
+      "target": "original-contract.json"
+    },
+    {
+      "source": "baseline/artifacts/architecture.md",
+      "target": "artifacts/architecture.md"
+    },
+    {
+      "source": "baseline/artifacts/contract.md",
+      "target": "artifacts/contract.md"
+    },
+    {
+      "source": "baseline/artifacts/suite.json",
+      "target": "artifacts/suite.json"
+    },
+    {
+      "source": "baseline/src/BookingService.java",
+      "target": "src/BookingService.java"
+    },
+    {
+      "source": "baseline/src/DurableState.java",
+      "target": "src/DurableState.java"
+    },
+    {
+      "source": "baseline/src/Main.java",
+      "target": "src/Main.java"
+    }
+  ]
+}

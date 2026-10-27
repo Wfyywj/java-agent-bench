@@ -1,0 +1,6451 @@
+{
+  "task": "K05",
+  "status": "runnable_slice",
+  "timestamp": "2026-10-27T04:00:47.875462+00:00",
+  "repeats": 3,
+  "all_expected": true,
+  "source_sha256": {
+    "baseline/src/Domain.java": "f0f776d6bc125e71fec93fd3619629e8e53913b6f81b14b09c58cd8d844bea29",
+    "baseline/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "baseline/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "baseline/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4",
+    "reference/src/Domain.java": "f6f3d78aac6e7fcd0ba8b6c37fc18b0836d2ad03837f6d7e68c506777c9b7150",
+    "reference/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "reference/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "reference/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4"
+  },
+  "runs": [
+    {
+      "repeat": 1,
+      "variant": "reference",
+      "checks": 49,
+      "passed": 49,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "baseline",
+      "checks": 49,
+      "passed": 41,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REFUND",
+          "pass_": false
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REJECT token-conflict",
+          "pass_": false
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 101 0 -1 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 101 -1 0 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 101 -1 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 101 59 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REFUND"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 140 0 -40 1 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "over-refund",
+      "checks": 49,
+      "passed": 41,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REFUND",
+          "pass_": false
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REJECT token-conflict",
+          "pass_": false
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 101 0 -1 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 101 -1 0 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 101 -1 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 101 59 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REFUND"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 140 0 -40 1 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "incompatible-producer",
+      "checks": 49,
+      "passed": 48,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "PRODUCER 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "duplicate-payment",
+      "checks": 49,
+      "passed": 46,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 100 -50 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 100 -50 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 160 -50 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "cross-item-token-collision",
+      "checks": 49,
+      "passed": 47,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REPLAY",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REPLAY",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "reference",
+      "checks": 49,
+      "passed": 49,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "baseline",
+      "checks": 49,
+      "passed": 41,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REFUND",
+          "pass_": false
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REJECT token-conflict",
+          "pass_": false
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 101 0 -1 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 101 -1 0 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 101 -1 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 101 59 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REFUND"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 140 0 -40 1 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "over-refund",
+      "checks": 49,
+      "passed": 41,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REFUND",
+          "pass_": false
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REJECT token-conflict",
+          "pass_": false
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 101 0 -1 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 101 -1 0 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 101 -1 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 101 59 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REFUND"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 140 0 -40 1 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "incompatible-producer",
+      "checks": 49,
+      "passed": 48,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "PRODUCER 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "duplicate-payment",
+      "checks": 49,
+      "passed": 46,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 100 -50 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 100 -50 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 160 -50 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "cross-item-token-collision",
+      "checks": 49,
+      "passed": 47,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REPLAY",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REPLAY",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "reference",
+      "checks": 49,
+      "passed": 49,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "baseline",
+      "checks": 49,
+      "passed": 41,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REFUND",
+          "pass_": false
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REJECT token-conflict",
+          "pass_": false
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 101 0 -1 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 101 -1 0 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 101 -1 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 101 59 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REFUND"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 140 0 -40 1 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "over-refund",
+      "checks": 49,
+      "passed": 41,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REFUND",
+          "pass_": false
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REJECT token-conflict",
+          "pass_": false
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 101 0 -1 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 101 -1 0 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 101 -1 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 101 59 0 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REFUND"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 140 0 -40 1 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "incompatible-producer",
+      "checks": 49,
+      "passed": 48,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "PRODUCER 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "duplicate-payment",
+      "checks": 49,
+      "passed": 46,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 100 -50 2 2",
+          "pass_": false
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 100 -50 1 1",
+          "pass_": false
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 160 -50 1 1",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "cross-item-token-collision",
+      "checks": 49,
+      "passed": 47,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K05-C01",
+          "command": "order item1 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C02",
+          "command": "refund r1 item1 20",
+          "expected": "REJECT policy",
+          "actual": "REJECT policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C03",
+          "command": "policy free-fee",
+          "expected": "REJECT unresolved-policy",
+          "actual": "REJECT unresolved-policy",
+          "pass_": true
+        },
+        {
+          "check": "K05-C04",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C05",
+          "command": "producer 2",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C06",
+          "command": "consumer 2",
+          "expected": "CONSUMER 2",
+          "actual": "CONSUMER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C07",
+          "command": "producer 2",
+          "expected": "PRODUCER 2",
+          "actual": "PRODUCER 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C08",
+          "command": "consumer 1",
+          "expected": "REJECT incompatible",
+          "actual": "REJECT incompatible",
+          "pass_": true
+        },
+        {
+          "check": "K05-C09",
+          "command": "refund r1 item1 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C10",
+          "command": "refund r1 item1 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "K05-C11",
+          "command": "refund r1 item1 21",
+          "expected": "REJECT token-conflict",
+          "actual": "REJECT token-conflict",
+          "pass_": true
+        },
+        {
+          "check": "K05-C12",
+          "command": "refund r2 item1 81",
+          "expected": "REJECT refund-limit",
+          "actual": "REJECT refund-limit",
+          "pass_": true
+        },
+        {
+          "check": "K05-C13",
+          "command": "refund r2 item1 30",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "K05-C14",
+          "command": "settle item1 99",
+          "expected": "REJECT before-cutoff",
+          "actual": "REJECT before-cutoff",
+          "pass_": true
+        },
+        {
+          "check": "K05-C15",
+          "command": "settle item1 100",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K05-C16",
+          "command": "settle item1 101",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C17",
+          "command": "refund r3 item1 1",
+          "expected": "REJECT closed",
+          "actual": "REJECT closed",
+          "pass_": true
+        },
+        {
+          "check": "K05-C18",
+          "command": "status",
+          "expected": "100 50 0 50 2 2",
+          "actual": "100 50 0 50 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C19",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C20",
+          "command": "reconcile item1",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C21",
+          "command": "status",
+          "expected": "100 50 50 0 2 2",
+          "actual": "100 50 50 0 2 2",
+          "pass_": true
+        },
+        {
+          "check": "K05-C22",
+          "command": "producer 1",
+          "expected": "PRODUCER 1",
+          "actual": "PRODUCER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C23",
+          "command": "consumer 1",
+          "expected": "CONSUMER 1",
+          "actual": "CONSUMER 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C24",
+          "command": "status",
+          "expected": "100 50 50 0 1 1",
+          "actual": "100 50 50 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "K05-C25",
+          "command": "order item2 60",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "K05-C26",
+          "command": "settle item2 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K05-C27",
+          "command": "reconcile item2",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "K05-C28",
+          "command": "status",
+          "expected": "160 50 110 0 1 1",
+          "actual": "160 50 110 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-order",
+          "command": "order first 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-order",
+          "command": "order second 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-first-refund",
+          "command": "refund global first 20",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-pre-conflict-state",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-same-amount-different-item",
+          "command": "refund global second 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REPLAY",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-conflict-no-state-change",
+          "command": "status",
+          "expected": "200 20 0 180 1 1",
+          "actual": "200 20 0 180 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-unknown-item-same-token",
+          "command": "refund global absent 20",
+          "expected": "REJECT token-conflict",
+          "actual": "REPLAY",
+          "pass_": false
+        },
+        {
+          "check": "cross-item-original-token-still-replays",
+          "command": "refund global first 20",
+          "expected": "REPLAY",
+          "actual": "REPLAY",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-second-independent-refund",
+          "command": "refund independent second 80",
+          "expected": "REFUND",
+          "actual": "REFUND",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-independent-refund-conservation",
+          "command": "status",
+          "expected": "200 100 0 100 1 1",
+          "actual": "200 100 0 100 1 1",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-first",
+          "command": "settle first 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-settle-second",
+          "command": "settle second 100",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-first",
+          "command": "reconcile first",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-reconcile-second",
+          "command": "reconcile second",
+          "expected": "PAID",
+          "actual": "PAID",
+          "pass_": true
+        },
+        {
+          "check": "cross-item-final-conservation",
+          "command": "status",
+          "expected": "200 100 100 0 1 1",
+          "actual": "200 100 100 0 1 1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-policy",
+          "command": "policy fee-merchant",
+          "expected": "POLICY",
+          "actual": "POLICY",
+          "pass_": true
+        },
+        {
+          "check": "contention-order",
+          "command": "order item 100",
+          "expected": "ORDER",
+          "actual": "ORDER",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "actual": [
+            "REFUND",
+            "REJECT refund-limit"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "100 70 0 30 1 1",
+          "actual": "100 70 0 30 1 1",
+          "pass_": true
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Public tests and reference; not held out",
+    "Local trusted code only, not secure sandbox",
+    "No real cluster, broker or production load",
+    "No model run or difficulty calibration"
+  ]
+}

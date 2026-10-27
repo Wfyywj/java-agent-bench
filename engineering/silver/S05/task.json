@@ -1,0 +1,83 @@
+{
+  "id": "S05",
+  "title": "订单搜索慢查询的证据化修复",
+  "status": "executable_narrowed_engineering_slice",
+  "original_scope": {
+    "context": "单服务加 PostgreSQL，提供合成倾斜数据和正常/异常查询计划；禁止以关闭过滤条件恢复速度。",
+    "mission": "二手书交易平台新增“最近有沟通”筛选后搜索变慢。分析执行计划、查询构造与数据分布，给出不改变权限和结果集的修复。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "S05-A01",
+      "criterion": "以执行计划和调用链证据区分 N+1 查询、低选择性过滤及缺失索引",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S05-A02",
+      "criterion": "修复前后结果集合、稳定排序与租户权限完全一致",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S05-A03",
+      "criterion": "查询次数对页大小不呈线性增长，使用计数器而非脆弱毫秒断言",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S05-A04",
+      "criterion": "索引迁移说明锁影响与回滚方法，不删除其他查询依赖索引",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S05-A05",
+      "criterion": "覆盖空对话、密集历史、同时间戳及高频租户；报告性能测量机器与数据规模",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Actual H2 relational fixture, EXISTS semi-join, stable ordering, tenant predicate, counted SQL statements across page sizes, measured H2 EXPLAIN index evidence.",
+  "not_implemented_or_unmeasured": "H2 is not PostgreSQL; PostgreSQL EXPLAIN ANALYZE, production cardinality estimates, index lock duration, latency/SLO and connection pooling remain unmeasured. Counter covers search SQL, excludes fixture loading and EXPLAIN.",
+  "full_catalog_ready": false,
+  "test_visibility": "public development tests; no hidden evaluation or contamination resistance claimed",
+  "candidate_trust": "trusted local code only; process/resource limits are not a security sandbox",
+  "runtime": {
+    "language": "Java 21",
+    "compiler": "java -m jdk.compiler/com.sun.tools.javac.Main -source 21 -target 21",
+    "dependency": {
+      "name": "H2",
+      "version": "2.3.232",
+      "sha256": "8dae62d22db8982c3dcb3826edb9c727c5d302063a67eef7d63d82de401f07d3"
+    }
+  },
+  "baseline_directory": "baseline",
+  "reference_directory": "reference",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "selfcheck_command": "python3 run_selfcheck.py",
+  "independent_verifier": "../verifier.py",
+  "public_scenarios": 9,
+  "reference_repetitions": 3,
+  "mutants": [
+    "exclusive_since",
+    "n_plus_one",
+    "silent_n_plus_one",
+    "tenant_leak"
+  ],
+  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator.",
+  "query_measurement": "Evaluator-owned TrustedSearchProbe loads fixture and wraps injected JDBC Connection/Statement/PreparedStatement to count real execute* calls. Candidate queries field is not trusted. Existing CLI output checked separately.",
+  "candidate_api": "Preserve public bench.SearchRepository.search(java.sql.Connection,String,long,int) returning List<bench.Order> and Order.id(). Evaluator probes this repository API with its own Connection."
+}

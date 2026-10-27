@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "baseline/src/bench/BatchActions.java",
+      "target": "src/bench/BatchActions.java"
+    },
+    {
+      "source": "baseline/src/bench/BatchService.java",
+      "target": "src/bench/BatchService.java"
+    },
+    {
+      "source": "baseline/src/bench/Database.java",
+      "target": "src/bench/Database.java"
+    },
+    {
+      "source": "baseline/src/bench/Main.java",
+      "target": "src/bench/Main.java"
+    },
+    {
+      "source": "baseline/src/bench/TransactionEntry.java",
+      "target": "src/bench/TransactionEntry.java"
+    },
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-task.json",
+      "target": "original-task.json"
+    }
+  ]
+}

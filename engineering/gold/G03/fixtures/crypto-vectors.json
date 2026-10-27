@@ -1,0 +1,148 @@
+{
+  "provenance": "Python 3 stdlib hashlib.sha256 and hmac.new; UTF-8 canonical forms specified by CONTRACT.md; no candidate calls",
+  "hashes": {
+    "ab": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+    "cd": "21e721c35a5823fdb452fa2f9f0a612c74fb952e06927489c6b27a43b817bed4",
+    "abcd": "88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589",
+    "XX": "ecc76c19c9f3c5108773d6c3a18a6c25c9bf1131c4e250b71213274e3b2b5d08",
+    "": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "hmac": [
+    {
+      "key": "synthetic-secret",
+      "version": 1,
+      "session": "old",
+      "index": 1,
+      "hash": "21e721c35a5823fdb452fa2f9f0a612c74fb952e06927489c6b27a43b817bed4",
+      "signature": "377823ab5e490e04dcd935f54cba11acdac78b5ea77a446dcaa0ff17a46a46cc"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 1,
+      "session": "old",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "b3617d6938b3fd47d796a120fe785ab153a4cbc4821e45dcadeff789f9c85baf"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 1,
+      "session": "old",
+      "index": 0,
+      "hash": "21e721c35a5823fdb452fa2f9f0a612c74fb952e06927489c6b27a43b817bed4",
+      "signature": "fdc786b3543bac700191ec393bac3f92ff5fa2d4be22acd75e533d05a8ddbc64"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 1,
+      "session": "new",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "379f811c15bfcded145e470df2377b7b058698d0929a468b1bade5736161aabd"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "new",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "a7da5ca7c12e10ab6e7827fc3f2dde1c798ab72862fbed5929b6b46e3bab8176"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "new",
+      "index": 0,
+      "hash": "21e721c35a5823fdb452fa2f9f0a612c74fb952e06927489c6b27a43b817bed4",
+      "signature": "ddf56a653868deee962a349dd2b167077fdb129fbeb33b2b772d89280e915394"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "old",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "5d1bca45df94f53c840524d0e552681968aaaaa030ec8fc617351de881b74df1"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "expired",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "023c3e55fcdcaf161e2d1fd98feb7c584cbc7e8e1ed5aab46b959ddec4d6b25a"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "paused",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "6d6f50fb13f2b3d09cfd20ce0af5752f3f960164c27c9319c99f8f31a1336569"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 1,
+      "session": "vector",
+      "index": 7,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "e4d8c1ba45b341b461d0e919acf5d5a4dbfa8a993212fa200d793b16063fbf94"
+    },
+    {
+      "key": "rotated-secret",
+      "version": 1,
+      "session": "vector",
+      "index": 7,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "b1e10324af9c488a58a89481c28e73cd6fd59657268f11dd9e01cb9d47783b3e"
+    },
+    {
+      "key": "wrong-secret",
+      "version": 1,
+      "session": "wrongkey1",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "1411a41b6563ef7856378d9c0e25a4aaf2b9d3c3ea25922f7a625947d0b17eb8"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 1,
+      "session": "wrongkey1",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "13c7e748d850819bfbad52b81baa847cac9469417e236bc6a69a08c5d64dc445"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "vector",
+      "index": 7,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "a9d64b9358d09574b16e2e188955edf7ee8e326fc82fa51769633f1542228e00"
+    },
+    {
+      "key": "rotated-secret",
+      "version": 2,
+      "session": "vector",
+      "index": 7,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "11036802af540bea50143299c62a8151937ecb7cf80483526bf352c2932bca76"
+    },
+    {
+      "key": "wrong-secret",
+      "version": 2,
+      "session": "wrongkey2",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "2cd6fdb560e86ca983cf1eb097869e47db4f7deeff64aa659da52ae2665e3e49"
+    },
+    {
+      "key": "synthetic-secret",
+      "version": 2,
+      "session": "wrongkey2",
+      "index": 0,
+      "hash": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "signature": "3b9bba47e09fbec4af0f7eabfbececd0c7a34a856d27a1c5fd51b13896db2946"
+    }
+  ]
+}

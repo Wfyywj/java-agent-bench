@@ -1,0 +1,355 @@
+{
+  "engine": "H2 2.3.232",
+  "orders": 1200,
+  "messages": 1693,
+  "tenant_order_counts": {
+    "t2": 240,
+    "t1": 960
+  },
+  "measured_query_counts": {
+    "baseline": [
+      {
+        "case": "join_t1_1700_10",
+        "candidate_reported": "queries=11",
+        "evaluator_observed": "observed_executions=11",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_100",
+        "candidate_reported": "queries=101",
+        "evaluator_observed": "observed_executions=101",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_1000",
+        "candidate_reported": "queries=481",
+        "evaluator_observed": "observed_executions=481",
+        "passed": false
+      },
+      {
+        "case": "join_t2_1700_1000",
+        "candidate_reported": "queries=121",
+        "evaluator_observed": "observed_executions=121",
+        "passed": false
+      },
+      {
+        "case": "join_none_0_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_9999_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_0_1000",
+        "candidate_reported": "queries=641",
+        "evaluator_observed": "observed_executions=641",
+        "passed": false
+      },
+      {
+        "case": "invalid_page_limit",
+        "candidate_reported": "422 invalid_limit",
+        "evaluator_observed": "",
+        "passed": true
+      },
+      {
+        "case": "inclusive_exact_since_1800",
+        "candidate_reported": "queries=481",
+        "evaluator_observed": "observed_executions=481",
+        "passed": false
+      }
+    ],
+    "reference": [
+      {
+        "case": "join_t1_1700_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_1700_100",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t2_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_none_0_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_9999_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_0_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "invalid_page_limit",
+        "candidate_reported": "422 invalid_limit",
+        "evaluator_observed": "",
+        "passed": true
+      },
+      {
+        "case": "inclusive_exact_since_1800",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      }
+    ],
+    "exclusive_since": [
+      {
+        "case": "join_t1_1700_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_1700_100",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t2_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_none_0_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_9999_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_0_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "invalid_page_limit",
+        "candidate_reported": "422 invalid_limit",
+        "evaluator_observed": "",
+        "passed": true
+      },
+      {
+        "case": "inclusive_exact_since_1800",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      }
+    ],
+    "n_plus_one": [
+      {
+        "case": "join_t1_1700_10",
+        "candidate_reported": "queries=11",
+        "evaluator_observed": "observed_executions=11",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_100",
+        "candidate_reported": "queries=101",
+        "evaluator_observed": "observed_executions=101",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_1000",
+        "candidate_reported": "queries=481",
+        "evaluator_observed": "observed_executions=481",
+        "passed": false
+      },
+      {
+        "case": "join_t2_1700_1000",
+        "candidate_reported": "queries=121",
+        "evaluator_observed": "observed_executions=121",
+        "passed": false
+      },
+      {
+        "case": "join_none_0_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_9999_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_0_1000",
+        "candidate_reported": "queries=641",
+        "evaluator_observed": "observed_executions=641",
+        "passed": false
+      },
+      {
+        "case": "invalid_page_limit",
+        "candidate_reported": "422 invalid_limit",
+        "evaluator_observed": "",
+        "passed": true
+      },
+      {
+        "case": "inclusive_exact_since_1800",
+        "candidate_reported": "queries=481",
+        "evaluator_observed": "observed_executions=481",
+        "passed": false
+      }
+    ],
+    "silent_n_plus_one": [
+      {
+        "case": "join_t1_1700_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=11",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_100",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=101",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=481",
+        "passed": false
+      },
+      {
+        "case": "join_t2_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=121",
+        "passed": false
+      },
+      {
+        "case": "join_none_0_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_9999_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_0_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=641",
+        "passed": false
+      },
+      {
+        "case": "invalid_page_limit",
+        "candidate_reported": "422 invalid_limit",
+        "evaluator_observed": "",
+        "passed": true
+      },
+      {
+        "case": "inclusive_exact_since_1800",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=481",
+        "passed": false
+      }
+    ],
+    "tenant_leak": [
+      {
+        "case": "join_t1_1700_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_100",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      },
+      {
+        "case": "join_t1_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      },
+      {
+        "case": "join_t2_1700_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      },
+      {
+        "case": "join_none_0_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      },
+      {
+        "case": "join_t1_9999_10",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": true
+      },
+      {
+        "case": "join_t1_0_1000",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      },
+      {
+        "case": "invalid_page_limit",
+        "candidate_reported": "422 invalid_limit",
+        "evaluator_observed": "",
+        "passed": true
+      },
+      {
+        "case": "inclusive_exact_since_1800",
+        "candidate_reported": "queries=1",
+        "evaluator_observed": "observed_executions=1",
+        "passed": false
+      }
+    ]
+  },
+  "plan": "h2-explain-measured.txt",
+  "conclusions": {
+    "N_plus_one": "Baseline performs one extra real SELECT COUNT for each returned order; query count grows with result page.",
+    "selectivity": "Fixture tenant t1 owns 80% of orders; low selectivity is visible in input distribution, not established as latency root cause.",
+    "index": "Actual H2 plan references both indexes. No missing-index causal A/B or PostgreSQL performance measurement claimed."
+  },
+  "measurement_owner": "Evaluator TrustedSearchProbe dynamic proxy over Connection/Statement counts actual execute* events; fixture loading excluded; candidate queries field not trusted",
+  "audit_hardening": "silent_n_plus_one CLI reports one query but trusted probe observes 11/101/481 calls for t1 page sizes10/100/1000. exclusive_since killed at exact1800."
+}

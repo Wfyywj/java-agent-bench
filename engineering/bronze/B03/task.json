@@ -1,0 +1,69 @@
+{
+  "id": "B03",
+  "tier": "bronze",
+  "category": "test_and_fix",
+  "runtime": "Java 21 + Python 3 standard libraries",
+  "entrypoint": "Server",
+  "candidate": "baseline/src",
+  "reference": "reference/src",
+  "verifier": "verifier/check.py",
+  "selfcheck": "python3 run_selfcheck.py",
+  "acceptance": [
+    {
+      "id": "B03-A01",
+      "criterion": "排序以入库时间与唯一箱号构成稳定全序，升降序与游标比较保持一致",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B03-A02",
+      "criterion": "相同时间戳至少三页数据遍历后每条记录恰好出现一次",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B03-A03",
+      "criterion": "非法、截断或版本未知的 token 返回受控客户端错误而非 500",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B03-A04",
+      "criterion": "租户与筛选条件绑定游标，不能把另一租户或另一过滤条件的游标直接复用",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B03-A05",
+      "criterion": "明确遍历期间新增及删除记录的非快照语义，保留无数据与末页返回契约",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "status": "public_development_fixture",
+  "security_sandbox": false,
+  "model_scores": null,
+  "limitations": [
+    "File-backed read-only repository replaces planned rebuildable database; SQL indexing/query plan not exercised.",
+    "Trusted loopback tenant parameter is not production authentication.",
+    "Public cases and reference are not hidden evaluation assets.",
+    "No performance or difficulty calibration."
+  ],
+  "mutation_controls": [
+    "time_only",
+    "unbound_cursor",
+    "inclusive_cursor",
+    "descending_mismatch",
+    "limit_oversized"
+  ],
+  "bounds": {
+    "compile_timeout_seconds": 20,
+    "server_start_timeout_seconds": 10,
+    "http_request_timeout_seconds": 3,
+    "max_walk_pages": 30,
+    "captured_output_bytes": 262144,
+    "java_heap_mb": 96,
+    "server_total_timeout_seconds": 90
+  },
+  "version": "0.1.1"
+}

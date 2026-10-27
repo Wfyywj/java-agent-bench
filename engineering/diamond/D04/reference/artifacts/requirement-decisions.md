@@ -1,0 +1,2 @@
+Scope is deliberately a runnable slice, not full original catalog acceptance. Manifest supply-chain review plus allowlisted expression DSL; explicit dependency and permission denial, harmless write marker probe, input and instruction budgets, clean tenant execution after rejection, redacted audits.
+Assumptions: synthetic IDs, trusted local input, sequential command lock, integer amounts, explicit logical scheduling. Unknown production policies remain unresolved.

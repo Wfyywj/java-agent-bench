@@ -1,0 +1,5 @@
+# Frozen synthetic fixture decisions
+
+Keep success terminal versus processing/cancellation; terminal conflicts queue manual review. Cancellation is a request, not proof money cannot move: later success supersedes cancellation. Missing sequence rejects 422; unknown refund rejects 404; same sequence/different body is conflict.
+
+Pending: No HTTP adapter, real payment dispatch, database transaction engine, distributed delivery, fsync/power-loss guarantees, or production secrets.

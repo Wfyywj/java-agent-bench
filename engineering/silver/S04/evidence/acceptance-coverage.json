@@ -1,0 +1,7 @@
+{
+  "S04-A01": "behavioral actual H2 JDBC all-or-nothing via JDK Proxy",
+  "S04-A02": "behavioral runtime/checked failure rollback of actual SQL rows",
+  "S04-A03": "behavioral duplicate and shipped prevention",
+  "S04-A04": "behavioral two independent H2 connections concurrently ship/cancel",
+  "S04-A05": "partial: actual JDK proxy + checked failure, no Spring self-invocation/pool test"
+}

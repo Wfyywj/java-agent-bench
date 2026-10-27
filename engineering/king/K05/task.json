@@ -1,0 +1,173 @@
+{
+  "id": "K05",
+  "status": "runnable_slice",
+  "original_scope": {
+    "id": "K05",
+    "title": "多团队结算平台的完整变更闭环",
+    "tier": "king",
+    "category": "end_to_end_engineering",
+    "summary": "校园商户结算平台要支持订单拆分退款与延迟结算。需求记录冲突、领域模型分散、候选 PR 存在隐藏缺陷；完成澄清、定位、实现、测试、审查与模拟上线的一体化交付。",
+    "brief": {
+      "context": "订单、退款、账本、商户结算、SDK 五仓；两代客户端、独立数据库及支付桩，无真实资金操作。",
+      "mission": "校园商户结算平台要支持订单拆分退款与延迟结算。需求记录冲突、领域模型分散、候选 PR 存在隐藏缺陷；完成澄清、定位、实现、测试、审查与模拟上线的一体化交付。",
+      "constraints": [
+        "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+        "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+        "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+        "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+      ],
+      "inputPackagePlanned": [
+        "原创仓库固定提交快照及构建锁",
+        "需求片段、领域政策和历史接口样例",
+        "脱敏合成数据与故障夹具",
+        "公开冒烟测试；独立保留的验收用例及评分锚点"
+      ]
+    },
+    "deliverables": [
+      "提交 requirement-decisions.md：已知约束、冲突、合理假设、必须询问的问题及最终决策，不虚构用户答复。",
+      "提交 evidence-map.md：仓库/模块/符号或日志证据到结论的对应关系，记录排除的替代解释。",
+      "提交范围受控的实现补丁或该类别要求的测试/审查产物；保留既有公共契约并说明所有行为变化。",
+      "提交 regression-tests/ 与复演命令：断言与验收 ID 对应，明确实际执行、失败及未执行项。",
+      "提交 delivery-note.md：变更范围、风险、恢复或回滚步骤、依赖条件与残余未知。"
+    ],
+    "acceptance": [
+      {
+        "id": "K05-A01",
+        "criterion": "冻结拆分退款、手续费归属与结算截止的决策表，未授权政策变更保持阻断",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "K05-A02",
+        "criterion": "按订单项建立资金守恒模型，累计退款不超过可退余额，结算与退款竞态不重复扣款",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "K05-A03",
+        "criterion": "跨仓契约兼容旧客户端，滚动发布和回滚过程不产生无法解析的事件",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "K05-A04",
+        "criterion": "自审候选 PR 并提交有复现的缺陷清单，修复后提供独立回归证据",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "K05-A05",
+        "criterion": "外部结果未知时持久化待核对状态，不能把超时当失败再次发起无幂等付款",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "K05-A06",
+        "criterion": "模拟上线包含灰度闸门、指标和数据核对；交付可复演包与明确未验证清单",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      }
+    ],
+    "risks": {
+      "failureCases": [
+        "只完成编码忽略澄清",
+        "重复退款只靠缓存",
+        "以全绿单测冒充上线安全"
+      ],
+      "traps": [
+        "只完成编码忽略澄清",
+        "重复退款只靠缓存",
+        "以全绿单测冒充上线安全",
+        "测试全绿不等于任务已验证；未执行步骤须明确披露。"
+      ],
+      "invariants": [
+        "冻结拆分退款、手续费归属与结算截止的决策表，未授权政策变更保持阻断",
+        "按订单项建立资金守恒模型，累计退款不超过可退余额，结算与退款竞态不重复扣款"
+      ],
+      "criticalFailurePolicy": "若经证实违反标为 critical 的核心约束，标记 task_pass=false；维度分仍如实保留，不以总分掩盖安全或业务失败。"
+    },
+    "rubric": [
+      {
+        "dimension": "端到端不变量与政策正确性",
+        "weight": 30,
+        "evidence": "验收断言、独立参考模型或数据库状态；不能仅凭自述得分。"
+      },
+      {
+        "dimension": "联合故障与迁移验证",
+        "weight": 30,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "完整工程证据链",
+        "weight": 25,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "可运营交付与风险诚实性",
+        "weight": 15,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      }
+    ],
+    "environment": {
+      "runtimeTarget": "Java 21；依赖与服务镜像版本待可运行夹具实现时锁定，当前不声称可构建。",
+      "prerequisiteInfrastructure": [
+        "五仓锁定快照",
+        "独立资金模型",
+        "支付故障桩",
+        "版本矩阵运行器",
+        "灰度模拟器"
+      ],
+      "plannedAssets": [
+        "公开 starter 仓库快照",
+        "隔离验收运行器与独立 oracle",
+        "固定 seed 数据与故障夹具",
+        "参考补丁和故障版对照",
+        "机器预算、超时及评分配置"
+      ],
+      "objectiveTestStrategy": "结合政策问答评分、合同矩阵、资金模型性质测试与持久化边界故障注入；最终模拟滚动发布并验证全账本守恒。",
+      "skillAxes": [
+        "需求澄清",
+        "跨仓定位",
+        "实现",
+        "测试",
+        "审查",
+        "事故预防"
+      ],
+      "networkPolicy": "依赖预热后默认离线；所有第三方、支付与消息外联以本地桩代替。",
+      "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
+    },
+    "status": "design_only",
+    "difficultyRationale": "暂定王者：需求冲突与多仓实现、独立验证、故障恢复和发布治理组合出现，要求完整交付链而非单点优秀。不是已测难度或模型能力声明。"
+  },
+  "implemented_scope": "Java21 CLI with a forced local journal, OS file locking, restart replay, phase controls and public black-box verifier.",
+  "excluded_scope": [
+    "Real multi-region or distributed quorum",
+    "Real databases, brokers, object stores, payment systems",
+    "Production authentication and legal policy",
+    "Performance or difficulty calibration",
+    "Hidden tests or secure execution sandbox"
+  ],
+  "entrypoint": "Main <journal-path> <command> [before|after]",
+  "baseline": "baseline/src",
+  "reference": "reference/src",
+  "verifier": "../verify.py",
+  "runtime": "Java 21; Python 3; no third-party dependencies",
+  "candidate_command": "python3 engineering/king/K05/run_selfcheck.py --candidate ABS_PACKAGE",
+  "agent_files": "agent-files.json",
+  "baseline_path": "baseline",
+  "minimum_checks": 21,
+  "scope_limitations": "Local payment obligation, not real external payment idempotency. Five teams are represented by domain boundaries, not five independent repos/databases. No fee amount calculation, heterogeneous serializers, distributed transaction, real customer funds, or simultaneous provider callback implementation.",
+  "public_tests": true,
+  "secure_sandbox": false,
+  "difficulty_calibrated": false,
+  "phase_contract": "PHASES.md",
+  "coverage": "COVERAGE.md",
+  "source_files": [
+    "Domain.java",
+    "Journal.java",
+    "Main.java",
+    "Protocol.java"
+  ],
+  "check_count": 49,
+  "semantic_mutants": 4
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "stale-writer",
+    "file": "Domain.java",
+    "old": "epoch!=term||!region.equals(leader)",
+    "new": "false"
+  },
+  {
+    "name": "partition-ack",
+    "file": "Domain.java",
+    "old": "!linked||!control",
+    "new": "false"
+  },
+  {
+    "name": "duplicate-grant",
+    "file": "Domain.java",
+    "old": "if(prior!=null) {",
+    "new": "if(false) {"
+  }
+]

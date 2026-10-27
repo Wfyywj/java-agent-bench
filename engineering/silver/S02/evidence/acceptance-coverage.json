@@ -1,0 +1,7 @@
+{
+  "S02-A01": "source evidence supplied; no double-human review",
+  "S02-A02": "behavioral protocol precedence including lists/empty/unknown",
+  "S02-A03": "behavioral fixture modes across independently compiled modules; not historical binaries",
+  "S02-A04": "behavioral server-owned entitlements",
+  "S02-A05": "release/rollback telemetry plan supplied, not deployed/measured"
+}

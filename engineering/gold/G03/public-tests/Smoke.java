@@ -1,0 +1,1 @@
+package publictests; public class Smoke {public static void main(String[] args)throws Exception {String h=protocol.Signing.hash("hello".getBytes());if(h.length()!=64)throw new AssertionError("SHA256 wire width");System.out.println("SMOKE PASS");}}

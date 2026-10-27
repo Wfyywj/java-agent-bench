@@ -1,0 +1,2 @@
+Scope is deliberately a runnable slice, not full original catalog acceptance. Deterministic explicitly labeled simulation of stale two-level cache rules, duplicate acceptance, out-of-order projection, backlog and lock-pressure recovery; raw offset clocks and structured diagnosis.
+Assumptions: synthetic IDs, trusted local input, sequential command lock, integer amounts, explicit logical scheduling. Unknown production policies remain unresolved.

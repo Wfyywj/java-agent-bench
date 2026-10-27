@@ -1,0 +1,54 @@
+[
+  {
+    "name": "terminal_and_out_of_order",
+    "acceptance": "S01-A01",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "callback",
+          "r1",
+          "3",
+          "SUCCEEDED",
+          "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+          "none"
+        ],
+        "expected": "200 applied"
+      },
+      {
+        "args": [
+          "callback",
+          "r1",
+          "2",
+          "PROCESSING",
+          "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+          "none"
+        ],
+        "expected": "200 stale"
+      },
+      {
+        "args": [
+          "callback",
+          "r1",
+          "4",
+          "PROCESSING",
+          "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+          "none"
+        ],
+        "expected": "200 stale"
+      },
+      {
+        "args": [
+          "get",
+          "r1"
+        ],
+        "expected": "SUCCEEDED|1|false"
+      }
+    ]
+  }
+]

@@ -1,0 +1,64 @@
+{
+  "pass": false,
+  "checks": [
+    "1:a:state",
+    "1:a:slot",
+    "1:a:paid",
+    "1:a:refund",
+    "1:capacity:s1",
+    "2:a:state",
+    "2:a:slot",
+    "2:a:paid",
+    "2:a:refund",
+    "2:capacity:s1",
+    "3:a:state",
+    "3:a:slot",
+    "3:a:paid"
+  ],
+  "failure": "3:a:refund",
+  "generated_suite": {
+    "matrix": [
+      {
+        "system": "reference",
+        "detected_by_history": [
+          false
+        ],
+        "minimal_legal_histories": [
+          null
+        ]
+      },
+      {
+        "system": "DUP_PAY",
+        "detected_by_history": [
+          false
+        ],
+        "minimal_legal_histories": [
+          null
+        ]
+      },
+      {
+        "system": "LATE_PAY",
+        "detected_by_history": [
+          false
+        ],
+        "minimal_legal_histories": [
+          null
+        ]
+      },
+      {
+        "system": "LEAK_MOVE",
+        "detected_by_history": [
+          false
+        ],
+        "minimal_legal_histories": [
+          null
+        ]
+      }
+    ],
+    "reference_clean": true,
+    "mutants_killed": 0,
+    "mutants_total": 3,
+    "shrinking": "deletion-1-minimal under legal preconditions; not global minimum",
+    "public_development": true
+  }
+}

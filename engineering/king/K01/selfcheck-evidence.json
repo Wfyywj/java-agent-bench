@@ -1,0 +1,3400 @@
+{
+  "task": "K01",
+  "status": "runnable_slice",
+  "timestamp": "2026-10-27T03:57:07.937479+00:00",
+  "repeats": 3,
+  "all_expected": true,
+  "source_sha256": {
+    "baseline/src/Domain.java": "cccc8420bfa9510d1305a980b09af158229ee7e131c59f2d6ffe696f390e2bc4",
+    "baseline/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "baseline/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "baseline/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4",
+    "reference/src/Domain.java": "fc6a2186c46bed9463cc635eb7f778c49b7bd25f34442abe632e6ca251b04318",
+    "reference/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "reference/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "reference/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4"
+  },
+  "runs": [
+    {
+      "repeat": 1,
+      "variant": "reference",
+      "checks": 29,
+      "passed": 29,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 15 15 rollback 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 19 19 rollback 3",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "baseline",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK stale",
+          "pass_": false
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK staleB",
+          "pass_": false
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 29 29 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 33 33 rollback 5",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "stale-writer",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK stale",
+          "pass_": false
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK staleB",
+          "pass_": false
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 29 29 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 33 33 rollback 5",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "partition-ack",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "ACK partition",
+          "pass_": false
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 13 13 cutover 2",
+          "pass_": false
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 18 18 rollback 3",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 22 22 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "duplicate-grant",
+      "checks": 29,
+      "passed": 20,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "ACK first",
+          "pass_": false
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 20 20 cutover 1",
+          "pass_": false
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "ACK first",
+          "pass_": false
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 31 31 cutover 1",
+          "pass_": false
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 36 36 rollback 2",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "ACK uncertain",
+          "pass_": false
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 44 44 rollback 3",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 42 42 cutover 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "reference",
+      "checks": 29,
+      "passed": 29,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 15 15 rollback 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 19 19 rollback 3",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "baseline",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK stale",
+          "pass_": false
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK staleB",
+          "pass_": false
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 29 29 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 33 33 rollback 5",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "stale-writer",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK stale",
+          "pass_": false
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK staleB",
+          "pass_": false
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 29 29 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 33 33 rollback 5",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "partition-ack",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "ACK partition",
+          "pass_": false
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 13 13 cutover 2",
+          "pass_": false
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 18 18 rollback 3",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 22 22 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "duplicate-grant",
+      "checks": 29,
+      "passed": 20,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "ACK first",
+          "pass_": false
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 20 20 cutover 1",
+          "pass_": false
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "ACK first",
+          "pass_": false
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 31 31 cutover 1",
+          "pass_": false
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 36 36 rollback 2",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "ACK uncertain",
+          "pass_": false
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 44 44 rollback 3",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 42 42 cutover 1",
+          "pass_": false
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "reference",
+      "checks": 29,
+      "passed": 29,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 15 15 rollback 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 19 19 rollback 3",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "baseline",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK stale",
+          "pass_": false
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK staleB",
+          "pass_": false
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 29 29 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 33 33 rollback 5",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "stale-writer",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK stale",
+          "pass_": false
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "ACK staleB",
+          "pass_": false
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 29 29 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 33 33 rollback 5",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "partition-ack",
+      "checks": 29,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "REPLAY first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 10 10 cutover 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "REJECT conflict",
+          "pass_": true
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "ACK partition",
+          "pass_": false
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 13 13 cutover 2",
+          "pass_": false
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 18 18 rollback 3",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "REPLAY uncertain",
+          "pass_": true
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 22 22 rollback 4",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 7 7 cutover 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "duplicate-grant",
+      "checks": 29,
+      "passed": 20,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K01-C01",
+          "command": "status",
+          "expected": "none 0 0 0 stable 0",
+          "actual": "none 0 0 0 stable 0",
+          "pass_": true
+        },
+        {
+          "check": "K01-C02",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "K01-C03",
+          "command": "grant A 1 first 10",
+          "expected": "ACK first",
+          "actual": "ACK first",
+          "pass_": true
+        },
+        {
+          "check": "K01-C04",
+          "command": "grant A 1 first 10",
+          "expected": "REPLAY first",
+          "actual": "ACK first",
+          "pass_": false
+        },
+        {
+          "check": "K01-C05",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 20 20 cutover 1",
+          "pass_": false
+        },
+        {
+          "check": "K01-C06",
+          "command": "grant A 1 first 11",
+          "expected": "REJECT conflict",
+          "actual": "ACK first",
+          "pass_": false
+        },
+        {
+          "check": "K01-C07",
+          "command": "network false",
+          "expected": "NETWORK false",
+          "actual": "NETWORK false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C08",
+          "command": "grant A 1 partition 3",
+          "expected": "REJECT quorum-unavailable",
+          "actual": "REJECT quorum-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K01-C09",
+          "command": "status",
+          "expected": "A 1 10 10 cutover 1",
+          "actual": "A 1 31 31 cutover 1",
+          "pass_": false
+        },
+        {
+          "check": "K01-C10",
+          "command": "control false",
+          "expected": "CONTROL false",
+          "actual": "CONTROL false",
+          "pass_": true
+        },
+        {
+          "check": "K01-C11",
+          "command": "promote B 2",
+          "expected": "REJECT unsafe-promotion",
+          "actual": "REJECT unsafe-promotion",
+          "pass_": true
+        },
+        {
+          "check": "K01-C12",
+          "command": "network true",
+          "expected": "NETWORK true",
+          "actual": "NETWORK true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C13",
+          "command": "control true",
+          "expected": "CONTROL true",
+          "actual": "CONTROL true",
+          "pass_": true
+        },
+        {
+          "check": "K01-C14",
+          "command": "promote B 2",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K01-C15",
+          "command": "grant A 1 stale 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C16",
+          "command": "grant B 2 next 5",
+          "expected": "ACK next",
+          "actual": "ACK next",
+          "pass_": true
+        },
+        {
+          "check": "K01-C17",
+          "command": "rollback A",
+          "expected": "TERM 3",
+          "actual": "TERM 3",
+          "pass_": true
+        },
+        {
+          "check": "K01-C18",
+          "command": "grant B 2 staleB 7",
+          "expected": "REJECT fenced",
+          "actual": "REJECT fenced",
+          "pass_": true
+        },
+        {
+          "check": "K01-C19",
+          "command": "grant A 3 zero 0",
+          "expected": "REJECT amount",
+          "actual": "REJECT amount",
+          "pass_": true
+        },
+        {
+          "check": "K01-C20",
+          "command": "grant A 3 overflow 9223372036854775807",
+          "expected": "REJECT long overflow",
+          "actual": "REJECT long overflow",
+          "pass_": true
+        },
+        {
+          "check": "K01-C21",
+          "command": "status",
+          "expected": "A 3 15 15 rollback 2",
+          "actual": "A 3 36 36 rollback 2",
+          "pass_": false
+        },
+        {
+          "check": "K01-C22",
+          "command": "grant A 3 uncertain 4",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K01-C23",
+          "command": "grant A 3 uncertain 4",
+          "expected": "REPLAY uncertain",
+          "actual": "ACK uncertain",
+          "pass_": false
+        },
+        {
+          "check": "K01-C24",
+          "command": "grant A 3 uncommitted 9",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K01-C25",
+          "command": "status",
+          "expected": "A 3 19 19 rollback 3",
+          "actual": "A 3 44 44 rollback 3",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-bootstrap",
+          "command": "promote A 1",
+          "expected": "TERM 1",
+          "actual": "TERM 1",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "ACK same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same",
+            "REPLAY same"
+          ],
+          "actual": [
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same",
+            "ACK same"
+          ],
+          "pass_": false
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "A 1 7 7 cutover 1",
+          "actual": "A 1 42 42 cutover 1",
+          "pass_": false
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Public tests and reference; not held out",
+    "Local trusted code only, not secure sandbox",
+    "No real cluster, broker or production load",
+    "No model run or difficulty calibration"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "S05-A01": "partial: measured SQL counts/H2 EXPLAIN and dataset skew, no PG plans or causal index A/B",
+  "S05-A02": "behavioral SQL results versus independent Python oracle including exact inclusive 1800 boundary, stable ties and tenant scope",
+  "S05-A03": "behavioral: evaluator-owned JDBC connection/statement proxy counts actual execute* calls at several page sizes; candidate-maintained counters cannot satisfy this check",
+  "S05-A04": "PostgreSQL concurrent-index migration and rollback designed, not executed",
+  "S05-A05": "behavioral fixed 1200 order/1693 message skewed fixture; machine recorded, no latency claim"
+}

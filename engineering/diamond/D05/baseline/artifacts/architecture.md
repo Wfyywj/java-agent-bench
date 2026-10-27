@@ -1,0 +1,2 @@
+CLI Main loads a locked snapshot, delegates to the domain orchestration module, and persists through DurableState. Every CLI call is a separate JVM. Atomic snapshot replacement establishes process-restart semantics, not distributed atomicity.
+BatchController queries QuotaProvider before non-idempotent issue and advances through SnapshotMembership; a process halt after provider commit leaves an unknown result.

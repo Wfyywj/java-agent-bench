@@ -1,0 +1,7 @@
+{
+  "S01-A01": "behavioral partial: signed state transition CLI, no real callback HTTP",
+  "S01-A02": "behavioral partial: persisted receipts/ledger snapshot, not database projection transaction",
+  "S01-A03": "behavioral partial: actual HMAC rejection; public synthetic key only",
+  "S01-A04": "behavioral partial: before/after atomic file commit injection, no DB or power loss",
+  "S01-A05": "behavioral+decision: sequence errors, unknown refund, cancellation priority"
+}

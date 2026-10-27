@@ -1,0 +1,1 @@
+Independent public development oracle resides in ../run.py, outside participant allowlist. All calls compile clean temp code with Java21 module compiler, enforce 8-second JVM and 30-second compile timeouts and 32KiB output cap, and clean temp directories. Trusted code only; not secure containment. Exactly asserted fields and failed mutants are captured in evidence/selfcheck.json.

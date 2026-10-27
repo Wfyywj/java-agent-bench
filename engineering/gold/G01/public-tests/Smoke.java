@@ -1,0 +1,1 @@
+package publictests; public class Smoke {public static void main(String[] args)throws Exception {var i=new inventory.Inventory(java.nio.file.Files.createTempDirectory("smoke").resolve("i"));i.reserve(new inventory.Inventory.Hold("one","tenant","item",0,1),false);if(i.active()!=1)throw new AssertionError("reservation");System.out.println("SMOKE PASS");}}

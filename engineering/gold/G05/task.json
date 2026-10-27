@@ -1,0 +1,82 @@
+{
+  "id": "G05",
+  "title": "线程池饥饿引发的级联超时",
+  "status": "runnable_slice",
+  "original_scope": {
+    "summary": "区域票务服务数据库健康但大量请求超时，重启短暂恢复。结合线程转储、指标和链路定位同池嵌套等待，并修复取消传播与排队上限。",
+    "context": "入口服务、座位查询客户端及异步价格模块；故障注入桩可延迟一个下游，线程池有固定预算。",
+    "acceptance": [
+      {
+        "id": "G05-A01",
+        "criterion": "用等待图证明父任务等待同池子任务而非仅猜测线程数不足",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "G05-A02",
+        "criterion": "修复不靠无界线程或无界队列，服务预算与过载拒绝策略清楚",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "G05-A03",
+        "criterion": "请求截止后子任务与连接得到取消或释放，不能继续无限后台工作",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "G05-A04",
+        "criterion": "一个下游变慢不耗尽无关接口全部执行资源",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "G05-A05",
+        "criterion": "重现负载下响应成功、拒绝与取消可计数且无请求静默丢失",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "G05-A06",
+        "criterion": "提供缓解、永久修复、回滚与观察指标，区分已验证根因和未验证因素",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      }
+    ]
+  },
+  "implemented_scope": "Java21 separately compiled API, resource-owning synthetic seat client and gateway; deterministic wait-graph reproducer, bounded isolated executor repair, cancellation and admission accounting.",
+  "not_implemented": [
+    "Real network/HTTP entry deadlines",
+    "Real connection pool",
+    "Production workload or SLA validation",
+    "Automated operational prose grading",
+    "Hidden acceptance tests",
+    "Database/Redis/Kafka infrastructure"
+  ],
+  "public_development_tests": 16,
+  "variants": {
+    "reference": "reference/src",
+    "baseline": "baseline/src",
+    "mutants": [
+      "shared_bulkhead",
+      "unbounded_queue",
+      "cancelled_queue_leak",
+      "lost_shutdown_futures",
+      "result_defaulting"
+    ]
+  },
+  "command": "python selfcheck.py --write-evidence",
+  "runtime": "Java 21, no downloaded dependencies",
+  "candidate_edit_scope": [
+    "candidate/src/bench/Service.java"
+  ],
+  "evaluation_warning": "Public selfcheck calibration only; not an untrusted-code sandbox; not full original catalog acceptance.",
+  "integration": {
+    "command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+    "baseline_path": "baseline",
+    "candidate_layout": "src/bench/Service.java",
+    "stdout": "JSON",
+    "exit_code": "0 iff candidate passes all public verifier invariants",
+    "trusted_submissions_only": true
+  }
+}

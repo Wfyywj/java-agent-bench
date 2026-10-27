@@ -1,0 +1,16 @@
+{
+  "pass": false,
+  "checks": [
+    "snapshot",
+    "members",
+    "initial-provider-empty",
+    "crash-a-exact-provider",
+    "unknown.a",
+    "checkpoint-not-ahead",
+    "crash-a-not-falsely-issued",
+    "epoch",
+    "stale-worker-no-write",
+    "replay-a-no-extra-provider-effect"
+  ],
+  "failure": "replay-a-exact-issued"
+}

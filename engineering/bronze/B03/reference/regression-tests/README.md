@@ -1,0 +1,1 @@
+Executable independent regression tests: `../../verifier/check.py` invoked through `../../run_selfcheck.py --candidate ../src` from this directory (or use absolute paths). Each check is named B03-A01..A05. The candidate source is compiled without verifier code, and the verifier only accesses HTTP and the synthetic dataset.

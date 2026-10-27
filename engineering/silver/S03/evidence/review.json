@@ -1,0 +1,9 @@
+{
+  "task": "S03",
+  "finding": "Cached authorization at creation is not valid at download after revocation; formula data escaping is separate from authorization.",
+  "symbol_chain": "Main create/download -> ExportPolicy.allowed; ExportWorker.execute uses explicit owner/tenant; Store.commit writes object payload.",
+  "severity": "high",
+  "reproduce": "Run baseline candidate against evaluator-owned fixtures/cases.json",
+  "alternative_explanation": "A compilation failure is not a semantic mutant kill; selfcheck separately requires every variant to compile.",
+  "limits": "CLI rather than REST/object-store URLs; principal is trusted adapter input, not authentication. No real object-storage signing, HTTP non-enumeration policy, cross-process worker pool or external IAM."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "B04",
+  "path": "engineering/bronze/B04",
+  "run": "python engineering/bronze/B04/run_selfcheck.py",
+  "status": "public_development_fixture_verified",
+  "baseline_expected_failure": true,
+  "reference_pass": true,
+  "case_count": 39,
+  "semantic_java_mutants_killed": 4,
+  "review_false_positive_mutants_rejected": 1,
+  "repeat_runs": 2,
+  "repeat_outputs_identical": true,
+  "result_sha256": "dd922701e356ef7e7c5c0c479e66211562bd9e99d024a9d56588dce8ee3bf3e3",
+  "limitations": [
+    "CLI adapter, no HTTP transport",
+    "Public verdict anchors, not hidden holdout",
+    "No secure sandbox",
+    "Human review still needed for prose nuance and novel findings",
+    "No model capability or difficulty score"
+  ],
+  "version": "0.1.1",
+  "candidate_command": "python3 engineering/bronze/B04/run_selfcheck.py --candidate /absolute/review-package"
+}

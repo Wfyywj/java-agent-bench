@@ -1,0 +1,155 @@
+{
+  "id": "D03",
+  "status": "runnable_slice",
+  "original_contract": {
+    "id": "D03",
+    "title": "多层缓存与消息积压的事故指挥",
+    "tier": "diamond",
+    "category": "incident_diagnosis",
+    "summary": "农资补贴申请在活动日出现重复受理与读状态回退，缓存命中率正常但消费积压增加。需在多因子证据中建立时间线，提出安全止血并实现根因修复。",
+    "brief": {
+      "context": "申请服务、规则服务、消息 worker 与两级缓存；给出相互矛盾的监控片段及脱敏历史，不允许连接生产。",
+      "mission": "农资补贴申请在活动日出现重复受理与读状态回退，缓存命中率正常但消费积压增加。需在多因子证据中建立时间线，提出安全止血并实现根因修复。",
+      "constraints": [
+        "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+        "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+        "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+        "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+      ],
+      "inputPackagePlanned": [
+        "原创仓库固定提交快照及构建锁",
+        "需求片段、领域政策和历史接口样例",
+        "脱敏合成数据与故障夹具",
+        "公开冒烟测试；独立保留的验收用例及评分锚点"
+      ]
+    },
+    "deliverables": [
+      "提交 requirement-decisions.md：已知约束、冲突、合理假设、必须询问的问题及最终决策，不虚构用户答复。",
+      "提交 evidence-map.md：仓库/模块/符号或日志证据到结论的对应关系，记录排除的替代解释。",
+      "提交范围受控的实现补丁或该类别要求的测试/审查产物；保留既有公共契约并说明所有行为变化。",
+      "提交 regression-tests/ 与复演命令：断言与验收 ID 对应，明确实际执行、失败及未执行项。",
+      "提交 delivery-note.md：变更范围、风险、恢复或回滚步骤、依赖条件与残余未知。"
+    ],
+    "acceptance": [
+      {
+        "id": "D03-A01",
+        "criterion": "时间线统一时钟偏差，区分部署、缓存失效、积压及数据库锁等待的先后关系",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "D03-A02",
+        "criterion": "用可重复实验区分至少两个竞争假设，并标记证据无法支持的结论",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "D03-A03",
+        "criterion": "止血优先维持一次受理与资格正确性，不能简单绕过资格校验",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "D03-A04",
+        "criterion": "修复覆盖旧缓存版本、重放消息和读投影回退，重复申请不能多占额度",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "D03-A05",
+        "criterion": "清理或重放计划有 dry-run、范围限制、检查点和停止条件",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "D03-A06",
+        "criterion": "交付指标验证、通信模板与回滚计划，保留原始故障证据而不改写历史",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      }
+    ],
+    "risks": {
+      "failureCases": [
+        "相关性当因果",
+        "全量清缓存引发雪崩",
+        "批量重放无幂等保护"
+      ],
+      "traps": [
+        "相关性当因果",
+        "全量清缓存引发雪崩",
+        "批量重放无幂等保护",
+        "测试全绿不等于任务已验证；未执行步骤须明确披露。"
+      ],
+      "invariants": [
+        "时间线统一时钟偏差，区分部署、缓存失效、积压及数据库锁等待的先后关系",
+        "用可重复实验区分至少两个竞争假设，并标记证据无法支持的结论"
+      ],
+      "criticalFailurePolicy": "若经证实违反标为 critical 的核心约束，标记 task_pass=false；维度分仍如实保留，不以总分掩盖安全或业务失败。"
+    },
+    "rubric": [
+      {
+        "dimension": "系统不变量与安全边界",
+        "weight": 30,
+        "evidence": "验收断言、独立参考模型或数据库状态；不能仅凭自述得分。"
+      },
+      {
+        "dimension": "对抗测试与恢复证据",
+        "weight": 30,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "推理与跨仓完整性",
+        "weight": 25,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "上线回滚可操作性",
+        "weight": 15,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      }
+    ],
+    "environment": {
+      "runtimeTarget": "Java 21；依赖与服务镜像版本待可运行夹具实现时锁定，当前不声称可构建。",
+      "prerequisiteInfrastructure": [
+        "时钟偏差合成遥测",
+        "积压代理",
+        "缓存桩",
+        "故障重演环境"
+      ],
+      "plannedAssets": [
+        "公开 starter 仓库快照",
+        "隔离验收运行器与独立 oracle",
+        "固定 seed 数据与故障夹具",
+        "参考补丁和故障版对照",
+        "机器预算、超时及评分配置"
+      ],
+      "objectiveTestStrategy": "隐藏根因变体与干扰日志；评分验证实验能排除错误假设，恢复后对全部申请键与额度账本核对。",
+      "skillAxes": [
+        "事故诊断",
+        "证据推理",
+        "安全恢复"
+      ],
+      "networkPolicy": "依赖预热后默认离线；所有第三方、支付与消息外联以本地桩代替。",
+      "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
+    },
+    "status": "design_only",
+    "difficultyRationale": "暂定钻石：具有在线迁移、复合事故或独立模型验证等系统级约束，需解释取舍并证明中间态安全。须待试跑校准。"
+  },
+  "implemented_scope": "Deterministic explicitly labeled simulation of stale two-level cache rules, duplicate acceptance, out-of-order projection, backlog and lock-pressure recovery; raw offset clocks and structured diagnosis.",
+  "not_implemented": [
+    "real distributed database transactions and CDC",
+    "Kafka or real cluster",
+    "production isolation/security sandbox",
+    "calibrated diamond difficulty",
+    "hidden evaluation"
+  ],
+  "entrypoint": "python3 run.py --selfcheck",
+  "mutants": [
+    "STALE_RULE",
+    "DUP_ACCEPT",
+    "REGRESS"
+  ],
+  "trust": "trusted local code only; process timeouts are not a security sandbox",
+  "specific_limits": "Metrics are simulation counters, not measured hardware/database performance. Fixed causal fixture is not production diagnosis generalization.",
+  "compiler_note": "Java21 compiler module with -source 21 -target 21; --release unavailable because this environment lacks ct.sym release support."
+}

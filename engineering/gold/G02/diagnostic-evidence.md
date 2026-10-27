@@ -1,0 +1,6 @@
+# Synthetic evidence
+
+The baseline is the candidate incident/PR snapshot. `python run.py baseline` emits named failed business invariants. These are executable diagnostics, not fabricated production telemetry. Follow calls across the module package directories; compare durable files where applicable.
+
+# Billing slice policy v1
+Synthetic approved policy, not an invented answer to original unresolved policy: charge elapsed seconds rounded UP to minutes per local calendar-day segment, after one initial free elapsed-time window. Daily caps reset at local midnight using ZoneId (DST days can be 23 or 25 hours). Arithmetic overflow rejects even if a cap would have hidden it. Empty intervals cost zero; reversed intervals reject. Rules are immutable by version; select greatest effective instant not publication time, with lexical version tie-break. Confirmed bills retain immutable input/rule/value. Rebuild is a preview difference only, deduplicated by all audit fields; it never updates a bill or issues payments. Actor and reviewer must be nonblank and distinct. Publishing requires admin role. This in-memory ledger is NOT durable database history; no real authorization token verification, approval workflow or money movement is provided.

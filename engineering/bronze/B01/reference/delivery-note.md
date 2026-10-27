@@ -1,0 +1,2 @@
+# Delivery and rollback
+Changes limited to scheduling validation and decision contract. Site configuration, Clock injection, optional notes and error envelope retained. File adapter is for replayable development only: no distributed lock, WAL or fsync guarantee is claimed. Restore baseline directory to roll back code; do not replay successfully persisted bookings. Existing unknown statuses remain conservatively occupied. Holiday policy needs operational approval. Live HTTP transport and prose grading not performed by this package.

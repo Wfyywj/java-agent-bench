@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "baseline/src/bench/BatchService.java",
+      "target": "src/bench/BatchService.java"
+    },
+    {
+      "source": "baseline/src/bench/BusinessFailure.java",
+      "target": "src/bench/BusinessFailure.java"
+    },
+    {
+      "source": "baseline/src/bench/OperationProbe.java",
+      "target": "src/bench/OperationProbe.java"
+    },
+    {
+      "source": "baseline/src/bench/OrderRepository.java",
+      "target": "src/bench/OrderRepository.java"
+    },
+    {
+      "source": "baseline/src/bench/OrderRow.java",
+      "target": "src/bench/OrderRow.java"
+    },
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    }
+  ]
+}

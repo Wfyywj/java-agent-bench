@@ -1,0 +1,12 @@
+test_all_bronze_prepare_whitelists_exclude_grading_assets (test_bronze_protocol.BronzeCandidateProtocolTests.test_all_bronze_prepare_whitelists_exclude_grading_assets) ... ok
+test_b02_missing_source_is_invalid_input_not_measured_failure (test_bronze_protocol.BronzeCandidateProtocolTests.test_b02_missing_source_is_invalid_input_not_measured_failure) ... ok
+test_b02_reference_passes_and_baseline_is_measured_failure (test_bronze_protocol.BronzeCandidateProtocolTests.test_b02_reference_passes_and_baseline_is_measured_failure) ... ok
+test_b03_accepts_standard_package_root (test_bronze_protocol.BronzeCandidateProtocolTests.test_b03_accepts_standard_package_root) ... ok
+test_b04_missing_review_is_invalid_input (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_missing_review_is_invalid_input) ... ok
+test_b04_rejects_unjustified_blocker_hidden_among_suggestions (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_rejects_unjustified_blocker_hidden_among_suggestions) ... ok
+test_b04_reviews_artifact_without_compiling_submitted_source (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_reviews_artifact_without_compiling_submitted_source) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 11.402s
+
+OK

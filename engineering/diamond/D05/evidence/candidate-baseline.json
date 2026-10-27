@@ -1,0 +1,14 @@
+{
+  "pass": false,
+  "checks": [
+    "snapshot",
+    "members",
+    "initial-provider-empty",
+    "crash-a-exact-provider",
+    "unknown.a",
+    "checkpoint-not-ahead",
+    "crash-a-not-falsely-issued",
+    "epoch"
+  ],
+  "failure": "(('step', 1, 'normal'), 0, '')"
+}

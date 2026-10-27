@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "task.json",
+      "target": "task.json"
+    },
+    {
+      "source": "baseline/src/Box.java",
+      "target": "src/Box.java"
+    },
+    {
+      "source": "baseline/src/BoxRepository.java",
+      "target": "src/BoxRepository.java"
+    },
+    {
+      "source": "baseline/src/Cursor.java",
+      "target": "src/Cursor.java"
+    },
+    {
+      "source": "baseline/src/PageService.java",
+      "target": "src/PageService.java"
+    },
+    {
+      "source": "baseline/src/Server.java",
+      "target": "src/Server.java"
+    },
+    {
+      "source": "public-inputs/incident.log",
+      "target": "evidence/incident.log"
+    },
+    {
+      "source": "public-inputs/api-contract.md",
+      "target": "evidence/api-contract.md"
+    },
+    {
+      "source": "public-inputs/warehouse.csv",
+      "target": "evidence/warehouse.csv"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "run_selfcheck.py",
+    "selfcheck-results.json",
+    "verification-results.json",
+    "evaluation and repeatability evidence"
+  ],
+  "note": "Only named public task-input fixtures are copied; public-inputs is not evaluator result evidence. No oracle, reference solution or maintained selfcheck is supplied. Public repository remains accessible; not hidden or secure."
+}

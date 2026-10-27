@@ -1,0 +1,174 @@
+{
+  "selfcheck_passed": true,
+  "repeats": 3,
+  "results": [
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true,
+      "repeat": 1
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_tenant_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_stale_on_error",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nFAIL expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_long_ttl",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nFAIL lost invalidation converges at TTL\nFAIL negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nFAIL expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=4\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_default_allow",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nFAIL cross subject isolation\nFAIL cross resource isolation\nFAIL cross action isolation\nFAIL second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=5\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_hidden_call_count",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=2\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true,
+      "repeat": 2
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_tenant_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_stale_on_error",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nFAIL expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_long_ttl",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nFAIL lost invalidation converges at TTL\nFAIL negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nFAIL expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=4\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_default_allow",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nFAIL cross subject isolation\nFAIL cross resource isolation\nFAIL cross action isolation\nFAIL second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=5\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_hidden_call_count",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=2\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true,
+      "repeat": 3
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_tenant_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_stale_on_error",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nFAIL expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_long_ttl",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nFAIL lost invalidation converges at TTL\nFAIL negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nFAIL expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=4\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_default_allow",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nFAIL cross subject isolation\nFAIL cross resource isolation\nFAIL cross action isolation\nFAIL second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=5\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_hidden_call_count",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=2\n",
+      "passed": false,
+      "repeat": 3
+    }
+  ]
+}

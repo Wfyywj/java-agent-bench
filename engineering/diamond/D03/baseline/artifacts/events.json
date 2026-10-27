@@ -1,0 +1,22 @@
+[
+  {
+    "event": "backlog",
+    "local": 25,
+    "offset": 5
+  },
+  {
+    "event": "deploy",
+    "local": 8,
+    "offset": -2
+  },
+  {
+    "event": "lock-wait",
+    "local": 20,
+    "offset": 5
+  },
+  {
+    "event": "cache-stale",
+    "local": 10,
+    "offset": -2
+  }
+]

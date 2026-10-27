@@ -1,0 +1,78 @@
+[
+  {
+    "id": "decimal-half",
+    "prices": [
+      "1.005"
+    ],
+    "discount": "0",
+    "tax": "0",
+    "expected": "OK\t1.01"
+  },
+  {
+    "id": "tax-location",
+    "prices": [
+      "0.05",
+      "0.05"
+    ],
+    "discount": "0",
+    "tax": "0.1",
+    "expected": "OK\t0.11"
+  },
+  {
+    "id": "legacy-null",
+    "prices": [
+      "10"
+    ],
+    "discount": "-",
+    "tax": "0",
+    "expected": "OK\t10.00"
+  },
+  {
+    "id": "invalid-discount",
+    "prices": [
+      "10"
+    ],
+    "discount": "1.01",
+    "tax": "0",
+    "expected": "ERROR\t422\tINVALID_QUOTE"
+  },
+  {
+    "id": "overflow",
+    "prices": [
+      "999999999.99",
+      "0.01"
+    ],
+    "discount": "0",
+    "tax": "0",
+    "expected": "ERROR\t422\tINVALID_QUOTE"
+  },
+  {
+    "id": "discount-rounding",
+    "prices": [
+      "0.05",
+      "0.05"
+    ],
+    "discount": "0.5",
+    "tax": "0",
+    "expected": "OK\t0.06"
+  },
+  {
+    "id": "smoke",
+    "prices": [
+      "10",
+      "20"
+    ],
+    "discount": "0",
+    "tax": ".10",
+    "expected": "OK\t33.00"
+  },
+  {
+    "id": "negative-discount",
+    "prices": [
+      "10"
+    ],
+    "discount": "-0.1",
+    "tax": "0",
+    "expected": "ERROR\t422\tINVALID_QUOTE"
+  }
+]

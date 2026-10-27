@@ -1,0 +1,7 @@
+SYNTHETIC DIAGNOSTIC SNAPSHOT; not a production capture
+"import-worker-1" RUNNABLE
+  at java.io.BufferedReader.readLine(BufferedReader.java)
+  at Importer.run(Importer.java)
+"db-health-1" TIMED_WAITING
+  at java.util.concurrent.CompletableFuture.timedGet(CompletableFuture.java)
+No database lock cycle in this snapshot. Absence does not rule out intermittent database faults.

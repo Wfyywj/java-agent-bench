@@ -1,0 +1,9 @@
+{
+  "simulation": true,
+  "hypotheses": [
+    {
+      "id": "cache-hit",
+      "conclusion": "98% hit means no cache problem"
+    }
+  ]
+}

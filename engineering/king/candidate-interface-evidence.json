@@ -1,0 +1,76 @@
+[
+  {
+    "task": "K01",
+    "exported_files": [
+      "PHASES.md",
+      "PROMPT.md",
+      "src/Domain.java",
+      "src/Journal.java",
+      "src/Main.java",
+      "src/Protocol.java"
+    ],
+    "baseline_rejected": true,
+    "checks": 29,
+    "error": null
+  },
+  {
+    "task": "K02",
+    "exported_files": [
+      "PHASES.md",
+      "PROMPT.md",
+      "src/Domain.java",
+      "src/Journal.java",
+      "src/Main.java",
+      "src/Protocol.java"
+    ],
+    "baseline_rejected": true,
+    "checks": 33,
+    "error": null
+  },
+  {
+    "task": "K03",
+    "exported_files": [
+      "PHASES.md",
+      "PROMPT.md",
+      "src/Domain.java",
+      "src/Journal.java",
+      "src/Main.java",
+      "src/Protocol.java"
+    ],
+    "baseline_rejected": true,
+    "checks": 50,
+    "error": null,
+    "reference_passed": true,
+    "verifier_sha256": "4ce2d6b3c2d58e28557ec2cc40d80374c858a8bc8495b88fead085ca8c60710d"
+  },
+  {
+    "task": "K04",
+    "exported_files": [
+      "PHASES.md",
+      "PROMPT.md",
+      "src/Domain.java",
+      "src/Journal.java",
+      "src/Main.java",
+      "src/Protocol.java"
+    ],
+    "baseline_rejected": true,
+    "checks": 26,
+    "error": null
+  },
+  {
+    "task": "K05",
+    "exported_files": [
+      "PHASES.md",
+      "PROMPT.md",
+      "src/Domain.java",
+      "src/Journal.java",
+      "src/Main.java",
+      "src/Protocol.java"
+    ],
+    "baseline_rejected": true,
+    "checks": 49,
+    "error": null,
+    "reference_passed": true,
+    "verifier_sha256": "4ce2d6b3c2d58e28557ec2cc40d80374c858a8bc8495b88fead085ca8c60710d"
+  }
+]

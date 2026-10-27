@@ -1,0 +1,85 @@
+{
+  "scope": "local_file_adapter_not_postgresql",
+  "selfcheck": "PASS",
+  "task": "B02",
+  "variants": {
+    "baseline": {
+      "checks": {
+        "B02-A01_replay_restart": "FAIL: duplicate cleaning",
+        "B02-A02_payload_conflicts": "FAIL: conflicting token accepted",
+        "B02-A03_rollback_write_1": "PASS",
+        "B02-A03_rollback_write_2": "PASS",
+        "B02-A03_rollback_write_3": "PASS",
+        "B02-A04_tenant_lifecycle": "PASS",
+        "B02-A05_concurrent_http": "FAIL: concurrent duplicate effects",
+        "B02-A05_damaged_review": "PASS"
+      },
+      "passed": false
+    },
+    "conflict_ignored": {
+      "checks": {
+        "B02-A01_replay_restart": "PASS",
+        "B02-A02_payload_conflicts": "FAIL: conflicting token accepted",
+        "B02-A03_rollback_write_1": "PASS",
+        "B02-A03_rollback_write_2": "PASS",
+        "B02-A03_rollback_write_3": "PASS",
+        "B02-A04_tenant_lifecycle": "PASS",
+        "B02-A05_concurrent_http": "PASS",
+        "B02-A05_damaged_review": "PASS"
+      },
+      "passed": false
+    },
+    "damaged_available": {
+      "checks": {
+        "B02-A01_replay_restart": "PASS",
+        "B02-A02_payload_conflicts": "PASS",
+        "B02-A03_rollback_write_1": "PASS",
+        "B02-A03_rollback_write_2": "PASS",
+        "B02-A03_rollback_write_3": "PASS",
+        "B02-A04_tenant_lifecycle": "PASS",
+        "B02-A05_concurrent_http": "PASS",
+        "B02-A05_damaged_review": "FAIL: damaged not review"
+      },
+      "passed": false
+    },
+    "normal_loan_state_omitted": {
+      "checks": {
+        "B02-A01_replay_restart": "FAIL: normal return loan state not persisted",
+        "B02-A02_payload_conflicts": "PASS",
+        "B02-A03_rollback_write_1": "PASS",
+        "B02-A03_rollback_write_2": "PASS",
+        "B02-A03_rollback_write_3": "PASS",
+        "B02-A04_tenant_lifecycle": "PASS",
+        "B02-A05_concurrent_http": "FAIL: concurrent normal return state not persisted",
+        "B02-A05_damaged_review": "PASS"
+      },
+      "passed": false
+    },
+    "partial_commit": {
+      "checks": {
+        "B02-A01_replay_restart": "PASS",
+        "B02-A02_payload_conflicts": "PASS",
+        "B02-A03_rollback_write_1": "FAIL: partial snapshot committed",
+        "B02-A03_rollback_write_2": "FAIL: partial snapshot committed",
+        "B02-A03_rollback_write_3": "FAIL: partial snapshot committed",
+        "B02-A04_tenant_lifecycle": "PASS",
+        "B02-A05_concurrent_http": "PASS",
+        "B02-A05_damaged_review": "PASS"
+      },
+      "passed": false
+    },
+    "reference": {
+      "checks": {
+        "B02-A01_replay_restart": "PASS",
+        "B02-A02_payload_conflicts": "PASS",
+        "B02-A03_rollback_write_1": "PASS",
+        "B02-A03_rollback_write_2": "PASS",
+        "B02-A03_rollback_write_3": "PASS",
+        "B02-A04_tenant_lifecycle": "PASS",
+        "B02-A05_concurrent_http": "PASS",
+        "B02-A05_damaged_review": "PASS"
+      },
+      "passed": true
+    }
+  }
+}

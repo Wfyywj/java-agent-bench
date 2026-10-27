@@ -1,0 +1,34 @@
+{
+  "scope": "Synthetic PR baseline; not a real deployed service",
+  "decision": "request_changes",
+  "unresolved": [
+    "Production revocation SLA requires owner approval; fixture uses explicit synthetic 30-unit SLA",
+    "Expected maximum distinct keys and eviction budget need measurement"
+  ],
+  "findings": [
+    {
+      "id": "G04-R1",
+      "severity": "critical",
+      "path": "baseline/sdk/AuthCache.java:key -> callers/Documents.java:read -> policy/Authority.java:read",
+      "exploit": "Prime red/alice/report/read grant, then request same subject/resource/action in blue tenant; baseline reuses red cache key. No authority/admin attacker capability required.",
+      "reproduction": "python run.py baseline; FAIL cross tenant isolation",
+      "fix": "Include tenant, subject, resource, action as typed key; retain version in entry and fixed TTL",
+      "regression": "cross tenant isolation; cross subject isolation; cross resource isolation; cross action isolation"
+    },
+    {
+      "id": "G04-R2",
+      "severity": "high",
+      "path": "mutant_stale_on_error/sdk/AuthCache.java:allow",
+      "exploit": "After legitimate cached grant expires and invalidation is lost, authority outage must not extend permission indefinitely.",
+      "reproduction": "python run.py mutant_stale_on_error; FAIL expired grant fails closed on outage",
+      "fix": "Fail closed only for that failed read; do not turn unavailability into long-lived authoritative deny",
+      "regression": "expired grant fails closed on outage; transient outage not permanent denial"
+    }
+  ],
+  "performance_review": {
+    "hot_keys": "Verifier proves repeated fresh read does not call authority; no throughput claim",
+    "policy_churn": "Version-aware invalidation triggers next lookup; old events do not evict newer entry",
+    "outage": "Fresh permissions serve only through fixed TTL; expired deny/allow both fail closed",
+    "residual": "Unbounded distinct-key map is a memory risk; add capacity eviction before production. Cache disabling is not proposed as sole fix."
+  }
+}

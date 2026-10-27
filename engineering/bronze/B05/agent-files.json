@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "task.json",
+      "target": "task.json"
+    },
+    {
+      "source": "baseline/diagnosis.json",
+      "target": "diagnosis.json"
+    },
+    {
+      "source": "baseline/src/Csv.java",
+      "target": "src/Csv.java"
+    },
+    {
+      "source": "baseline/src/Importer.java",
+      "target": "src/Importer.java"
+    },
+    {
+      "source": "baseline/src/Main.java",
+      "target": "src/Main.java"
+    },
+    {
+      "source": "baseline/src/StagingFile.java",
+      "target": "src/StagingFile.java"
+    },
+    {
+      "source": "public-inputs/incident.log",
+      "target": "evidence/incident.log"
+    },
+    {
+      "source": "public-inputs/fd-samples.csv",
+      "target": "evidence/fd-samples.csv"
+    },
+    {
+      "source": "public-inputs/thread-dump.txt",
+      "target": "evidence/thread-dump.txt"
+    },
+    {
+      "source": "public-inputs/normal.csv",
+      "target": "evidence/normal.csv"
+    },
+    {
+      "source": "public-inputs/malformed.csv",
+      "target": "evidence/malformed.csv"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "run_selfcheck.py",
+    "selfcheck-results.json",
+    "verification-results.json",
+    "evaluation and repeatability evidence"
+  ],
+  "note": "Only named public task-input fixtures are copied; public-inputs is not evaluator result evidence. No oracle, reference solution or maintained selfcheck is supplied. Public repository remains accessible; not hidden or secure."
+}

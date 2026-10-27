@@ -1,0 +1,40 @@
+[
+  {
+    "name": "all_or_nothing_middle",
+    "acceptance": "S04-A01/A02",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "cancel",
+          "middle"
+        ],
+        "expected": "503 rolled_back"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "OPEN|PENDING|PENDING|5"
+      },
+      {
+        "args": [
+          "cancel",
+          "none"
+        ],
+        "expected": "200 cancelled"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "CANCELLED|CANCELLED|CANCELLED|10"
+      }
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "case": "staged_baseline",
+    "exit": 1,
+    "result": {
+      "variant": "/tmp/gold-staging-xvng89rs",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nFAIL cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=3\n",
+      "passed": false
+    }
+  },
+  {
+    "case": "absolute_reference",
+    "exit": 0,
+    "result": {
+      "variant": "/workspace/shared/java-agent-bench/engineering/gold/G04/reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nPASS six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nPASS exact authority calls including failed read\nINVARIANTS=22 FAILURES=0\n",
+      "passed": true
+    }
+  },
+  {
+    "case": "audit_counterexample",
+    "exit": 1,
+    "result": {
+      "variant": "/workspace/shared/java-agent-bench/engineering/gold/G04/mutant_hidden_call_count",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS legitimate grant\nPASS cross tenant isolation\nPASS cross subject isolation\nPASS cross resource isolation\nPASS cross action isolation\nPASS second caller cannot borrow read\nFAIL six distinct authority misses counted\nPASS cache hot hit\nPASS hot hit avoids authority\nPASS documented bounded stale allow\nPASS lost invalidation converges at TTL\nPASS negative cache bounded\nPASS deny expires exact boundary\nPASS revocation event immediate\nPASS grant event invalidates negative\nPASS old event no eviction\nPASS fresh grant during outage bounded\nPASS expired grant fails closed on outage\nPASS transient outage not permanent denial\nPASS explicit deny\nPASS negative entry outage stays denied\nFAIL exact authority calls including failed read\nINVARIANTS=22 FAILURES=2\n",
+      "passed": false
+    }
+  }
+]

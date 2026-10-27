@@ -1,0 +1,75 @@
+{
+  "id": "S02",
+  "title": "优惠资格字段的跨仓兼容升级",
+  "status": "executable_narrowed_engineering_slice",
+  "original_scope": {
+    "context": "三个原创仓库快照；旧 SDK 仍发送 level，新服务计划读取 eligibilityCodes；不得要求同时升级全部调用者。",
+    "mission": "合作社采购从单一会员等级改为资格列表，网关、订单服务和客户端 SDK 分处三仓。定位字段传播链并完成可滚动发布的升级。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "S02-A01",
+      "criterion": "提交调用链与字段读写位置证据，区分生成代码和源定义",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S02-A02",
+      "criterion": "旧请求、双字段请求和新请求都有明确且一致的优先级规则",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S02-A03",
+      "criterion": "混合版本矩阵覆盖旧客户端对新服务和新客户端对旧服务的受控降级",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S02-A04",
+      "criterion": "资格判断在服务端完成，客户端自报资格不得直接授予优惠",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S02-A05",
+      "criterion": "给出先扩展后收缩的发布顺序、回滚边界及字段移除前的遥测证据",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Independently compiled SDK/gateway/service module snapshots with old/new request matrix, dual-write downgrade, list precedence and authoritative server entitlements.",
+  "not_implemented_or_unmeasured": "No real separate Git histories, remote HTTP schemas, generated client runtime, deployed telemetry, or rolling production experiment. Old/new behavior is selected by fixture protocol modes, not historical published client binaries.",
+  "full_catalog_ready": false,
+  "test_visibility": "public development tests; no hidden evaluation or contamination resistance claimed",
+  "candidate_trust": "trusted local code only; process/resource limits are not a security sandbox",
+  "runtime": {
+    "language": "Java 21",
+    "compiler": "java -m jdk.compiler/com.sun.tools.javac.Main -source 21 -target 21",
+    "dependency": null
+  },
+  "baseline_directory": "baseline",
+  "reference_directory": "reference",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "selfcheck_command": "python3 run_selfcheck.py",
+  "independent_verifier": "../verifier.py",
+  "public_scenarios": 13,
+  "reference_repetitions": 3,
+  "mutants": [
+    "client_trust",
+    "legacy_precedence"
+  ],
+  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator."
+}

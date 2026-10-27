@@ -1,0 +1,86 @@
+{
+  "id": "G04",
+  "status": "runnable_slice",
+  "original_scope": {
+    "context": "认证 SDK、权限服务与两个调用方的候选补丁；提供 SLA 草案与攻击者只拥有普通账号的威胁模型。",
+    "mission": "组织协作平台提交权限缓存优化：延迟下降但撤权可能迟迟不生效。审查跨仓补丁，复现租户键碰撞、失效消息丢失与负缓存问题，并给出分级修复。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "G04-A01",
+      "criterion": "明确撤权生效上限与读取一致性口径，无法确认的 SLA 单列而非自行选定",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G04-A02",
+      "criterion": "定位缓存键中租户、主体、资源及策略版本遗漏造成的具体越权路径",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G04-A03",
+      "criterion": "失效事件丢失后必须在约定时间内收敛，证明 TTL 或版本机制不依赖理想消息",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G04-A04",
+      "criterion": "区分暂时服务不可用与明确拒绝权限，负缓存不能扩大权限或永久锁死",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G04-A05",
+      "criterion": "给出每个高危问题的跨仓调用路径、可运行复现和建议测试",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G04-A06",
+      "criterion": "评价修复对热键、权限变更频率与故障降级的影响，不将全部禁用缓存作为唯一方案",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Two callers + SDK + authority modules with executable ordinary-account cross-tenant exploit, fixed-clock TTL/outage/version regression and structured PR review. Synthetic explicit SLA only; no Redis, load benchmark or real auth token validation.",
+  "runtime": "OpenJDK 21, no third-party dependencies",
+  "modules": [
+    "callers",
+    "policy",
+    "sdk"
+  ],
+  "variants": [
+    "reference",
+    "baseline",
+    "mutant_tenant_key",
+    "mutant_stale_on_error",
+    "mutant_long_ttl",
+    "mutant_default_allow",
+    "mutant_hidden_call_count"
+  ],
+  "public_tests": true,
+  "hidden_holdout": false,
+  "independence": "Verifier expected values authored directly from frozen policies, reference is separate implementation; mutants are deliberate reference patches. No independent human authorship claim.",
+  "limitations": [
+    "Not full catalog acceptance; no database/Redis/Kafka/object storage integration",
+    "Not a security sandbox: arbitrary candidate Java executes with caller permissions; run untrusted submissions only in external disposable network-disabled container",
+    "No model runs or difficulty calibration"
+  ],
+  "command": "python run.py reference; python selfcheck.py",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "baseline_path": "baseline",
+  "agent_files_manifest": "agent-files.json"
+}

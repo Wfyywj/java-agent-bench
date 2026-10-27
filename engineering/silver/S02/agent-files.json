@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "baseline/src/gateway/src/coop/gateway/Gateway.java",
+      "target": "src/gateway/src/coop/gateway/Gateway.java"
+    },
+    {
+      "source": "baseline/src/sdk/src/coop/sdk/Client.java",
+      "target": "src/sdk/src/coop/sdk/Client.java"
+    },
+    {
+      "source": "baseline/src/service/src/bench/Main.java",
+      "target": "src/service/src/bench/Main.java"
+    },
+    {
+      "source": "baseline/src/service/src/coop/service/Eligibility.java",
+      "target": "src/service/src/coop/service/Eligibility.java"
+    },
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-task.json",
+      "target": "original-task.json"
+    },
+    {
+      "source": "contract/eligibility.schema.json",
+      "target": "contract/eligibility.schema.json"
+    }
+  ]
+}

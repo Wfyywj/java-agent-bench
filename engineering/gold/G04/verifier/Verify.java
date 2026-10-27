@@ -1,0 +1,14 @@
+import java.nio.file.*;import java.time.*;import java.util.*;import java.math.*;
+public class Verify { static int n=0, failures=0; static void check(String name,boolean ok){ n++;System.out.println((ok?"PASS ":"FAIL ")+name);if(!ok) failures++;} static void reject(String name,Runnable action){boolean bad=false;try{action.run();}catch(Exception e){bad=true;}check(name,bad);} public static void main(String[] args)throws Exception {
+
+var a=new policy.Authority();var c=new sdk.AuthCache(a);var docs=new callers.Documents(c);var exports=new callers.Exports(c);var key=new policy.Authority.Key("red","alice","report","read");a.set(key,true,1);
+check("legitimate grant",docs.read("red","alice","report",0));check("cross tenant isolation",!docs.read("blue","alice","report",0));check("cross subject isolation",!docs.read("red","mallory","report",0));check("cross resource isolation",!docs.read("red","alice","secret",0));check("cross action isolation",!docs.edit("red","alice","report",0));check("second caller cannot borrow read",!exports.download("red","alice","report",0));check("six distinct authority misses counted",a.calls()==6);int before=a.calls();check("cache hot hit",docs.read("red","alice","report",1));check("hot hit avoids authority",a.calls()==before);
+a.set(key,false,2);check("documented bounded stale allow",docs.read("red","alice","report",29));check("lost invalidation converges at TTL",!docs.read("red","alice","report",30));
+a.set(key,true,3);check("negative cache bounded",!docs.read("red","alice","report",34));check("deny expires exact boundary",docs.read("red","alice","report",35));
+a.set(key,false,4);c.invalidate(key,4);check("revocation event immediate",!docs.read("red","alice","report",36));
+a.set(key,true,5);c.invalidate(key,5);check("grant event invalidates negative",docs.read("red","alice","report",37));
+int calls=a.calls();c.invalidate(key,4);check("old event no eviction",docs.read("red","alice","report",38)&&a.calls()==calls);
+a.available(false);check("fresh grant during outage bounded",docs.read("red","alice","report",66));check("expired grant fails closed on outage",!docs.read("red","alice","report",67));
+a.available(true);check("transient outage not permanent denial",docs.read("red","alice","report",68));
+var deny=new policy.Authority.Key("blue","bob","doc","read");a.set(deny,false,9);check("explicit deny",!docs.read("blue","bob","doc",68));a.available(false);check("negative entry outage stays denied",!docs.read("blue","bob","doc",69));check("exact authority calls including failed read",a.calls()==13);
+System.out.println("INVARIANTS="+n+" FAILURES="+failures);if(failures>0)System.exit(1);}}

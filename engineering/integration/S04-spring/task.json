@@ -1,0 +1,33 @@
+{
+  "id": "S04-spring",
+  "design_id": "S04",
+  "title": "Real Spring batch cancellation integration",
+  "status": "runnable_integration_slice",
+  "runtime": "Java 21 jdk.compiler; Python 3",
+  "scope": [
+    "Actual Spring annotation transaction proxy and JDBC transaction manager",
+    "Checked and runtime rollback, atomic batch inventory/order updates",
+    "Repeat cancel and delivered guard",
+    "Per-batch SQL row locking, concurrent delivery/cancel, atomic shared inventory increment"
+  ],
+  "dependencies_lock": "dependencies.lock.json",
+  "versions": {
+    "spring": "6.2.12",
+    "h2": "2.3.232",
+    "micrometer": "1.14.12"
+  },
+  "setup_command": "python3 tools/bootstrap.py",
+  "selfcheck_command": "python3 run_selfcheck.py",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "checks": 20,
+  "mutants": 10,
+  "reference_repeats": 3,
+  "limits": [
+    "H2 only, not PostgreSQL",
+    "No finite production connection pool or pool exhaustion test",
+    "Public tests, no hidden evaluation or model ranking",
+    "Trusted candidate code only; no hostile-code sandbox",
+    "Maven manifest provided, Maven lifecycle unexecuted",
+    "No production load calibration; bounded progress deadlines are not performance scores"
+  ]
+}

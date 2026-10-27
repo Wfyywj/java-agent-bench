@@ -1,0 +1,3 @@
+Frozen membership snapshot, external provider ledger in durable file, unknown result after abrupt process halt, query-before-retry, checkpoint, fence, cancellation and poison isolation.
+Limitations: Provider/controller use a local state file, not separate transactional systems. No wall-clock lease expiry, distributed quota service, cross-process multi-provider transaction, or real rate-limit timing model.
+Recovery: retain state.properties and audit.log; invoke only fenced documented commands. Never delete unknown effects to retry. Real deployment needs separate infrastructure review and trials.

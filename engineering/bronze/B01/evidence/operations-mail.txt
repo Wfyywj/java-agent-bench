@@ -1,0 +1,5 @@
+Synthetic 2026-10-20 08:12 operations note: bookings belong to each building; cancel frees a seat. Today closes at 17:00. The station runs in Shanghai, hosts run UTC.
+Synthetic 08:31 follow-up: capacity is shared by all buildings at a station for a slot, not per building. Holiday opening has not been approved.
+Example A: 16:59:59 local accepts a future slot; 17:00:00 local rejects it.
+Example B (stale): a 23:30–00:30 visit was labeled next-day and accepted after cutoff. Confirm which day owns the visit.
+Legacy POST omitted note; error: HTTP 422 {"error":{"code":"INVALID_SLOT"}}.

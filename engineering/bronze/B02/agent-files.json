@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "prompt.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "task.json",
+      "target": "task.json"
+    },
+    {
+      "source": "baseline/src/App.java",
+      "target": "src/App.java"
+    },
+    {
+      "source": "baseline/src/Model.java",
+      "target": "src/Model.java"
+    },
+    {
+      "source": "baseline/src/ReturnService.java",
+      "target": "src/ReturnService.java"
+    },
+    {
+      "source": "baseline/src/Store.java",
+      "target": "src/Store.java"
+    },
+    {
+      "source": "public-inputs/incident.log",
+      "target": "evidence/incident.log"
+    },
+    {
+      "source": "public-inputs/schema.sql",
+      "target": "evidence/schema.sql"
+    },
+    {
+      "source": "public-inputs/seed.tsv",
+      "target": "evidence/seed.tsv"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "run_selfcheck.py",
+    "selfcheck-results.json",
+    "verification-results.json",
+    "evaluation and repeatability evidence"
+  ],
+  "note": "Only named public task-input fixtures are copied; public-inputs is not evaluator result evidence. No oracle, reference solution or maintained selfcheck is supplied. Public repository remains accessible; not hidden or secure."
+}

@@ -1,0 +1,7 @@
+{
+  "pass": false,
+  "checks": [
+    "approved.a"
+  ],
+  "failure": "(('review', PosixPath('/tmp/D04-l9piszsx/dep0.properties'), 'bad0'), 0, '')"
+}

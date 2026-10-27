@@ -1,0 +1,1 @@
+package publictests; public class Smoke {public static void main(String[] args)throws Exception {var c=new sdk.AuthCache(new policy.Authority());if(c.allow(new policy.Authority.Key("t","u","r","read"),0))throw new AssertionError("default deny");System.out.println("SMOKE PASS");}}

@@ -1,0 +1,5 @@
+{
+  "passed": true,
+  "method": "urllib.request.urlopen patched to raise; runpy executes actual tools/bootstrap.py against warm cache",
+  "output": "Verified 11 artifacts\n"
+}

@@ -1,0 +1,9 @@
+{
+  "task": "S02",
+  "finding": "Client-trust bypass grants STUDENT to bob without owned entitlement; legacy-precedence mutation ignores explicit empty/new fields.",
+  "symbol_chain": "sdk Client.wire -> gateway Gateway.forward -> service Eligibility.decide; contract/eligibility.schema.json is source definition; no generated sources are present.",
+  "severity": "high",
+  "reproduce": "Run baseline candidate against evaluator-owned fixtures/cases.json",
+  "alternative_explanation": "A compilation failure is not a semantic mutant kill; selfcheck separately requires every variant to compile.",
+  "limits": "No real separate Git histories, remote HTTP schemas, generated client runtime, deployed telemetry, or rolling production experiment."
+}

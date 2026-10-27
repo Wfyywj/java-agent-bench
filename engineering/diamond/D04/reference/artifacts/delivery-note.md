@@ -1,0 +1,3 @@
+Manifest supply-chain review plus allowlisted expression DSL; explicit dependency and permission denial, harmless write marker probe, input and instruction budgets, clean tenant execution after rejection, redacted audits.
+Limitations: Not a sandbox for arbitrary Java plugins. No classloader isolation claim. Java serialization and legacy Java plugins are rejected; OS network enforcement and real CPU preemption are not implemented. Trusted local fixture only.
+Recovery: retain state.properties and audit.log; invoke only fenced documented commands. Never delete unknown effects to retry. Real deployment needs separate infrastructure review and trials.

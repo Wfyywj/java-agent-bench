@@ -1,0 +1,9 @@
+{
+  "task": "S04",
+  "finding": "The baseline explicitly commits the first order/stock writes before throwing: rollback cannot undo already committed data. This reproduces partial commit, not a claim to reproduce Spring self-invocation. Retain batch-level lock, not table-wide lock.",
+  "symbol_chain": "Main -> TransactionEntry JDK Proxy -> BatchService.execute -> H2 batch/orders/inventory. Proxy rolls back InvocationTargetException including checked/runtime causes.",
+  "severity": "high",
+  "reproduce": "Run baseline candidate against evaluator-owned fixtures/cases.json",
+  "alternative_explanation": "A compilation failure is not a semantic mutant kill; selfcheck separately requires every variant to compile.",
+  "limits": "H2 is not PostgreSQL. JDK Proxy is not Spring AOP: Spring self-invocation, propagation configuration and connection-pool exhaustion remain unmeasured. One fixture batch; no production lock/load calibration."
+}

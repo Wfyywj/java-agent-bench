@@ -1,0 +1,1 @@
+Original contract is copied in original-contract.json. State properties and append-only audit.log are synthetic local evidence. Do not delete historical evidence. Snapshot/recovery commands are intentionally limited; document gaps from original scope.

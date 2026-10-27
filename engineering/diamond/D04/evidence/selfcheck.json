@@ -1,0 +1,255 @@
+{
+  "task": "D04",
+  "status": "runnable_slice",
+  "java": "21",
+  "public_development_only": true,
+  "results": [
+    {
+      "pass": true,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2",
+        "forbidden-permission-0",
+        "forbidden-permission-1",
+        "forbidden-permission-2",
+        "legacy-rejected",
+        "unapproved-no-result",
+        "cpu-budget",
+        "input-budget",
+        "no-network-language",
+        "harmless-boundary-proof",
+        "good-tenant-after-bad",
+        "result.a",
+        "sensitive-input-not-audited",
+        "dependency-provenance-audited"
+      ],
+      "details": null,
+      "state": {
+        "approved.a": "true",
+        "result.a": "41"
+      },
+      "audit": "review a locked=builtin-expression@1#original-2026 permissions=compute\nexecute a redacted-input steps=1\n",
+      "label": "reference",
+      "repeat": 1,
+      "elapsed_seconds": 1.895
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-7h9fraoz/dep0.properties'), 'bad0'), 0, '')",
+      "label": "baseline",
+      "repeat": 1,
+      "elapsed_seconds": 0.857
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-gazyo_qv/perm0.properties'), 'p0'), 0, '')",
+      "label": "PERMISSION",
+      "repeat": 1,
+      "elapsed_seconds": 1.087
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2",
+        "forbidden-permission-0",
+        "forbidden-permission-1",
+        "forbidden-permission-2",
+        "legacy-rejected",
+        "unapproved-no-result"
+      ],
+      "failure": "(('execute', 'a', 1001, '1+2'), 0, '3\\n')",
+      "label": "UNBOUNDED",
+      "repeat": 1,
+      "elapsed_seconds": 1.52
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-1ennje4k/dep0.properties'), 'bad0'), 0, '')",
+      "label": "UNLOCKED",
+      "repeat": 1,
+      "elapsed_seconds": 1.012
+    },
+    {
+      "pass": true,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2",
+        "forbidden-permission-0",
+        "forbidden-permission-1",
+        "forbidden-permission-2",
+        "legacy-rejected",
+        "unapproved-no-result",
+        "cpu-budget",
+        "input-budget",
+        "no-network-language",
+        "harmless-boundary-proof",
+        "good-tenant-after-bad",
+        "result.a",
+        "sensitive-input-not-audited",
+        "dependency-provenance-audited"
+      ],
+      "details": null,
+      "state": {
+        "approved.a": "true",
+        "result.a": "41"
+      },
+      "audit": "review a locked=builtin-expression@1#original-2026 permissions=compute\nexecute a redacted-input steps=1\n",
+      "label": "reference",
+      "repeat": 2,
+      "elapsed_seconds": 1.647
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-16fkr5gl/dep0.properties'), 'bad0'), 0, '')",
+      "label": "baseline",
+      "repeat": 2,
+      "elapsed_seconds": 0.903
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-hnkg3xuu/perm0.properties'), 'p0'), 0, '')",
+      "label": "PERMISSION",
+      "repeat": 2,
+      "elapsed_seconds": 1.268
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2",
+        "forbidden-permission-0",
+        "forbidden-permission-1",
+        "forbidden-permission-2",
+        "legacy-rejected",
+        "unapproved-no-result"
+      ],
+      "failure": "(('execute', 'a', 1001, '1+2'), 0, '3\\n')",
+      "label": "UNBOUNDED",
+      "repeat": 2,
+      "elapsed_seconds": 1.412
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-0p71_jy2/dep0.properties'), 'bad0'), 0, '')",
+      "label": "UNLOCKED",
+      "repeat": 2,
+      "elapsed_seconds": 0.956
+    },
+    {
+      "pass": true,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2",
+        "forbidden-permission-0",
+        "forbidden-permission-1",
+        "forbidden-permission-2",
+        "legacy-rejected",
+        "unapproved-no-result",
+        "cpu-budget",
+        "input-budget",
+        "no-network-language",
+        "harmless-boundary-proof",
+        "good-tenant-after-bad",
+        "result.a",
+        "sensitive-input-not-audited",
+        "dependency-provenance-audited"
+      ],
+      "details": null,
+      "state": {
+        "approved.a": "true",
+        "result.a": "41"
+      },
+      "audit": "review a locked=builtin-expression@1#original-2026 permissions=compute\nexecute a redacted-input steps=1\n",
+      "label": "reference",
+      "repeat": 3,
+      "elapsed_seconds": 1.555
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-no132bu2/dep0.properties'), 'bad0'), 0, '')",
+      "label": "baseline",
+      "repeat": 3,
+      "elapsed_seconds": 0.973
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-vu6omete/perm0.properties'), 'p0'), 0, '')",
+      "label": "PERMISSION",
+      "repeat": 3,
+      "elapsed_seconds": 1.247
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a",
+        "forbidden-dependency-0",
+        "forbidden-dependency-1",
+        "forbidden-dependency-2",
+        "forbidden-permission-0",
+        "forbidden-permission-1",
+        "forbidden-permission-2",
+        "legacy-rejected",
+        "unapproved-no-result"
+      ],
+      "failure": "(('execute', 'a', 1001, '1+2'), 0, '3\\n')",
+      "label": "UNBOUNDED",
+      "repeat": 3,
+      "elapsed_seconds": 1.488
+    },
+    {
+      "pass": false,
+      "checks": [
+        "approved.a"
+      ],
+      "failure": "(('review', PosixPath('/tmp/D04-17ybt7by/dep0.properties'), 'bad0'), 0, '')",
+      "label": "UNLOCKED",
+      "repeat": 3,
+      "elapsed_seconds": 0.971
+    }
+  ],
+  "selfcheck_pass": true
+}

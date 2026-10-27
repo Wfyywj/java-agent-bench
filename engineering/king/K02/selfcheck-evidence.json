@@ -1,0 +1,3760 @@
+{
+  "task": "K02",
+  "status": "runnable_slice",
+  "timestamp": "2026-10-27T03:57:56.602801+00:00",
+  "repeats": 3,
+  "all_expected": true,
+  "source_sha256": {
+    "baseline/src/Domain.java": "46b483075fcee1324be74394a5d88c36d7dc131a912d1027c67e17edbaffda53",
+    "baseline/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "baseline/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "baseline/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4",
+    "reference/src/Domain.java": "8d6c8410016348bcdaeb75a45fa4ed438b95ecf14d394e53bbb3dbe7bbb86d88",
+    "reference/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "reference/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "reference/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4"
+  },
+  "runs": [
+    {
+      "repeat": 1,
+      "variant": "reference",
+      "checks": 33,
+      "passed": 33,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "baseline",
+      "checks": 33,
+      "passed": 30,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "WRITTEN",
+          "pass_": false
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "resurrection",
+      "checks": 33,
+      "passed": 30,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "WRITTEN",
+          "pass_": false
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "premature-completion",
+      "checks": 33,
+      "passed": 31,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "COMPLETE 2",
+          "pass_": false
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "COMPLETE 2",
+          "pass_": false
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "restore-leak",
+      "checks": 33,
+      "passed": 28,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "reference",
+      "checks": 33,
+      "passed": 33,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "baseline",
+      "checks": 33,
+      "passed": 30,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "WRITTEN",
+          "pass_": false
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "resurrection",
+      "checks": 33,
+      "passed": 30,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "WRITTEN",
+          "pass_": false
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "premature-completion",
+      "checks": 33,
+      "passed": 31,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "COMPLETE 2",
+          "pass_": false
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "COMPLETE 2",
+          "pass_": false
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "restore-leak",
+      "checks": 33,
+      "passed": 28,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "reference",
+      "checks": 33,
+      "passed": 33,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "baseline",
+      "checks": 33,
+      "passed": 30,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "WRITTEN",
+          "pass_": false
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "resurrection",
+      "checks": 33,
+      "passed": 30,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "WRITTEN",
+          "pass_": false
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:3",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "premature-completion",
+      "checks": 33,
+      "passed": 31,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "COMPLETE 2",
+          "pass_": false
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "COMPLETE 2",
+          "pass_": false
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "SUPPRESSED",
+          "pass_": true
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "restore-leak",
+      "checks": 33,
+      "passed": 28,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K02-C01",
+          "command": "write u 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C02",
+          "command": "view u",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C03",
+          "command": "delete u 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C04",
+          "command": "proof u",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C05",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C06",
+          "command": "proof u",
+          "expected": "PENDING 1",
+          "actual": "PENDING 1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C07",
+          "command": "write u 3 late",
+          "expected": "REJECT deleted-subject",
+          "actual": "REJECT deleted-subject",
+          "pass_": true
+        },
+        {
+          "check": "K02-C08",
+          "command": "step u search",
+          "expected": "STEP search",
+          "actual": "STEP search",
+          "pass_": true
+        },
+        {
+          "check": "K02-C09",
+          "command": "proof u",
+          "expected": "PENDING 2",
+          "actual": "PENDING 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C10",
+          "command": "delete u 1",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "K02-C11",
+          "command": "step u objects",
+          "expected": "STEP objects",
+          "actual": "STEP objects",
+          "pass_": true
+        },
+        {
+          "check": "K02-C12",
+          "command": "step u analytics",
+          "expected": "STEP analytics",
+          "actual": "STEP analytics",
+          "pass_": true
+        },
+        {
+          "check": "K02-C13",
+          "command": "proof u",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        },
+        {
+          "check": "K02-C14",
+          "command": "step u users",
+          "expected": "STEP users",
+          "actual": "STEP users",
+          "pass_": true
+        },
+        {
+          "check": "K02-C15",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "0 0 0 0 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C16",
+          "command": "restore u users backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C17",
+          "command": "restore u search backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C18",
+          "command": "restore u objects backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C19",
+          "command": "restore u analytics backup",
+          "expected": "SUPPRESSED",
+          "actual": "RESTORED",
+          "pass_": false
+        },
+        {
+          "check": "K02-C20",
+          "command": "view u",
+          "expected": "0 0 0 0 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": false
+        },
+        {
+          "check": "K02-C21",
+          "command": "write other 1 allowed",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "K02-C22",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "K02-C23",
+          "command": "step other users",
+          "expected": "REJECT no-manifest",
+          "actual": "REJECT no-manifest",
+          "pass_": true
+        },
+        {
+          "check": "K02-C24",
+          "command": "proof other",
+          "expected": "ACTIVE",
+          "actual": "ACTIVE",
+          "pass_": true
+        },
+        {
+          "check": "K02-C25",
+          "command": "delete other 2",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K02-C26",
+          "command": "proof other",
+          "expected": "PENDING 0",
+          "actual": "PENDING 0",
+          "pass_": true
+        },
+        {
+          "check": "K02-C27",
+          "command": "step other users",
+          "expected": "UNKNOWN before",
+          "actual": "UNKNOWN before",
+          "pass_": true
+        },
+        {
+          "check": "K02-C28",
+          "command": "view other",
+          "expected": "1 1 1 1 receipt:1",
+          "actual": "1 1 1 1 receipt:1",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "contention-seed",
+          "command": "write s 1 synthetic",
+          "expected": "WRITTEN",
+          "actual": "WRITTEN",
+          "pass_": true
+        },
+        {
+          "check": "contention-manifest",
+          "command": "delete s 2",
+          "expected": "PENDING",
+          "actual": "PENDING",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "actual": [
+            "STEP analytics",
+            "STEP objects",
+            "STEP search",
+            "STEP users"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "proof s",
+          "expected": "COMPLETE 2",
+          "actual": "COMPLETE 2",
+          "pass_": true
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Public tests and reference; not held out",
+    "Local trusted code only, not secure sandbox",
+    "No real cluster, broker or production load",
+    "No model run or difficulty calibration"
+  ]
+}

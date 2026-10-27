@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "baseline": false,
+  "reference": [
+    true,
+    true,
+    true
+  ],
+  "mutants": {
+    "allow-delivered": false,
+    "default-checked-policy": false,
+    "double-release": false,
+    "early-return-cancelled": false,
+    "early-return-delivered": false,
+    "global-lock": false,
+    "lost-update": false,
+    "no-batch-lock": false,
+    "self-invocation": false,
+    "swallow-checked": false
+  }
+}

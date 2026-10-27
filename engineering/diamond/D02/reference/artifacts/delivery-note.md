@@ -1,0 +1,3 @@
+Event-driven booking, capacity and payment state in separate JVM command invocations; independent Python model, reproducible seeded legal histories, asynchronous projection tick and agent-generated history mutation matrix with legal deletion shrinker.
+Limitations: Serialized deterministic scheduling only, no real message broker or simultaneous service processes; deletion-1-minimal is not globally minimum; no hidden seeds.
+Recovery: retain state.properties and audit.log; invoke only fenced documented commands. Never delete unknown effects to retry. Real deployment needs separate infrastructure review and trials.

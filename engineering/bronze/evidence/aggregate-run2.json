@@ -1,0 +1,31 @@
+{
+  "suite": "bronze-engineering-public-dev",
+  "passed": true,
+  "results": [
+    {
+      "task": "B01",
+      "exit_code": 0,
+      "output_sha256": "ba3ada89ed958e6fe8c38a1eb107fdb5f2c7f9eb1f028061ca0a8ae22277a7a8"
+    },
+    {
+      "task": "B02",
+      "exit_code": 0,
+      "output_sha256": "2caaa3ddce94d9cda12201a2486333b83af37df6bdda45c47d83fced0e7c6238"
+    },
+    {
+      "task": "B03",
+      "exit_code": 0,
+      "output_sha256": "93d8c22c207d176cdd66acdb73ff9fffe37d345c8c722ab4709d41aa380b70ca"
+    },
+    {
+      "task": "B04",
+      "exit_code": 0,
+      "output_sha256": "dd922701e356ef7e7c5c0c479e66211562bd9e99d024a9d56588dce8ee3bf3e3"
+    },
+    {
+      "task": "B05",
+      "exit_code": 0,
+      "output_sha256": "a5130d74d126a9f18ed7a652fb7db5454a0a881767d0f27b1136ef9e82759e10"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "S04",
+  "title": "配送批次取消的事务回归",
+  "status": "executable_narrowed_engineering_slice",
+  "original_scope": {
+    "context": "单 Spring 风格服务的订单、库存模块；提供失效批次夹具、事务代理边界与数据库连接池限制。",
+    "mission": "社区团购取消配送批次后，部分库存被释放但订单仍待配送。找到代理事务失效与批量异常处理交互，修复而不锁住整张订单表。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "S04-A01",
+      "criterion": "明确批次取消采用全部成功或全部失败的契约，并据此实现事务边界",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S04-A02",
+      "criterion": "任一订单取消失败时该批次库存释放和状态更新全部回滚",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S04-A03",
+      "criterion": "重复取消不重复释放库存，已交付订单必须阻止整批取消",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S04-A04",
+      "criterion": "并发取消和发货只允许一个合法结果，库存可用量不得超过初始数量",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S04-A05",
+      "criterion": "测试通过真实代理入口调用，覆盖同类自调用、受检异常及批处理中途失败",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Actual H2 JDBC transaction and JDK dynamic proxy entry; batch-row locking, stock/orders atomic rollback, checked/runtime injection, independent concurrent connections for cancellation versus shipping.",
+  "not_implemented_or_unmeasured": "H2 is not PostgreSQL. JDK Proxy is not Spring AOP: Spring self-invocation, propagation configuration and connection-pool exhaustion remain unmeasured. One fixture batch; no production lock/load calibration.",
+  "full_catalog_ready": false,
+  "test_visibility": "public development tests; no hidden evaluation or contamination resistance claimed",
+  "candidate_trust": "trusted local code only; process/resource limits are not a security sandbox",
+  "runtime": {
+    "language": "Java 21",
+    "compiler": "java -m jdk.compiler/com.sun.tools.javac.Main -source 21 -target 21",
+    "dependency": {
+      "name": "H2",
+      "version": "2.3.232",
+      "sha256": "8dae62d22db8982c3dcb3826edb9c727c5d302063a67eef7d63d82de401f07d3"
+    }
+  },
+  "baseline_directory": "baseline",
+  "reference_directory": "reference",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "selfcheck_command": "python3 run_selfcheck.py",
+  "independent_verifier": "../verifier.py",
+  "public_scenarios": 6,
+  "reference_repetitions": 3,
+  "mutants": [
+    "partial_commit",
+    "repeat_inventory_change"
+  ],
+  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator."
+}

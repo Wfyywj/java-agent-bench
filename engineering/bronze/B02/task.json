@@ -1,0 +1,80 @@
+{
+  "id": "B02",
+  "title": "租借器材归还接口的重复提交",
+  "category": "implementation",
+  "tier": "bronze",
+  "implementation_status": "runnable_local_adapter_partial_catalog_infrastructure",
+  "runtime": {
+    "java": "21",
+    "python": "3 standard library",
+    "dependencies": []
+  },
+  "entrypoint": "python3 run_selfcheck.py",
+  "baseline": "baseline/src",
+  "reference": "reference/src",
+  "verifier": "verifier/check.py",
+  "prompt": "prompt.md",
+  "acceptance": [
+    {
+      "id": "B02-A01",
+      "criterion": "同一租借单相同归还令牌重放返回同一结果且只产生一条清洁任务",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B02-A02",
+      "criterion": "相同令牌携带不同器材或损坏状态时返回冲突，不能静默复用首次成功",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B02-A03",
+      "criterion": "归还、事件记录与清洁任务处于同一事务，任意写入失败均不得留下半完成状态",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B02-A04",
+      "criterion": "未借出、已报废或租户不匹配的器材不能归还，错误不得泄露其他租户信息",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B02-A05",
+      "criterion": "并发两个相同请求后数据库唯一约束仍成立；损坏器材进入复核且不进入可借库存",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "coverage": {
+    "B02-A01": "HTTP replay, disk cardinality, process restart; normal loan state persisted across restart and second token rejected",
+    "B02-A02": "equipment/damage/loan conflicts",
+    "B02-A03": "three staged-write failures; atomic file replacement, NOT PostgreSQL transaction",
+    "B02-A04": "tenant non-disclosure and unavailable/retired lifecycle",
+    "B02-A05": "two concurrent HTTP clients and damaged REVIEW; NOT database uniqueness"
+  },
+  "excluded": [
+    "PostgreSQL integration",
+    "database unique constraints",
+    "two database connections",
+    "fsync/power-loss guarantees",
+    "multi-process writers",
+    "secure sandbox",
+    "hidden evaluation",
+    "model scores"
+  ],
+  "mutants": [
+    "conflict_ignored",
+    "partial_commit",
+    "damaged_available",
+    "normal_loan_state_omitted"
+  ],
+  "limits": {
+    "subprocess_timeout_seconds": 30,
+    "output_bytes": 65536,
+    "server_heap_mb": 96
+  },
+  "public_development_fixture": true,
+  "version": "0.1.1",
+  "candidate_entrypoint": "python3 run_selfcheck.py --candidate /absolute/package"
+}

@@ -1,0 +1,4 @@
+SYNTHETIC incident replay, not production evidence
+2026-02-09T10:04:00Z POST /returns tenant=tenantA loan=loan1 token=cabinet77 damaged=false -> 200
+2026-02-09T10:04:01Z cabinet retry after response loss token=cabinet77 -> 200
+2026-02-09T10:04:02Z reconciliation loan1 cleaning_jobs=2 return_events=1

@@ -1,0 +1,222 @@
+{
+  "selfcheck_passed": true,
+  "repeats": 3,
+  "results": [
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nPASS disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nPASS wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nPASS wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=0\n",
+      "passed": true,
+      "repeat": 1
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nFAIL duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_duplicate_overwrite",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nFAIL duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_trust_disk",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nFAIL disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nPASS wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nPASS wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_ignore_signature",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nFAIL bad signature\nFAIL cross session signature\nPASS disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nFAIL wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nFAIL wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=4\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_reverse_assembly",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_fixed_hmac_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "Exception in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:5)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_constant_hash",
+      "phase": "verify",
+      "exit": 1,
+      "output": "Exception in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:5)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_v2_legacy_canonical",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nException in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:10)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nPASS disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nPASS wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nPASS wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=0\n",
+      "passed": true,
+      "repeat": 2
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nFAIL duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_duplicate_overwrite",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nFAIL duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_trust_disk",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nFAIL disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nPASS wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nPASS wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_ignore_signature",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nFAIL bad signature\nFAIL cross session signature\nPASS disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nFAIL wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nFAIL wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=4\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_reverse_assembly",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_fixed_hmac_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "Exception in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:5)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_constant_hash",
+      "phase": "verify",
+      "exit": 1,
+      "output": "Exception in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:5)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_v2_legacy_canonical",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nException in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:10)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nPASS disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nPASS wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nPASS wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=0\n",
+      "passed": true,
+      "repeat": 3
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nFAIL duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_duplicate_overwrite",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nFAIL duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_trust_disk",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nFAIL disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nPASS wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nPASS wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_ignore_signature",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nFAIL bad signature\nFAIL cross session signature\nPASS disk tampering detected\nPASS failed upload invisible\nPASS expiry boundary\nPASS cleanup pause operational switch\nPASS expired incomplete cleaned\nPASS path traversal session\nPASS independent SHA256 vector empty\nPASS independent SHA256 vector ab\nPASS independent SHA256 vector abcd\nPASS independent HMAC v1 synthetic-secret\nPASS independent HMAC v1 rotated-secret\nFAIL wrong HMAC key v1\nPASS independent v1 signed upload\nPASS independent HMAC v2 synthetic-secret\nPASS independent HMAC v2 rotated-secret\nFAIL wrong HMAC key v2\nPASS independent v2 signed upload\nINVARIANTS=31 FAILURES=4\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_reverse_assembly",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nException in thread \"main\" java.lang.IllegalStateException: whole hash\n\tat upload.Sessions.complete(Sessions.java:10)\n\tat Verify.main(Verify.java:8)\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_fixed_hmac_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "Exception in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:5)\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_constant_hash",
+      "phase": "verify",
+      "exit": 1,
+      "output": "Exception in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:5)\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_v2_legacy_canonical",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS out of order not visible\nPASS incomplete cannot attach\nPASS missing part cannot complete\nPASS duplicate identical content stable\nPASS duplicate different content conflict\nPASS whole object hash checked\nPASS legacy v1 assembled index order\nPASS complete unlinked survives cleanup\nPASS visible after verified link\nPASS protocol downgrade reject\nPASS length mismatch\nPASS hash mismatch\nPASS bad signature\nPASS cross session signature\nException in thread \"main\" java.lang.IllegalArgumentException: invalid fragment\n\tat upload.Sessions.part(Sessions.java:9)\n\tat Verify.main(Verify.java:10)\n",
+      "passed": false,
+      "repeat": 3
+    }
+  ]
+}

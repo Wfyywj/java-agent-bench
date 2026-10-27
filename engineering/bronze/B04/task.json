@@ -1,0 +1,49 @@
+{
+  "id": "B04",
+  "title": "维修报价 PR 的金额精度审查",
+  "category": "review",
+  "runtime": "Java 21; Python 3 standard library",
+  "entrypoint": "python run_selfcheck.py",
+  "candidate": "baseline/src",
+  "reference": "reference/src",
+  "verifier": "verifier",
+  "scope": "Review-only agent deliverable; maintainer correction independently checked. CLI response adapter; no HTTP deployment.",
+  "public_development_fixture": true,
+  "secure_sandbox": false,
+  "model_scores": null,
+  "acceptance": [
+    {
+      "id": "B04-A01",
+      "criterion": "每条阻断意见指向候选补丁的具体位置，包含触发输入与可观测错误",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B04-A02",
+      "criterion": "以政策规定的小数精度和舍入位置构造反例，不将个人风格偏好当作缺陷",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B04-A03",
+      "criterion": "区分金额精度缺陷、空值行为变化和非阻断可读性建议",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B04-A04",
+      "criterion": "给出至少一组正确实现应通过的回归断言，并证明反例在基线或政策模型上的预期",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B04-A05",
+      "criterion": "不得把用户提供备注写进异常日志；审查结论必须覆盖报价溢出和非法折扣输入",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "version": "0.1.1",
+  "candidate_entrypoint": "python3 run_selfcheck.py --candidate /absolute/review-package",
+  "candidate_scope": "review.json structured anchors only; candidate source not compiled or repaired"
+}

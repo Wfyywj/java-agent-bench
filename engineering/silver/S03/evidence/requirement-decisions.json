@@ -1,0 +1,7 @@
+{
+  "task": "S03",
+  "decisions": "Current membership required at creation, execution and download. Download restricted to task owner; expiry boundary now>=expiry. Unknown job 404, unauthorized 403, pending 409, expired 410. Prefix formula-leading text with apostrophe; exported columns only id/name.",
+  "assumptions": "Synthetic fixture policy frozen for the narrowed slice, not invented user approval for production.",
+  "pending": "CLI rather than REST/object-store URLs; principal is trusted adapter input, not authentication. No real object-storage signing, HTTP non-enumeration policy, cross-process worker pool or external IAM.",
+  "approval_status": "No external policy owner consultation claimed"
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "scope_injection",
+    "acceptance": "S03-A01",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "create",
+          "alice",
+          "t1",
+          "t2",
+          "j1",
+          "100"
+        ],
+        "expected": "403 forbidden"
+      },
+      {
+        "args": [
+          "download",
+          "alice",
+          "j1",
+          "1"
+        ],
+        "expected": "404 not_found"
+      }
+    ]
+  }
+]

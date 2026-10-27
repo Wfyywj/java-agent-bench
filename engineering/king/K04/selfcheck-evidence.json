@@ -1,0 +1,3085 @@
+{
+  "task": "K04",
+  "status": "runnable_slice",
+  "timestamp": "2026-10-27T03:59:43.206001+00:00",
+  "repeats": 3,
+  "all_expected": true,
+  "source_sha256": {
+    "baseline/src/Domain.java": "adc5cab7e877ba8fb72cdf765d25984cab8df288fe48f61b2e94afca204bde0f",
+    "baseline/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "baseline/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "baseline/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4",
+    "reference/src/Domain.java": "883229ae92f49d6fa5eddb9a9cf3989d39ad1508fe63d9c0b29bcce231b37510",
+    "reference/src/Journal.java": "bb0f81e6883adea6e9d325bdc855b192f25a0fee4d1a2beb7111e13e9115127e",
+    "reference/src/Main.java": "62a1fe4f944ce00a350c490bf9967fdf0509d4143965de898c5ce46ad6b09b54",
+    "reference/src/Protocol.java": "f588c29c22b2c29a0d529a82525be69cf635c76b63da025bc66aa876f807f3e4"
+  },
+  "runs": [
+    {
+      "repeat": 1,
+      "variant": "reference",
+      "checks": 26,
+      "passed": 26,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "baseline",
+      "checks": 26,
+      "passed": 18,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=3 term=2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 1 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 4 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "oversell",
+      "checks": 26,
+      "passed": 18,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=3 term=2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 1 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 4 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "duplicate-effects",
+      "checks": 26,
+      "passed": 20,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 2 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 5",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 5 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "variant": "retry-amplification",
+      "checks": 26,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "CONFIRMED one",
+          "pass_": false
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "reference",
+      "checks": 26,
+      "passed": 26,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "baseline",
+      "checks": 26,
+      "passed": 18,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=3 term=2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 1 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 4 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "oversell",
+      "checks": 26,
+      "passed": 18,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=3 term=2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 1 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 4 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "duplicate-effects",
+      "checks": 26,
+      "passed": 20,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 2 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 5",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 5 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "variant": "retry-amplification",
+      "checks": 26,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "CONFIRMED one",
+          "pass_": false
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "reference",
+      "checks": 26,
+      "passed": 26,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "baseline",
+      "checks": 26,
+      "passed": 18,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=3 term=2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 1 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 4 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "oversell",
+      "checks": 26,
+      "passed": 18,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=3 term=2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 1 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "CONFIRMED four",
+          "pass_": false
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 4 EFFECTS 4 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "duplicate-effects",
+      "checks": 26,
+      "passed": 20,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "REJECT retry-budget",
+          "pass_": true
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 2 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 4",
+          "pass_": false
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 5",
+          "pass_": false
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 5 TERM 2",
+          "pass_": false
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    },
+    {
+      "repeat": 3,
+      "variant": "retry-amplification",
+      "checks": 26,
+      "passed": 25,
+      "expected_outcome": true,
+      "details": [
+        {
+          "check": "K04-C01",
+          "command": "book one stranger 1 1",
+          "expected": "REJECT unauthorized",
+          "actual": "REJECT unauthorized",
+          "pass_": true
+        },
+        {
+          "check": "K04-C02",
+          "command": "book one member 1 3",
+          "expected": "REJECT retry-budget",
+          "actual": "CONFIRMED one",
+          "pass_": false
+        },
+        {
+          "check": "K04-C03",
+          "command": "book one member 1 1",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C04",
+          "command": "book one member 1 2",
+          "expected": "CONFIRMED one",
+          "actual": "CONFIRMED one",
+          "pass_": true
+        },
+        {
+          "check": "K04-C05",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C06",
+          "command": "deliver one",
+          "expected": "EFFECTS 1",
+          "actual": "EFFECTS 1",
+          "pass_": true
+        },
+        {
+          "check": "K04-C07",
+          "command": "database false",
+          "expected": "DATABASE false",
+          "actual": "DATABASE false",
+          "pass_": true
+        },
+        {
+          "check": "K04-C08",
+          "command": "book two member 1 1",
+          "expected": "REJECT database-unavailable",
+          "actual": "REJECT database-unavailable",
+          "pass_": true
+        },
+        {
+          "check": "K04-C09",
+          "command": "failover",
+          "expected": "TERM 2",
+          "actual": "TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C10",
+          "command": "book two member 1 1",
+          "expected": "REJECT stale-connection",
+          "actual": "REJECT stale-connection",
+          "pass_": true
+        },
+        {
+          "check": "K04-C11",
+          "command": "book two member 2 1",
+          "expected": "UNKNOWN after",
+          "actual": "UNKNOWN after",
+          "pass_": true
+        },
+        {
+          "check": "K04-C12",
+          "command": "query two",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C13",
+          "command": "book two member 2 1",
+          "expected": "CONFIRMED two",
+          "actual": "CONFIRMED two",
+          "pass_": true
+        },
+        {
+          "check": "K04-C14",
+          "command": "book three member 2 1",
+          "expected": "CONFIRMED three",
+          "actual": "CONFIRMED three",
+          "pass_": true
+        },
+        {
+          "check": "K04-C15",
+          "command": "book four member 2 1",
+          "expected": "REJECT full",
+          "actual": "REJECT full",
+          "pass_": true
+        },
+        {
+          "check": "K04-C16",
+          "command": "repair 1 apply",
+          "expected": "REJECT repair-precondition",
+          "actual": "REJECT repair-precondition",
+          "pass_": true
+        },
+        {
+          "check": "K04-C17",
+          "command": "repair 2",
+          "expected": "DRY_RUN missing=2 term=2",
+          "actual": "DRY_RUN missing=2 term=2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C18",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 1 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "K04-C19",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C20",
+          "command": "repair 2 apply",
+          "expected": "REPAIRED 3",
+          "actual": "REPAIRED 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C21",
+          "command": "deliver three",
+          "expected": "EFFECTS 3",
+          "actual": "EFFECTS 3",
+          "pass_": true
+        },
+        {
+          "check": "K04-C22",
+          "command": "query four",
+          "expected": "NOT_FOUND",
+          "actual": "NOT_FOUND",
+          "pass_": true
+        },
+        {
+          "check": "K04-C23",
+          "command": "status",
+          "expected": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "actual": "BOOKINGS 3 EFFECTS 3 TERM 2",
+          "pass_": true
+        },
+        {
+          "check": "torn-tail-fail-closed",
+          "command": "status",
+          "expected": "REJECT torn-journal",
+          "actual": "REJECT torn-journal",
+          "pass_": true
+        },
+        {
+          "check": "concurrent-linearization",
+          "expected": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "actual": [
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same",
+            "CONFIRMED same"
+          ],
+          "pass_": true
+        },
+        {
+          "check": "concurrent-final-state",
+          "command": "status",
+          "expected": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "actual": "BOOKINGS 1 EFFECTS 0 TERM 1",
+          "pass_": true
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Public tests and reference; not held out",
+    "Local trusted code only, not secure sandbox",
+    "No real cluster, broker or production load",
+    "No model run or difficulty calibration"
+  ]
+}

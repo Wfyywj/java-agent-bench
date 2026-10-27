@@ -1,0 +1,111 @@
+{
+  "baseline": {
+    "expected_failure": true,
+    "failed_cases": [
+      "decimal-half",
+      "tax-location",
+      "legacy-null",
+      "grid-1",
+      "grid-3",
+      "grid-6",
+      "grid-7",
+      "grid-9",
+      "grid-12",
+      "grid-13",
+      "grid-15",
+      "grid-18",
+      "grid-19",
+      "grid-21",
+      "grid-24",
+      "grid-25",
+      "grid-27",
+      "grid-30",
+      "grid-31",
+      "note-log"
+    ],
+    "review_rejected": true
+  },
+  "cases": 39,
+  "mutants": {
+    "log-note": {
+      "failed_cases": [
+        "note-log"
+      ],
+      "killed": true
+    },
+    "null-discount": {
+      "failed_cases": [
+        "legacy-null"
+      ],
+      "killed": true
+    },
+    "omit-tax": {
+      "failed_cases": [
+        "tax-location",
+        "smoke",
+        "grid-1",
+        "grid-2",
+        "grid-4",
+        "grid-5",
+        "grid-7",
+        "grid-8",
+        "grid-10",
+        "grid-11",
+        "grid-13",
+        "grid-14",
+        "grid-16",
+        "grid-17",
+        "grid-19",
+        "grid-20",
+        "grid-22",
+        "grid-23",
+        "grid-25",
+        "grid-26",
+        "grid-28",
+        "grid-29",
+        "grid-31"
+      ],
+      "killed": true
+    },
+    "round-down": {
+      "failed_cases": [
+        "decimal-half",
+        "discount-rounding",
+        "grid-2",
+        "grid-3",
+        "grid-4",
+        "grid-5",
+        "grid-6",
+        "grid-8",
+        "grid-9",
+        "grid-10",
+        "grid-11",
+        "grid-12",
+        "grid-14",
+        "grid-15",
+        "grid-16",
+        "grid-17",
+        "grid-18",
+        "grid-20",
+        "grid-21",
+        "grid-22",
+        "grid-23",
+        "grid-24",
+        "grid-26",
+        "grid-27",
+        "grid-28",
+        "grid-29",
+        "grid-30"
+      ],
+      "killed": true
+    }
+  },
+  "reference": {
+    "failed_cases": [],
+    "passed": true,
+    "review_accepted": true
+  },
+  "review_false_positive_mutant_rejected": true,
+  "secure_sandbox": false,
+  "task": "B04"
+}

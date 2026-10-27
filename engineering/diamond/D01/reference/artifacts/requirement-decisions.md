@@ -1,0 +1,2 @@
+Scope is deliberately a runnable slice, not full original catalog acceptance. Durable per-region migration controller, stable entry identity, dual writes, bounded backfill, exact key/amount gate, fencing and rollback reverse-copy check.
+Assumptions: synthetic IDs, trusted local input, sequential command lock, integer amounts, explicit logical scheduling. Unknown production policies remain unresolved.

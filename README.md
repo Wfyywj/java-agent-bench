@@ -1,10 +1,14 @@
 # Java Agent Bench
 
-面向 Java 服务端的分级工程测评实验室，用于比较模型、Skills 与工作流。**v0.1 是开发预览，不是已校准的模型排行榜。**
+面向 Java 服务端的分级工程测评实验室，用于比较模型、Skills 与工作流。**v0.2 是开发预览，不是已校准的模型排行榜。**
+
+网站：[工程测评实验室](https://java-agent-bench-lab.sound-acorn-0952.chatgpt.site)（当前仅所有者可访问，不是公开站点）。
 
 ## 目前真正完成了什么
 
 - 25 个原创复杂场景设计，青铜/白银/黄金/钻石/王者各 5 题；覆盖需求澄清、跨仓库定位、实现、测试、Review、事故诊断。全部标记 `design_only`。
+- 25 个限定范围的可运行工程切片（见 `engineering/`），实际 CLI/HTTP/文件或 H2 流程；不是完整分布式场景。每题有原始缺陷、参考修复、独立验收与故意错误的语义变体。
+- 额外的 S04-spring 真实 Spring 事务集成变体，实际使用 @Transactional/CGLIB、JDBC/H2，不宣称 PostgreSQL 等价。
 - 3 个独立可执行 Java 机制任务：租户支付幂等、并发库存预留、Outbox 租约重试。它们是内存模型，不是完整 Spring/MySQL 生产工程，也不冒充前述 25 题的实现。
 - Python 标准库验收内核：净构建、限时、限输出、补丁哈希、环境证据、结构化结果。
 - 任务浏览与详情、实验计划导出、结果 JSON 导入、协议和路线图网站。
@@ -16,6 +20,11 @@
 
 ```sh
 python3 -m unittest discover -s tests -v
+node --test tests/test_web.mjs
+python3 scripts/engineering.py list
+python3 scripts/engineering.py prepare B01 /tmp/b01-work
+# 修改 src 与本题要求的结构化产物，仅对可信代码执行下步
+python3 scripts/engineering.py evaluate B01 /tmp/b01-work --trusted-code --output /tmp/b01-result.json
 python3 harness/bench.py selfcheck R01
 python3 harness/bench.py prepare R01 /tmp/r01-work
 # 在 /tmp/r01-work/src 中修复可信代码
@@ -30,6 +39,8 @@ python3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result
 - `tasks/R01..R03/`：原始缺陷、参考修复、验收器与错误变体。
 - `harness/bench.py`：执行入口。
 - `harness/results/`：真实参考解/缺陷/变体自检证据，不是 AI 分数。
+- `engineering/`：25 个任务的工程切片及明确覆盖边界。
+- `scripts/engineering.py`：统一 prepare/evaluate 入口，结果可导入网站。
 - `dist/`：无构建依赖的静态网站。
 - `docs/TASK_DESIGN.md`：任务设计协议。
 - `docs/RESEARCH.md`：开源测评经验和来源。
@@ -42,3 +53,9 @@ python3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result
 ## 许可证
 
 沿用仓库所有者创建的 MIT LICENSE。当前题目与实现为原创；上游项目只作研究引用，没有把其代码/题目自动纳入 MIT 范围。引入外部任务时必须逐项记录来源、提交和原始许可证。
+
+## 验证与 CI
+
+本地运行 `python3 scripts/check_engineering.py` 可执行全部已存在切片的可信自检。S04/S05 的 H2 依赖从 Maven Central 按固定版本与 SHA256 获取，不随仓库分发。GitHub Actions 配置只在 main 推送或手动触发运行，不提交密钥；CI 状态以具体提交的实际运行结果为准。
+
+候选任务 ZIP 可在网站任务详情下载；仓库不提交生成包，运行 `python3 scripts/build_implementations.py && python3 scripts/build_task_packages.py` 可重建。不会在包中复制评分器或参考答案，但公开仓库依然可访问，不能当成防泄漏隔离。

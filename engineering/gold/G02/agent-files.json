@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "CONTRACT.md",
+      "target": "CONTRACT.md"
+    },
+    {
+      "source": "diagnostic-evidence.md",
+      "target": "diagnostic-evidence.md"
+    },
+    {
+      "source": "baseline/admin/AdminService.java",
+      "target": "admin/AdminService.java"
+    },
+    {
+      "source": "baseline/billing/Engine.java",
+      "target": "billing/Engine.java"
+    },
+    {
+      "source": "baseline/bills/Ledger.java",
+      "target": "bills/Ledger.java"
+    },
+    {
+      "source": "public-tests/Smoke.java",
+      "target": "public-tests/Smoke.java"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "mutant_*",
+    "verification-results.json",
+    "reference-review.json"
+  ],
+  "note": "Only copy files listed; trusted local selfcheck stays evaluator-side. No hidden holdout exists."
+}

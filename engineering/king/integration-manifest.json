@@ -1,0 +1,30 @@
+{
+  "all_expected": true,
+  "tasks": [
+    {
+      "id": "K01",
+      "repeats": 3,
+      "all_expected": true
+    },
+    {
+      "id": "K02",
+      "repeats": 3,
+      "all_expected": true
+    },
+    {
+      "id": "K03",
+      "repeats": 3,
+      "all_expected": true
+    },
+    {
+      "id": "K04",
+      "repeats": 3,
+      "all_expected": true
+    },
+    {
+      "id": "K05",
+      "repeats": 3,
+      "all_expected": true
+    }
+  ]
+}

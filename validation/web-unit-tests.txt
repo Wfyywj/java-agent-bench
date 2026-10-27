@@ -1,0 +1,22 @@
+✔ zero seed survives save, fresh application reopen and exported plan (11.160256ms)
+✔ planner persists fields and filters obsolete IDs, using current task statuses (2.43223ms)
+✔ planner rejects noninteger or unsafe seeds and missing task selections (1.54027ms)
+✔ catalog tier and case-insensitive query filters intersect; unknown detail is a no-op (2.768439ms)
+✔ task titles, descriptions and detail markup are escaped (1.700603ms)
+✔ imported result metadata and raw evidence are HTML-escaped (1.944512ms)
+✔ unknown result task/status, missing versions and inconsistent success are rejected (1.782117ms)
+✔ malformed result shape and oversized files are rejected (1.193126ms)
+✔ checkbox handler updates selection used by save/export (1.350293ms)
+✔ valid JSON nonobjects in saved storage do not crash the planner (3.683774ms)
+✔ saved numeric fields and task IDs are escaped before interpolation (1.232225ms)
+✔ all 15 shipped baseline/reference/mutation records import with current task metadata (6.659036ms)
+✔ all 25 shipped design task details render with real nested data shapes (6.177878ms)
+✔ engineering slice plan and result use distinct implementation identity (2.699254ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 127.157658

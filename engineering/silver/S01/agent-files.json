@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "baseline/src/bench/Main.java",
+      "target": "src/bench/Main.java"
+    },
+    {
+      "source": "baseline/src/bench/RefundService.java",
+      "target": "src/bench/RefundService.java"
+    },
+    {
+      "source": "baseline/src/bench/Signature.java",
+      "target": "src/bench/Signature.java"
+    },
+    {
+      "source": "baseline/src/bench/Store.java",
+      "target": "src/bench/Store.java"
+    },
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-task.json",
+      "target": "original-task.json"
+    }
+  ]
+}

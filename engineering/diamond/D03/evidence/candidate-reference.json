@@ -1,0 +1,76 @@
+{
+  "pass": true,
+  "checks": [
+    "hit.percent",
+    "backlog",
+    "eligibility-not-cache",
+    "quota",
+    "projection.a",
+    "lock-stop-no-mutation",
+    "locks",
+    "backlog",
+    "dry-run-no-mutation",
+    "scope-budget-no-mutation",
+    "backlog",
+    "checkpoint",
+    "l1.version",
+    "l2.version",
+    "backlog",
+    "checkpoint",
+    "simulation-labeled",
+    "evidence-preserved",
+    "clock-normalized-order"
+  ],
+  "details": {
+    "timeline": [
+      [
+        10,
+        "deploy"
+      ],
+      [
+        12,
+        "cache-stale"
+      ],
+      [
+        15,
+        "lock-wait"
+      ],
+      [
+        20,
+        "backlog"
+      ]
+    ],
+    "experiments": {
+      "limit-workers": "locks 8 -> 1; backlog remains 6 until bounded drain",
+      "cache-hit-hypothesis": "98% hit does not establish eligibility freshness"
+    },
+    "unsupported": [
+      "real production latency",
+      "actual CPU or database lock measurements"
+    ]
+  },
+  "state": {
+    "accepted.a": "true",
+    "backlog": "2",
+    "checkpoint": "4",
+    "clock.api.offset": "-2",
+    "clock.worker.offset": "5",
+    "hit.percent": "98",
+    "l1.eligible": "true",
+    "l1.version": "2",
+    "l2.eligible": "true",
+    "l2.version": "2",
+    "locks": "1",
+    "projection.a": "3",
+    "quota": "1",
+    "rule.version": "2"
+  },
+  "audit": "seed\napply a true\napply a true\nproject a 3\nproject a 1\nintervene limit-workers\nrecover east 2 dry-run\nrecover east 2 apply\nrecover east 2 apply\n",
+  "diagnosis_checks": {
+    "simulation_labeled": true,
+    "clock_evidence": true,
+    "competing_hypotheses": true,
+    "bounded_scope": true,
+    "unsupported_claims": true
+  }
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "task": "S01",
+    "variant": "baseline",
+    "returncode": 1,
+    "compiled": true,
+    "passed": false,
+    "check_count": 10,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S01",
+    "variant": "reference",
+    "returncode": 0,
+    "compiled": true,
+    "passed": true,
+    "check_count": 10,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S02",
+    "variant": "baseline",
+    "returncode": 1,
+    "compiled": true,
+    "passed": false,
+    "check_count": 13,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S02",
+    "variant": "reference",
+    "returncode": 0,
+    "compiled": true,
+    "passed": true,
+    "check_count": 13,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S03",
+    "variant": "baseline",
+    "returncode": 1,
+    "compiled": true,
+    "passed": false,
+    "check_count": 12,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S03",
+    "variant": "reference",
+    "returncode": 0,
+    "compiled": true,
+    "passed": true,
+    "check_count": 12,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S04",
+    "variant": "baseline",
+    "returncode": 1,
+    "compiled": true,
+    "passed": false,
+    "check_count": 6,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S04",
+    "variant": "reference",
+    "returncode": 0,
+    "compiled": true,
+    "passed": true,
+    "check_count": 6,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S05",
+    "variant": "baseline",
+    "returncode": 1,
+    "compiled": true,
+    "passed": false,
+    "check_count": 9,
+    "expected_outcome_observed": true
+  },
+  {
+    "task": "S05",
+    "variant": "reference",
+    "returncode": 0,
+    "compiled": true,
+    "passed": true,
+    "check_count": 9,
+    "expected_outcome_observed": true
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "task_id": "D05",
+  "base_path": "/workspace/shared/java-agent-bench/engineering/diamond/D05",
+  "selfcheck": [
+    "python3",
+    "/workspace/shared/java-agent-bench/engineering/diamond/D05/run_selfcheck.py"
+  ],
+  "candidate_command": [
+    "python3",
+    "/workspace/shared/java-agent-bench/engineering/diamond/D05/run_selfcheck.py",
+    "--candidate",
+    "ABS_PACKAGE"
+  ],
+  "candidate_layout": "src/Main.java plus artifacts/; accepts direct source folder as convenience",
+  "status": "runnable_slice"
+}

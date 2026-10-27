@@ -1,0 +1,24 @@
+[
+  {
+    "case": "staged_baseline",
+    "exit": 1,
+    "result": {
+      "variant": "/tmp/gold-staging-sldo_3v8",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false
+    }
+  },
+  {
+    "case": "absolute_reference",
+    "exit": 0,
+    "result": {
+      "variant": "/workspace/shared/java-agent-bench/engineering/gold/G01/reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=0\n",
+      "passed": true
+    }
+  }
+]

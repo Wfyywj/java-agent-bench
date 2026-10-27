@@ -1,0 +1,180 @@
+[
+  {
+    "name": "all_or_nothing_middle",
+    "acceptance": "S04-A01/A02",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "cancel",
+          "middle"
+        ],
+        "expected": "503 rolled_back"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "OPEN|PENDING|PENDING|5"
+      },
+      {
+        "args": [
+          "cancel",
+          "none"
+        ],
+        "expected": "200 cancelled"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "CANCELLED|CANCELLED|CANCELLED|10"
+      }
+    ]
+  },
+  {
+    "name": "checked_failure_surrogate",
+    "acceptance": "S04-A02",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "cancel",
+          "checked"
+        ],
+        "expected": "503 rolled_back"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "OPEN|PENDING|PENDING|5"
+      }
+    ]
+  },
+  {
+    "name": "duplicate_no_inventory_inflation",
+    "acceptance": "S04-A03",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "cancel",
+          "none"
+        ],
+        "expected": "200 cancelled"
+      },
+      {
+        "args": [
+          "cancel",
+          "none"
+        ],
+        "expected": "200 duplicate"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "CANCELLED|CANCELLED|CANCELLED|10"
+      }
+    ]
+  },
+  {
+    "name": "shipped_blocks_entire_batch",
+    "acceptance": "S04-A03",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "ship"
+        ],
+        "expected": "200 shipped"
+      },
+      {
+        "args": [
+          "cancel",
+          "none"
+        ],
+        "expected": "409 shipped"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "OPEN|SHIPPED|PENDING|5"
+      }
+    ]
+  },
+  {
+    "name": "cancel_blocks_ship",
+    "acceptance": "S04-A04",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "cancel",
+          "none"
+        ],
+        "expected": "200 cancelled"
+      },
+      {
+        "args": [
+          "ship"
+        ],
+        "expected": "409 cancelled"
+      },
+      {
+        "args": [
+          "get"
+        ],
+        "expected": "CANCELLED|CANCELLED|CANCELLED|10"
+      }
+    ]
+  },
+  {
+    "name": "concurrent_ship_cancel",
+    "acceptance": "S04-A04",
+    "steps": [
+      {
+        "args": [
+          "init"
+        ],
+        "expected": "200 initialized"
+      },
+      {
+        "args": [
+          "race"
+        ],
+        "expected": [
+          "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
+          "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
+        ]
+      }
+    ]
+  }
+]

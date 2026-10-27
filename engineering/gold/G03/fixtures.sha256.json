@@ -1,0 +1,6 @@
+{
+  "CONTRACT.md": "d30d583e51190d2222213fc15ef21a494384f45bba832217646b3315d9302a1e",
+  "verifier/Verify.java": "80bf83ef47dd64631158de7a42468db4ad909633f3041f86f5e8b6941a569e60",
+  "fixtures/crypto-vectors.json": "ee25fd06c5bad1c57eb50febfa5dc7a3fbbe9b2273b2b7abf2b7a466d7479612",
+  "verifier/generate_crypto_vectors.py": "43162760b8c217ff82760223804d52e3348f8c39c9bf6b2766ab414c6d03d66a"
+}

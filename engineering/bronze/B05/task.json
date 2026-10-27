@@ -1,0 +1,70 @@
+{
+  "id": "B05",
+  "version": "0.1.1",
+  "tier": "bronze",
+  "category": "incident_diagnosis",
+  "status": "public_engineering_fixture",
+  "runtime": "Java 21 jdk.compiler + Python 3.10+, standard library only",
+  "entrypoint": "python3 engineering/bronze/B05/run_selfcheck.py",
+  "acceptance": [
+    {
+      "id": "B05-A01",
+      "criterion": "建立导入次数与资源未释放的证据链，明确数据库超时是症状还是直接根因",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B05-A02",
+      "criterion": "正常结束、解析异常及客户端取消均关闭输入流和相关临时资源",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "B05-A03",
+      "criterion": "坏行返回行号与稳定错误码，不在响应或日志中暴露整行个人信息",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B05-A04",
+      "criterion": "连续重复导入后资源计数回到基线容差内；容差由夹具说明固定",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "B05-A05",
+      "criterion": "给出修复前失败、修复后通过的回归测试及仍未证实的假设列表",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "checks_per_variant": 28,
+  "variants": [
+    "baseline",
+    "reference",
+    "mutant_input_leak",
+    "mutant_temp_leak",
+    "mutant_raw_error",
+    "mutant_corrupted_output",
+    "mutant_missing_header"
+  ],
+  "resource_tolerance": {
+    "tracked_unclosed_streams": 0,
+    "remaining_staging_files": 0,
+    "repeat_import_count": 120
+  },
+  "limits": {
+    "build_timeout_seconds": 30,
+    "run_timeout_seconds": 15,
+    "output_bytes_per_process": 65536,
+    "java_heap": "96m"
+  },
+  "scope_limits": [
+    "Not a secure sandbox. Only trusted local code.",
+    "Public fixtures and answer contract, not hidden evaluation.",
+    "No real database or production FD exhaustion is reproduced.",
+    "Recorded incident artifacts are authored synthetic evidence; deterministic close tracking and actual temp filesystem behavior are executed.",
+    "CSV supports quoted fields and escaped quotes on a single physical line; multiline fields rejected.",
+    "No model scores or difficulty calibration."
+  ]
+}

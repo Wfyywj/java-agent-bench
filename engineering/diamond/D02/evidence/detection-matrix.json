@@ -1,0 +1,108 @@
+{
+  "matrix": [
+    {
+      "system": "reference",
+      "detected_by_history": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "minimal_legal_histories": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "system": "DUP_PAY",
+      "detected_by_history": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "minimal_legal_histories": [
+        null,
+        [
+          [
+            "book",
+            "a",
+            "s1"
+          ],
+          [
+            "pay",
+            "a"
+          ],
+          [
+            "pay",
+            "a"
+          ]
+        ],
+        null,
+        null
+      ]
+    },
+    {
+      "system": "LATE_PAY",
+      "detected_by_history": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "minimal_legal_histories": [
+        [
+          [
+            "book",
+            "a",
+            "s1"
+          ],
+          [
+            "cancel",
+            "a"
+          ],
+          [
+            "pay",
+            "a"
+          ]
+        ],
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "system": "LEAK_MOVE",
+      "detected_by_history": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "minimal_legal_histories": [
+        null,
+        null,
+        [
+          [
+            "book",
+            "a",
+            "s1"
+          ],
+          [
+            "move",
+            "a",
+            "s2"
+          ]
+        ],
+        null
+      ]
+    }
+  ],
+  "reference_clean": true,
+  "mutants_killed": 3,
+  "mutants_total": 3,
+  "shrinking": "deletion-1-minimal under legal preconditions; not global minimum",
+  "public_development": true
+}

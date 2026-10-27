@@ -9,3 +9,6 @@ node_modules/
 *.tar.gz
 agent-workspaces/
 private-evaluators/
+
+# Reproducible generated participant archives
+dist/packages/

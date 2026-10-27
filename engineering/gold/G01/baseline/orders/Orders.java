@@ -1,0 +1,7 @@
+package orders;
+import events.Journal;import inventory.Inventory;import java.nio.file.*;import java.util.*;
+public final class Orders { private final Journal log;private final Inventory inventory;private final Set<String> pending=new HashSet<>(),done=new HashSet<>();public Orders(Path path,Inventory i){log=new Journal(path);inventory=i;for(String s:log.read()){String[] a=s.split("[|]",-1);if(a[0].equals("C"))pending.add(a[1]);if(a[0].equals("D")){pending.remove(a[1]);done.add(a[1]);}}}
+ public void create(Inventory.Hold h,boolean failOrder,boolean loseReserveReply,boolean loseRelease){try{inventory.reserve(h,loseReserveReply);}catch(IllegalStateException e){Inventory.Hold existing=inventory.query(h.key());if(existing==null||!existing.equals(h))throw e;}if(failOrder){/* lost durable intent */pending.add(h.key());if(!loseRelease)recover("system-recovery");}else {log.append("O|"+h.key());}}
+ public void recover(String role){if(!role.equals("system-recovery"))throw new SecurityException("recovery role");for(String k:new ArrayList<>(pending)){inventory.release(k);log.append("D|"+k);pending.remove(k);done.add(k);}}
+ public int pending(){return pending.size();} public int audits(){return done.size();}
+}

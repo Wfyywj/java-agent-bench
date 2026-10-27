@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "suite": "bronze-engineering-public-dev",
+  "status": "local_selfchecks_passed",
+  "central_catalog_changed": false,
+  "external_mutations": false,
+  "secure_sandbox": false,
+  "model_scores": null,
+  "packages": [
+    {
+      "id": "B01",
+      "path": "B01",
+      "manifest": "B01/task.json",
+      "command": "python3 engineering/bronze/B01/run_selfcheck.py",
+      "check_count": 17,
+      "rejected_mutant_count": 6,
+      "evidence": "B01/selfcheck-results.json",
+      "scope": "17 behavior assertions plus CLI/decision checks; HTTP value, not live transport",
+      "version": "0.1.1",
+      "candidate_command": "python3 engineering/bronze/B01/run_selfcheck.py --candidate /absolute/package",
+      "agent_files": "B01/agent-files.json",
+      "selfcheck_sha256": "ba3ada89ed958e6fe8c38a1eb107fdb5f2c7f9eb1f028061ca0a8ae22277a7a8"
+    },
+    {
+      "id": "B02",
+      "path": "B02",
+      "manifest": "B02/task.json",
+      "command": "python3 engineering/bronze/B02/run_selfcheck.py",
+      "check_count": 8,
+      "rejected_mutant_count": 4,
+      "evidence": "B02/verification-results.json",
+      "scope": "8 HTTP/disk groups incl persisted normal state; file adapter, NOT PostgreSQL acceptance",
+      "version": "0.1.1",
+      "candidate_command": "python3 engineering/bronze/B02/run_selfcheck.py --candidate /absolute/package",
+      "agent_files": "B02/agent-files.json",
+      "selfcheck_sha256": "2caaa3ddce94d9cda12201a2486333b83af37df6bdda45c47d83fced0e7c6238"
+    },
+    {
+      "id": "B03",
+      "path": "B03",
+      "manifest": "B03/task.json",
+      "command": "python3 engineering/bronze/B03/run_selfcheck.py",
+      "check_count": 6,
+      "rejected_mutant_count": 5,
+      "evidence": "B03/evidence/selfcheck-results.json",
+      "scope": "6 groups incl request limit bounds; file dataset, not SQL/auth",
+      "version": "0.1.1",
+      "candidate_command": "python3 engineering/bronze/B03/run_selfcheck.py --candidate /absolute/package",
+      "agent_files": "B03/agent-files.json",
+      "selfcheck_sha256": "93d8c22c207d176cdd66acdb73ff9fffe37d345c8c722ab4709d41aa380b70ca"
+    },
+    {
+      "id": "B04",
+      "path": "B04",
+      "manifest": "B04/task.json",
+      "command": "python3 engineering/bronze/B04/run_selfcheck.py",
+      "check_count": 39,
+      "rejected_mutant_count": 5,
+      "evidence": "B04/evidence/selfcheck-run1.json",
+      "scope": "39 independent scenarios; 4 code mutants plus structured review mutant; candidate evaluation is review-only",
+      "version": "0.1.1",
+      "candidate_command": "python3 engineering/bronze/B04/run_selfcheck.py --candidate /absolute/package",
+      "agent_files": "B04/agent-files.json",
+      "selfcheck_sha256": "dd922701e356ef7e7c5c0c479e66211562bd9e99d024a9d56588dce8ee3bf3e3"
+    },
+    {
+      "id": "B05",
+      "path": "B05",
+      "manifest": "B05/task.json",
+      "command": "python3 engineering/bronze/B05/run_selfcheck.py",
+      "check_count": 28,
+      "rejected_mutant_count": 5,
+      "evidence": "B05/evidence/selfcheck-1.json",
+      "scope": "28 behavior checks incl independent committed CSV/header semantics plus diagnosis contract; synthetic incident, no DB exhaustion",
+      "version": "0.1.1",
+      "candidate_command": "python3 engineering/bronze/B05/run_selfcheck.py --candidate /absolute/package",
+      "agent_files": "B05/agent-files.json",
+      "selfcheck_sha256": "a5130d74d126a9f18ed7a652fb7db5454a0a881767d0f27b1136ef9e82759e10"
+    }
+  ],
+  "validation": {
+    "aggregate_runs": 2,
+    "all_exit_codes": 0,
+    "byte_identical": true,
+    "reference_variants_passed": 5,
+    "baseline_variants_rejected": 5,
+    "semantic_controls_rejected": 25,
+    "evidence": [
+      "evidence/aggregate-run1.json",
+      "evidence/aggregate-run2.json"
+    ],
+    "jdk": "OpenJDK 21.0.12.1",
+    "compiler": "jdk.compiler module; no javac launcher or ct.sym",
+    "catalog_infrastructure_fully_reproduced": false,
+    "audit_note": "Four independently reproduced false positives closed: B01 dropped notes; B02 missing normal loan state; B03 oversized limit; B05 corrupted CSV. B05 committed header corrected as well.",
+    "aggregate_sha256": "793f8614ab888bff46e00b00881e1fb59fcaddcab0301507bb26cc5805d5910d",
+    "candidate_protocol_tests": {
+      "passed": 7,
+      "failed": 0,
+      "evidence": "evidence/candidate-protocol-tests.txt"
+    }
+  }
+}

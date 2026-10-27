@@ -1,0 +1,19 @@
+[
+  {
+    "name": "old_to_old",
+    "acceptance": "S02-A02/A03",
+    "steps": [
+      {
+        "args": [
+          "request",
+          "old",
+          "old",
+          "alice",
+          "gold",
+          "~"
+        ],
+        "expected": "200 MEMBER"
+      }
+    ]
+  }
+]

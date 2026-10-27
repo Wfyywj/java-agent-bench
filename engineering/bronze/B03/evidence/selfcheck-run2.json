@@ -1,0 +1,158 @@
+{
+  "results": {
+    "baseline": {
+      "B03-A01": {
+        "pass": false,
+        "reason": "asc/all expected ['BOX000', 'BOX001', 'BOX002', 'BOX003', 'BOX004', 'BOX005', 'BOX006', 'BOX007', 'BOX008', 'BOX009', 'BOX010', 'BOX011', 'BOX012', 'BOX013', 'BOX014', 'BOX015', 'BOX016', 'BOX017', 'BOX018', 'BOX019', 'BOX020', 'BOX021', 'BOX022', 'BOX023', 'BOX024', 'BOX025', 'BOX026', 'BOX027', 'BOX028', 'BOX029', 'BOX030', 'BOX031', 'BOX032', 'BOX033', 'BOX034', 'BOX035'], got ['BOX011', 'BOX01"
+      },
+      "B03-A02": {
+        "pass": false,
+        "reason": "pages=4, count=9, unique=9"
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": true
+      },
+      "B03-A04": {
+        "pass": true
+      },
+      "B03-A05": {
+        "pass": false,
+        "reason": "(['BOX023', 'BOX022', 'BOX021', 'BOX020', 'BOX035', 'BOX034', 'BOX033', 'BOX032', 'NEWAFTER'], ['BOX010', 'BOX012', 'BOX013', 'BOX014', 'BOX015', 'BOX016', 'BOX017', 'BOX018', 'BOX019', 'BOX020', 'BOX021', 'BOX022', 'BOX023', 'BOX024', 'BOX025', 'BOX026', 'BOX027', 'BOX028', 'BOX029', 'BOX030', 'BOX031', 'BOX032', 'BOX033', 'BOX034', 'BOX035', 'NEWAFTER'])"
+      }
+    },
+    "descending_mismatch": {
+      "B03-A01": {
+        "pass": false,
+        "reason": "desc/all expected ['BOX035', 'BOX034', 'BOX033', 'BOX032', 'BOX031', 'BOX030', 'BOX029', 'BOX028', 'BOX027', 'BOX026', 'BOX025', 'BOX024', 'BOX023', 'BOX022', 'BOX021', 'BOX020', 'BOX019', 'BOX018', 'BOX017', 'BOX016', 'BOX015', 'BOX014', 'BOX013', 'BOX012', 'BOX011', 'BOX010', 'BOX009', 'BOX008', 'BOX007', 'BOX006', 'BOX005', 'BOX004', 'BOX003', 'BOX002', 'BOX001', 'BOX000'], got ['BOX000', 'BOX0"
+      },
+      "B03-A02": {
+        "pass": true
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": true
+      },
+      "B03-A04": {
+        "pass": true
+      },
+      "B03-A05": {
+        "pass": true
+      }
+    },
+    "inclusive_cursor": {
+      "B03-A01": {
+        "pass": false,
+        "reason": "asc/all expected ['BOX000', 'BOX001', 'BOX002', 'BOX003', 'BOX004', 'BOX005', 'BOX006', 'BOX007', 'BOX008', 'BOX009', 'BOX010', 'BOX011', 'BOX012', 'BOX013', 'BOX014', 'BOX015', 'BOX016', 'BOX017', 'BOX018', 'BOX019', 'BOX020', 'BOX021', 'BOX022', 'BOX023', 'BOX024', 'BOX025', 'BOX026', 'BOX027', 'BOX028', 'BOX029', 'BOX030', 'BOX031', 'BOX032', 'BOX033', 'BOX034', 'BOX035'], got ['BOX000', 'BOX00"
+      },
+      "B03-A02": {
+        "pass": false,
+        "reason": "pages=18, count=53, unique=36"
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": true
+      },
+      "B03-A04": {
+        "pass": true
+      },
+      "B03-A05": {
+        "pass": false,
+        "reason": "(['BOX002', 'BOX003', 'BOX004', 'BOX005', 'BOX005', 'BOX006', 'BOX007', 'BOX008', 'BOX008', 'BOX009', 'BOX010', 'BOX011', 'BOX011', 'BOX012', 'BOX013', 'BOX014', 'BOX014', 'BOX015', 'BOX016', 'BOX017', 'BOX017', 'BOX018', 'BOX019', 'BOX020', 'BOX020', 'BOX021', 'BOX022', 'BOX023', 'BOX023', 'BOX024', 'BOX025', 'BOX026', 'BOX026', 'BOX027', 'BOX028', 'BOX029', 'BOX029', 'BOX030', 'BOX031', 'BOX032'"
+      }
+    },
+    "limit_oversized": {
+      "B03-A01": {
+        "pass": true
+      },
+      "B03-A02": {
+        "pass": true
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": false,
+        "reason": "accepted invalid limit 101"
+      },
+      "B03-A04": {
+        "pass": true
+      },
+      "B03-A05": {
+        "pass": true
+      }
+    },
+    "reference": {
+      "B03-A01": {
+        "pass": true
+      },
+      "B03-A02": {
+        "pass": true
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": true
+      },
+      "B03-A04": {
+        "pass": true
+      },
+      "B03-A05": {
+        "pass": true
+      }
+    },
+    "time_only": {
+      "B03-A01": {
+        "pass": false,
+        "reason": "asc/all expected ['BOX000', 'BOX001', 'BOX002', 'BOX003', 'BOX004', 'BOX005', 'BOX006', 'BOX007', 'BOX008', 'BOX009', 'BOX010', 'BOX011', 'BOX012', 'BOX013', 'BOX014', 'BOX015', 'BOX016', 'BOX017', 'BOX018', 'BOX019', 'BOX020', 'BOX021', 'BOX022', 'BOX023', 'BOX024', 'BOX025', 'BOX026', 'BOX027', 'BOX028', 'BOX029', 'BOX030', 'BOX031', 'BOX032', 'BOX033', 'BOX034', 'BOX035'], got ['BOX011', 'BOX01"
+      },
+      "B03-A02": {
+        "pass": false,
+        "reason": "pages=4, count=9, unique=9"
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": true
+      },
+      "B03-A04": {
+        "pass": true
+      },
+      "B03-A05": {
+        "pass": false,
+        "reason": "(['BOX023', 'BOX022', 'BOX021', 'BOX020', 'BOX035', 'BOX034', 'BOX033', 'BOX032', 'NEWAFTER'], ['BOX010', 'BOX012', 'BOX013', 'BOX014', 'BOX015', 'BOX016', 'BOX017', 'BOX018', 'BOX019', 'BOX020', 'BOX021', 'BOX022', 'BOX023', 'BOX024', 'BOX025', 'BOX026', 'BOX027', 'BOX028', 'BOX029', 'BOX030', 'BOX031', 'BOX032', 'BOX033', 'BOX034', 'BOX035', 'NEWAFTER'])"
+      }
+    },
+    "unbound_cursor": {
+      "B03-A01": {
+        "pass": true
+      },
+      "B03-A02": {
+        "pass": true
+      },
+      "B03-A03": {
+        "pass": true
+      },
+      "B03-A03_limit_bounds": {
+        "pass": true
+      },
+      "B03-A04": {
+        "pass": false,
+        "reason": "({'tenant': 'south'}, 200, {'items': [{'id': 'SOUTH000', 'receivedAt': '2026-01-20T10:00:00Z'}, {'id': 'SOUTH001', 'receivedAt': '2026-01-20T10:00:00Z'}, {'id': 'SOUTH002', 'receivedAt': '2026-01-20T10:00:00Z'}, {'id': 'SOUTH003', 'receivedAt': '2026-01-20T10:00:00Z'}, {'id': 'SOUTH004', 'receivedAt': '2026-01-20T10:00:00Z'}], 'next': 'MXxzb3V0aHxhbGx8YXNjfDIwMjYtMDEtMjBUMTA6MDA6MDBafFNPVVRIMDA0'}"
+      },
+      "B03-A05": {
+        "pass": true
+      }
+    }
+  },
+  "selfcheck_pass": true,
+  "task": "B03"
+}

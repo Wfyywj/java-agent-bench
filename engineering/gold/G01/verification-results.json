@@ -1,0 +1,150 @@
+{
+  "selfcheck_passed": true,
+  "repeats": 3,
+  "results": [
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=0\n",
+      "passed": true,
+      "repeat": 1
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_missing_intent",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_wrong_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nFAIL key bound to tenant\nFAIL key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=2\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_overlap",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nException in thread \"main\" java.lang.IllegalStateException: capacity\n\tat inventory.Inventory.reserve(Inventory.java:7)\n\tat Verify.main(Verify.java:10)\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "mutant_release_noop",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=1\n",
+      "passed": false,
+      "repeat": 1
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=0\n",
+      "passed": true,
+      "repeat": 2
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_missing_intent",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_wrong_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nFAIL key bound to tenant\nFAIL key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=2\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_overlap",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nException in thread \"main\" java.lang.IllegalStateException: capacity\n\tat inventory.Inventory.reserve(Inventory.java:7)\n\tat Verify.main(Verify.java:10)\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "mutant_release_noop",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=1\n",
+      "passed": false,
+      "repeat": 2
+    },
+    {
+      "variant": "reference",
+      "phase": "verify",
+      "exit": 0,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=0\n",
+      "passed": true,
+      "repeat": 3
+    },
+    {
+      "variant": "baseline",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_missing_intent",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nFAIL recovery audit\nFAIL repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=3\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_wrong_key",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nFAIL key bound to tenant\nFAIL key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nPASS restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=2\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_overlap",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nException in thread \"main\" java.lang.IllegalStateException: capacity\n\tat inventory.Inventory.reserve(Inventory.java:7)\n\tat Verify.main(Verify.java:10)\n",
+      "passed": false,
+      "repeat": 3
+    },
+    {
+      "variant": "mutant_release_noop",
+      "phase": "verify",
+      "exit": 1,
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nPASS half-open adjacent lease\nPASS empty interval\nPASS restart preserves holds\nPASS failed commit records pending compensation\nPASS lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=1\n",
+      "passed": false,
+      "repeat": 3
+    }
+  ]
+}

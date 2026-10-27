@@ -1,0 +1,73 @@
+{
+  "status": "validated_narrowed_engineering_slices",
+  "full_catalog_ready": false,
+  "tasks": [
+    {
+      "id": "S01",
+      "scenarios": 10,
+      "reference_passes": 30,
+      "repetitions": 3,
+      "compiled_variants": 4,
+      "baseline_rejected": true,
+      "semantic_mutants_killed": 2,
+      "fixture_sha256": "57ba28e4e03d145ca64898d4333481af58cef378790cc0d79aa3ae59ab2c895f",
+      "evidence": "S01/evidence/selfcheck.json"
+    },
+    {
+      "id": "S02",
+      "scenarios": 13,
+      "reference_passes": 39,
+      "repetitions": 3,
+      "compiled_variants": 4,
+      "baseline_rejected": true,
+      "semantic_mutants_killed": 2,
+      "fixture_sha256": "12bd9252e53d76120ded1073a58e96b6d8dd348a41e0f72364fab9645a06b910",
+      "evidence": "S02/evidence/selfcheck.json"
+    },
+    {
+      "id": "S03",
+      "scenarios": 12,
+      "reference_passes": 36,
+      "repetitions": 3,
+      "compiled_variants": 4,
+      "baseline_rejected": true,
+      "semantic_mutants_killed": 2,
+      "fixture_sha256": "92e520b9d642a8583e50db63fc53d160e9732a6dc98997dba9956d50934823f4",
+      "evidence": "S03/evidence/selfcheck.json"
+    },
+    {
+      "id": "S04",
+      "scenarios": 6,
+      "reference_passes": 18,
+      "repetitions": 3,
+      "compiled_variants": 4,
+      "baseline_rejected": true,
+      "semantic_mutants_killed": 2,
+      "fixture_sha256": "59a836ecb01aedf29bd446a3b26540cffefd70436e75a91d282d832dc43665d6",
+      "evidence": "S04/evidence/selfcheck.json"
+    },
+    {
+      "id": "S05",
+      "scenarios": 9,
+      "reference_passes": 27,
+      "repetitions": 3,
+      "compiled_variants": 6,
+      "baseline_rejected": true,
+      "semantic_mutants_killed": 4,
+      "fixture_sha256": "4144a2a8655326157839c2e2aaaaa2fc6909728c9b76efac3b794c6e5b5d513c",
+      "evidence": "S05/evidence/selfcheck.json"
+    }
+  ],
+  "public_development_tests": true,
+  "hidden_tests": false,
+  "candidate_trust": "trusted local code only; not a sandbox",
+  "source_digest_verification": true,
+  "verifier_sha256": "bdaab409aeb8355a1683d1bae2aaf9c333ef931fcf563783962f688393a1b502",
+  "s05_jdbc_probe_sha256": "4de70c58d03269460ec3f58c72f7848d835cb369d495a1f98a57ca6efb02b7f6",
+  "total_scenarios": 50,
+  "total_reference_passes": 150,
+  "total_compiled_variants": 22,
+  "total_semantic_mutants_killed": 12,
+  "prepared_candidate_interface_checks": 10,
+  "s05_external_audit_candidates_rejected": 2
+}

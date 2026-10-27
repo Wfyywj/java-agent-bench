@@ -1,0 +1,16 @@
+{
+  "task": "B01",
+  "version": "0.1.1",
+  "runs": 2,
+  "exit_codes": [
+    0,
+    0
+  ],
+  "byte_identical": true,
+  "result_sha256": "ba3ada89ed958e6fe8c38a1eb107fdb5f2c7f9eb1f028061ca0a8ae22277a7a8",
+  "evidence": [
+    "selfcheck-results.json",
+    "evidence/selfcheck-run2.json"
+  ],
+  "scope": "trusted public development fixture, not model scores or hidden evaluation"
+}

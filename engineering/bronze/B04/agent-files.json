@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "prompt.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "task.json",
+      "target": "task.json"
+    },
+    {
+      "source": "baseline/review.json",
+      "target": "review.json"
+    },
+    {
+      "source": "baseline/src/AuditLog.java",
+      "target": "src/AuditLog.java"
+    },
+    {
+      "source": "baseline/src/Quote.java",
+      "target": "src/Quote.java"
+    },
+    {
+      "source": "baseline/src/QuoteCalculator.java",
+      "target": "src/QuoteCalculator.java"
+    },
+    {
+      "source": "baseline/src/QuoteCli.java",
+      "target": "src/QuoteCli.java"
+    },
+    {
+      "source": "baseline/src/QuoteInput.java",
+      "target": "src/QuoteInput.java"
+    },
+    {
+      "source": "public-inputs/policy.md",
+      "target": "evidence/policy.md"
+    },
+    {
+      "source": "public-inputs/candidate.diff",
+      "target": "evidence/candidate.diff"
+    },
+    {
+      "source": "public-inputs/ci-before.log",
+      "target": "evidence/ci-before.log"
+    },
+    {
+      "source": "public-inputs/pr-description.md",
+      "target": "evidence/pr-description.md"
+    },
+    {
+      "source": "public-inputs/pre-pr-AuditLog.java.txt",
+      "target": "evidence/pre-pr-AuditLog.java.txt"
+    },
+    {
+      "source": "public-inputs/pre-pr-QuoteCalculator.java.txt",
+      "target": "evidence/pre-pr-QuoteCalculator.java.txt"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "run_selfcheck.py",
+    "selfcheck-results.json",
+    "verification-results.json",
+    "evaluation and repeatability evidence"
+  ],
+  "note": "Only named public task-input fixtures are copied; public-inputs is not evaluator result evidence. No oracle, reference solution or maintained selfcheck is supplied. Public repository remains accessible; not hidden or secure."
+}

@@ -1,0 +1,154 @@
+{
+  "id": "D04",
+  "status": "runnable_slice",
+  "original_contract": {
+    "id": "D04",
+    "title": "插件隔离与供应链变更审查",
+    "tier": "diamond",
+    "category": "review_and_hardening",
+    "summary": "物流报价服务允许租户安装受限规则插件，一次依赖升级改变了反序列化入口与类加载行为。审查依赖和实现变更，设计隔离及兼容替代方案。",
+    "brief": {
+      "context": "规则平台、插件 SDK、构建配置三仓；所有恶意样例为本地安全夹具，不访问外网或宿主敏感文件。",
+      "mission": "物流报价服务允许租户安装受限规则插件，一次依赖升级改变了反序列化入口与类加载行为。审查依赖和实现变更，设计隔离及兼容替代方案。",
+      "constraints": [
+        "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+        "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+        "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+        "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+      ],
+      "inputPackagePlanned": [
+        "原创仓库固定提交快照及构建锁",
+        "需求片段、领域政策和历史接口样例",
+        "脱敏合成数据与故障夹具",
+        "公开冒烟测试；独立保留的验收用例及评分锚点"
+      ]
+    },
+    "deliverables": [
+      "提交 requirement-decisions.md：已知约束、冲突、合理假设、必须询问的问题及最终决策，不虚构用户答复。",
+      "提交 evidence-map.md：仓库/模块/符号或日志证据到结论的对应关系，记录排除的替代解释。",
+      "提交范围受控的实现补丁或该类别要求的测试/审查产物；保留既有公共契约并说明所有行为变化。",
+      "提交 regression-tests/ 与复演命令：断言与验收 ID 对应，明确实际执行、失败及未执行项。",
+      "提交 delivery-note.md：变更范围、风险、恢复或回滚步骤、依赖条件与残余未知。"
+    ],
+    "acceptance": [
+      {
+        "id": "D04-A01",
+        "criterion": "绘制不可信插件输入到反序列化、类加载和执行入口的数据流",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "D04-A02",
+        "criterion": "使用无害标记文件或计数器证明权限边界问题，不运行真实破坏性 payload",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": true
+      },
+      {
+        "id": "D04-A03",
+        "criterion": "隔离方案对 CPU、内存、时间和网络有明确边界，不能依赖已弃用机制的未验证能力",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "D04-A04",
+        "criterion": "旧插件契约和拒绝不安全插件的错误有迁移说明及契约测试",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "D04-A05",
+        "criterion": "依赖锁与构建来源可追溯，不能以随意替换未经确认组件处理漏洞",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      },
+      {
+        "id": "D04-A06",
+        "criterion": "证明超限插件不能拖死无关租户，审计不记录插件内敏感输入",
+        "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+        "critical": false
+      }
+    ],
+    "risks": {
+      "failureCases": [
+        "仅扫描版本号",
+        "JVM 内超时被当作强隔离",
+        "过滤字符串当沙箱"
+      ],
+      "traps": [
+        "仅扫描版本号",
+        "JVM 内超时被当作强隔离",
+        "过滤字符串当沙箱",
+        "测试全绿不等于任务已验证；未执行步骤须明确披露。"
+      ],
+      "invariants": [
+        "绘制不可信插件输入到反序列化、类加载和执行入口的数据流",
+        "使用无害标记文件或计数器证明权限边界问题，不运行真实破坏性 payload"
+      ],
+      "criticalFailurePolicy": "若经证实违反标为 critical 的核心约束，标记 task_pass=false；维度分仍如实保留，不以总分掩盖安全或业务失败。"
+    },
+    "rubric": [
+      {
+        "dimension": "系统不变量与安全边界",
+        "weight": 30,
+        "evidence": "验收断言、独立参考模型或数据库状态；不能仅凭自述得分。"
+      },
+      {
+        "dimension": "对抗测试与恢复证据",
+        "weight": 30,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "推理与跨仓完整性",
+        "weight": 25,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      },
+      {
+        "dimension": "上线回滚可操作性",
+        "weight": 15,
+        "evidence": "提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。"
+      }
+    ],
+    "environment": {
+      "runtimeTarget": "Java 21；依赖与服务镜像版本待可运行夹具实现时锁定，当前不声称可构建。",
+      "prerequisiteInfrastructure": [
+        "离线依赖镜像",
+        "受限子进程执行器",
+        "无害攻击夹具"
+      ],
+      "plannedAssets": [
+        "公开 starter 仓库快照",
+        "隔离验收运行器与独立 oracle",
+        "固定 seed 数据与故障夹具",
+        "参考补丁和故障版对照",
+        "机器预算、超时及评分配置"
+      ],
+      "objectiveTestStrategy": "对安全边界做本地对抗测试与资源耗尽测试；验证构建可重复及旧插件兼容，外联尝试只指向本地桩。",
+      "skillAxes": [
+        "供应链审查",
+        "威胁建模",
+        "资源隔离"
+      ],
+      "networkPolicy": "依赖预热后默认离线；所有第三方、支付与消息外联以本地桩代替。",
+      "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
+    },
+    "status": "design_only",
+    "difficultyRationale": "暂定钻石：具有在线迁移、复合事故或独立模型验证等系统级约束，需解释取舍并证明中间态安全。须待试跑校准。"
+  },
+  "implemented_scope": "Manifest supply-chain review plus allowlisted expression DSL; explicit dependency and permission denial, harmless write marker probe, input and instruction budgets, clean tenant execution after rejection, redacted audits.",
+  "not_implemented": [
+    "real distributed database transactions and CDC",
+    "Kafka or real cluster",
+    "production isolation/security sandbox",
+    "calibrated diamond difficulty",
+    "hidden evaluation"
+  ],
+  "entrypoint": "python3 run.py --selfcheck",
+  "mutants": [
+    "UNLOCKED",
+    "PERMISSION",
+    "UNBOUNDED"
+  ],
+  "trust": "trusted local code only; process timeouts are not a security sandbox",
+  "specific_limits": "Not a sandbox for arbitrary Java plugins. No classloader isolation claim. Java serialization and legacy Java plugins are rejected; OS network enforcement and real CPU preemption are not implemented. Trusted local fixture only.",
+  "compiler_note": "Java21 compiler module with -source 21 -target 21; --release unavailable because this environment lacks ct.sym release support."
+}

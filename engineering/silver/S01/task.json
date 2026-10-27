@@ -1,0 +1,75 @@
+{
+  "id": "S01",
+  "title": "押金退款回调的乱序状态机",
+  "status": "executable_narrowed_engineering_slice",
+  "original_scope": {
+    "context": "退款服务、账单模块与模拟支付适配器；消息至少一次投递，事件含退款号、序号和签名。",
+    "mission": "共享工具平台的退款回调可能重复或乱序：成功后收到处理中，用户页面会回退。修复接收端与账单投影，不能重放真实支付请求。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "S01-A01",
+      "criterion": "按退款聚合验证合法状态迁移，终态成功不得被旧处理中覆盖",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S01-A02",
+      "criterion": "重复事件只能产生一次账单变更，冲突终态进入人工核对而不是任意覆盖",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "S01-A03",
+      "criterion": "回调验签失败不写业务数据，回放日志不得包含完整签名密钥",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S01-A04",
+      "criterion": "事务提交前失败允许安全重试，提交后响应丢失不会重复记账",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "S01-A05",
+      "criterion": "明确取消请求与已成功退款的优先级，并有乱序、缺失序号和未知退款号用例",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Signed refund callback CLI, atomic persisted event receipts and billing projection; fault injection before commit and after commit with restart replay.",
+  "not_implemented_or_unmeasured": "No HTTP adapter, real payment dispatch, database transaction engine, distributed delivery, fsync/power-loss guarantees, or production secrets.",
+  "full_catalog_ready": false,
+  "test_visibility": "public development tests; no hidden evaluation or contamination resistance claimed",
+  "candidate_trust": "trusted local code only; process/resource limits are not a security sandbox",
+  "runtime": {
+    "language": "Java 21",
+    "compiler": "java -m jdk.compiler/com.sun.tools.javac.Main -source 21 -target 21",
+    "dependency": null
+  },
+  "baseline_directory": "baseline",
+  "reference_directory": "reference",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "selfcheck_command": "python3 run_selfcheck.py",
+  "independent_verifier": "../verifier.py",
+  "public_scenarios": 10,
+  "reference_repetitions": 3,
+  "mutants": [
+    "double_booking",
+    "terminal_regression"
+  ],
+  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator."
+}

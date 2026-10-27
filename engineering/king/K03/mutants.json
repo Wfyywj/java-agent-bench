@@ -1,0 +1,26 @@
+[
+  {
+    "name": "legacy-rate",
+    "file": "Domain.java",
+    "old": "rule.equals(\"v2\")?3:2",
+    "new": "2"
+  },
+  {
+    "name": "shadow-bypass",
+    "file": "Domain.java",
+    "old": "boolean allowed=old==now||approvals.contains(\"peak-correction\")",
+    "new": "boolean allowed=true"
+  },
+  {
+    "name": "bill-reinterpretation",
+    "file": "Domain.java",
+    "old": "if(prior!=null) {",
+    "new": "if(false) {"
+  },
+  {
+    "name": "narrow-long-reading",
+    "file": "Domain.java",
+    "old": "Math.multiplyExact(peak,",
+    "new": "Math.multiplyExact((int)peak,"
+  }
+]

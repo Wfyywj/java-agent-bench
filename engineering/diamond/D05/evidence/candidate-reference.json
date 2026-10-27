@@ -1,0 +1,79 @@
+{
+  "pass": true,
+  "checks": [
+    "snapshot",
+    "members",
+    "initial-provider-empty",
+    "crash-a-exact-provider",
+    "unknown.a",
+    "checkpoint-not-ahead",
+    "crash-a-not-falsely-issued",
+    "epoch",
+    "stale-worker-no-write",
+    "replay-a-no-extra-provider-effect",
+    "replay-a-exact-issued",
+    "cursor",
+    "replay-a-unknown-resolved",
+    "cursor",
+    "normal-b-exact-provider",
+    "normal-b-exact-issued",
+    "normal-b-no-unknown",
+    "cursor",
+    "poison-no-provider-effect",
+    "poison-exact-quarantine",
+    "poison-not-falsely-issued",
+    "crash-c-exact-provider",
+    "crash-c-exact-unknown",
+    "crash-c-no-false-confirmation",
+    "cursor",
+    "cancel-stops-new-work",
+    "cancel-exact-provider-effects",
+    "cancel-exact-issued",
+    "cancel-exact-unknown",
+    "cancel-exact-quarantine",
+    "query-before-retry-exact-attempts",
+    "cancelled",
+    "cursor",
+    "epoch",
+    "snapshot"
+  ],
+  "details": {
+    "issued": [
+      "a",
+      "b"
+    ],
+    "unknown": [
+      "c"
+    ],
+    "not_issued": [
+      "d"
+    ],
+    "quarantined": [
+      "poison"
+    ],
+    "snapshot": "cycle7-snapshot3",
+    "expected_provider_effects": {
+      "cycle7-snapshot3:a": 1,
+      "cycle7-snapshot3:b": 1,
+      "cycle7-snapshot3:c": 1
+    }
+  },
+  "state": {
+    "attempt.a": "1",
+    "attempt.b": "1",
+    "attempt.c": "1",
+    "cancelled": "true",
+    "cursor": "3",
+    "epoch": "2",
+    "members": "a,b,poison,c,d",
+    "provider.cycle7-snapshot3:a": "1",
+    "provider.cycle7-snapshot3:b": "1",
+    "provider.cycle7-snapshot3:c": "1",
+    "quarantine.poison": "invalid",
+    "result.a": "issued",
+    "result.b": "issued",
+    "snapshot": "cycle7-snapshot3",
+    "unknown.c": "true"
+  },
+  "audit": "provider-committed-before-crash cycle7-snapshot3:a\ncheckpoint 0 cycle7-snapshot3:a\ncheckpoint 1 cycle7-snapshot3:b\nprovider-committed-before-crash cycle7-snapshot3:c\n"
+}

@@ -1,0 +1,85 @@
+{
+  "id": "G02",
+  "status": "runnable_slice",
+  "original_scope": {
+    "context": "计费核心、账单服务和客服管理接口三模块；规则覆盖免费窗口、跨日封顶与站点时区。",
+    "mission": "城市储物柜按存放区间计费，新规则上线后客服发现历史账单被当前规则重新解释。设计版本化规则与可审计重算，不能覆盖已确认账单。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "G02-A01",
+      "criterion": "每份已确认账单绑定不可变规则版本及输入快照，规则编辑不改变历史结果",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G02-A02",
+      "criterion": "对跨日、跨时区和夏令时边界明确业务口径，并以问答记录冻结未明规则",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G02-A03",
+      "criterion": "重算生成差异记录而不覆盖原账单，批准前不能触发实际收退款",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G02-A04",
+      "criterion": "相同快照与规则版本重复计算逐分一致；金额范围溢出得到显式错误",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G02-A05",
+      "criterion": "新规则的生效时刻不等同于发布时间，回滚不重新解释旧账单",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G02-A06",
+      "criterion": "管理员权限、审批人与计算执行者在审计事件中可追踪",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Three modules: timezone/DST exact billing, immutable version catalog and confirmed snapshot ledger, audited preview rebuild management facade. In-memory persistence and supplied identity strings; no real approval/payment service.",
+  "runtime": "OpenJDK 21, no third-party dependencies",
+  "modules": [
+    "admin",
+    "billing",
+    "bills"
+  ],
+  "variants": [
+    "reference",
+    "baseline",
+    "mutant_mutable_versions",
+    "mutant_floor_minutes",
+    "mutant_latest_publication",
+    "mutant_zero_amount"
+  ],
+  "public_tests": true,
+  "hidden_holdout": false,
+  "independence": "Verifier expected values authored directly from frozen policies, reference is separate implementation; mutants are deliberate reference patches. No independent human authorship claim.",
+  "limitations": [
+    "Not full catalog acceptance; no database/Redis/Kafka/object storage integration",
+    "Not a security sandbox: arbitrary candidate Java executes with caller permissions; run untrusted submissions only in external disposable network-disabled container",
+    "No model runs or difficulty calibration"
+  ],
+  "command": "python run.py reference; python selfcheck.py",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "baseline_path": "baseline",
+  "agent_files_manifest": "agent-files.json"
+}

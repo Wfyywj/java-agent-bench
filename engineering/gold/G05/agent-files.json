@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "baseline/src/bench/Service.java",
+      "target": "src/bench/Service.java"
+    },
+    {
+      "source": "contract/CONTRACT.md",
+      "target": "contract/CONTRACT.md"
+    },
+    {
+      "source": "diagnostics/incident.md",
+      "target": "diagnostics/incident.md"
+    },
+    {
+      "source": "modules/api/src/bench/Gateway.java",
+      "target": "modules/api/src/bench/Gateway.java"
+    },
+    {
+      "source": "modules/downstream/src/bench/SeatClient.java",
+      "target": "modules/downstream/src/bench/SeatClient.java"
+    }
+  ]
+}

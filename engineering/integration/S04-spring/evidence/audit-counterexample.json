@@ -1,0 +1,42 @@
+{
+  "package": "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/mutants/early-return-cancelled",
+  "source_sha256": "f377e6433dee6203164ed2729ca5fda9790d49c71067897c1111fcc4c1985435",
+  "compile": {
+    "command": [
+      "java",
+      "-m",
+      "jdk.compiler/com.sun.tools.javac.Main",
+      "-source",
+      "21",
+      "-target",
+      "21",
+      "-cp",
+      "/tmp/java-agent-bench-s04-spring-deps/spring-context-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-aop-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-beans-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-core-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-expression-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jcl-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jdbc-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-tx-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-observation-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-commons-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/h2-2.3.232.jar",
+      "-d",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/classes",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/src/bench/BatchService.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/src/bench/BusinessFailure.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/src/bench/OperationProbe.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/src/bench/OrderRepository.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/src/bench/OrderRow.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/regression-tests/bench/IntegrationVerifier.java",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/regression-tests/bench/TestConfiguration.java"
+    ],
+    "exit": 0,
+    "output": "",
+    "seconds": 1.13
+  },
+  "passed": false,
+  "test": {
+    "command": [
+      "java",
+      "-Xmx192m",
+      "-cp",
+      "/workspace/shared/java-agent-bench/engineering/integration/S04-spring/s04-r67xtx5h/classes:/tmp/java-agent-bench-s04-spring-deps/spring-context-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-aop-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-beans-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-core-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-expression-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jcl-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-jdbc-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/spring-tx-6.2.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-observation-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/micrometer-commons-1.14.12.jar:/tmp/java-agent-bench-s04-spring-deps/h2-2.3.232.jar",
+      "bench.IntegrationVerifier"
+    ],
+    "exit": 1,
+    "output": "PASS spring-proxy\nPASS active-transaction-at-repository\nPASS batch-row-lock-visible-to-independent-connection\nPASS successful-cancel-atomic-state\nPASS unrelated-batch-preserved\nPASS repeat-cancel-idempotent\nFAIL mixed-cancelled-pending-processes-remainder java.lang.AssertionError: cancelled prefix skipped pending remainder\nFAIL mixed-cancelled-delivered-still-rejects java.lang.AssertionError: Expected checked business rejection\nFAIL mixed-cancelled-pending-failure-rolls-back java.lang.AssertionError: Expected checked business rejection\nPASS checked-mid-batch-rollback\nPASS runtime-mid-batch-rollback\nPASS late-checked-failure-rollback\nPASS delivered-order-blocks-whole-batch\nPASS delivery-and-repeat-no-release\nPASS mixed-delivered-pending-delivers-remainder\nPASS mixed-delivered-cancelled-rejects-delivery\nPASS cancel-wins-concurrent-delivery\nPASS delivery-wins-concurrent-cancel\nPASS concurrent-distinct-batches-no-lost-update\nPASS unrelated-batch-not-globally-locked\nRESULT tests=20 failed=3\n",
+    "seconds": 1.524
+  }
+}

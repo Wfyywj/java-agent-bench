@@ -1,0 +1,13 @@
+{
+  "expand": [
+    "Deploy service accepting both fields with explicit new-field precedence",
+    "Deploy gateway preserving optional field",
+    "Release dual-writing SDK after new service available"
+  ],
+  "contract": [
+    "Record old-only requests, new-only requests, downgrade counts and unknown-code rejections by client version",
+    "Remove level only after observed legacy traffic is zero for approved support window"
+  ],
+  "rollback_boundary": "Before contract, retain old level dual-write; rollback service loses STUDENT-only selection in controlled downgrade, never bypasses authoritative entitlement. After level removal, old service rollback requires restoring dual-write first.",
+  "telemetry_status": "Required telemetry designed; no production observations claimed."
+}

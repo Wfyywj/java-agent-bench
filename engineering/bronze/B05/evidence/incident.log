@@ -1,0 +1,5 @@
+2026-04-16T09:00:00Z import-start request=synthetic-101
+2026-04-16T09:00:01Z import-complete request=synthetic-101 rows=2
+2026-04-16T09:10:00Z open-upload failure=Too_many_open_files request=synthetic-161
+2026-04-16T09:10:01Z health-check component=database outcome=TIMEOUT request=health-80
+2026-04-16T09:10:03Z database-probe SELECT_1 latency_ms=3 active=2 waiters=0

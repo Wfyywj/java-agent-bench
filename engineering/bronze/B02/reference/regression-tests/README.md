@@ -1,0 +1,1 @@
+From this directory run `python3 ../../run_selfcheck.py`. Executable independent assertions are in `../../verifier/check.py`: A01 replay/restart; A02 payload conflicts; A03 each staged-write failure; A04 lifecycle and tenant concealment; A05 two simultaneous HTTP clients and damaged review. Task-level verification-results.json records actual final execution.

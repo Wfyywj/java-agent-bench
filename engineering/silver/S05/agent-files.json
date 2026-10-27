@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "baseline/src/bench/Database.java",
+      "target": "src/bench/Database.java"
+    },
+    {
+      "source": "baseline/src/bench/Main.java",
+      "target": "src/bench/Main.java"
+    },
+    {
+      "source": "baseline/src/bench/Order.java",
+      "target": "src/bench/Order.java"
+    },
+    {
+      "source": "baseline/src/bench/SearchRepository.java",
+      "target": "src/bench/SearchRepository.java"
+    },
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-task.json",
+      "target": "original-task.json"
+    },
+    {
+      "source": "fixtures/orders.csv",
+      "target": "fixtures/orders.csv"
+    },
+    {
+      "source": "fixtures/conversations.csv",
+      "target": "fixtures/conversations.csv"
+    }
+  ]
+}

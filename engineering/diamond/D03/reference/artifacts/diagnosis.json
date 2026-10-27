@@ -1,0 +1,56 @@
+{
+  "simulation": true,
+  "normalized_timeline": [
+    {
+      "event": "deploy",
+      "time": 10
+    },
+    {
+      "event": "cache-stale",
+      "time": 12
+    },
+    {
+      "event": "lock-wait",
+      "time": 15
+    },
+    {
+      "event": "backlog",
+      "time": 20
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "freshness",
+      "evidence": [
+        "rule.version=2",
+        "l1.version=1",
+        "l2.version=1",
+        "hit.percent=98"
+      ],
+      "experiment": "reject ineligible despite cache hit",
+      "conclusion": "hit ratio does not establish rule freshness"
+    },
+    {
+      "id": "lock-amplification",
+      "evidence": [
+        "locks=8",
+        "backlog=6"
+      ],
+      "experiment": "limit-workers then bounded drain",
+      "conclusion": "lowering lock pressure permits recovery but does not itself drain"
+    }
+  ],
+  "recovery": {
+    "tenant": "east",
+    "max_batch": 2,
+    "dry_run": true,
+    "stop_if_locks_above": 2,
+    "checkpoint": "count of drained synthetic messages"
+  },
+  "unsupported": [
+    "production causality",
+    "real performance"
+  ],
+  "communication": "Synthetic reproduction identifies separate stale-rule and lock-pressure mechanisms. Pause only affected region; preserve eligibility and deduplication. Unknown production impact remains unverified.",
+  "rollback": "Stop bounded replay on lock pressure >2; retain original events and checkpoint; never reset accepted IDs or projection versions."
+}

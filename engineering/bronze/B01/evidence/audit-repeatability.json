@@ -1,0 +1,11 @@
+{
+  "task": "B01",
+  "version": "0.1.1",
+  "runs": [
+    "selfcheck-results.json",
+    "evidence/selfcheck-run2.json"
+  ],
+  "byte_identical": true,
+  "sha256": "ba3ada89ed958e6fe8c38a1eb107fdb5f2c7f9eb1f028061ca0a8ae22277a7a8",
+  "scope": "trusted public engineering fixture; not model scores"
+}

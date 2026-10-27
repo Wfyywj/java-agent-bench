@@ -1,0 +1,19 @@
+SELECT
+    "O"."ID",
+    "O"."TENANT",
+    "O"."CREATED"
+FROM "PUBLIC"."ORDERS" "O"
+    /* PUBLIC.IDX_ORDERS_TENANT_CREATED: TENANT = ?1 */
+WHERE ("O"."TENANT" = ?1)
+    AND EXISTS(    SELECT
+        1
+    FROM "PUBLIC"."MESSAGES" "M"
+        /* PUBLIC.IDX_MESSAGES_RECENT: CREATED >= ?2
+            AND TENANT = O.TENANT
+            AND ORDER_ID = O.ID
+         */
+    WHERE ("M"."CREATED" >= ?2)
+        AND ("M"."TENANT" = "O"."TENANT")
+        AND ("M"."ORDER_ID" = "O"."ID"))
+ORDER BY 3 DESC, 1
+FETCH FIRST ?3 ROWS ONLY

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "PROMPT.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "CONTRACT.md",
+      "target": "CONTRACT.md"
+    },
+    {
+      "source": "diagnostic-evidence.md",
+      "target": "diagnostic-evidence.md"
+    },
+    {
+      "source": "baseline/protocol/Signing.java",
+      "target": "protocol/Signing.java"
+    },
+    {
+      "source": "baseline/upload/Sessions.java",
+      "target": "upload/Sessions.java"
+    },
+    {
+      "source": "baseline/workorders/Attachments.java",
+      "target": "workorders/Attachments.java"
+    },
+    {
+      "source": "public-tests/Smoke.java",
+      "target": "public-tests/Smoke.java"
+    }
+  ],
+  "excluded": [
+    "reference",
+    "verifier",
+    "mutant_*",
+    "verification-results.json",
+    "reference-review.json"
+  ],
+  "note": "Only copy files listed; trusted local selfcheck stays evaluator-side. No hidden holdout exists."
+}

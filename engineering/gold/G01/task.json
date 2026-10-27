@@ -1,0 +1,85 @@
+{
+  "id": "G01",
+  "status": "runnable_slice",
+  "original_scope": {
+    "context": "订单、库存及事件契约三仓；每服务独立数据库，消息至少一次，无跨库事务。",
+    "mission": "户外装备租赁把库存拆为独立服务，订单创建超时重试后出现幽灵预占。实现可恢复工作流，保障租期重叠约束并保留人工修复入口。",
+    "constraints": [
+      "只在合成隔离环境操作；无生产数据、真实资金或真实客户通信。",
+      "不得删除、跳过、弱化验收测试，不得修改隐藏评测器或根据隐藏答案硬编码。",
+      "允许提出澄清问题；未获答复时列出假设，对会改变授权、资金或数据安全的歧义停止依赖步骤。",
+      "实现技术细节开放，但必须证明行为与既定契约符合，不能以某个框架用法替代业务正确性。"
+    ],
+    "inputPackagePlanned": [
+      "原创仓库固定提交快照及构建锁",
+      "需求片段、领域政策和历史接口样例",
+      "脱敏合成数据与故障夹具",
+      "公开冒烟测试；独立保留的验收用例及评分锚点"
+    ]
+  },
+  "original_acceptance": [
+    {
+      "id": "G01-A01",
+      "criterion": "订单意图、预占键和租期绑定，重试不能创建多份有效预占",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G01-A02",
+      "criterion": "订单提交失败最终释放预占；释放请求丢失可由持久化恢复流程重试",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": true
+    },
+    {
+      "id": "G01-A03",
+      "criterion": "超时不能直接认定预占失败，先按业务键查询或执行幂等补偿",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G01-A04",
+      "criterion": "并发重叠租期下有效预占不超过器材容量，非重叠租期允许复用",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G01-A05",
+      "criterion": "提供恢复任务与人工核对的权限、审计及重复执行保护",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    },
+    {
+      "id": "G01-A06",
+      "criterion": "混合新旧消息版本兼容，毒消息隔离不阻断其他库存分区",
+      "method": "由隔离验收器执行相应行为断言；涉及决策或诊断的部分按事先冻结的证据锚点双人复核。",
+      "critical": false
+    }
+  ],
+  "implemented_scope": "Separate order/inventory/event Java packages and fsync journals; response-loss query, durable compensation recovery, interval capacity concurrency. Partial saga only; explicitly excludes crash-before-intent, mixed message versions and poison partitions.",
+  "runtime": "OpenJDK 21, no third-party dependencies",
+  "modules": [
+    "events",
+    "inventory",
+    "orders"
+  ],
+  "variants": [
+    "reference",
+    "baseline",
+    "mutant_missing_intent",
+    "mutant_wrong_key",
+    "mutant_overlap",
+    "mutant_release_noop"
+  ],
+  "public_tests": true,
+  "hidden_holdout": false,
+  "independence": "Verifier expected values authored directly from frozen policies, reference is separate implementation; mutants are deliberate reference patches. No independent human authorship claim.",
+  "limitations": [
+    "Not full catalog acceptance; no database/Redis/Kafka/object storage integration",
+    "Not a security sandbox: arbitrary candidate Java executes with caller permissions; run untrusted submissions only in external disposable network-disabled container",
+    "No model runs or difficulty calibration"
+  ],
+  "command": "python run.py reference; python selfcheck.py",
+  "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
+  "baseline_path": "baseline",
+  "agent_files_manifest": "agent-files.json"
+}

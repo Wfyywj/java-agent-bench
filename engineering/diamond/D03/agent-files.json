@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "source": "prompt.md",
+      "target": "PROMPT.md"
+    },
+    {
+      "source": "original-contract.json",
+      "target": "original-contract.json"
+    },
+    {
+      "source": "baseline/artifacts/architecture.md",
+      "target": "artifacts/architecture.md"
+    },
+    {
+      "source": "baseline/artifacts/contract.md",
+      "target": "artifacts/contract.md"
+    },
+    {
+      "source": "baseline/artifacts/diagnosis.json",
+      "target": "artifacts/diagnosis.json"
+    },
+    {
+      "source": "baseline/artifacts/events.json",
+      "target": "artifacts/events.json"
+    },
+    {
+      "source": "baseline/src/DurableState.java",
+      "target": "src/DurableState.java"
+    },
+    {
+      "source": "baseline/src/IncidentSimulator.java",
+      "target": "src/IncidentSimulator.java"
+    },
+    {
+      "source": "baseline/src/Main.java",
+      "target": "src/Main.java"
+    }
+  ]
+}
