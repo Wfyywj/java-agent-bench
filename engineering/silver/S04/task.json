@@ -2,6 +2,7 @@
   "id": "S04",
   "title": "配送批次取消的事务回归",
   "status": "executable_narrowed_engineering_slice",
+  "implementation_status": "executable_narrowed_engineering_slice",
   "original_scope": {
     "context": "单 Spring 风格服务的订单、库存模块；提供失效批次夹具、事务代理边界与数据库连接池限制。",
     "mission": "社区团购取消配送批次后，部分库存被释放但订单仍待配送。找到代理事务失效与批量异常处理交互，修复而不锁住整张订单表。",

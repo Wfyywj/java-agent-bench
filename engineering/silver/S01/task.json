@@ -2,6 +2,7 @@
   "id": "S01",
   "title": "押金退款回调的乱序状态机",
   "status": "executable_narrowed_engineering_slice",
+  "implementation_status": "executable_narrowed_engineering_slice",
   "original_scope": {
     "context": "退款服务、账单模块与模拟支付适配器；消息至少一次投递，事件含退款号、序号和签名。",
     "mission": "共享工具平台的退款回调可能重复或乱序：成功后收到处理中，用户页面会回退。修复接收端与账单投影，不能重放真实支付请求。",

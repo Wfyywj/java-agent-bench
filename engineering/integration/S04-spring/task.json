@@ -3,6 +3,20 @@
   "design_id": "S04",
   "title": "Real Spring batch cancellation integration",
   "status": "runnable_integration_slice",
+  "implementation_status": "runnable_integration_slice",
+  "implemented_scope": "Actual Spring annotation transaction proxy and JDBC transaction manager on H2: checked and runtime rollback, atomic batch inventory and order updates, repeat-cancel and delivered guard, per-batch SQL row locking, concurrent delivery versus cancel, and atomic shared inventory increment.",
+  "not_implemented_or_unmeasured": [
+    "H2 only, not PostgreSQL",
+    "No finite production connection pool or pool exhaustion test",
+    "Public tests, no hidden evaluation or model ranking",
+    "Trusted candidate code only; no hostile-code sandbox",
+    "Maven manifest provided, Maven lifecycle unexecuted",
+    "No production load calibration; bounded progress deadlines are not performance scores",
+    "No HTTP/controller/auth, persistence across process restart, deadlock retry, mixed SKU cancellation ordering, or broad randomized schedule coverage",
+    "Per-batch pessimistic locking is required here; this is not an oracle for optimistic implementations",
+    "Spring 6.2.12 is a reproducibility pin, not a latest-version or security recommendation"
+  ],
+  "full_catalog_ready": false,
   "runtime": "Java 21 jdk.compiler; Python 3",
   "scope": [
     "Actual Spring annotation transaction proxy and JDBC transaction manager",
@@ -20,7 +34,19 @@
   "selfcheck_command": "python3 run_selfcheck.py",
   "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
   "checks": 20,
-  "mutants": 10,
+  "mutant_count": 10,
+  "mutants": [
+    "allow-delivered",
+    "default-checked-policy",
+    "double-release",
+    "early-return-cancelled",
+    "early-return-delivered",
+    "global-lock",
+    "lost-update",
+    "no-batch-lock",
+    "self-invocation",
+    "swallow-checked"
+  ],
   "reference_repeats": 3,
   "limits": [
     "H2 only, not PostgreSQL",
