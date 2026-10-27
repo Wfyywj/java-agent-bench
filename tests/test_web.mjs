@@ -333,6 +333,44 @@ test('design-only tasks without a slice stay unrealized, and a true flag invents
  assert.doesNotMatch(detail,/model_evaluated 为 false|模型得分|成功率\s*\d/);
 });
 
+test('M1 gates-green slices stay design_only and are not full-catalog ready',async()=>{
+ const implData=JSON.parse(await readFile(new URL('../dist/implementations.json',import.meta.url),'utf8'));
+ const taskData=JSON.parse(await readFile(new URL('../dist/tasks.json',import.meta.url),'utf8'));
+ const m1=['B02','S01','S04','G01','G05'];
+ const a=await app({implData,taskData});
+ a.run('renderCatalog()');
+ const catalog=a.get('#content').innerHTML;
+ assert.match(catalog,/可执行切片 · gates_green · 非完整设计/);
+ assert.match(catalog,/原设计 \+ 可运行切片/);
+ assert.match(catalog,/M1 四门通过的切片标为 gates_green，不是完整目录就绪/);
+ assert.doesNotMatch(catalog,/完整设计已就绪|设计稿 · 已完成|可直接评测模型|full_catalog_ready 为 true/);
+ for(const id of m1){
+  a.run(`detail('${id}')`);
+  const html=a.get('#detailContent').innerHTML;
+  assert.match(html,/design_only/);
+  assert.match(html,/切片 gates_green/);
+  assert.match(html,/gates_green/);
+  assert.match(html,/full_catalog_ready 为 false/);
+  assert.match(html,/没有模型实测/);
+  assert.doesNotMatch(html,/设计稿本身不可执行/);
+  assert.doesNotMatch(html,/完整设计已就绪|生产就绪|full_catalog_ready 为 true/);
+ }
+ a.run("detail('S04')");
+ const s04=a.get('#detailContent').innerHTML;
+ assert.match(s04,/S04-slice · gates_green/);
+ assert.match(s04,/S04-spring · gates_green/);
+ assert.match(s04,/runnable_integration_slice/);
+ assert.match(s04,/不是 PostgreSQL/);
+ a.run("detail('B01')");
+ const b01=a.get('#detailContent').innerHTML;
+ assert.match(b01,/design_only/);
+ assert.match(b01,/设计稿本身不可执行/);
+ assert.doesNotMatch(b01,/gates_green/);
+ const green=implData.filter(x=>x.status==='gates_green').map(x=>x.implementation_id).sort();
+ assert.deepEqual(green,['B02-slice','G01-slice','G05-slice','S01-slice','S04-slice','S04-spring']);
+ assert.equal(implData.filter(x=>x.full_catalog_ready===true).length,0);
+});
+
 test('exported plans explicitly remain non-executable planning drafts',async()=>{
  const a=await app();a.run("selected.add('R01');renderPlanner()");a.get('#exportPlan').onclick();const plan=await a.exported();assert.equal(plan.plan_kind,'planning_draft');assert.equal(plan.execution_supported,false);assert.equal(plan.execution_status,'not_run');assert.match(a.get('#content').innerHTML,/不能直接交给 experiment_tools 或 analysis_tools 执行/);assert.doesNotMatch(a.get('#content').innerHTML,/导出配置交给执行器/);
 });

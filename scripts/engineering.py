@@ -97,6 +97,27 @@ def evaluate(task,candidate,output,timeout,trusted):
         output.parent.mkdir(parents=True,exist_ok=True);output.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n')
     return record
 
+def discover():
+    """List slices. Status matches catalog/implementations.json when that file exists.
+
+    gates_green means the M1 four gates passed for that slice. It is not
+    full-catalog-ready and it does not replace design_only on the original design.
+    """
+    rows=[{'id':p.name,'implementation_id':p.name+'-slice','tier':p.parent.name,'status':'runnable_slice','candidate_adapter':(p/'agent-files.json').exists()} for tier in TIERS.values() for p in sorted((ROOT/'engineering'/tier).glob('[BSGDK]0[1-5]')) if (p/'task.json').exists()]
+    rows+=[{'id':name,'implementation_id':name,'tier':'integration','status':'runnable_integration_slice','candidate_adapter':True} for name,path in VARIANTS.items() if (ROOT/path/'task.json').is_file()]
+    impl_path=ROOT/'catalog/implementations.json'
+    if impl_path.is_file():
+        known={item['implementation_id']:item for item in json.loads(impl_path.read_text()) if isinstance(item,dict) and isinstance(item.get('implementation_id'),str)}
+        for row in rows:
+            item=known.get(row['implementation_id'])
+            if not item:continue
+            status=item.get('status')
+            if status in ('runnable_slice','runnable_integration_slice','gates_green'):row['status']=status
+            kind=item.get('slice_kind')
+            if kind in ('runnable_slice','runnable_integration_slice'):row['slice_kind']=kind
+            if item.get('full_catalog_ready') is False:row['full_catalog_ready']=False
+    return rows
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__);sp=ap.add_subparsers(dest='command',required=True)
     sp.add_parser('list')
@@ -104,7 +125,7 @@ def main():
     p=sp.add_parser('evaluate');p.add_argument('task');p.add_argument('candidate',type=Path);p.add_argument('--trusted-code',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--timeout',type=int,default=180)
     a=ap.parse_args()
     try:
-        if a.command=='list':result=[{'id':p.name,'implementation_id':p.name+'-slice','tier':p.parent.name,'status':'runnable_slice','candidate_adapter':(p/'agent-files.json').exists()} for tier in TIERS.values() for p in sorted((ROOT/'engineering'/tier).glob('[BSGDK]0[1-5]')) if (p/'task.json').exists()]+ [{'id':name,'implementation_id':name,'tier':'integration','status':'runnable_integration_slice','candidate_adapter':True} for name,path in VARIANTS.items() if (ROOT/path/'task.json').is_file()]
+        if a.command=='list':result=discover()
         elif a.command=='prepare':result=prepare(a.task,a.destination)
         else:
             if not 1<=a.timeout<=1800:raise ValueError('Timeout must be 1..1800 seconds')

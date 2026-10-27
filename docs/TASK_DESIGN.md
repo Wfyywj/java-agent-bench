@@ -2,7 +2,7 @@
 
 ## 当前交付与可信边界
 
-`catalog/tasks.json` 是 **25 题原创设计目录，不是 25 题已可运行 benchmark**。每题均为 `design_only`。本批交付包含 140 条验收要求、任务级风险、加权 rubric、基础设施需求和客观测试策略；不包含实际业务服务、故障夹具、隐藏验收器或参考补丁。任何其他文档中单独实现的 pilot 不会自动使本目录对应题目成为 runnable。
+`catalog/tasks.json` 是 **25 题原创设计目录，不是 25 题已可运行 benchmark**。每题 `status` 均为 `design_only`：完整原设计还不是目录就绪。`design_only` 不能读成“没有任何可执行切片”。可运行切片在 `catalog/implementations.json`。其中 B02、S01、S04、G01、G05（含 S04 的 S04-spring）若通过 M1 四门，实现状态是 `gates_green`，并在设计清单上用可选字段 `slice_implementation` 指向这些切片；`full_catalog_ready` 保持 false。`gates_green` 不能读成“完整原设计已就绪”。本批设计交付包含 140 条验收要求、任务级风险、加权 rubric、基础设施需求和客观测试策略。任何其他文档中单独实现的 pilot 不会自动使本目录对应题目的**完整设计**成为 runnable。
 
 所有业务组织、事故、政策和数据均为原创虚构场景，未复制第三方仓库问题或未获授权的生产事故。Java 21 是计划运行目标，不代表已验证依赖兼容性。没有模型排名、成功率、token 成本、耗时或实测难度结论。难度名称是便于组织工作的暂定标签。
 
@@ -26,7 +26,7 @@
 
 ## JSON 字段契约
 
-顶层为任务数组，不包含额外 wrapper。每题使用相同的 13 个顶层键：
+顶层为任务数组，不包含额外 wrapper。每题共享下列 13 个顶层键。已有四门证据的设计可以多一个 `slice_implementation`，不改变 `status`。
 
 | 字段 | 结构与含义 |
 |---|---|
@@ -40,7 +40,8 @@
 | `risks` | `failureCases`、`traps`、`invariants`、`criticalFailurePolicy` |
 | `rubric` | 对象数组：`dimension`、整数 `weight`、`evidence`；每题权重合计 100 |
 | `environment` | 运行目标、基础设施、计划资产、客观测试策略、技能轴、网络策略和预算状态 |
-| `status` | 本版本全部 `design_only` |
+| `status` | 本版本全部 `design_only`。这是完整原设计的状态，不是“切片不可执行” |
+| `slice_implementation` | 可选。仅当该题有 M1 四门通过的切片时出现：`engineering_status` 为 `gates_green`，`full_catalog_ready` 为 false，`implementations` 列出 `B02-slice` 这类实现 id（S04 同时列出 `S04-spring`），`evidence` 指向 `engineering/m1-gates/evidence/summary.json` |
 | `difficultyRationale` | 暂定分层理由及未实测声明 |
 
 `acceptance.method` 提供统一评估渠道，具体实验步骤由 `environment.objectiveTestStrategy` 定义。`risks.invariants` 摘录两个核心要求，并不意味着其余验收要求可以忽略。`critical=true` 的条目用于不可被高平均分抵消的核心失败判定；正式实现前应拆分复合条目为细粒度隐藏断言，避免一条部分通过却无法解释扣分。
