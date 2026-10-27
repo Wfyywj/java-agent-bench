@@ -2,7 +2,7 @@
 
 面向 Java 服务端的分级工程测评实验室，用于比较模型、Skills 与工作流。**v0.3 是开发预览，不是已校准的模型排行榜。**
 
-网站：[工程测评实验室](https://java-agent-bench-lab.sound-acorn-0952.chatgpt.site)（当前仅所有者可访问，不是公开站点）。
+网站：[工程测评实验室](https://java-agent-bench-lab.sound-acorn-0952.chatgpt.site)（公开访问，任何持有链接的人可查看；浏览器本地保存的实验记录不会同步公开）。
 
 ## 目前真正完成了什么
 
