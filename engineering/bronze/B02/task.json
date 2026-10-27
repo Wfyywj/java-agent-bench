@@ -63,6 +63,18 @@
     "hidden evaluation",
     "model scores"
   ],
+  "implemented_scope": "Loopback HTTP return service with a durable file snapshot: token replay across process restart, payload conflict, staged-write atomic replacement, tenant non-disclosure, and two concurrent HTTP clients with damaged-item review. Local-adapter evidence for the public checks.",
+  "not_implemented_or_unmeasured": [
+    "PostgreSQL integration",
+    "database unique constraints",
+    "two database connections",
+    "fsync/power-loss guarantees",
+    "multi-process writers",
+    "secure sandbox",
+    "hidden evaluation",
+    "model scores"
+  ],
+  "full_catalog_ready": false,
   "mutants": [
     "conflict_ignored",
     "partial_commit",

@@ -2,6 +2,7 @@
   "id": "G05",
   "title": "线程池饥饿引发的级联超时",
   "status": "runnable_slice",
+  "implementation_status": "runnable_slice",
   "original_scope": {
     "summary": "区域票务服务数据库健康但大量请求超时，重启短暂恢复。结合线程转储、指标和链路定位同池嵌套等待，并修复取消传播与排队上限。",
     "context": "入口服务、座位查询客户端及异步价格模块；故障注入桩可延迟一个下游，线程池有固定预算。",
@@ -53,6 +54,15 @@
     "Hidden acceptance tests",
     "Database/Redis/Kafka infrastructure"
   ],
+  "not_implemented_or_unmeasured": [
+    "Real network/HTTP entry deadlines",
+    "Real connection pool",
+    "Production workload or SLA validation",
+    "Automated operational prose grading",
+    "Hidden acceptance tests",
+    "Database/Redis/Kafka infrastructure"
+  ],
+  "full_catalog_ready": false,
   "public_development_tests": 16,
   "variants": {
     "reference": "reference/src",
@@ -65,6 +75,13 @@
       "result_defaulting"
     ]
   },
+  "mutants": [
+    "shared_bulkhead",
+    "unbounded_queue",
+    "cancelled_queue_leak",
+    "lost_shutdown_futures",
+    "result_defaulting"
+  ],
   "command": "python selfcheck.py --write-evidence",
   "runtime": "Java 21, no downloaded dependencies",
   "candidate_edit_scope": [

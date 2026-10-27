@@ -1,6 +1,7 @@
 {
   "id": "G01",
   "status": "runnable_slice",
+  "implementation_status": "runnable_slice",
   "original_scope": {
     "context": "订单、库存及事件契约三仓；每服务独立数据库，消息至少一次，无跨库事务。",
     "mission": "户外装备租赁把库存拆为独立服务，订单创建超时重试后出现幽灵预占。实现可恢复工作流，保障租期重叠约束并保留人工修复入口。",
@@ -56,6 +57,14 @@
     }
   ],
   "implemented_scope": "Separate order/inventory/event Java packages and fsync journals; response-loss query, durable compensation recovery, interval capacity concurrency. Partial saga only; explicitly excludes crash-before-intent, mixed message versions and poison partitions.",
+  "not_implemented_or_unmeasured": [
+    "Not full catalog acceptance; no database/Redis/Kafka/object storage integration",
+    "Not a security sandbox: arbitrary candidate Java executes with caller permissions; run untrusted submissions only in external disposable network-disabled container",
+    "No model runs or difficulty calibration",
+    "Partial saga only: crash-before-intent, mixed message versions, and poison partitions are not implemented",
+    "Separate process writers, power-loss/torn-write recovery, multi-item capacity, and manual reconciliation workflow are not implemented"
+  ],
+  "full_catalog_ready": false,
   "runtime": "OpenJDK 21, no third-party dependencies",
   "modules": [
     "events",
@@ -65,6 +74,12 @@
   "variants": [
     "reference",
     "baseline",
+    "mutant_missing_intent",
+    "mutant_wrong_key",
+    "mutant_overlap",
+    "mutant_release_noop"
+  ],
+  "mutants": [
     "mutant_missing_intent",
     "mutant_wrong_key",
     "mutant_overlap",
