@@ -209,9 +209,17 @@ test('import busy flag blocks overlapping batches and navigation does not crash 
  const a=await app();a.run("view='results';renderResults()");let resolve;const slow={name:'slow.json',size:100,text:()=>new Promise(r=>{resolve=r})};const pending=batch(a,[slow]);await batch(a,[file(validResult)]);assert.equal(a.run('results.length'),0);a.run("view='catalog';renderCatalog()");resolve(JSON.stringify(validResult));await pending;assert.equal(a.run('results.length'),1);a.run("view='results';renderResults()");assert.match(a.get('#resultError').textContent,/新增 1/);
 });
 
+test('static header links the real repository before JavaScript runs',async()=>{
+ const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+ assert.doesNotMatch(html,/源码仓库待连接/);
+ assert.doesNotMatch(html,/href="https:\/\/github\.com"/);
+ assert.match(html,/id="repoLink" href="https:\/\/github\.com\/Wfyywj\/java-agent-bench" target="_blank" rel="noopener">GitHub 源码 ↗/);
+ assert.match(html,/href="https:\/\/github\.com\/Wfyywj\/java-agent-bench">GitHub 源码</);
+});
+
 test('markup has native keyboard file/selection controls, status announcements and responsive CSS',async()=>{
  const a=await app();a.run("view='results';renderResults()");assert.match(a.get('#content').innerHTML,/id="resultFile" type="file"[^>]*multiple/);assert.doesNotMatch(a.get('#content').innerHTML,/id="resultFile"[^>]*hidden/);assert.match(a.get('#content').innerHTML,/aria-live="polite"/);
- const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),css=await readFile(new URL('../dist/style.css',import.meta.url),'utf8');assert.match(html,/class="skiplink" href="#content"/);assert.match(html,/<dialog[^>]*aria-label=/);assert.match(css,/:focus-visible/);assert.match(css,/@media\(max-width:760px\)/);assert.match(css,/prefers-reduced-motion/);
+ const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),css=await readFile(new URL('../dist/style.css',import.meta.url),'utf8');assert.match(html,/class="skiplink" href="#content"/);assert.match(html,/<dialog[^>]*aria-label=/);assert.match(css,/:focus-visible/);assert.match(css,/@media\(max-width:760px\)/);assert.match(css,/prefers-reduced-motion/);assert.match(css,/\.notice\.trust/);
 });
 
 test('deletion never silently saves newly imported evidence',async()=>{
@@ -230,6 +238,99 @@ test('quickstart lists all engineering variants, task detail links preselect, Co
  a.get('#setupModel').value='fixed';a.get('#setupVersion').value='1';a.get('#setupWorkspace').value='/tmp/new';a.get('#generateSetup').onclick();assert.match(a.get('#setupCommands').textContent,/--sandbox 'read-only'/);
  a.get('#setupSandbox').value='workspace-write';a.get('#generateSetup').onclick();assert.match(a.get('#setupCommands').textContent,/--sandbox 'workspace-write'/);
  a.get('#setupProvider').value='claude';a.get('#setupProvider').onchange();assert.equal(a.get('#setupSandbox').disabled,true);a.get('#generateSetup').onclick();assert.doesNotMatch(a.get('#setupCommands').textContent,/--sandbox/);
+});
+
+test('loaded app keeps the real repository link',async()=>{
+ const a=await app();
+ assert.equal(a.get('#repoLink').href,'https://github.com/Wfyywj/java-agent-bench');
+ assert.equal(a.get('#repoLink').textContent,'GitHub 源码 ↗');
+});
+
+test('quickstart leads with clone and prepare, and warns this is not a sandbox',async()=>{
+ const a=await app({implData:[{id:'B01',implementation_id:'B01-slice',security:'not_a_secure_sandbox',model_evaluated:false}]});
+ a.run("view='start';renderStart()");
+ const html=a.get('#content').innerHTML;
+ assert.match(html,/class="notice trust"/);
+ assert.match(html,/当前执行器仅适用于可信代码，不是安全沙箱。不得直接运行任意模型或第三方生成的不可信代码/);
+ assert.match(html,/隔离运行器尚未实现/);
+ assert.match(html,/harness\/INTEGRITY.md/);
+ const cloneAt=html.indexOf('git clone https://github.com/Wfyywj/java-agent-bench.git');
+ const prepareAt=html.indexOf('python3 scripts/engineering.py prepare B01 /tmp/b01-work');
+ const springAt=html.indexOf('python3 scripts/engineering.py prepare S04-spring /tmp/s04-spring-work');
+ const r01At=html.indexOf('python3 harness/bench.py prepare R01 /tmp/r01-work');
+ const zipNoteAt=html.indexOf('可选 ZIP');
+ assert.ok(html.indexOf('notice trust')<cloneAt&&cloneAt<prepareAt&&prepareAt<springAt&&springAt<r01At&&r01At<zipNoteAt);
+ assert.match(html,/托管可能失败|被托管拦截/);
+ assert.doesNotMatch(html,/class="primary"[^>]*>[^<]*下载/);
+ assert.match(html,/没有真实模型实测分数/);
+ assert.doesNotMatch(html,/模型得分|模型分数\s*[:=：]\s*\d/);
+});
+
+test('slice and runnable details lead with clone, keep ZIP secondary, and explain security',async()=>{
+ const implData=JSON.parse(await readFile(new URL('../dist/implementations.json',import.meta.url),'utf8'));
+ const taskData=JSON.parse(await readFile(new URL('../dist/tasks.json',import.meta.url),'utf8'));
+ const runData=JSON.parse(await readFile(new URL('../dist/runnable.json',import.meta.url),'utf8'));
+ const a=await app({implData,taskData,runData});
+ a.run("detail('B01')");
+ let html=a.get('#detailContent').innerHTML;
+ assert.match(html,/design_only/);
+ assert.match(html,/设计稿本身不可执行/);
+ assert.match(html,/class="notice trust"/);
+ assert.match(html,/当前执行器仅适用于可信代码，不是安全沙箱/);
+ assert.match(html,/security：仅可信代码的本地功能验收，不是安全沙箱；不得直接运行不可信模型或第三方代码。没有模型实测。/);
+ assert.match(html,/model_evaluated 为 false，没有模型实测成绩。/);
+ assert.match(html,/python3 scripts\/engineering\.py prepare B01 /);
+ assert.match(html,/可选 ZIP/);
+ assert.match(html,/托管可能失败/);
+ for(const part of html.split('可运行工程变体').slice(1)){
+  assert.ok(part.indexOf('git clone https://github.com/Wfyywj/java-agent-bench.git')>=0);
+  assert.ok(part.indexOf('git clone')<part.indexOf('packages/'));
+  assert.match(part,/class="primary" data-prepare="/);
+  assert.doesNotMatch(part,/<a[^>]*class="(?:primary|secondary)"/);
+ }
+ assert.doesNotMatch(html,/模型得分|成功率\s*\d|排行榜第/);
+ a.run("detail('S04')");
+ html=a.get('#detailContent').innerHTML;
+ assert.match(html,/packages\/S04-spring\.zip/);
+ assert.match(html,/prepare S04-spring/);
+ assert.match(html,/不是安全沙箱/);
+ assert.match(html,/没有模型实测/);
+ assert.ok(html.indexOf('git clone https://github.com/Wfyywj/java-agent-bench.git')<html.indexOf('packages/S04-spring.zip'));
+ a.run("detail('R01')");
+ html=a.get('#detailContent').innerHTML;
+ assert.match(html,/class="notice trust"/);
+ assert.match(html,/security：仅可信代码的本地功能验收，不是安全沙箱/);
+ assert.match(html,/python3 harness\/bench\.py prepare R01/);
+ assert.match(html,/没有候选 ZIP/);
+ assert.doesNotMatch(html,/packages\/R01/);
+ assert.doesNotMatch(html,/model_evaluated 为 true|模型得分/);
+ a.run('renderCatalog()');
+ html=a.get('#content').innerHTML;
+ assert.match(html,/可执行 · 非隔离沙箱/);
+ assert.match(html,/原设计 \+ 可运行切片/);
+ assert.match(html,/切片 security：仅可信代码的本地功能验收，不是安全沙箱/);
+ assert.match(html,/没有模型实测。/);
+ assert.doesNotMatch(html,/设计稿 · 已完成|可直接评测模型/);
+});
+
+test('design-only tasks without a slice stay unrealized, and a true flag invents no score',async()=>{
+ const a=await app({taskData:[{id:'G01',tier:'gold',status:'design_only',title:'Beta',summary:'Stock'}]});
+ a.run("detail('G01')");
+ assert.doesNotMatch(a.get('#detailContent').innerHTML,/执行边界|packages\/|git clone/);
+ assert.match(a.get('#detailContent').innerHTML,/设计稿本身不可执行/);
+ a.run('renderCatalog()');
+ assert.match(a.get('#content').innerHTML,/设计稿 · 尚未实现/);
+ assert.doesNotMatch(a.get('#content').innerHTML,/security：/);
+ const b=await app({taskData:[{id:'B01',tier:'bronze',status:'design_only',title:'Alpha',summary:'Payment'}],implData:[{id:'B01',implementation_id:'B01-slice',status:'runnable_slice',tier:'bronze',security:'not_a_secure_sandbox',model_evaluated:true,scope:'partial',command:'python3 scripts/engineering.py prepare B01 /tmp/b01-work',path:'engineering/bronze/B01'}]});
+ b.run('renderCatalog()');
+ assert.match(b.get('#content').innerHTML,/原设计 \+ 可运行切片/);
+ assert.match(b.get('#content').innerHTML,/不是安全沙箱/);
+ assert.doesNotMatch(b.get('#content').innerHTML,/没有模型实测|模型得分|成功率/);
+ b.run("detail('B01')");
+ const detail=b.get('#detailContent').innerHTML;
+ assert.match(detail,/设计稿本身不可执行/);
+ assert.match(detail,/security：仅可信代码的本地功能验收，不是安全沙箱；不得直接运行不可信模型或第三方代码<\/p>/);
+ assert.doesNotMatch(detail,/model_evaluated 为 false|模型得分|成功率\s*\d/);
 });
 
 test('exported plans explicitly remain non-executable planning drafts',async()=>{
