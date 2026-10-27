@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"SYNTHETIC-NOT-A-MODEL-RUN"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"synthetic-item","type":"agent_message","text":"SYNTHETIC TEST FIXTURE, NOT MODEL RESULTS"}}
+{"type":"turn.completed","usage":{"input_tokens":100,"cached_input_tokens":20,"output_tokens":10}}

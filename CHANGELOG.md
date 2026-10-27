@@ -1,5 +1,11 @@
 # Changelog
 
+## CLI adapter preparation — 2026-10-27
+
+- Added offline Codex CLI / Claude Code command planning, existing-trace normalization and source manifest/diff collection.
+- No agent launching, credential reads, permission bypass, billing-route switch or actual-model integration claim.
+- Added dedicated adapter CI; core workflow skips adapter/analysis/docs-only changes while retaining full verification for core changes.
+
 ## 0.2 development — 2026-10-27
 
 - Added 25 scope-limited engineering slices, five per design tier, separately identified as B01-slice .. K05-slice. Full original designs remain design_only.

@@ -2,6 +2,14 @@ name: Verify public development fixtures
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'cli_adapters/**'
+      - 'analysis_tools/**'
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.github/workflows/cli-adapters.yml'
+      - '.github/workflows/analysis.yml'
   workflow_dispatch:
 permissions:
   contents: read

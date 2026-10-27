@@ -63,3 +63,14 @@ python3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result
 ## 离线 A/B 分析
 
 `analysis_tools/paired_analysis.py` 比较预先登记的真实 agent 试验，严格锁定版本与配置，保留失败、缺失和未知费用；不把参考解自检当模型成绩。示例全部明确标为合成测试夹具，默认拒绝作为真实记录。使用方法见 [分析工具说明](analysis_tools/README.md)。
+
+## Codex CLI / Claude Code 接入准备
+
+已提供 [离线适配层](cli_adapters/README.md)：生成命令计划、解析已有 JSONL 轨迹、采集前后提交差异。当前没有启动模型的入口；CLI 完成不等于业务验收成功，费用未知也不会补成零。实际执行、认证与预算需后续明确后接入。
+
+```sh
+python3 -m cli_adapters --help
+python3 -m unittest discover -s cli_adapters -p 'test_*.py' -v
+```
+
+CLI/分析工具使用独立快速 CI；仅修改这些目录或文档时不重复运行全部 Java 工程题。修改整库验证 workflow 自身仍会触发完整验证。
