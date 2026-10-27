@@ -22,6 +22,12 @@ ROOT = Path(__file__).resolve().parents[1]
 TASKS = ROOT / 'tasks'
 ID = re.compile(r'R[0-9]{2}')
 CHECK = re.compile(r'^(PASS|FAIL) ([A-Za-z0-9_.-]+)(?: (.*))?$')
+# Keep identical to scripts/engineering.py SECURITY_BOUNDARY.
+SECURITY_WARNING = (
+    'NOT a secure sandbox; trusted code only; do not evaluate untrusted model or third-party output. '
+    'See harness/INTEGRITY.md. '
+    '非安全沙箱；仅可信代码；禁止直接运行不可信模型或第三方输出。'
+)
 
 
 def confined(root, relative):
@@ -180,7 +186,8 @@ def evaluate(task_id, candidate, timeout=20):
               'environment': {'java': version['stderr'].strip() or version['stdout'].strip(),
                               'python': platform.python_version(), 'platform': platform.platform()},
               'expected_checks': manifest['test_count'], 'checks': [], 'passed': False,
-              'status': 'build_failed', 'security': 'local functional evaluation; not a security sandbox'}
+              'status': 'build_failed', 'security': 'local functional evaluation; not a security sandbox',
+              'warning': SECURITY_WARNING}
     with tempfile.TemporaryDirectory(prefix='java-bench-') as tmp:
         build = Path(tmp)
         copy_java(candidate, build / 'candidate')
@@ -235,7 +242,8 @@ def selfcheck(task_id, timeout=20):
                and bool(mutations) and all(m['killed'] for m in mutations))
     return {'task_id': task_id, 'passed': success, 'baseline': baseline, 'reference': reference,
             'mutation': mutations[0]['result'], 'mutation_reason': mutations[0]['reason'],
-            'mutation_killed': all(m['killed'] for m in mutations), 'mutations': mutations}
+            'mutation_killed': all(m['killed'] for m in mutations), 'mutations': mutations,
+            'warning': SECURITY_WARNING}
 
 
 def main(argv=None):
@@ -259,10 +267,12 @@ def main(argv=None):
         elif args.action == 'prepare':
             result = prepare(args.task_id, args.destination)
         elif args.action == 'evaluate':
+            print(SECURITY_WARNING, file=sys.stderr)
             result = evaluate(args.task_id, args.candidate, args.timeout)
         else:
+            print(SECURITY_WARNING, file=sys.stderr)
             result = selfcheck(args.task_id, args.timeout)
-        payload = json.dumps(result, indent=2) + '\n'
+        payload = json.dumps(result, indent=2, ensure_ascii=False) + '\n'
         if args.output:
             Path(args.output).write_text(payload)
         print(payload, end='')

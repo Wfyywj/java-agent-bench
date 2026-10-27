@@ -4,6 +4,8 @@ from pathlib import Path, PurePosixPath
 import argparse, hashlib, json, os, platform, re, shutil, signal, subprocess, sys, tempfile, time
 from datetime import datetime, timezone
 ROOT=Path(__file__).resolve().parents[1]
+# Keep identical to harness/bench.py SECURITY_WARNING.
+SECURITY_BOUNDARY='NOT a secure sandbox; trusted code only; do not evaluate untrusted model or third-party output. See harness/INTEGRITY.md. 非安全沙箱；仅可信代码；禁止直接运行不可信模型或第三方输出。'
 TIERS={'B':'bronze','S':'silver','G':'gold','D':'diamond','K':'king'}
 LIMIT=2*1024*1024
 VARIANTS={'S04-spring':'engineering/integration/S04-spring'}
@@ -61,6 +63,7 @@ def prepare(task,dest):
     return {'task':task,'workspace':str(dest),'files':len(pairs),'executed':False,'warning':'Reference/verifier remain public in original repository; separation is not a security boundary.'}
 
 def evaluate(task,candidate,output,timeout,trusted):
+    print(SECURITY_BOUNDARY,file=sys.stderr)
     if not trusted:raise ValueError('Refusing execution: use --trusted-code only for code you trust. This is NOT a sandbox.')
     taskdir=task_path(task)
     if not candidate.is_dir() or candidate.is_symlink():raise ValueError('Candidate must be a real directory')
@@ -89,7 +92,7 @@ def evaluate(task,candidate,output,timeout,trusted):
     except (ValueError,UnicodeDecodeError):
         if not reason:reason='invalid_report'
     status=reason or ('passed' if p.returncode==0 else 'failed')
-    record={'schema_version':'engineering-1.0','implementation_id':task if task in VARIANTS else task+'-slice','design_id':task.split('-')[0],'dataset':'public-dev-slices','timestamp_utc':datetime.now(timezone.utc).isoformat(),'submission_sha256':digest,'manifest_sha256':hashlib.sha256((taskdir/'task.json').read_bytes()).hexdigest(),'candidate_files':hashes,'environment':environment,'evaluator_provenance':provenance,'elapsed_seconds':round(time.monotonic()-start,3),'status':status,'passed':status=='passed','exit_code':p.returncode,'cost_usd':None,'model':None,'security':'TRUSTED LOCAL CODE ONLY; NOT A SECURITY SANDBOX','report':report,'log':raw.decode(errors='replace')}
+    record={'schema_version':'engineering-1.0','implementation_id':task if task in VARIANTS else task+'-slice','design_id':task.split('-')[0],'dataset':'public-dev-slices','timestamp_utc':datetime.now(timezone.utc).isoformat(),'submission_sha256':digest,'manifest_sha256':hashlib.sha256((taskdir/'task.json').read_bytes()).hexdigest(),'candidate_files':hashes,'environment':environment,'evaluator_provenance':provenance,'elapsed_seconds':round(time.monotonic()-start,3),'status':status,'passed':status=='passed','exit_code':p.returncode,'cost_usd':None,'model':None,'security':'TRUSTED LOCAL CODE ONLY; NOT A SECURITY SANDBOX','warning':SECURITY_BOUNDARY,'report':report,'log':raw.decode(errors='replace')}
     if output:
         output.parent.mkdir(parents=True,exist_ok=True);output.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n')
     return record

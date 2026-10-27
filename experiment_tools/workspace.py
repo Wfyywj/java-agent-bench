@@ -40,7 +40,8 @@ def doctor(provider=None):
             'agent_execution': 'not_attempted', 'credentials': 'not_read',
             'versions': 'CLI/Java versions not probed; manually verify Java 21 and CLI flags',
             'missing_tools': [c['name'] for c in checks if not c['available_on_path']],
-            'warning': 'PATH presence does not prove version, authentication, billing, sandbox or readiness. No executable launched; no config inspected.'}
+            'warning': 'PATH presence does not prove version, authentication, billing, sandbox or readiness. No executable launched; no config inspected.',
+            'security_boundary': engineering.SECURITY_BOUNDARY}
 
 
 def write_json(path, value):
@@ -117,6 +118,7 @@ def initialize(task, provider, model, cli_version, workspace, auth_mode='unknown
         raise
     return {'schema_version': 1, 'command': 'init', 'workspace': str(target), 'implementation_id': implementation,
             'execution_status': 'not_run', 'business_status': 'not_evaluated',
+            'security_boundary': engineering.SECURITY_BOUNDARY,
             'artifacts': ['baseline/', 'candidate/', 'PROMPT.md', 'command-plan.json', 'next-steps.json', 'manifest.json', 'GUIDE.md'],
             'next_steps': followup}
 
@@ -178,4 +180,5 @@ def status(workspace):
             'implementation_id': manifest.get('implementation_id'), 'integrity': integrity, 'evidence': evidence,
             'missing_evidence': missing, 'execution_status': 'not_verified', 'business_status': 'not_evaluated',
             'cost_usd': None, 'next_step': 'Review GUIDE.md and command-plan.json; supply/review missing evidence' if missing else 'Review evidence authenticity, task identity and evaluator results manually',
-            'warning': 'Presence/hashes are not evidence authentication; no model outcome, cost or business pass is inferred. Manifest is local and unsigned.'}
+            'warning': 'Presence/hashes are not evidence authentication; no model outcome, cost or business pass is inferred. Manifest is local and unsigned.',
+            'security_boundary': engineering.SECURITY_BOUNDARY}

@@ -1,5 +1,6 @@
-import importlib.util,json,tempfile,unittest
+import contextlib,importlib.util,io,json,sys,tempfile,unittest
 from pathlib import Path
+from unittest.mock import patch
 SPEC=importlib.util.spec_from_file_location('engineering_launcher',Path(__file__).resolve().parents[1]/'scripts/engineering.py')
 M=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(M)
 class LauncherTests(unittest.TestCase):
@@ -30,7 +31,25 @@ class LauncherTests(unittest.TestCase):
   (self.t/'agent-files.json').write_text(json.dumps({'files':[{'source':'reference/Solution.java','target':'src/Main.java'}]}))
   with self.assertRaises(ValueError):M.prepare('B01',self.dest)
  def test_gate_before_execution(self):
-  with self.assertRaises(ValueError):M.evaluate('B01',self.dest,None,1,False)
+  err=io.StringIO()
+  with contextlib.redirect_stderr(err),self.assertRaises(ValueError) as caught:M.evaluate('B01',self.dest,None,1,False)
+  self.assertEqual(str(caught.exception),'Refusing execution: use --trusted-code only for code you trust. This is NOT a sandbox.')
+  self.assertIn(M.SECURITY_BOUNDARY,err.getvalue())
+ def test_cli_refuses_without_trusted_code(self):
+  err=io.StringIO()
+  argv=['engineering.py','evaluate','B01',str(self.dest)]
+  with patch.object(sys,'argv',argv),contextlib.redirect_stderr(err),contextlib.redirect_stdout(io.StringIO()):
+   code=M.main()
+  self.assertEqual(code,2);text=err.getvalue();self.assertIn(M.SECURITY_BOUNDARY,text);self.assertIn('NOT a sandbox',text);self.assertIn('--trusted-code',text)
+ def test_cli_trusted_code_still_warns(self):
+  M.prepare('B01',self.dest);(self.t/'run_selfcheck.py').write_text('import json; print(json.dumps({"assertions": [True]}))')
+  out,err=io.StringIO(),io.StringIO()
+  argv=['engineering.py','evaluate','B01',str(self.dest),'--trusted-code']
+  with patch.object(sys,'argv',argv),contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):
+   code=M.main()
+  self.assertEqual(code,0);self.assertIn(M.SECURITY_BOUNDARY,err.getvalue())
+  payload=json.loads(out.getvalue());self.assertEqual(payload['warning'],M.SECURITY_BOUNDARY)
+  self.assertEqual(payload['security'],'TRUSTED LOCAL CODE ONLY; NOT A SECURITY SANDBOX');self.assertTrue(payload['passed'])
  def test_hashes_stable(self):
   M.prepare('B01',self.dest);self.assertEqual(M.file_hashes(self.dest),M.file_hashes(self.dest))
  def test_invalid_id(self):
