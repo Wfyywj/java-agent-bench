@@ -1,5 +1,11 @@
 # Changelog
 
+## Website entry honesty — 2026-10-27
+
+- Static header links the real GitHub repository as「GitHub 源码」before JavaScript runs.
+- Quick start and task details lead with `git clone` and `prepare`. ZIP stays optional because `dist/packages/` is not committed and hosting can fail.
+- Quick start and runnable/slice details state that the current runner is trusted-code only and not a secure sandbox. `model_evaluated: false` is not shown as a model score.
+
 ## 0.3 usability preview — 2026-10-27
 
 - Added offline experiment workspace doctor/init/status with explicit provider/model/version, separate baseline/candidate and guided next steps; no model execution or credential access.
