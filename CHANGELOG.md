@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3 usability preview — 2026-10-27
+
+- Added offline experiment workspace doctor/init/status with explicit provider/model/version, separate baseline/candidate and guided next steps; no model execution or credential access.
+- Added website quick-start command planning, explicit executable-variant selection, atomic/deduplicated evidence imports, browser backup/export/deletion and same-version evidence comparison.
+- Imported evidence remains unauthenticated and is not a model score; local storage is opt-in, and raw logs may contain private data.
+- Added a single offline tooling check entry point and a Chinese end-to-end quick-start guide.
+- Browser layout/interaction QA is not established by DOM-stub tests; managed preview infrastructure remained unavailable during this release.
+
 ## CLI adapter preparation — 2026-10-27
 
 - Added offline Codex CLI / Claude Code command planning, existing-trace normalization and source manifest/diff collection.

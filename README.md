@@ -1,6 +1,6 @@
 # Java Agent Bench
 
-面向 Java 服务端的分级工程测评实验室，用于比较模型、Skills 与工作流。**v0.2 是开发预览，不是已校准的模型排行榜。**
+面向 Java 服务端的分级工程测评实验室，用于比较模型、Skills 与工作流。**v0.3 是开发预览，不是已校准的模型排行榜。**
 
 网站：[工程测评实验室](https://java-agent-bench-lab.sound-acorn-0952.chatgpt.site)（当前仅所有者可访问，不是公开站点）。
 
@@ -16,7 +16,9 @@
 
 ## 快速开始
 
-要求 Python 3.10+、Java 21+（含 jdk.compiler）。无 Maven/网络依赖。
+要求 Python 3.10+、Java 21+（含 jdk.compiler）。基础题不需要 Maven；H2/Spring 变体首次准备依赖需要联网。
+
+首次使用请看 [从选题到查看证据](docs/QUICKSTART.md)，或运行 `python3 -m experiment_tools doctor --provider codex`。网站引导与 `experiment_tools init/status` 可准备独立工作区、命令计划和待办状态，不会启动模型。
 
 ```sh
 python3 -m unittest discover -s tests -v
@@ -73,4 +75,4 @@ python3 -m cli_adapters --help
 python3 -m unittest discover -s cli_adapters -p 'test_*.py' -v
 ```
 
-CLI/分析工具使用独立快速 CI；仅修改这些目录或文档时不重复运行全部 Java 工程题。修改整库验证 workflow 自身仍会触发完整验证。
+CLI/分析/实验工作区工具使用独立快速 CI；仅修改这些目录或文档时不重复运行全部 Java 工程题。修改整库验证 workflow 自身仍会触发完整验证。

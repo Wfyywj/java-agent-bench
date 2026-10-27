@@ -5,6 +5,8 @@ on:
     paths-ignore:
       - 'cli_adapters/**'
       - 'analysis_tools/**'
+      - 'experiment_tools/**'
+      - '.github/workflows/workspace.yml'
       - 'docs/**'
       - 'README.md'
       - 'CHANGELOG.md'
@@ -30,9 +32,7 @@ jobs:
           java-version: '21'
       - name: Validate catalogue and local evaluation kernel
         run: |
-          python3 scripts/build_catalog.py
-          python3 -m unittest discover -s tests -v
-          node --test tests/test_web.mjs
+          python3 scripts/check_fast.py
       - name: Exercise available engineering fixture suites
         run: |
           python3 engineering/silver/setup_h2.py
