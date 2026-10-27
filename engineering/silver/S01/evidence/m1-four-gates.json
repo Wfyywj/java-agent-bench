@@ -1,0 +1,62 @@
+{
+  "schema": "m1-four-gates/v1",
+  "task_id": "S01",
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "baseline_role": "baseline",
+  "commands": [
+    "python3 -B engineering/silver/S01/run_selfcheck.py"
+  ],
+  "captured_from": "evidence/selfcheck.json",
+  "gates": {
+    "reference": {
+      "pass": true,
+      "run_count": 3,
+      "detail": "3 reference run(s) passed"
+    },
+    "nop_or_baseline": {
+      "pass": true,
+      "role": "baseline",
+      "variant": "baseline",
+      "mapping": "acceptance-id",
+      "critical_failures": [
+        "terminal_and_out_of_order"
+      ],
+      "detail": "Unfixed baseline failed at least one critical check. No separate nop fixture; baseline is this gate."
+    },
+    "mutants": {
+      "pass": true,
+      "listed": [
+        "double_booking",
+        "terminal_regression"
+      ],
+      "results": [
+        {
+          "id": "double_booking",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "terminal_regression",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        }
+      ],
+      "detail": "2 listed mutants failed"
+    },
+    "repeat": {
+      "pass": true,
+      "run_count": 3,
+      "agreement": "structured",
+      "sha256": "9eec2642c238bbcdd0f8a38fa7b8d48b05bf987b1adeb35385a963d91fe613e8",
+      "source": "reference repeats inside one selfcheck",
+      "detail": "3 reference runs agreed on pass"
+    }
+  },
+  "gaps": [],
+  "pass": true,
+  "elapsed_seconds": 22.232
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "m1-four-gates-summary/v1",
+  "task_ids": [
+    "B02",
+    "S01",
+    "S04",
+    "S04-spring",
+    "G01",
+    "G05"
+  ],
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "tasks": {
+    "B02": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/bronze/B02/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "S01": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/silver/S01/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "S04": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/silver/S04/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "S04-spring": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/integration/S04-spring/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "G01": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/gold/G01/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "G05": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/gold/G05/evidence/m1-four-gates.json",
+      "gaps": []
+    }
+  },
+  "pass": true
+}

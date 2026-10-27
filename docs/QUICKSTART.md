@@ -71,4 +71,4 @@ python3 scripts/engineering.py evaluate B01 /tmp/jab-b01-control/candidate \
 python3 scripts/check_fast.py
 ```
 
-该命令覆盖目录生成、Python 工具测试、JavaScript 语法与网站 DOM-stub 单测。它不会调用模型；也不等于浏览器视觉测试或完整 Java 工程题自检。全题检查另外执行 `python3 scripts/check_engineering.py`，先按说明准备固定依赖。
+该命令覆盖目录生成、Python 工具测试、JavaScript 语法与网站 DOM-stub 单测。它不会调用模型；也不等于浏览器视觉测试或完整 Java 工程题自检。全题检查另外执行 `python3 scripts/check_engineering.py`，先按说明准备固定依赖。M1 六题四门禁是 `python3 scripts/check_engineering.py --m1`（B02、S01、S04、S04-spring、G01、G05）；任一必需门禁失败时退出码非零。`check_fast.py` 不会调用它。
