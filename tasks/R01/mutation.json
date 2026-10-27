@@ -1,0 +1,1 @@
+{"file":"PaymentService.java","old":"!previous.payload().equals(payload) || previous.amount() != amount","new":"previous.amount() != amount","reason":"Removing payload equality permits conflicting payload replay; payload_conflict and no_normalization must fail."}

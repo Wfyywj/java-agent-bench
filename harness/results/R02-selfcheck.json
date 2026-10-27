@@ -1,0 +1,681 @@
+{
+  "task_id": "R02",
+  "passed": true,
+  "baseline": {
+    "schema_version": "1.0",
+    "task_id": "R02",
+    "task_version": "1.0.1",
+    "category": "concurrency_inventory",
+    "tier": "T2",
+    "timestamp_utc": "2026-10-27T03:21:03.955423+00:00",
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 15,
+    "checks": [
+      {
+        "name": "capacity_validation",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "exact_capacity",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "quantity_validation",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "id_validation",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "insufficient_retry",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "replay_depleted",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "quantity_conflict",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "cancel_once",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "unknown_cancel",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "cancelled_replay_snapshot",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "max_capacity_no_overflow",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "reservation_identity_snapshots",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_same_id",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_capacity",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_cancel_once",
+        "passed": false,
+        "detail": ""
+      }
+    ],
+    "passed": false,
+    "status": "verification_failed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Inventory.java",
+        "candidate/Reservation.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.6282,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.1306,
+      "stdout": "FAIL capacity_validation\nPASS exact_capacity\nFAIL quantity_validation\nFAIL id_validation\nPASS insufficient_retry\nFAIL replay_depleted\nFAIL quantity_conflict\nFAIL cancel_once\nPASS unknown_cancel\nFAIL cancelled_replay_snapshot\nFAIL max_capacity_no_overflow\nFAIL reservation_identity_snapshots\nFAIL concurrent_same_id\nPASS concurrent_capacity\nFAIL concurrent_cancel_once\n",
+      "stderr": "capacity_validation: java.lang.AssertionError: expected IllegalArgumentException\nquantity_validation: java.lang.AssertionError: expected IllegalArgumentException\nid_validation: java.lang.AssertionError: expected IllegalArgumentException\nreplay_depleted: java.lang.AssertionError: contract violated\nquantity_conflict: java.lang.AssertionError: expected IllegalArgumentException\ncancel_once: java.lang.AssertionError: contract violated\ncancelled_replay_snapshot: java.lang.AssertionError: contract violated\nmax_capacity_no_overflow: java.lang.AssertionError: contract violated\nreservation_identity_snapshots: java.lang.AssertionError: contract violated\nconcurrent_same_id: java.lang.AssertionError: contract violated\nconcurrent_cancel_once: java.lang.AssertionError: contract violated\n"
+    }
+  },
+  "reference": {
+    "schema_version": "1.0",
+    "task_id": "R02",
+    "task_version": "1.0.1",
+    "category": "concurrency_inventory",
+    "tier": "T2",
+    "timestamp_utc": "2026-10-27T03:21:04.744913+00:00",
+    "patch_sha256": "f5ff64eb075bb9f6457210122a6730337ef576548633acdaa7650c3048c1ca89",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 15,
+    "checks": [
+      {
+        "name": "capacity_validation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "exact_capacity",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "quantity_validation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "id_validation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "insufficient_retry",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "replay_depleted",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "quantity_conflict",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "cancel_once",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "unknown_cancel",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "cancelled_replay_snapshot",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "max_capacity_no_overflow",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "reservation_identity_snapshots",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_same_id",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_capacity",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_cancel_once",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "passed": true,
+    "status": "passed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Inventory.java",
+        "candidate/Reservation.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.6218,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0863,
+      "stdout": "PASS capacity_validation\nPASS exact_capacity\nPASS quantity_validation\nPASS id_validation\nPASS insufficient_retry\nPASS replay_depleted\nPASS quantity_conflict\nPASS cancel_once\nPASS unknown_cancel\nPASS cancelled_replay_snapshot\nPASS max_capacity_no_overflow\nPASS reservation_identity_snapshots\nPASS concurrent_same_id\nPASS concurrent_capacity\nPASS concurrent_cancel_once\n",
+      "stderr": ""
+    }
+  },
+  "mutation": {
+    "schema_version": "1.0",
+    "task_id": "R02",
+    "task_version": "1.0.1",
+    "category": "concurrency_inventory",
+    "tier": "T2",
+    "timestamp_utc": "2026-10-27T03:21:05.480839+00:00",
+    "patch_sha256": "f13129a3ebfc60414431ae4ae7ba112bd298a2ce548345f2ed82caf7b15ff971",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 15,
+    "checks": [
+      {
+        "name": "capacity_validation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "exact_capacity",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "quantity_validation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "id_validation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "insufficient_retry",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "replay_depleted",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "quantity_conflict",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "cancel_once",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "unknown_cancel",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "cancelled_replay_snapshot",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "max_capacity_no_overflow",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "reservation_identity_snapshots",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_same_id",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_capacity",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_cancel_once",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "passed": false,
+    "status": "verification_failed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Inventory.java",
+        "candidate/Reservation.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.5089,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0933,
+      "stdout": "PASS capacity_validation\nFAIL exact_capacity\nPASS quantity_validation\nPASS id_validation\nPASS insufficient_retry\nFAIL replay_depleted\nPASS quantity_conflict\nPASS cancel_once\nPASS unknown_cancel\nPASS cancelled_replay_snapshot\nFAIL max_capacity_no_overflow\nPASS reservation_identity_snapshots\nPASS concurrent_same_id\nFAIL concurrent_capacity\nPASS concurrent_cancel_once\n",
+      "stderr": "exact_capacity: java.lang.NullPointerException: Cannot invoke \"Reservation.quantity()\" because \"<local1>\" is null\nreplay_depleted: java.lang.NullPointerException: Cannot invoke \"Reservation.equals(Object)\" because \"<local1>\" is null\nmax_capacity_no_overflow: java.lang.AssertionError: contract violated\nconcurrent_capacity: java.lang.AssertionError: contract violated\n"
+    }
+  },
+  "mutation_reason": "Boundary mutation rejects a reservation consuming exactly the remaining stock. exact_capacity, replay_depleted, max_capacity_no_overflow and concurrent_capacity detect it.",
+  "mutation_killed": true,
+  "mutations": [
+    {
+      "reason": "Boundary mutation rejects a reservation consuming exactly the remaining stock. exact_capacity, replay_depleted, max_capacity_no_overflow and concurrent_capacity detect it.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R02",
+        "task_version": "1.0.1",
+        "category": "concurrency_inventory",
+        "tier": "T2",
+        "timestamp_utc": "2026-10-27T03:21:05.480839+00:00",
+        "patch_sha256": "f13129a3ebfc60414431ae4ae7ba112bd298a2ce548345f2ed82caf7b15ff971",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 15,
+        "checks": [
+          {
+            "name": "capacity_validation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "exact_capacity",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "quantity_validation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "id_validation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "insufficient_retry",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "replay_depleted",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "quantity_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "cancel_once",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "unknown_cancel",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "cancelled_replay_snapshot",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "max_capacity_no_overflow",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "reservation_identity_snapshots",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_same_id",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_capacity",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_cancel_once",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Inventory.java",
+            "candidate/Reservation.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.5089,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0933,
+          "stdout": "PASS capacity_validation\nFAIL exact_capacity\nPASS quantity_validation\nPASS id_validation\nPASS insufficient_retry\nFAIL replay_depleted\nPASS quantity_conflict\nPASS cancel_once\nPASS unknown_cancel\nPASS cancelled_replay_snapshot\nFAIL max_capacity_no_overflow\nPASS reservation_identity_snapshots\nPASS concurrent_same_id\nFAIL concurrent_capacity\nPASS concurrent_cancel_once\n",
+          "stderr": "exact_capacity: java.lang.NullPointerException: Cannot invoke \"Reservation.quantity()\" because \"<local1>\" is null\nreplay_depleted: java.lang.NullPointerException: Cannot invoke \"Reservation.equals(Object)\" because \"<local1>\" is null\nmax_capacity_no_overflow: java.lang.AssertionError: contract violated\nconcurrent_capacity: java.lang.AssertionError: contract violated\n"
+        }
+      },
+      "killed": true
+    },
+    {
+      "reason": "Wrong reservation identity must fail snapshot identity assertions.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R02",
+        "task_version": "1.0.1",
+        "category": "concurrency_inventory",
+        "tier": "T2",
+        "timestamp_utc": "2026-10-27T03:21:06.112470+00:00",
+        "patch_sha256": "3b2a77904536de0bd61177b25f51d6d24870be8d3ca9fc59f1d2e48e793c02bf",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 15,
+        "checks": [
+          {
+            "name": "capacity_validation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "exact_capacity",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "quantity_validation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "id_validation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "insufficient_retry",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "replay_depleted",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "quantity_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "cancel_once",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "unknown_cancel",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "cancelled_replay_snapshot",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "max_capacity_no_overflow",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "reservation_identity_snapshots",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_same_id",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_capacity",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_cancel_once",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Inventory.java",
+            "candidate/Reservation.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.5545,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0902,
+          "stdout": "PASS capacity_validation\nPASS exact_capacity\nPASS quantity_validation\nPASS id_validation\nPASS insufficient_retry\nPASS replay_depleted\nPASS quantity_conflict\nPASS cancel_once\nPASS unknown_cancel\nPASS cancelled_replay_snapshot\nPASS max_capacity_no_overflow\nFAIL reservation_identity_snapshots\nPASS concurrent_same_id\nPASS concurrent_capacity\nPASS concurrent_cancel_once\n",
+          "stderr": "reservation_identity_snapshots: java.lang.AssertionError: contract violated\n"
+        }
+      },
+      "killed": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.class
+.env
+.env.*
+!.env.example
+node_modules/
+.local/
+*.tar.gz
+agent-workspaces/
+private-evaluators/

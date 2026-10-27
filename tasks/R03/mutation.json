@@ -1,0 +1,6 @@
+{
+  "file": "OutboxStore.java",
+  "old": "&& m.worker.equals(c.worker()) && now < m.leaseUntil",
+  "new": "&& m.worker.equals(c.worker()) && now <= m.leaseUntil",
+  "reason": "Off-by-one expiry permits completion at lease boundary; expired_completion must fail."
+}

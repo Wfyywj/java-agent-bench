@@ -1,0 +1,14 @@
+[
+  {
+    "file": "Inventory.java",
+    "old": "if (quantity > available) return null;",
+    "new": "if (quantity >= available) return null;",
+    "reason": "Boundary mutation rejects a reservation consuming exactly the remaining stock. exact_capacity, replay_depleted, max_capacity_no_overflow and concurrent_capacity detect it."
+  },
+  {
+    "file": "Inventory.java",
+    "old": "new Reservation(id, quantity, Reservation.State.ACTIVE)",
+    "new": "new Reservation(\"WRONG\", quantity, Reservation.State.ACTIVE)",
+    "reason": "Wrong reservation identity must fail snapshot identity assertions."
+  }
+]

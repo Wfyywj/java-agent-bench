@@ -1,0 +1,1067 @@
+{
+  "task_id": "R03",
+  "passed": true,
+  "baseline": {
+    "schema_version": "1.0",
+    "task_id": "R03",
+    "task_version": "1.0.1",
+    "category": "transactional_outbox",
+    "tier": "T3",
+    "timestamp_utc": "2026-10-27T03:21:06.827362+00:00",
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 18,
+    "checks": [
+      {
+        "name": "atomic_duplicate",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "aggregate_distinct_amounts",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "dead_after_retries",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "invalid_submit_no_effect",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "ordered_claim",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "retry_due_boundary",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "expired_reclaim",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "stale_token_fencing",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "worker_fencing",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "informational_fields_ack",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "informational_fields_fail",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "expired_completion",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "sent_terminal",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "dead_terminal",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "invalid_transition_arguments",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "overflow_no_mutation",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_duplicate_credit",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_exclusive_claim",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "passed": false,
+    "status": "verification_failed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Claim.java",
+        "candidate/OutboxMessage.java",
+        "candidate/OutboxStore.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.5753,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0565,
+      "stdout": "FAIL atomic_duplicate\nFAIL aggregate_distinct_amounts\nFAIL dead_after_retries\nFAIL invalid_submit_no_effect\nPASS ordered_claim\nFAIL retry_due_boundary\nFAIL expired_reclaim\nFAIL stale_token_fencing\nFAIL worker_fencing\nPASS informational_fields_ack\nPASS informational_fields_fail\nFAIL expired_completion\nFAIL sent_terminal\nFAIL dead_terminal\nFAIL invalid_transition_arguments\nFAIL overflow_no_mutation\nFAIL concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+      "stderr": ""
+    }
+  },
+  "reference": {
+    "schema_version": "1.0",
+    "task_id": "R03",
+    "task_version": "1.0.1",
+    "category": "transactional_outbox",
+    "tier": "T3",
+    "timestamp_utc": "2026-10-27T03:21:07.489558+00:00",
+    "patch_sha256": "dcc93af463a4b46351eec76d8019060000ed2262e8a7ed914ab7fa807d312be2",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 18,
+    "checks": [
+      {
+        "name": "atomic_duplicate",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "aggregate_distinct_amounts",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "dead_after_retries",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_submit_no_effect",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "ordered_claim",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "retry_due_boundary",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "expired_reclaim",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "stale_token_fencing",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "worker_fencing",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "informational_fields_ack",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "informational_fields_fail",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "expired_completion",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "sent_terminal",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "dead_terminal",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_transition_arguments",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "overflow_no_mutation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_duplicate_credit",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_exclusive_claim",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "passed": true,
+    "status": "passed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Claim.java",
+        "candidate/OutboxMessage.java",
+        "candidate/OutboxStore.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.6442,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0566,
+      "stdout": "PASS atomic_duplicate\nPASS aggregate_distinct_amounts\nPASS dead_after_retries\nPASS invalid_submit_no_effect\nPASS ordered_claim\nPASS retry_due_boundary\nPASS expired_reclaim\nPASS stale_token_fencing\nPASS worker_fencing\nPASS informational_fields_ack\nPASS informational_fields_fail\nPASS expired_completion\nPASS sent_terminal\nPASS dead_terminal\nPASS invalid_transition_arguments\nPASS overflow_no_mutation\nPASS concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+      "stderr": ""
+    }
+  },
+  "mutation": {
+    "schema_version": "1.0",
+    "task_id": "R03",
+    "task_version": "1.0.1",
+    "category": "transactional_outbox",
+    "tier": "T3",
+    "timestamp_utc": "2026-10-27T03:21:08.222314+00:00",
+    "patch_sha256": "7559cbd306fe9c0d2dddb1c159b62b665da42ef30c9cbcb347e9103dcc48f361",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 18,
+    "checks": [
+      {
+        "name": "atomic_duplicate",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "aggregate_distinct_amounts",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "dead_after_retries",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_submit_no_effect",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "ordered_claim",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "retry_due_boundary",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "expired_reclaim",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "stale_token_fencing",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "worker_fencing",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "informational_fields_ack",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "informational_fields_fail",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "expired_completion",
+        "passed": false,
+        "detail": ""
+      },
+      {
+        "name": "sent_terminal",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "dead_terminal",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_transition_arguments",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "overflow_no_mutation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_duplicate_credit",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_exclusive_claim",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "passed": false,
+    "status": "verification_failed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Claim.java",
+        "candidate/OutboxMessage.java",
+        "candidate/OutboxStore.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.637,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.065,
+      "stdout": "PASS atomic_duplicate\nPASS aggregate_distinct_amounts\nPASS dead_after_retries\nPASS invalid_submit_no_effect\nPASS ordered_claim\nPASS retry_due_boundary\nPASS expired_reclaim\nPASS stale_token_fencing\nPASS worker_fencing\nPASS informational_fields_ack\nPASS informational_fields_fail\nFAIL expired_completion\nPASS sent_terminal\nPASS dead_terminal\nPASS invalid_transition_arguments\nPASS overflow_no_mutation\nPASS concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+      "stderr": ""
+    }
+  },
+  "mutation_reason": "Off-by-one expiry permits completion at lease boundary; expired_completion must fail.",
+  "mutation_killed": true,
+  "mutations": [
+    {
+      "reason": "Off-by-one expiry permits completion at lease boundary; expired_completion must fail.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R03",
+        "task_version": "1.0.1",
+        "category": "transactional_outbox",
+        "tier": "T3",
+        "timestamp_utc": "2026-10-27T03:21:08.222314+00:00",
+        "patch_sha256": "7559cbd306fe9c0d2dddb1c159b62b665da42ef30c9cbcb347e9103dcc48f361",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 18,
+        "checks": [
+          {
+            "name": "atomic_duplicate",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "aggregate_distinct_amounts",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_after_retries",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_submit_no_effect",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "ordered_claim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_due_boundary",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_reclaim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "stale_token_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "worker_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_ack",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_fail",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_completion",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "sent_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_transition_arguments",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "overflow_no_mutation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_duplicate_credit",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_exclusive_claim",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Claim.java",
+            "candidate/OutboxMessage.java",
+            "candidate/OutboxStore.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.637,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.065,
+          "stdout": "PASS atomic_duplicate\nPASS aggregate_distinct_amounts\nPASS dead_after_retries\nPASS invalid_submit_no_effect\nPASS ordered_claim\nPASS retry_due_boundary\nPASS expired_reclaim\nPASS stale_token_fencing\nPASS worker_fencing\nPASS informational_fields_ack\nPASS informational_fields_fail\nFAIL expired_completion\nPASS sent_terminal\nPASS dead_terminal\nPASS invalid_transition_arguments\nPASS overflow_no_mutation\nPASS concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    },
+    {
+      "reason": "Informational claim fields must not become ownership predicates.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R03",
+        "task_version": "1.0.1",
+        "category": "transactional_outbox",
+        "tier": "T3",
+        "timestamp_utc": "2026-10-27T03:21:08.954190+00:00",
+        "patch_sha256": "cd28086d079db093a44476f1164f0547b3ea4746d49bbf84c28bc83add2ef69f",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 18,
+        "checks": [
+          {
+            "name": "atomic_duplicate",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "aggregate_distinct_amounts",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_after_retries",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_submit_no_effect",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "ordered_claim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_due_boundary",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_reclaim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "stale_token_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "worker_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_ack",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_fail",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "expired_completion",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "sent_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_transition_arguments",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "overflow_no_mutation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_duplicate_credit",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_exclusive_claim",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Claim.java",
+            "candidate/OutboxMessage.java",
+            "candidate/OutboxStore.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.6492,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0607,
+          "stdout": "PASS atomic_duplicate\nPASS aggregate_distinct_amounts\nPASS dead_after_retries\nPASS invalid_submit_no_effect\nPASS ordered_claim\nPASS retry_due_boundary\nPASS expired_reclaim\nPASS stale_token_fencing\nPASS worker_fencing\nFAIL informational_fields_ack\nFAIL informational_fields_fail\nPASS expired_completion\nPASS sent_terminal\nPASS dead_terminal\nPASS invalid_transition_arguments\nPASS overflow_no_mutation\nPASS concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    },
+    {
+      "reason": "Failure must honor multi-attempt terminal threshold, not only maxAttempts one.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R03",
+        "task_version": "1.0.1",
+        "category": "transactional_outbox",
+        "tier": "T3",
+        "timestamp_utc": "2026-10-27T03:21:09.692648+00:00",
+        "patch_sha256": "eb706804ac2bbb586ad486b86dc25e0f2269ee4053cee61c3d816b3124359afa",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 18,
+        "checks": [
+          {
+            "name": "atomic_duplicate",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "aggregate_distinct_amounts",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_after_retries",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "invalid_submit_no_effect",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "ordered_claim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_due_boundary",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_reclaim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "stale_token_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "worker_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_ack",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_fail",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_completion",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "sent_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_transition_arguments",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "overflow_no_mutation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_duplicate_credit",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_exclusive_claim",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Claim.java",
+            "candidate/OutboxMessage.java",
+            "candidate/OutboxStore.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.6055,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0556,
+          "stdout": "PASS atomic_duplicate\nPASS aggregate_distinct_amounts\nFAIL dead_after_retries\nPASS invalid_submit_no_effect\nPASS ordered_claim\nPASS retry_due_boundary\nPASS expired_reclaim\nPASS stale_token_fencing\nPASS worker_fencing\nPASS informational_fields_ack\nPASS informational_fields_fail\nPASS expired_completion\nPASS sent_terminal\nPASS dead_terminal\nPASS invalid_transition_arguments\nPASS overflow_no_mutation\nPASS concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    },
+    {
+      "reason": "Distinct submissions must accumulate arbitrary positive amounts in long precision.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R03",
+        "task_version": "1.0.1",
+        "category": "transactional_outbox",
+        "tier": "T3",
+        "timestamp_utc": "2026-10-27T03:21:10.382002+00:00",
+        "patch_sha256": "1b1c9b8aae182381ace01d1192fc7cae176434ed5689b7fce41e1e8707f773ef",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 18,
+        "checks": [
+          {
+            "name": "atomic_duplicate",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "aggregate_distinct_amounts",
+            "passed": false,
+            "detail": ""
+          },
+          {
+            "name": "dead_after_retries",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_submit_no_effect",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "ordered_claim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_due_boundary",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_reclaim",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "stale_token_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "worker_fencing",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_ack",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "informational_fields_fail",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "expired_completion",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "sent_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "dead_terminal",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_transition_arguments",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "overflow_no_mutation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_duplicate_credit",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_exclusive_claim",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Claim.java",
+            "candidate/OutboxMessage.java",
+            "candidate/OutboxStore.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.5641,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0629,
+          "stdout": "PASS atomic_duplicate\nFAIL aggregate_distinct_amounts\nPASS dead_after_retries\nPASS invalid_submit_no_effect\nPASS ordered_claim\nPASS retry_due_boundary\nPASS expired_reclaim\nPASS stale_token_fencing\nPASS worker_fencing\nPASS informational_fields_ack\nPASS informational_fields_fail\nPASS expired_completion\nPASS sent_terminal\nPASS dead_terminal\nPASS invalid_transition_arguments\nPASS overflow_no_mutation\nPASS concurrent_duplicate_credit\nPASS concurrent_exclusive_claim\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    }
+  ]
+}

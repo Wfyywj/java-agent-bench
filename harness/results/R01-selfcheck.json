@@ -1,0 +1,794 @@
+{
+  "task_id": "R01",
+  "passed": true,
+  "baseline": {
+    "schema_version": "1.0",
+    "task_id": "R01",
+    "task_version": "1.0.1",
+    "category": "idempotency",
+    "tier": "T2",
+    "timestamp_utc": "2026-10-27T03:20:59.940597+00:00",
+    "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 14,
+    "checks": [
+      {
+        "name": "first_charge",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "gateway_arguments",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "gateway_receipt_preserved",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "exact_replay",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "payload_conflict",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "amount_conflict",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "tenant_isolation",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "composite_key_collision",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_identifiers",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "invalid_amounts",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "retry_after_failure",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "no_normalization",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "concurrent_replay",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_conflict",
+        "passed": false,
+        "detail": "AssertionError"
+      }
+    ],
+    "passed": false,
+    "status": "verification_failed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Gateway.java",
+        "candidate/PaymentService.java",
+        "candidate/Receipt.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.6507,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0978,
+      "stdout": "PASS first_charge\nFAIL gateway_arguments AssertionError\nPASS gateway_receipt_preserved\nPASS exact_replay\nFAIL payload_conflict AssertionError\nFAIL amount_conflict AssertionError\nFAIL tenant_isolation AssertionError\nPASS composite_key_collision\nFAIL invalid_identifiers AssertionError\nFAIL invalid_amounts AssertionError\nPASS retry_after_failure\nFAIL no_normalization AssertionError\nPASS concurrent_replay\nFAIL concurrent_conflict AssertionError\n",
+      "stderr": ""
+    }
+  },
+  "reference": {
+    "schema_version": "1.0",
+    "task_id": "R01",
+    "task_version": "1.0.1",
+    "category": "idempotency",
+    "tier": "T2",
+    "timestamp_utc": "2026-10-27T03:21:00.719599+00:00",
+    "patch_sha256": "fb3a96750a89b1b705d75d7588d11d7687bc443c915fce86a5fceefcaef635e8",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 14,
+    "checks": [
+      {
+        "name": "first_charge",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "gateway_arguments",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "gateway_receipt_preserved",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "exact_replay",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "payload_conflict",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "amount_conflict",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "tenant_isolation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "composite_key_collision",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_identifiers",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_amounts",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "retry_after_failure",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "no_normalization",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_replay",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_conflict",
+        "passed": true,
+        "detail": ""
+      }
+    ],
+    "passed": true,
+    "status": "passed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Gateway.java",
+        "candidate/PaymentService.java",
+        "candidate/Receipt.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.697,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0798,
+      "stdout": "PASS first_charge\nPASS gateway_arguments\nPASS gateway_receipt_preserved\nPASS exact_replay\nPASS payload_conflict\nPASS amount_conflict\nPASS tenant_isolation\nPASS composite_key_collision\nPASS invalid_identifiers\nPASS invalid_amounts\nPASS retry_after_failure\nPASS no_normalization\nPASS concurrent_replay\nPASS concurrent_conflict\n",
+      "stderr": ""
+    }
+  },
+  "mutation": {
+    "schema_version": "1.0",
+    "task_id": "R01",
+    "task_version": "1.0.1",
+    "category": "idempotency",
+    "tier": "T2",
+    "timestamp_utc": "2026-10-27T03:21:01.530470+00:00",
+    "patch_sha256": "e3be7cbe78686574bc08182a1a5bf7f289864d8cd09d3501701ed80e14b253fe",
+    "environment": {
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+    },
+    "expected_checks": 14,
+    "checks": [
+      {
+        "name": "first_charge",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "gateway_arguments",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "gateway_receipt_preserved",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "exact_replay",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "payload_conflict",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "amount_conflict",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "tenant_isolation",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "composite_key_collision",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_identifiers",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "invalid_amounts",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "retry_after_failure",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "no_normalization",
+        "passed": false,
+        "detail": "AssertionError"
+      },
+      {
+        "name": "concurrent_replay",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent_conflict",
+        "passed": false,
+        "detail": "AssertionError"
+      }
+    ],
+    "passed": false,
+    "status": "verification_failed",
+    "security": "local functional evaluation; not a security sandbox",
+    "compile": {
+      "argv": [
+        "/usr/bin/java",
+        "-m",
+        "jdk.compiler/com.sun.tools.javac.Main",
+        "-encoding",
+        "UTF-8",
+        "-proc:none",
+        "-d",
+        "classes",
+        "candidate/Gateway.java",
+        "candidate/PaymentService.java",
+        "candidate/Receipt.java",
+        "verifier/Verifier.java"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.6717,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "argv": [
+        "/usr/bin/java",
+        "-Xmx256m",
+        "-cp",
+        "classes",
+        "Verifier"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "output_limited": false,
+      "output_limit_bytes": 1048576,
+      "duration_seconds": 0.0964,
+      "stdout": "PASS first_charge\nPASS gateway_arguments\nPASS gateway_receipt_preserved\nPASS exact_replay\nFAIL payload_conflict AssertionError\nPASS amount_conflict\nPASS tenant_isolation\nPASS composite_key_collision\nPASS invalid_identifiers\nPASS invalid_amounts\nPASS retry_after_failure\nFAIL no_normalization AssertionError\nPASS concurrent_replay\nFAIL concurrent_conflict AssertionError\n",
+      "stderr": ""
+    }
+  },
+  "mutation_reason": "Removing payload equality permits conflicting payload replay; payload_conflict and no_normalization must fail.",
+  "mutation_killed": true,
+  "mutations": [
+    {
+      "reason": "Removing payload equality permits conflicting payload replay; payload_conflict and no_normalization must fail.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R01",
+        "task_version": "1.0.1",
+        "category": "idempotency",
+        "tier": "T2",
+        "timestamp_utc": "2026-10-27T03:21:01.530470+00:00",
+        "patch_sha256": "e3be7cbe78686574bc08182a1a5bf7f289864d8cd09d3501701ed80e14b253fe",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 14,
+        "checks": [
+          {
+            "name": "first_charge",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "gateway_arguments",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "gateway_receipt_preserved",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "exact_replay",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "payload_conflict",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "amount_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "tenant_isolation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "composite_key_collision",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_identifiers",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_amounts",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_after_failure",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "no_normalization",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "concurrent_replay",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_conflict",
+            "passed": false,
+            "detail": "AssertionError"
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Gateway.java",
+            "candidate/PaymentService.java",
+            "candidate/Receipt.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.6717,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0964,
+          "stdout": "PASS first_charge\nPASS gateway_arguments\nPASS gateway_receipt_preserved\nPASS exact_replay\nFAIL payload_conflict AssertionError\nPASS amount_conflict\nPASS tenant_isolation\nPASS composite_key_collision\nPASS invalid_identifiers\nPASS invalid_amounts\nPASS retry_after_failure\nFAIL no_normalization AssertionError\nPASS concurrent_replay\nFAIL concurrent_conflict AssertionError\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    },
+    {
+      "reason": "Wrong gateway tenant/payload must fail recording collaborator assertions.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R01",
+        "task_version": "1.0.1",
+        "category": "idempotency",
+        "tier": "T2",
+        "timestamp_utc": "2026-10-27T03:21:02.328771+00:00",
+        "patch_sha256": "9c55ae56ff55870a6c60aaa899a8eadc36d509a522d6e0d1205ae28bf10c3a50",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 14,
+        "checks": [
+          {
+            "name": "first_charge",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "gateway_arguments",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "gateway_receipt_preserved",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "exact_replay",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "payload_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "amount_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "tenant_isolation",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "composite_key_collision",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_identifiers",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_amounts",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_after_failure",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "no_normalization",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_replay",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_conflict",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Gateway.java",
+            "candidate/PaymentService.java",
+            "candidate/Receipt.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.7079,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.0939,
+          "stdout": "PASS first_charge\nFAIL gateway_arguments AssertionError\nPASS gateway_receipt_preserved\nPASS exact_replay\nPASS payload_conflict\nPASS amount_conflict\nPASS tenant_isolation\nPASS composite_key_collision\nPASS invalid_identifiers\nPASS invalid_amounts\nPASS retry_after_failure\nPASS no_normalization\nPASS concurrent_replay\nPASS concurrent_conflict\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    },
+    {
+      "reason": "Synthesizing a receipt must fail authoritative gateway receipt assertions.",
+      "result": {
+        "schema_version": "1.0",
+        "task_id": "R01",
+        "task_version": "1.0.1",
+        "category": "idempotency",
+        "tier": "T2",
+        "timestamp_utc": "2026-10-27T03:21:03.162869+00:00",
+        "patch_sha256": "0fa5f68d71907bc47a229a848588c51dfccc9d1a5f65926033393d2082cbd968",
+        "environment": {
+          "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+          "python": "3.12.14",
+          "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+        },
+        "expected_checks": 14,
+        "checks": [
+          {
+            "name": "first_charge",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "gateway_arguments",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "gateway_receipt_preserved",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "exact_replay",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "payload_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "amount_conflict",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "tenant_isolation",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "composite_key_collision",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_identifiers",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "invalid_amounts",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "retry_after_failure",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "no_normalization",
+            "passed": true,
+            "detail": ""
+          },
+          {
+            "name": "concurrent_replay",
+            "passed": false,
+            "detail": "AssertionError"
+          },
+          {
+            "name": "concurrent_conflict",
+            "passed": true,
+            "detail": ""
+          }
+        ],
+        "passed": false,
+        "status": "verification_failed",
+        "security": "local functional evaluation; not a security sandbox",
+        "compile": {
+          "argv": [
+            "/usr/bin/java",
+            "-m",
+            "jdk.compiler/com.sun.tools.javac.Main",
+            "-encoding",
+            "UTF-8",
+            "-proc:none",
+            "-d",
+            "classes",
+            "candidate/Gateway.java",
+            "candidate/PaymentService.java",
+            "candidate/Receipt.java",
+            "verifier/Verifier.java"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.6083,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "argv": [
+            "/usr/bin/java",
+            "-Xmx256m",
+            "-cp",
+            "classes",
+            "Verifier"
+          ],
+          "exit_code": 1,
+          "timed_out": false,
+          "output_limited": false,
+          "output_limit_bytes": 1048576,
+          "duration_seconds": 0.1051,
+          "stdout": "PASS first_charge\nPASS gateway_arguments\nFAIL gateway_receipt_preserved AssertionError\nFAIL exact_replay AssertionError\nPASS payload_conflict\nPASS amount_conflict\nFAIL tenant_isolation AssertionError\nPASS composite_key_collision\nPASS invalid_identifiers\nPASS invalid_amounts\nFAIL retry_after_failure AssertionError\nPASS no_normalization\nFAIL concurrent_replay AssertionError\nPASS concurrent_conflict\n",
+          "stderr": ""
+        }
+      },
+      "killed": true
+    }
+  ]
+}

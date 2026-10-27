@@ -1,0 +1,32 @@
+{
+  "id": "R02",
+  "version": "1.0.1",
+  "title": "Linearizable inventory reservations with idempotent cancellation",
+  "test_count": 15,
+  "category": "concurrency_inventory",
+  "tier": "T2",
+  "tier_status": "provisional_designer_estimate",
+  "limitations": [
+    "Single inventory pool in memory; no database or cross-process coordination.",
+    "Bounded thread scenarios do not exhaustively enumerate interleavings.",
+    "Public verifier and reference; not a leakage-resistant or security-isolated benchmark."
+  ],
+  "check_names": [
+    "capacity_validation",
+    "exact_capacity",
+    "quantity_validation",
+    "id_validation",
+    "insufficient_retry",
+    "replay_depleted",
+    "quantity_conflict",
+    "cancel_once",
+    "unknown_cancel",
+    "cancelled_replay_snapshot",
+    "max_capacity_no_overflow",
+    "reservation_identity_snapshots",
+    "concurrent_same_id",
+    "concurrent_capacity",
+    "concurrent_cancel_once"
+  ],
+  "mutation_count": 2
+}

@@ -1,0 +1,36 @@
+{
+  "id": "R01",
+  "version": "1.0.1",
+  "title": "Tenant-scoped payment idempotency",
+  "test_count": 14,
+  "language": "java",
+  "entrypoint": "Verifier",
+  "source_dir": "candidate/src",
+  "reference_dir": "reference/src",
+  "verifier_dir": "verifier",
+  "category": "idempotency",
+  "tier": "T2",
+  "tier_status": "provisional_designer_estimate",
+  "limitations": [
+    "In-memory synchronous gateway; no durable deduplication or distributed locks.",
+    "Global monitor prioritizes correctness over throughput; gateway reentrancy is not modeled.",
+    "Public verifier and reference; not a leakage-resistant or security-isolated benchmark."
+  ],
+  "check_names": [
+    "first_charge",
+    "gateway_arguments",
+    "gateway_receipt_preserved",
+    "exact_replay",
+    "payload_conflict",
+    "amount_conflict",
+    "tenant_isolation",
+    "composite_key_collision",
+    "invalid_identifiers",
+    "invalid_amounts",
+    "retry_after_failure",
+    "no_normalization",
+    "concurrent_replay",
+    "concurrent_conflict"
+  ],
+  "mutation_count": 3
+}

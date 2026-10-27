@@ -1,0 +1,35 @@
+{
+  "id": "R03",
+  "version": "1.0.1",
+  "title": "Transactional outbox lease fencing and retries",
+  "test_count": 18,
+  "category": "transactional_outbox",
+  "tier": "T3",
+  "tier_status": "provisional_designer_estimate",
+  "limitations": [
+    "Atomicity is simulated by a single in-memory monitor, not a database transaction.",
+    "No real broker, crash recovery, persistence, or network delivery; clock is caller supplied.",
+    "Public verifier and reference; not a leakage-resistant or security-isolated benchmark."
+  ],
+  "check_names": [
+    "atomic_duplicate",
+    "aggregate_distinct_amounts",
+    "dead_after_retries",
+    "invalid_submit_no_effect",
+    "ordered_claim",
+    "retry_due_boundary",
+    "expired_reclaim",
+    "stale_token_fencing",
+    "worker_fencing",
+    "informational_fields_ack",
+    "informational_fields_fail",
+    "expired_completion",
+    "sent_terminal",
+    "dead_terminal",
+    "invalid_transition_arguments",
+    "overflow_no_mutation",
+    "concurrent_duplicate_credit",
+    "concurrent_exclusive_claim"
+  ],
+  "mutation_count": 4
+}

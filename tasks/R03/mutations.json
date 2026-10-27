@@ -1,0 +1,26 @@
+[
+  {
+    "file": "OutboxStore.java",
+    "old": "&& m.worker.equals(c.worker()) && now < m.leaseUntil",
+    "new": "&& m.worker.equals(c.worker()) && now <= m.leaseUntil",
+    "reason": "Off-by-one expiry permits completion at lease boundary; expired_completion must fail."
+  },
+  {
+    "file": "OutboxStore.java",
+    "old": "m.token == c.token()",
+    "new": "m.token == c.token() && m.attempts == c.attempt() && m.leaseUntil == c.leaseUntil()",
+    "reason": "Informational claim fields must not become ownership predicates."
+  },
+  {
+    "file": "OutboxStore.java",
+    "old": "m.attempts >= maxAttempts",
+    "new": "maxAttempts == 1",
+    "reason": "Failure must honor multi-attempt terminal threshold, not only maxAttempts one."
+  },
+  {
+    "file": "OutboxStore.java",
+    "old": "total = next;",
+    "new": "total = amount;",
+    "reason": "Distinct submissions must accumulate arbitrary positive amounts in long precision."
+  }
+]

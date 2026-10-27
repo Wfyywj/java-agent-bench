@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:java-agent-bench:run-result:1.0",
+  "title": "Local Java functional evaluation result",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "task_version",
+    "timestamp_utc",
+    "patch_sha256",
+    "environment",
+    "expected_checks",
+    "checks",
+    "passed",
+    "status",
+    "security",
+    "compile",
+    "run",
+    "category",
+    "tier"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^R[0-9]{2}$"
+    },
+    "task_version": {
+      "type": "string"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "patch_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "environment": {
+      "type": "object",
+      "required": [
+        "java",
+        "python",
+        "platform"
+      ],
+      "properties": {
+        "java": {
+          "type": "string"
+        },
+        "python": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        }
+      }
+    },
+    "expected_checks": {
+      "type": "integer",
+      "minimum": 8
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "passed",
+          "detail"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "passed": {
+            "type": "boolean"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "build_failed",
+        "compile_timeout",
+        "run_timeout",
+        "verification_failed",
+        "passed",
+        "compile_output_limit",
+        "run_output_limit"
+      ]
+    },
+    "security": {
+      "type": "string"
+    },
+    "compile": {
+      "$ref": "#/$defs/process"
+    },
+    "run": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/process"
+        }
+      ]
+    },
+    "category": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "process": {
+      "type": "object",
+      "required": [
+        "argv",
+        "exit_code",
+        "timed_out",
+        "duration_seconds",
+        "stdout",
+        "stderr",
+        "output_limited",
+        "output_limit_bytes"
+      ],
+      "properties": {
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "stdout": {
+          "type": "string"
+        },
+        "stderr": {
+          "type": "string"
+        },
+        "output_limited": {
+          "type": "boolean"
+        },
+        "output_limit_bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

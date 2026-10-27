@@ -1,0 +1,160 @@
+[
+  {
+    "id": "R01",
+    "title": "租户支付幂等与冲突重放",
+    "tier": "silver",
+    "category": "idempotency",
+    "summary": "同一个请求重复到达、参数变化或租户撞键时，守住支付副作用边界。",
+    "brief": "# R01 — Tenant-scoped payment idempotency\n\nFix `PaymentService` and supporting production code for an in-memory checkout service. Preserve the public API. Each service instance owns its idempotency history.\n\n`pay(tenant, key, payload, amount)` must call `Gateway.charge` at most once for a **successful** operation with the same `(tenant, key)` and return the original receipt on replay. A replay must have exactly the same payload string and amount; otherwise throw `IllegalStateException` before touching the gateway. Different tenants may use the same key independently. Treat tenant and key as separate strings (concatenating with a delimiter is not collision-safe).\n\nReject null or blank tenant, key, and payload, and nonpositive amounts with `IllegalArgumentException` before any side effect. Do not trim or otherwise normalize valid identifiers/payloads. Gateway exceptions propagate and must not poison a key: a later attempt may succeed, even with changed payload. Concurrent calls must have linearizable behavior: duplicate successful requests get the same receipt, and conflicting requests cannot both charge. No external database/network is required. Global serialization inside one instance is acceptable.\n\nThis is a local functional exercise, not a secure sandbox. The repository's verifier and reference are public, not hidden tests. Do not change verifier files.\n",
+    "deliverables": [
+      "修复后的 Java 源码",
+      "变更说明与边界分析",
+      "独立验收结果 JSON"
+    ],
+    "acceptance": [
+      "first_charge",
+      "gateway_arguments",
+      "gateway_receipt_preserved",
+      "exact_replay",
+      "payload_conflict",
+      "amount_conflict",
+      "tenant_isolation",
+      "composite_key_collision",
+      "invalid_identifiers",
+      "invalid_amounts",
+      "retry_after_failure",
+      "no_normalization",
+      "concurrent_replay",
+      "concurrent_conflict"
+    ],
+    "risks": [
+      "In-memory synchronous gateway; no durable deduplication or distributed locks.",
+      "Global monitor prioritizes correctness over throughput; gateway reentrancy is not modeled.",
+      "Public verifier and reference; not a leakage-resistant or security-isolated benchmark."
+    ],
+    "rubric": [
+      {
+        "dimension": "严格功能验收",
+        "weight": 100,
+        "evidence": "全部必需检查通过；部分通过只作诊断，不等于任务成功。"
+      }
+    ],
+    "environment": {
+      "runtime": "Java 21 + Python 3.10+",
+      "database": "仅内存模型，不模拟真实数据库事务",
+      "network": "无需网络",
+      "security": "非安全沙箱，仅可信代码",
+      "task_version": "1.0.1"
+    },
+    "status": "runnable",
+    "difficultyRationale": "暂定机制复杂度，未经过模型完成率或人工耗时校准。",
+    "command": "python3 harness/bench.py prepare R01 /tmp/r01-work\npython3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result.json\npython3 harness/bench.py selfcheck R01"
+  },
+  {
+    "id": "R02",
+    "title": "并发库存预留与释放",
+    "tier": "silver",
+    "category": "concurrency_inventory",
+    "summary": "在竞争、重复操作与非法数量下，验证库存和预留的一致性。",
+    "brief": "# R02 — Concurrent inventory reservations\n\nRepair `src/Inventory.java` (and supporting source files if needed) without changing the public API. This service reserves units of a single SKU for checkout requests. No dependencies or persistence are required; correctness is within one JVM.\n\n## Contract\n- `new Inventory(capacity)` accepts zero or positive capacity; negative capacity throws `IllegalArgumentException`.\n- `available()` returns the current free quantity.\n- `reserve(id, quantity)` requires a non-null, nonblank id and positive quantity, otherwise throws `IllegalArgumentException` before changing state.\n- A new id reserves exactly quantity units and returns an immutable ACTIVE `Reservation`. Insufficient stock returns `null` and does not bind that id.\n- An existing id with the same quantity returns its current reservation snapshot without changing stock, including when available stock is zero. An existing id with different quantity throws `IllegalArgumentException`, including after cancellation.\n- `cancel(id)` requires a non-null, nonblank id. It restores stock exactly once and returns true only on the ACTIVE → CANCELLED transition. Missing or already-cancelled ids return false.\n- Cancellation permanently retains the id. Replaying it returns CANCELLED and never reserves again. Previously returned immutable snapshots do not change.\n- All calls must be linearizable and safe under concurrent reserve/cancel/read calls. Stock must never be negative or exceed initial capacity.\n\nUse Java 21 and the default package. Keep `Inventory` and `Reservation` public API compatible. Verifier and reference material are public in the benchmark repository; the prepared work directory omits them for clean task presentation, not secrecy. No model execution is part of this task.\n",
+    "deliverables": [
+      "修复后的 Java 源码",
+      "变更说明与边界分析",
+      "独立验收结果 JSON"
+    ],
+    "acceptance": [
+      "capacity_validation",
+      "exact_capacity",
+      "quantity_validation",
+      "id_validation",
+      "insufficient_retry",
+      "replay_depleted",
+      "quantity_conflict",
+      "cancel_once",
+      "unknown_cancel",
+      "cancelled_replay_snapshot",
+      "max_capacity_no_overflow",
+      "reservation_identity_snapshots",
+      "concurrent_same_id",
+      "concurrent_capacity",
+      "concurrent_cancel_once"
+    ],
+    "risks": [
+      "Single inventory pool in memory; no database or cross-process coordination.",
+      "Bounded thread scenarios do not exhaustively enumerate interleavings.",
+      "Public verifier and reference; not a leakage-resistant or security-isolated benchmark."
+    ],
+    "rubric": [
+      {
+        "dimension": "严格功能验收",
+        "weight": 100,
+        "evidence": "全部必需检查通过；部分通过只作诊断，不等于任务成功。"
+      }
+    ],
+    "environment": {
+      "runtime": "Java 21 + Python 3.10+",
+      "database": "仅内存模型，不模拟真实数据库事务",
+      "network": "无需网络",
+      "security": "非安全沙箱，仅可信代码",
+      "task_version": "1.0.1"
+    },
+    "status": "runnable",
+    "difficultyRationale": "暂定机制复杂度，未经过模型完成率或人工耗时校准。",
+    "command": "python3 harness/bench.py prepare R02 /tmp/r02-work\npython3 harness/bench.py evaluate R02 /tmp/r02-work/src --output /tmp/r02-result.json\npython3 harness/bench.py selfcheck R02"
+  },
+  {
+    "id": "R03",
+    "title": "Outbox 租约、重试与过期确认",
+    "tier": "gold",
+    "category": "transactional_outbox",
+    "summary": "模拟事件投递的所有权变更，防止旧 Worker 越权确认与重试失控。",
+    "brief": "# R03 — Transactional outbox lease fencing and retries\n\nRepair the Java 21 in-memory outbox used by an order-credit service. Preserve the public `OutboxStore` and `Claim` API. No dependencies, network, wall-clock calls, or sleeps are needed. Inputs use explicit logical time (nonnegative milliseconds). This is an original local benchmark fixture, not a production persistence implementation.\n\n## Contract\n- `submit(id, amount)` atomically adds a positive amount to aggregate `total` and inserts one pending message. Nonblank IDs only. Duplicate IDs return false and have no effect, regardless of payload. Invalid input throws IllegalArgumentException without mutation.\n- `claim(worker, now, lease)` returns the first eligible message in insertion order, or empty. Worker must be nonblank; lease must be positive. Pending messages are eligible at `due <= now`, with initial due zero. A claimed message is eligible for re-claim at `leaseUntil <= now`. SENT and DEAD are never eligible.\n- Each claim/re-claim increments its message's attempt (first attempt 1) and obtains a globally unique increasing token. Lease end is `now + lease`. Overflow throws ArithmeticException before any mutation.\n- `acknowledge(claim, now)` succeeds only for the current token AND worker on a currently CLAIMED message before its lease end; it transitions to SENT. Expired, forged, stale, or repeated acknowledgements return false without mutation.\n- `fail(claim, now, backoff, maxAttempts)` uses the same ownership/lease conditions. A successful failure becomes DEAD when current attempts >= maxAttempts, otherwise PENDING until `now + backoff`. Nonnegative backoff and positive maxAttempts required; overflow throws ArithmeticException without mutation.\n- Null claims and negative now are invalid. Failure argument validation occurs before ownership lookup. Claim fields attempt and leaseUntil are informational; ownership uses ID, worker and token against stored lease state.\n- `total`, `size`, and `state` provide consistent snapshots; unknown ID state is MISSING. All operations must be thread-safe. Concurrent duplicate submissions must credit exactly once, and only one worker may own an unexpired claim.\n\nEdit candidate `src/`. Evaluation is functional and public: verifier/reference in the benchmark repository are not secret tests. Do not inspect them during an agent attempt if measuring clean task performance. Local execution is NOT a secure sandbox for untrusted code.\n",
+    "deliverables": [
+      "修复后的 Java 源码",
+      "变更说明与边界分析",
+      "独立验收结果 JSON"
+    ],
+    "acceptance": [
+      "atomic_duplicate",
+      "aggregate_distinct_amounts",
+      "dead_after_retries",
+      "invalid_submit_no_effect",
+      "ordered_claim",
+      "retry_due_boundary",
+      "expired_reclaim",
+      "stale_token_fencing",
+      "worker_fencing",
+      "informational_fields_ack",
+      "informational_fields_fail",
+      "expired_completion",
+      "sent_terminal",
+      "dead_terminal",
+      "invalid_transition_arguments",
+      "overflow_no_mutation",
+      "concurrent_duplicate_credit",
+      "concurrent_exclusive_claim"
+    ],
+    "risks": [
+      "Atomicity is simulated by a single in-memory monitor, not a database transaction.",
+      "No real broker, crash recovery, persistence, or network delivery; clock is caller supplied.",
+      "Public verifier and reference; not a leakage-resistant or security-isolated benchmark."
+    ],
+    "rubric": [
+      {
+        "dimension": "严格功能验收",
+        "weight": 100,
+        "evidence": "全部必需检查通过；部分通过只作诊断，不等于任务成功。"
+      }
+    ],
+    "environment": {
+      "runtime": "Java 21 + Python 3.10+",
+      "database": "仅内存模型，不模拟真实数据库事务",
+      "network": "无需网络",
+      "security": "非安全沙箱，仅可信代码",
+      "task_version": "1.0.1"
+    },
+    "status": "runnable",
+    "difficultyRationale": "暂定机制复杂度，未经过模型完成率或人工耗时校准。",
+    "command": "python3 harness/bench.py prepare R03 /tmp/r03-work\npython3 harness/bench.py evaluate R03 /tmp/r03-work/src --output /tmp/r03-result.json\npython3 harness/bench.py selfcheck R03"
+  }
+]
