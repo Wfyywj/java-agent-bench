@@ -59,3 +59,7 @@ python3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result
 本地运行 `python3 scripts/check_engineering.py` 可执行全部已存在切片的可信自检。S04/S05 的 H2 依赖从 Maven Central 按固定版本与 SHA256 获取，不随仓库分发。GitHub Actions 配置只在 main 推送或手动触发运行，不提交密钥；CI 状态以具体提交的实际运行结果为准。
 
 候选任务 ZIP 可在网站任务详情下载；仓库不提交生成包，运行 `python3 scripts/build_implementations.py && python3 scripts/build_task_packages.py` 可重建。不会在包中复制评分器或参考答案，但公开仓库依然可访问，不能当成防泄漏隔离。
+
+## 离线 A/B 分析
+
+`analysis_tools/paired_analysis.py` 比较预先登记的真实 agent 试验，严格锁定版本与配置，保留失败、缺失和未知费用；不把参考解自检当模型成绩。示例全部明确标为合成测试夹具，默认拒绝作为真实记录。使用方法见 [分析工具说明](analysis_tools/README.md)。

@@ -1,0 +1,266 @@
+[
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-0-A",
+    "implementation_id": "synthetic-task-1",
+    "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "repeat": 1,
+    "arm": "A",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-A@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "infrastructure_failure",
+    "elapsed_seconds": 10,
+    "elapsed_unknown_reason": null,
+    "cost_usd": null,
+    "cost_unknown_reason": "provider usage unavailable",
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-0-B",
+    "implementation_id": "synthetic-task-1",
+    "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "repeat": 1,
+    "arm": "B",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-B@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "success",
+    "elapsed_seconds": 10,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-1-A",
+    "implementation_id": "synthetic-task-1",
+    "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "repeat": 2,
+    "arm": "A",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-A@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "failure",
+    "elapsed_seconds": 11,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-1-B",
+    "implementation_id": "synthetic-task-1",
+    "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "repeat": 2,
+    "arm": "B",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-B@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "success",
+    "elapsed_seconds": 11,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-2-A",
+    "implementation_id": "synthetic-task-2",
+    "manifest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "repeat": 1,
+    "arm": "A",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-A@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "success",
+    "elapsed_seconds": 12,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-2-B",
+    "implementation_id": "synthetic-task-2",
+    "manifest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "repeat": 1,
+    "arm": "B",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-B@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "failure",
+    "elapsed_seconds": 12,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-3-A",
+    "implementation_id": "synthetic-task-2",
+    "manifest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "repeat": 2,
+    "arm": "A",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-A@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "success",
+    "elapsed_seconds": 13,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "synthetic-only-001",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "agent_trial",
+    "trial_id": "synthetic-3-B",
+    "implementation_id": "synthetic-task-2",
+    "manifest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "repeat": 2,
+    "arm": "B",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-B@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "outcome": "success",
+    "elapsed_seconds": 13,
+    "elapsed_unknown_reason": null,
+    "cost_usd": 0.01,
+    "cost_unknown_reason": null,
+    "evidence": {
+      "agent_trace_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evaluation_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "synthetic-only-001",
+  "preregistered_at": "2026-01-01T00:00:00Z",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "track": "model",
+  "arms": {
+    "A": {
+      "model": "synthetic-model-A@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    },
+    "B": {
+      "model": "synthetic-model-B@fixture",
+      "tool": "synthetic-tools@1",
+      "workflow": "synthetic-workflow@1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@1",
+      "evaluator": "synthetic-evaluator@1"
+    }
+  },
+  "pairs": [
+    {
+      "implementation_id": "synthetic-task-1",
+      "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "repeat": 1
+    },
+    {
+      "implementation_id": "synthetic-task-1",
+      "manifest_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "repeat": 2
+    },
+    {
+      "implementation_id": "synthetic-task-2",
+      "manifest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "repeat": 1
+    },
+    {
+      "implementation_id": "synthetic-task-2",
+      "manifest_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "repeat": 2
+    }
+  ]
+}
