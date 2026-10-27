@@ -1,0 +1,32 @@
+name: Verify public development fixtures
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  trusted-fixture-selfcheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Validate catalogue and local evaluation kernel
+        run: |
+          python3 scripts/build_catalog.py
+          python3 -m unittest discover -s tests -v
+          node --test tests/test_web.mjs
+      - name: Exercise available engineering fixture suites
+        run: |
+          python3 engineering/silver/setup_h2.py
+          python3 engineering/integration/S04-spring/tools/bootstrap.py
+          python3 scripts/check_engineering.py
