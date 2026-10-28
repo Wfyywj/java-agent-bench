@@ -48,12 +48,17 @@ async function app({saved, taskData=catalog, runData=runnable, implData=[], stor
   async exported(){return JSON.parse(await downloads.at(-1).blob.text())},
   async import(value){const text=JSON.stringify(value);await ids.get('#resultFile').onchange({target:{files:[{name:'result.json',size:Buffer.byteLength(text),text:async()=>text}]}})}};
 }
+function fillPlan(a,fields={}){
+ const values={experiment:'Paired trial',control:'arm-control',treatment:'arm-treatment',model:'fixed-v1',repeats:'4',budget:'600',seed:'17',...fields};
+ for(const [id,value] of Object.entries(values)) a.get('#'+id).value=String(value);
+}
 
 test('zero seed survives save, fresh application reopen and exported plan',async()=>{
- const a=await app();a.run("selected.add('R01');renderPlanner()");a.get('#seed').value='0';a.get('#savePlan').onclick();
+ const a=await app();a.run("selected.add('R01');renderPlanner()");fillPlan(a,{seed:'0'});a.get('#savePlan').onclick();
  assert.equal(JSON.parse(a.storage.get(key)).seed,0);
  const b=await app({storage:a.storage});b.run('renderPlanner()');assert.equal(b.get('#seed').value,'0');
  b.get('#exportPlan').onclick();const plan=await b.exported();assert.equal(plan.seed,0);assert.equal(plan.tasks[0].id,'R01');assert.equal(plan.execution_status,'not_run');
+ assert.equal(plan.cost_usd,null);assert.equal(plan.cost_status,'unknown');assert.equal(plan.execution_supported,false);assert.equal(plan.executable,false);
 });
 
 test('planner persists fields and filters obsolete IDs, using current task statuses',async()=>{
@@ -64,7 +69,7 @@ test('planner persists fields and filters obsolete IDs, using current task statu
 
 test('planner rejects noninteger or unsafe seeds and missing task selections',async()=>{
  const a=await app();a.run('renderPlanner()');a.get('#exportPlan').onclick();assert.match(a.get('#planStatus').textContent,/至少选择/);
- a.run("selected.add('R01');renderPlanner()");for(const seed of ['1.5','Infinity','9007199254740992']){a.get('#seed').value=seed;a.get('#exportPlan').onclick();assert.match(a.get('#planStatus').textContent,/安全整数/)}assert.equal(a.downloads.length,0);
+ a.run("selected.add('R01');renderPlanner()");fillPlan(a);for(const seed of ['1.5','Infinity','9007199254740992','']){a.get('#seed').value=seed;a.get('#exportPlan').onclick();assert.match(a.get('#planStatus').textContent,seed===''?/尚未填写/:/安全整数/)}assert.equal(a.downloads.length,0);
 });
 
 test('catalog tier and case-insensitive query filters intersect; unknown detail is a no-op',async()=>{
@@ -98,12 +103,12 @@ test('malformed result shape and oversized files are rejected',async()=>{
 });
 
 test('checkbox handler updates selection used by save/export',async()=>{
- const a=await app();a.run('renderPlanner()');const c=a.all('[data-select]').find(e=>e.dataset.select==='R01');c.checked=true;c.onchange();a.get('#savePlan').onclick();assert.equal(JSON.parse(a.storage.get(key)).tasks[0].id,'R01');c.checked=false;c.onchange();a.get('#exportPlan').onclick();assert.equal(a.downloads.length,0);
+ const a=await app();a.run('renderPlanner()');const c=a.all('[data-select]').find(e=>e.dataset.select==='R01');c.checked=true;c.onchange();fillPlan(a);a.get('#savePlan').onclick();assert.equal(JSON.parse(a.storage.get(key)).tasks[0].id,'R01');c.checked=false;c.onchange();a.get('#exportPlan').onclick();assert.equal(a.downloads.length,0);
 });
 
 
 test('valid JSON nonobjects in saved storage do not crash the planner',async()=>{
- for(const saved of [null,[],42,'unexpected']){const a=await app({saved});assert.doesNotThrow(()=>a.run('renderPlanner()'));assert.equal(a.get('#seed').value,'42')}
+ for(const saved of [null,[],42,'unexpected']){const a=await app({saved});assert.doesNotThrow(()=>a.run('renderPlanner()'));assert.equal(a.get('#seed').value,'');assert.equal(a.get('#model').value,'');assert.equal(a.get('#control').value,'')}
 });
 
 test('saved numeric fields and task IDs are escaped before interpolation',async()=>{
@@ -134,7 +139,7 @@ test('all 25 shipped design task details render with real nested data shapes',as
 
 test('engineering slice plan and result use distinct implementation identity',async()=>{
  const implData=[{id:'B01',implementation_id:'B01-slice',status:'runnable_slice',scope:'partial',command:'test',path:'engineering/bronze/B01'}];
- const a=await app({implData});a.run("selected.add('B01-slice');renderPlanner()");a.get('#exportPlan').onclick();const plan=await a.exported();assert.equal(plan.tasks[0].implementation_id,'B01-slice');assert.equal(plan.tasks[0].status,'runnable_slice');
+ const a=await app({implData});a.run("selected.add('B01-slice');renderPlanner()");fillPlan(a);a.get('#exportPlan').onclick();const plan=await a.exported();assert.equal(plan.tasks[0].implementation_id,'B01-slice');assert.equal(plan.tasks[0].status,'runnable_slice');
  a.run("view='results';renderResults()");const record={schema_version:'engineering-1.0',implementation_id:'B01-slice',design_id:'B01',status:'passed',passed:true,submission_sha256:'a'.repeat(64),manifest_sha256:'b'.repeat(64),elapsed_seconds:1,exit_code:0,timestamp_utc:new Date().toISOString(),candidate_files:{'src/Main.java':'c'.repeat(64)},report:{checks:[]}};await a.import(record);assert.equal(a.run('results.length'),1);
  for(const change of [{implementation_id:'UNKNOWN'},{status:'failed'},{exit_code:1},{manifest_sha256:'bad'},{report:null}]){await a.import({...record,...change});assert.equal(a.run('results.length'),1)}
 });
@@ -196,7 +201,7 @@ test('quickstart generates only preparation commands with safe shell quoting and
 
 test('design and multiple executable variants keep separate identities in plan and refresh',async()=>{
  const implData=[{id:'B01',implementation_id:'B01-slice',status:'runnable_slice',manifest_sha256:'a'.repeat(64)},{id:'B01',implementation_id:'B01-other',status:'runnable_integration_slice',manifest_sha256:'b'.repeat(64)}];
- const a=await app({implData});a.run("selected=new Set(['B01','B01-slice','B01-other']);renderPlanner()");a.get('#savePlan').onclick();const plan=JSON.parse(a.storage.get(key));assert.equal(plan.tasks[0].implementation_id,null);assert.equal(plan.tasks[0].status,'design');assert.equal(plan.tasks[1].implementation_id,'B01-slice');assert.equal(plan.tasks[2].implementation_id,'B01-other');
+ const a=await app({implData});a.run("selected=new Set(['B01','B01-slice','B01-other']);renderPlanner()");fillPlan(a);a.get('#savePlan').onclick();const plan=JSON.parse(a.storage.get(key));assert.equal(plan.tasks[0].implementation_id,null);assert.equal(plan.tasks[0].status,'design');assert.equal(plan.tasks[1].implementation_id,'B01-slice');assert.equal(plan.tasks[2].implementation_id,'B01-other');
  const b=await app({implData,storage:a.storage});assert.deepEqual(JSON.parse(b.run('JSON.stringify([...selected])')),['B01','B01-slice','B01-other']);
 });
 
@@ -372,5 +377,55 @@ test('M1 gates-green slices stay design_only and are not full-catalog ready',asy
 });
 
 test('exported plans explicitly remain non-executable planning drafts',async()=>{
- const a=await app();a.run("selected.add('R01');renderPlanner()");a.get('#exportPlan').onclick();const plan=await a.exported();assert.equal(plan.plan_kind,'planning_draft');assert.equal(plan.execution_supported,false);assert.equal(plan.execution_status,'not_run');assert.match(a.get('#content').innerHTML,/不能直接交给 experiment_tools 或 analysis_tools 执行/);assert.doesNotMatch(a.get('#content').innerHTML,/导出配置交给执行器/);
+ const a=await app();a.run("selected.add('R01');renderPlanner()");fillPlan(a);a.get('#exportPlan').onclick();const plan=await a.exported();assert.equal(plan.plan_kind,'planning_draft');assert.equal(plan.execution_supported,false);assert.equal(plan.executable,false);assert.equal(plan.execution_status,'not_run');assert.equal(plan.cost_usd,null);assert.equal(plan.cost_status,'unknown');assert.match(plan.notice,/规划草案/);assert.match(plan.notice,/不可执行/);assert.match(plan.notice,/费用为空表示未知/);assert.match(a.get('#content').innerHTML,/不能直接交给 experiment_tools 或 analysis_tools 执行/);assert.match(a.get('#content').innerHTML,/不可执行/);assert.match(a.get('#content').innerHTML,/费用为空表示未知/);assert.doesNotMatch(a.get('#content').innerHTML,/导出配置交给执行器/);
+});
+
+test('planner blocks placeholder defaults and does not repeat implementation ids',async()=>{
+ const implData=[{id:'B01',implementation_id:'B01-slice',status:'runnable_slice',tier:'bronze',security:'not_a_secure_sandbox',model_evaluated:false}];
+ const a=await app({implData});a.run('renderPlanner()');
+ const html=a.get('#content').innerHTML;
+ for(const id of ['experiment','control','treatment','model','repeats','budget','seed']) assert.equal(a.get('#'+id).value,'',id);
+ assert.doesNotMatch(html,/value="(?:新 Skill 配对实验|baseline-no-skill|workflow-v2|请填写精确版本)"/);
+ assert.doesNotMatch(html,/placeholder="(?:baseline-no-skill|workflow-v2|请填写精确版本|新 Skill 配对实验)"/);
+ assert.doesNotMatch(html,/B01-slice B01-slice/);
+ assert.match(html,/data-select="B01-slice"[^>]*> B01-slice B01 的限定范围变体/);
+ assert.match(html,/规划草案，不可执行/);
+ assert.match(html,/费用为空表示未知/);
+ a.run("selected.add('B01-slice');renderPlanner()");a.get('#exportPlan').onclick();
+ assert.equal(a.downloads.length,0);assert.match(a.get('#planStatus').textContent,/占位或未填写/);
+ fillPlan(a,{control:'baseline-no-skill',treatment:'workflow-v2',model:'请填写精确版本'});a.get('#exportPlan').onclick();
+ assert.equal(a.downloads.length,0);assert.match(a.get('#planStatus').textContent,/占位/);
+ fillPlan(a,{seed:''});a.get('#exportPlan').onclick();
+ assert.equal(a.downloads.length,0);assert.match(a.get('#planStatus').textContent,/尚未填写/);
+ fillPlan(a);a.get('#exportPlan').onclick();
+ const plan=await a.exported();
+ assert.equal(plan.plan_kind,'planning_draft');assert.equal(plan.execution_supported,false);assert.equal(plan.executable,false);
+ assert.equal(plan.cost_usd,null);assert.equal(plan.cost_status,'unknown');assert.match(plan.cost_note,/未知/);
+ assert.equal(plan.model,'fixed-v1');assert.equal(plan.control,'arm-control');assert.equal(plan.treatment,'arm-treatment');
+ assert.equal(plan.tasks[0].implementation_id,'B01-slice');assert.equal(plan.tasks[0].id,'B01');
+ assert.doesNotMatch(a.get('#planStatus').textContent,/已预注册|成功率|模型得分/);
+});
+
+test('shipped implementation tags show each implementation id once',async()=>{
+ const implData=JSON.parse(await readFile(new URL('../dist/implementations.json',import.meta.url),'utf8'));
+ const a=await app({implData});a.run('renderPlanner()');
+ const html=a.get('#content').innerHTML;
+ for(const impl of implData){
+  assert.equal(html.split(impl.implementation_id+' '+impl.implementation_id).length-1,0,impl.implementation_id);
+  assert.match(html,new RegExp('data-select="'+impl.implementation_id+'"[^>]*> '+impl.implementation_id+' '+impl.id+' 的限定范围变体'));
+ }
+});
+
+test('saved placeholder identity is cleared and explicit numeric choices still export',async()=>{
+ const tainted=await app({saved:{name:'新 Skill 配对实验',control:'baseline-no-skill',treatment:'workflow-v2',model:'请填写精确版本',repeats:3,budget:1800,seed:42,tasks:[{id:'R01'}]}});
+ tainted.run('renderPlanner()');
+ assert.equal(tainted.get('#experiment').value,'');assert.equal(tainted.get('#control').value,'');assert.equal(tainted.get('#treatment').value,'');assert.equal(tainted.get('#model').value,'');
+ assert.equal(tainted.get('#repeats').value,'');assert.equal(tainted.get('#budget').value,'');assert.equal(tainted.get('#seed').value,'');
+ assert.equal(tainted.all('[data-select]').find(e=>e.dataset.select==='R01').checked,true);
+ tainted.get('#exportPlan').onclick();assert.equal(tainted.downloads.length,0);
+ const kept=await app({saved:{name:'Paired trial',track:'skill',control:'arm-control',treatment:'arm-treatment',model:'fixed-v1',repeats:3,budget:1800,seed:42,tasks:[{id:'R01'}]}});
+ kept.run('renderPlanner()');
+ assert.equal(kept.get('#repeats').value,'3');assert.equal(kept.get('#budget').value,'1800');assert.equal(kept.get('#seed').value,'42');
+ kept.get('#exportPlan').onclick();const plan=await kept.exported();
+ assert.equal(plan.repeats,3);assert.equal(plan.budget,1800);assert.equal(plan.seed,42);assert.equal(plan.cost_usd,null);assert.equal(plan.execution_supported,false);
 });

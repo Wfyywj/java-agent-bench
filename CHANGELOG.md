@@ -1,5 +1,11 @@
 # Changelog
 
+## Planner export placeholders — 2026-10-28
+
+- The comparison planner no longer prefills an experiment name, control id, treatment id, model text, repeat count, budget, or seed. Those old strings are not model, control, or treatment values.
+- Export is refused while any of those fields is empty or still one of the old placeholders. The page and the JSON both say the file is a planning draft, not executable, and an empty cost is unknown.
+- A checked implementation tag shows its implementation id once.
+
 ## M1 discovery status — 2026-10-27
 
 - `catalog/implementations.json` marks B02-slice, S01-slice, S04-slice, S04-spring, G01-slice, and G05-slice as `gates_green` when `engineering/m1-gates/evidence/summary.json` and the per-task four-gate files agree. `slice_kind` keeps `runnable_slice` or `runnable_integration_slice`. `security` stays `not_a_secure_sandbox`, `model_evaluated` stays false, and `full_catalog_ready` stays false.
