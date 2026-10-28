@@ -1,0 +1,15 @@
+NOT a secure sandbox. M1 gates run checked-in trusted fixtures only; model submissions are not executed.
+=== M1 B02 ===
+B02 reference=pass nop_or_baseline=pass mutants=pass repeat=pass
+=== M1 S01 ===
+S01 reference=pass nop_or_baseline=pass mutants=pass repeat=pass
+=== M1 S04 ===
+S04 reference=pass nop_or_baseline=pass mutants=pass repeat=pass
+=== M1 S04-spring ===
+S04-spring reference=pass nop_or_baseline=pass mutants=pass repeat=pass
+=== M1 G01 ===
+G01 reference=pass nop_or_baseline=pass mutants=pass repeat=pass
+=== M1 G05 ===
+G05 reference=pass nop_or_baseline=pass mutants=pass repeat=pass
+M1 summary: /workspace/shared/java-agent-bench-stage/engineering/m1-gates/evidence/summary.json
+M1 four-gate check passed

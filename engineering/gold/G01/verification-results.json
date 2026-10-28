@@ -38,7 +38,7 @@
       "variant": "mutant_overlap",
       "phase": "verify",
       "exit": 1,
-      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nException in thread \"main\" java.lang.IllegalStateException: capacity\n\tat inventory.Inventory.reserve(Inventory.java:7)\n\tat Verify.main(Verify.java:10)\n",
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nFAIL half-open adjacent lease\nPASS empty interval\nFAIL restart preserves holds\nPASS failed commit records pending compensation\nFAIL lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=4\n",
       "passed": false,
       "repeat": 1
     },
@@ -86,7 +86,7 @@
       "variant": "mutant_overlap",
       "phase": "verify",
       "exit": 1,
-      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nException in thread \"main\" java.lang.IllegalStateException: capacity\n\tat inventory.Inventory.reserve(Inventory.java:7)\n\tat Verify.main(Verify.java:10)\n",
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nFAIL half-open adjacent lease\nPASS empty interval\nFAIL restart preserves holds\nPASS failed commit records pending compensation\nFAIL lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=4\n",
       "passed": false,
       "repeat": 2
     },
@@ -134,7 +134,7 @@
       "variant": "mutant_overlap",
       "phase": "verify",
       "exit": 1,
-      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nException in thread \"main\" java.lang.IllegalStateException: capacity\n\tat inventory.Inventory.reserve(Inventory.java:7)\n\tat Verify.main(Verify.java:10)\n",
+      "output": "PASS unknown reserve outcome queried\nPASS same request replay one hold\nPASS key bound to tenant\nPASS key bound to lease\nPASS overlap capacity\nFAIL half-open adjacent lease\nPASS empty interval\nFAIL restart preserves holds\nPASS failed commit records pending compensation\nFAIL lost release still active\nPASS recovery requires service role\nFAIL restart recovery durably releases\nPASS recovery audit\nPASS repeat recovery no audit duplication\nPASS compensation survives second restart\nPASS concurrent capacity one\nINVARIANTS=16 FAILURES=4\n",
       "passed": false,
       "repeat": 3
     },

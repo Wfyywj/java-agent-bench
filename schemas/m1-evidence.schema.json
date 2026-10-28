@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source-bound M1 task attempt evidence",
+  "type": "object",
+  "required": ["schema", "task_id", "run_id", "started_at", "ended_at", "exit_type", "evidence_fingerprint", "pass", "gates"],
+  "properties": {
+    "schema": {"const": "m1-four-gates/v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "started_at": {"type": "string", "format": "date-time"},
+    "ended_at": {"type": "string", "format": "date-time"},
+    "exit_type": {"enum": ["completed", "verification_failed"]},
+    "evidence_fingerprint": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["algorithm", "sha256", "files"], "properties": {
+          "algorithm": {"const": "sha256-source-bundle/v1"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "files": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}}
+        }}
+      ]
+    },
+    "pass": {"type": "boolean"},
+    "gates": {"type": "object", "properties": {"mutants": {"type": "object", "properties": {"results": {"type": "array", "items": {
+      "type": "object", "required": ["id", "runnable", "failed", "outcome", "failed_assertions"],
+      "properties": {
+        "outcome": {"enum": ["semantic_assertion", "survived", "timeout", "compile_error", "startup_error", "infrastructure_error", "missing_report"]},
+        "failed_assertions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "if": {"properties": {"failed": {"const": true}}, "required": ["failed"]},
+      "then": {"properties": {"outcome": {"const": "semantic_assertion"}, "failed_assertions": {"minItems": 1}}}
+    }}}}}}
+  },
+  "if": {"properties": {"pass": {"const": true}}, "required": ["pass"]},
+  "then": {"properties": {"evidence_fingerprint": {"type": "object"}}}
+}

@@ -143,3 +143,13 @@ Files are independent of the existing benchmark harness and central result schem
 No runner adapter, model execution, provenance verifier, cost estimator, automatic
 outcome inference, or publication is implemented. The fixture assertions test arithmetic
 and validation behavior only. No package installation or network access is required.
+
+### Synthetic replay bridge
+
+`experiment_tools/RECIPE.md` documents a bounded B01 offline contract replay.
+Records with `run_kind: synthetic_replay` are additionally accepted **only** when their
+plan/record class is `SYNTHETIC TEST FIXTURES NOT MODEL RESULTS` and `--allow-synthetic`
+is explicit. This does not relax actual trial, metadata, hash, timing or outcome checks.
+Reference/selfcheck remain rejected. Replay timestamps/assertions are fixture data, not
+real agent timing or evaluator outcomes. Existing synthetic `agent_trial` examples remain
+backward compatible; the new bridge never labels replay as `agent_trial`.

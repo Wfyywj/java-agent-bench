@@ -1,0 +1,123 @@
+{
+  "schema": "m1-four-gates/v1",
+  "task_id": "S04-spring",
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "baseline_role": "baseline",
+  "commands": [
+    "python3 -B engineering/integration/S04-spring/tools/bootstrap.py",
+    "python3 -B engineering/integration/S04-spring/run_selfcheck.py"
+  ],
+  "captured_from": "evidence/selfcheck.json",
+  "gates": {
+    "reference": {
+      "pass": true,
+      "run_count": 3,
+      "detail": "3 reference run(s) passed"
+    },
+    "nop_or_baseline": {
+      "pass": true,
+      "role": "baseline",
+      "variant": "baseline",
+      "mapping": "explicit-critical-check-names",
+      "critical_failures": [
+        "active-transaction-at-repository",
+        "mixed-cancelled-pending-failure-rolls-back",
+        "checked-mid-batch-rollback",
+        "runtime-mid-batch-rollback",
+        "late-checked-failure-rollback"
+      ],
+      "detail": "Unfixed baseline failed at least one critical check. No separate nop fixture; baseline is this gate."
+    },
+    "mutants": {
+      "pass": true,
+      "listed": [
+        "allow-delivered",
+        "default-checked-policy",
+        "double-release",
+        "early-return-cancelled",
+        "early-return-delivered",
+        "global-lock",
+        "lost-update",
+        "no-batch-lock",
+        "self-invocation",
+        "swallow-checked"
+      ],
+      "results": [
+        {
+          "id": "allow-delivered",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "default-checked-policy",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "double-release",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "early-return-cancelled",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "early-return-delivered",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "global-lock",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "lost-update",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "no-batch-lock",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "self-invocation",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        },
+        {
+          "id": "swallow-checked",
+          "runnable": true,
+          "failed": true,
+          "reason": null
+        }
+      ],
+      "detail": "10 listed mutants failed"
+    },
+    "repeat": {
+      "pass": true,
+      "run_count": 3,
+      "agreement": "structured",
+      "sha256": "467b8be0ec128e7e4dc841a36c4cda53dedcdd6361cc08fafdd83b9c7ce8219f",
+      "source": "reference repeats inside one selfcheck",
+      "detail": "3 reference runs agreed on pass"
+    }
+  },
+  "gaps": [],
+  "pass": true,
+  "elapsed_seconds": 27.213
+}

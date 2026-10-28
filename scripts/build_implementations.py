@@ -18,7 +18,9 @@ a gates_green slice also carry ``slice_implementation`` pointing at those
 implementation ids. ``design_only`` does not mean "nothing executable".
 ``gates_green`` does not mean the original design is catalog-ready.
 """
-import json, hashlib
+import json, hashlib, sys
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import m1_gates
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,7 +30,7 @@ SLICE_KINDS = {'runnable_slice', 'runnable_integration_slice'}
 IMPLEMENTATION_STATUSES = SLICE_KINDS | {'gates_green'}
 
 
-def promoted_from_summary(summary, evidence_for):
+def promoted_from_summary(summary, evidence_for, fingerprint_for=None):
     """Return {task_id: evidence_rel} for slices whose four gates actually passed.
 
     A summary ``pass`` without matching per-task evidence raises. A task that
@@ -68,23 +70,64 @@ def promoted_from_summary(summary, evidence_for):
             not isinstance(egates.get(name), dict) or egates[name].get('pass') is not True for name in FOUR_GATES
         ):
             raise SystemExit(f'{task_id} evidence gates are not all green')
+        # Unbound legacy captures remain historical facts, never current green.
+        if fingerprint_for is None or not summary.get('run_id') or evidence.get('run_id') != summary.get('run_id'):
+            continue
+        if evidence.get('evidence_fingerprint') != fingerprint_for(task_id):
+            continue
+        if m1_gates.evidence_errors(evidence):
+            continue
         promoted[task_id] = rel
     return promoted
 
 
+class GateSelection(dict):
+    def __init__(self, *args, states=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.states = states or {}
+
+
 def load_promoted(root):
-    path = root / SUMMARY_REL
-    if not path.is_file():
-        return {}
-    summary = json.loads(path.read_text())
-
-    def evidence_for(rel):
-        evidence_path = root / rel
-        if not evidence_path.is_file():
-            raise SystemExit(f'missing gate evidence {rel}')
-        return json.loads(evidence_path.read_text())
-
-    return promoted_from_summary(summary, evidence_for)
+    root = Path(root)
+    states = {tid: ('stale', 'No current source-bound completed attempt') for tid in m1_gates.M1_TASK_IDS}
+    selection = GateSelection(states=states)
+    latest_path = root / 'engineering/m1-gates/evidence/latest.json'
+    if not latest_path.is_file():
+        return selection
+    try:
+        latest = json.loads(latest_path.read_text())
+        if not isinstance(latest, dict):
+            raise ValueError('latest selector is not an object')
+        run_id = latest.get('run_id')
+        if not isinstance(run_id, str) or not run_id or '/' in run_id or '..' in run_id:
+            raise ValueError('invalid latest run identity')
+        expected = f'engineering/m1-gates/evidence/runs/{run_id}/summary.json'
+        if latest.get('summary') != expected:
+            raise ValueError('latest summary path mismatch')
+        if latest.get('state') != 'completed':
+            raise ValueError('latest attempt is ' + str(latest.get('state')))
+        summary = json.loads((root / expected).read_text())
+        if not isinstance(summary, dict) or summary.get('run_id') != run_id or m1_gates.summary_errors(summary):
+            raise ValueError('latest summary is invalid')
+        def evidence_for(rel):
+            task_id = next(tid for tid in m1_gates.M1_TASK_IDS if m1_gates.evidence_rel(tid) == rel)
+            evidence = json.loads((root / Path(expected).parent / (task_id + '.json')).read_text())
+            # Compatibility views must not silently diverge from selected history.
+            if json.loads((root / rel).read_text()) != evidence:
+                raise ValueError('compatibility evidence differs from latest attempt')
+            return evidence
+        def fingerprint_for(task_id):
+            return m1_gates.source_fingerprint(root, task_id)
+        selection.update(promoted_from_summary(summary, evidence_for, fingerprint_for))
+        for task_id, item in summary['tasks'].items():
+            if task_id in selection:
+                states[task_id] = ('current', 'Current source bundle passed all four gates')
+            elif not item or item.get('pass') is not True:
+                states[task_id] = ('verification_failed', 'Latest task attempt failed')
+    except (OSError, ValueError, KeyError, StopIteration, SystemExit) as exc:
+        selection.clear()
+        selection.states = {tid: ('verification_failed', str(exc)) for tid in m1_gates.M1_TASK_IDS}
+    return selection
 
 
 def gate_task_id(implementation_id, promoted):
@@ -103,6 +146,10 @@ def apply_gate_status(record, promoted):
         raise SystemExit(f"unexpected slice status {kind}")
     task_id = gate_task_id(record['implementation_id'], promoted)
     if task_id is None:
+        raw_id = record['implementation_id'].removesuffix('-slice')
+        state = getattr(promoted, 'states', {}).get(raw_id)
+        if state:
+            record['gate_status'], record['gate_reason'] = state
         return record
     ordered = {}
     for key, value in record.items():
@@ -220,6 +267,18 @@ def dump(records):
 
 def main():
     records = build_records(ROOT)
+    # Reconcile derived links as well: stale evidence must not leave a green
+    # design pointer or prevent writing the downgraded discovery records.
+    links = expected_catalog_links(records)
+    tasks_path = ROOT / 'catalog/tasks.json'
+    tasks = json.loads(tasks_path.read_text())
+    for task in tasks:
+        task.pop('slice_implementation', None)
+        if task['id'] in links:
+            task['slice_implementation'] = links[task['id']]
+    tasks_text = json.dumps(tasks, ensure_ascii=False, indent=2) + '\n'
+    tasks_path.write_text(tasks_text)
+    (ROOT / 'dist/tasks.json').write_text(tasks_text)
     assert_catalog_links(ROOT, records)
     text = dump(records)
     (ROOT / 'catalog/implementations.json').write_text(text)

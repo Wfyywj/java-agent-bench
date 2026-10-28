@@ -1,5 +1,16 @@
 import java.nio.file.*;import java.time.*;import java.util.*;import java.math.*;
-public class Verify { static int n=0, failures=0; static void check(String name,boolean ok){ n++;System.out.println((ok?"PASS ":"FAIL ")+name);if(!ok) failures++;} static void reject(String name,Runnable action){boolean bad=false;try{action.run();}catch(Exception e){bad=true;}check(name,bad);} public static void main(String[] args)throws Exception {
+public class Verify {
+// Frozen half-open lease contract: an adjacent [20,30) reservation must succeed
+// beside [10,20). Only this exact capacity rejection is a business assertion;
+// unexpected exceptions still abort verification and cannot count as a kill.
+static boolean adjacentAccepted(Runnable reserve) {
+ try {reserve.run();return true;}
+ catch(IllegalStateException rejection) {
+  if(!"capacity".equals(rejection.getMessage()))throw rejection;
+  return false;
+ }
+}
+static int n=0, failures=0; static void check(String name,boolean ok){ n++;System.out.println((ok?"PASS ":"FAIL ")+name);if(!ok) failures++;} static void reject(String name,Runnable action){boolean bad=false;try{action.run();}catch(Exception e){bad=true;}check(name,bad);} public static void main(String[] args)throws Exception {
 
 Path dir=Files.createTempDirectory("saga");var i=new inventory.Inventory(dir.resolve("i"));var o=new orders.Orders(dir.resolve("o"),i);
 var h=new inventory.Inventory.Hold("k","t","camera",10,20);o.create(h,false,true,false);check("unknown reserve outcome queried",i.active()==1);
@@ -7,7 +18,7 @@ i.reserve(h,false);check("same request replay one hold",i.active()==1);
 reject("key bound to tenant",()->i.reserve(new inventory.Inventory.Hold("k","other","camera",10,20),false));
 reject("key bound to lease",()->i.reserve(new inventory.Inventory.Hold("k","t","camera",20,30),false));
 reject("overlap capacity",()->i.reserve(new inventory.Inventory.Hold("x","t","camera",19,21),false));
-i.reserve(new inventory.Inventory.Hold("adj","t","camera",20,30),false);check("half-open adjacent lease",i.active()==2);
+boolean adjacent=adjacentAccepted(()->i.reserve(new inventory.Inventory.Hold("adj","t","camera",20,30),false));check("half-open adjacent lease",adjacent&&i.active()==2);
 reject("empty interval",()->i.reserve(new inventory.Inventory.Hold("bad","t","camera",20,20),false));
 var reopened=new inventory.Inventory(dir.resolve("i"));check("restart preserves holds",reopened.active()==2);
 o.create(new inventory.Inventory.Hold("failed","t","tripod",1,2),true,false,true);check("failed commit records pending compensation",o.pending()==1);check("lost release still active",i.active()==3);

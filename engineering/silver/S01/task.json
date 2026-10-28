@@ -66,11 +66,17 @@
   "candidate_command": "python3 run_selfcheck.py --candidate ABS_PACKAGE",
   "selfcheck_command": "python3 run_selfcheck.py",
   "independent_verifier": "../verifier.py",
-  "public_scenarios": 10,
+  "public_scenarios": 16,
   "reference_repetitions": 3,
   "mutants": [
     "double_booking",
-    "terminal_regression"
+    "terminal_regression",
+    "reverse_terminal_conflict"
   ],
-  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator."
+  "documentation_review": "Structured decision/evidence/review artifacts supplied; not double-human reviewed, not automatically scored by candidate evaluator.",
+  "version": "0.1.1",
+  "coverage": {
+    "S01-A02": "paired SUCCEEDED/FAILED terminal conflicts with newer and older unseen sequence; same-terminal replay/stale events; original terminal state, ledger cardinality and persisted review after process restart",
+    "S01-A04": "existing precommit/lost-response cases plus paired terminal-conflict precommit rollback, retry, durable review and receipt replay"
+  }
 }

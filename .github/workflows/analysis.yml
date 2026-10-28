@@ -5,6 +5,11 @@ on:
     paths:
       - 'analysis_tools/**'
       - '.github/workflows/analysis.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'analysis_tools/**'
+      - '.github/workflows/analysis.yml'
   workflow_dispatch:
 permissions:
   contents: read

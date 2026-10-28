@@ -1,0 +1,293 @@
+=== bronze ===
+{
+  "suite": "bronze-engineering-public-dev",
+  "passed": true,
+  "results": [
+    {
+      "task": "B01",
+      "exit_code": 0,
+      "output_sha256": "ba3ada89ed958e6fe8c38a1eb107fdb5f2c7f9eb1f028061ca0a8ae22277a7a8"
+    },
+    {
+      "task": "B02",
+      "exit_code": 0,
+      "output_sha256": "b3e2abba957383758413f3c9423551ea5688e9c56cee71fbd6155543d733bb6c"
+    },
+    {
+      "task": "B03",
+      "exit_code": 0,
+      "output_sha256": "93d8c22c207d176cdd66acdb73ff9fffe37d345c8c722ab4709d41aa380b70ca"
+    },
+    {
+      "task": "B04",
+      "exit_code": 0,
+      "output_sha256": "dd922701e356ef7e7c5c0c479e66211562bd9e99d024a9d56588dce8ee3bf3e3"
+    },
+    {
+      "task": "B05",
+      "exit_code": 0,
+      "output_sha256": "a5130d74d126a9f18ed7a652fb7db5454a0a881767d0f27b1136ef9e82759e10"
+    }
+  ]
+}
+=== silver ===
+[
+  {
+    "id": "S01",
+    "passed": true,
+    "reference_checks": [
+      16,
+      16,
+      16
+    ],
+    "elapsed_seconds": 83.277
+  },
+  {
+    "id": "S02",
+    "passed": true,
+    "reference_checks": [
+      13,
+      13,
+      13
+    ],
+    "elapsed_seconds": 10.016
+  },
+  {
+    "id": "S03",
+    "passed": true,
+    "reference_checks": [
+      12,
+      12,
+      12
+    ],
+    "elapsed_seconds": 27.395
+  },
+  {
+    "id": "S04",
+    "passed": true,
+    "reference_checks": [
+      6,
+      6,
+      6
+    ],
+    "elapsed_seconds": 47.917
+  },
+  {
+    "id": "S05",
+    "passed": true,
+    "reference_checks": [
+      9,
+      9,
+      9
+    ],
+    "elapsed_seconds": 74.982
+  }
+]
+=== gold ===
+=== G01 ===
+{"selfcheck_passed": true, "runs": 18, "reference_passes": 3}
+=== G02 ===
+{"selfcheck_passed": true, "runs": 18, "reference_passes": 3}
+=== G03 ===
+{"selfcheck_passed": true, "runs": 27, "reference_passes": 3}
+=== G04 ===
+{"selfcheck_passed": true, "runs": 21, "reference_passes": 3}
+=== G05 ===
+reference [(1, 0, None), (2, 0, None), (3, 0, None)]
+baseline [(1, 1, None), (2, 1, None), (3, 1, None)]
+mutants/cancelled_queue_leak [(1, 1, None), (2, 1, None), (3, 1, None)]
+mutants/lost_shutdown_futures [(1, 1, None), (2, 1, None), (3, 1, None)]
+mutants/result_defaulting [(1, 1, None), (2, 1, None), (3, 1, None)]
+mutants/shared_bulkhead [(1, 1, None), (2, 1, None), (3, 1, None)]
+mutants/unbounded_queue [(1, 1, None), (2, 1, None), (3, 1, None)]
+=== diamond ===
+=== D01 ===
+D01 1 reference PASS 22
+D01 1 baseline FAIL 2
+D01 1 COUNT_ONLY FAIL 3
+D01 1 NO_FENCE FAIL 2
+D01 1 NO_REVERSE FAIL 12
+D01 2 reference PASS 22
+D01 2 baseline FAIL 2
+D01 2 COUNT_ONLY FAIL 3
+D01 2 NO_FENCE FAIL 2
+D01 2 NO_REVERSE FAIL 12
+D01 3 reference PASS 22
+D01 3 baseline FAIL 2
+D01 3 COUNT_ONLY FAIL 3
+D01 3 NO_FENCE FAIL 2
+D01 3 NO_REVERSE FAIL 12
+=== D02 ===
+D02 1 reference PASS 568
+D02 1 baseline FAIL 13
+D02 1 DUP_PAY FAIL 17
+D02 1 LATE_PAY FAIL 13
+D02 1 LEAK_MOVE FAIL 46
+D02 2 reference PASS 568
+D02 2 baseline FAIL 13
+D02 2 DUP_PAY FAIL 17
+D02 2 LATE_PAY FAIL 13
+D02 2 LEAK_MOVE FAIL 46
+D02 3 reference PASS 568
+D02 3 baseline FAIL 13
+D02 3 DUP_PAY FAIL 17
+D02 3 LATE_PAY FAIL 13
+D02 3 LEAK_MOVE FAIL 46
+=== D03 ===
+D03 1 reference PASS 19
+D03 1 baseline FAIL 2
+D03 1 DUP_ACCEPT FAIL 3
+D03 1 REGRESS FAIL 4
+D03 1 STALE_RULE FAIL 2
+D03 2 reference PASS 19
+D03 2 baseline FAIL 2
+D03 2 DUP_ACCEPT FAIL 3
+D03 2 REGRESS FAIL 4
+D03 2 STALE_RULE FAIL 2
+D03 3 reference PASS 19
+D03 3 baseline FAIL 2
+D03 3 DUP_ACCEPT FAIL 3
+D03 3 REGRESS FAIL 4
+D03 3 STALE_RULE FAIL 2
+=== D04 ===
+D04 1 reference PASS 17
+D04 1 baseline FAIL 1
+D04 1 PERMISSION FAIL 4
+D04 1 UNBOUNDED FAIL 9
+D04 1 UNLOCKED FAIL 1
+D04 2 reference PASS 17
+D04 2 baseline FAIL 1
+D04 2 PERMISSION FAIL 4
+D04 2 UNBOUNDED FAIL 9
+D04 2 UNLOCKED FAIL 1
+D04 3 reference PASS 17
+D04 3 baseline FAIL 1
+D04 3 PERMISSION FAIL 4
+D04 3 UNBOUNDED FAIL 9
+D04 3 UNLOCKED FAIL 1
+=== D05 ===
+D05 1 reference PASS 35
+D05 1 baseline FAIL 8
+D05 1 BLIND_RETRY FAIL 9
+D05 1 EARLY_CHECKPOINT FAIL 5
+D05 1 NO_FENCE FAIL 8
+D05 1 PHANTOM_RESULT FAIL 10
+D05 1 SKIP_NORMAL_ISSUE FAIL 14
+D05 2 reference PASS 35
+D05 2 baseline FAIL 8
+D05 2 BLIND_RETRY FAIL 9
+D05 2 EARLY_CHECKPOINT FAIL 5
+D05 2 NO_FENCE FAIL 8
+D05 2 PHANTOM_RESULT FAIL 10
+D05 2 SKIP_NORMAL_ISSUE FAIL 14
+D05 3 reference PASS 35
+D05 3 baseline FAIL 8
+D05 3 BLIND_RETRY FAIL 9
+D05 3 EARLY_CHECKPOINT FAIL 5
+D05 3 NO_FENCE FAIL 8
+D05 3 PHANTOM_RESULT FAIL 10
+D05 3 SKIP_NORMAL_ISSUE FAIL 14
+=== king ===
+K01 1 reference 29 / 29 OK
+K01 1 baseline 24 / 29 OK
+K01 1 stale-writer 25 / 29 OK
+K01 1 partition-ack 25 / 29 OK
+K01 1 duplicate-grant 20 / 29 OK
+K01 2 reference 29 / 29 OK
+K01 2 baseline 25 / 29 OK
+K01 2 stale-writer 25 / 29 OK
+K01 2 partition-ack 25 / 29 OK
+K01 2 duplicate-grant 20 / 29 OK
+K01 3 reference 29 / 29 OK
+K01 3 baseline 25 / 29 OK
+K01 3 stale-writer 25 / 29 OK
+K01 3 partition-ack 25 / 29 OK
+K01 3 duplicate-grant 20 / 29 OK
+K02 1 reference 33 / 33 OK
+K02 1 baseline 30 / 33 OK
+K02 1 resurrection 30 / 33 OK
+K02 1 premature-completion 31 / 33 OK
+K02 1 restore-leak 28 / 33 OK
+K02 2 reference 33 / 33 OK
+K02 2 baseline 30 / 33 OK
+K02 2 resurrection 30 / 33 OK
+K02 2 premature-completion 31 / 33 OK
+K02 2 restore-leak 28 / 33 OK
+K02 3 reference 33 / 33 OK
+K02 3 baseline 30 / 33 OK
+K02 3 resurrection 30 / 33 OK
+K02 3 premature-completion 30 / 33 OK
+K02 3 restore-leak 28 / 33 OK
+K03 1 reference 50 / 50 OK
+K03 1 baseline 32 / 50 OK
+K03 1 legacy-rate 32 / 50 OK
+K03 1 shadow-bypass 48 / 50 OK
+K03 1 bill-reinterpretation 46 / 50 OK
+K03 1 narrow-long-reading 36 / 50 OK
+K03 2 reference 50 / 50 OK
+K03 2 baseline 32 / 50 OK
+K03 2 legacy-rate 32 / 50 OK
+K03 2 shadow-bypass 48 / 50 OK
+K03 2 bill-reinterpretation 46 / 50 OK
+K03 2 narrow-long-reading 36 / 50 OK
+K03 3 reference 50 / 50 OK
+K03 3 baseline 32 / 50 OK
+K03 3 legacy-rate 32 / 50 OK
+K03 3 shadow-bypass 48 / 50 OK
+K03 3 bill-reinterpretation 46 / 50 OK
+K03 3 narrow-long-reading 36 / 50 OK
+K04 1 reference 26 / 26 OK
+K04 1 baseline 18 / 26 OK
+K04 1 oversell 18 / 26 OK
+K04 1 duplicate-effects 20 / 26 OK
+K04 1 retry-amplification 25 / 26 OK
+K04 2 reference 26 / 26 OK
+K04 2 baseline 18 / 26 OK
+K04 2 oversell 18 / 26 OK
+K04 2 duplicate-effects 20 / 26 OK
+K04 2 retry-amplification 25 / 26 OK
+K04 3 reference 26 / 26 OK
+K04 3 baseline 18 / 26 OK
+K04 3 oversell 18 / 26 OK
+K04 3 duplicate-effects 20 / 26 OK
+K04 3 retry-amplification 25 / 26 OK
+K05 1 reference 49 / 49 OK
+K05 1 baseline 41 / 49 OK
+K05 1 over-refund 41 / 49 OK
+K05 1 incompatible-producer 48 / 49 OK
+K05 1 duplicate-payment 46 / 49 OK
+K05 1 cross-item-token-collision 47 / 49 OK
+K05 2 reference 49 / 49 OK
+K05 2 baseline 41 / 49 OK
+K05 2 over-refund 41 / 49 OK
+K05 2 incompatible-producer 48 / 49 OK
+K05 2 duplicate-payment 46 / 49 OK
+K05 2 cross-item-token-collision 47 / 49 OK
+K05 3 reference 49 / 49 OK
+K05 3 baseline 41 / 49 OK
+K05 3 over-refund 41 / 49 OK
+K05 3 incompatible-producer 48 / 49 OK
+K05 3 duplicate-payment 46 / 49 OK
+K05 3 cross-item-token-collision 47 / 49 OK
+=== S04-spring integration ===
+{
+  "passed": true,
+  "baseline": false,
+  "reference": [
+    true,
+    true,
+    true
+  ],
+  "mutants": {
+    "allow-delivered": false,
+    "default-checked-policy": false,
+    "double-release": false,
+    "early-return-cancelled": false,
+    "early-return-delivered": false,
+    "global-lock": false,
+    "lost-update": false,
+    "no-batch-lock": false,
+    "self-invocation": false,
+    "swallow-checked": false
+  }
+}

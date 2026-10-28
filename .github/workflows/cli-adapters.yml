@@ -5,6 +5,11 @@ on:
     paths:
       - 'cli_adapters/**'
       - '.github/workflows/cli-adapters.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'cli_adapters/**'
+      - '.github/workflows/cli-adapters.yml'
   workflow_dispatch:
 permissions:
   contents: read

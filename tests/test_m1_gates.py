@@ -55,6 +55,8 @@ def silver_report(task_id, critical, ordinary, mutants, baseline_fail, mutant_fa
             {'name': 'critical-case', 'acceptance': critical, 'passed': critical not in failed},
             {'name': 'ordinary-case', 'acceptance': ordinary, 'passed': ordinary not in failed},
         ]
+        for check in checks:
+            check['steps'] = [{'actual': 'ok' if check['passed'] else 'wrong', 'expected': 'ok', 'passed': check['passed']}]
         return {'passed': sum(item['passed'] for item in checks), 'total': len(checks), 'checks': checks}
 
     variants = {
@@ -89,6 +91,7 @@ def spring_result(fail_name=None):
 def g01_row(variant, repeat, fail_name=None):
     names = ('same request replay one hold', 'recovery audit', 'restart recovery durably releases')
     lines = [('FAIL ' if name == fail_name else 'PASS ') + name for name in names]
+    lines.append('INVARIANTS=3 FAILURES=' + ('1' if fail_name else '0'))
     return {
         'variant': variant,
         'repeat': repeat,
@@ -108,6 +111,7 @@ def g05_row(variant, repeat, fail_prefix=None):
         else:
             lines.append('PASS ' + name)
     passed = fail_prefix is None
+    lines.append('SUMMARY passed=' + ('3 failed=0' if passed else '2 failed=1'))
     return {
         'variant': variant,
         'repeat': repeat,

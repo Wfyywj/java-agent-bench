@@ -12,6 +12,18 @@ on:
       - 'CHANGELOG.md'
       - '.github/workflows/cli-adapters.yml'
       - '.github/workflows/analysis.yml'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'cli_adapters/**'
+      - 'analysis_tools/**'
+      - 'experiment_tools/**'
+      - '.github/workflows/workspace.yml'
+      - 'docs/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.github/workflows/cli-adapters.yml'
+      - '.github/workflows/analysis.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -38,3 +50,20 @@ jobs:
           python3 engineering/silver/setup_h2.py
           python3 engineering/integration/S04-spring/tools/bootstrap.py
           python3 scripts/check_engineering.py
+
+  current-source-m1-gates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Reproduce current-source semantic gates (no models)
+        run: |
+          python3 engineering/silver/setup_h2.py
+          python3 engineering/integration/S04-spring/tools/bootstrap.py
+          python3 scripts/check_engineering.py --m1

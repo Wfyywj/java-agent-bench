@@ -1,0 +1,340 @@
+{
+  "schema": "m1-four-gates/v1",
+  "task_id": "G01",
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "baseline_role": "baseline",
+  "commands": [
+    "python3 -B engineering/gold/G01/selfcheck.py"
+  ],
+  "captured_from": "verification-results.json",
+  "gates": {
+    "reference": {
+      "pass": true,
+      "run_count": 3,
+      "detail": "3 reference run(s) passed"
+    },
+    "nop_or_baseline": {
+      "pass": true,
+      "role": "baseline",
+      "variant": "baseline",
+      "mapping": "explicit-critical-check-names",
+      "critical_failures": [
+        "restart recovery durably releases"
+      ],
+      "detail": "Unfixed baseline failed at least one critical check. No separate nop fixture; baseline is this gate."
+    },
+    "mutants": {
+      "pass": true,
+      "listed": [
+        "mutant_missing_intent",
+        "mutant_wrong_key",
+        "mutant_overlap",
+        "mutant_release_noop"
+      ],
+      "results": [
+        {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
+          "id": "mutant_missing_intent",
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "restart recovery durably releases",
+            "recovery audit",
+            "repeat recovery no audit duplication"
+          ]
+        },
+        {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
+          "id": "mutant_wrong_key",
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "key bound to tenant",
+            "key bound to lease"
+          ]
+        },
+        {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
+          "id": "mutant_overlap",
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "half-open adjacent lease",
+            "restart preserves holds",
+            "lost release still active",
+            "restart recovery durably releases"
+          ]
+        },
+        {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
+          "id": "mutant_release_noop",
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "restart recovery durably releases"
+          ]
+        }
+      ],
+      "detail": "4 listed mutants failed"
+    },
+    "repeat": {
+      "pass": true,
+      "run_count": 3,
+      "agreement": "structured",
+      "sha256": "1fd58e4cdb1207b62f81d00f283a5fb9a8287dc667953446a20cb426ea144d33",
+      "source": "reference repeats inside one selfcheck",
+      "detail": "3 reference runs agreed on pass"
+    }
+  },
+  "gaps": [],
+  "pass": true,
+  "elapsed_seconds": 14.161,
+  "run_id": "20261028T040939332173Z-38251c744c74",
+  "started_at": "2026-10-28T04:09:39.332201+00:00",
+  "ended_at": "2026-10-28T04:15:15.774917+00:00",
+  "evidence_fingerprint": {
+    "algorithm": "sha256-source-bundle/v1",
+    "sha256": "38d8268737f302576421240d88c8ce2c75dccb2261fba7c2acd65295724b07e2",
+    "files": [
+      {
+        "path": "engineering/bronze/run_all.py",
+        "sha256": "dc3ad1ad12fe393199281bb7518c16a16fef0e64922ac2ea50bc2acf2a932275"
+      },
+      {
+        "path": "engineering/diamond/run_all.py",
+        "sha256": "170d22d5ddb4aee1aeda31d678326dd4fe5b288b7206c3dd0fdef7f955a2370a"
+      },
+      {
+        "path": "engineering/gold/G01/CONTRACT.md",
+        "sha256": "54a2590fb91fc355447b0281d1e8c39fc78f23a359e2773423349f206176a156"
+      },
+      {
+        "path": "engineering/gold/G01/PROMPT.md",
+        "sha256": "bddb85e7c8a20e30207d60be3ff38cdd76c9b9c5b2d0e2060f34f605533d17ab"
+      },
+      {
+        "path": "engineering/gold/G01/agent-files.json",
+        "sha256": "163508d0f2f97a1d5d298d3a5e5f1e87976941e68bb8326f0eaf66b706db08dd"
+      },
+      {
+        "path": "engineering/gold/G01/baseline/events/Journal.java",
+        "sha256": "c02bfa420f55d044e1023dc515d2477b7c79516c3a677b83e94fb79c97c111cb"
+      },
+      {
+        "path": "engineering/gold/G01/baseline/inventory/Inventory.java",
+        "sha256": "0310202dca7b1126fb28ae02a11fb0103870f597fe1dcf2f7e6ecdfe2e6f3b1f"
+      },
+      {
+        "path": "engineering/gold/G01/baseline/orders/Orders.java",
+        "sha256": "d7872a80d28d948c1e1a6a4f39793278b8296d717be030c00a4f833d6c2de1fc"
+      },
+      {
+        "path": "engineering/gold/G01/diagnostic-evidence.md",
+        "sha256": "e6755e5690f397f025986a4caf5d071b563517855008de988a788032d8afafd3"
+      },
+      {
+        "path": "engineering/gold/G01/fixtures.sha256.json",
+        "sha256": "8f03b8a2955c69a42049e52a90a4fdc6f6405a8f349fdbb7cbd3e4aa2c7065aa"
+      },
+      {
+        "path": "engineering/gold/G01/integration-results.json",
+        "sha256": "1ed26b131138e33006babef7e0fc65a6480c7d4a87b8163cd11cd53918a546ba"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_missing_intent/events/Journal.java",
+        "sha256": "c02bfa420f55d044e1023dc515d2477b7c79516c3a677b83e94fb79c97c111cb"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_missing_intent/inventory/Inventory.java",
+        "sha256": "0310202dca7b1126fb28ae02a11fb0103870f597fe1dcf2f7e6ecdfe2e6f3b1f"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_missing_intent/orders/Orders.java",
+        "sha256": "d7872a80d28d948c1e1a6a4f39793278b8296d717be030c00a4f833d6c2de1fc"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_overlap/events/Journal.java",
+        "sha256": "c02bfa420f55d044e1023dc515d2477b7c79516c3a677b83e94fb79c97c111cb"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_overlap/inventory/Inventory.java",
+        "sha256": "fa89c96ceae509fcfa3d90994f8098b1ac32b7d23af10b36ea3fe7e69d36cdb2"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_overlap/orders/Orders.java",
+        "sha256": "505884fc1b583708a8823e18805c1f1ead82e361e4b4112d7b0b180ad0361ab9"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_release_noop/events/Journal.java",
+        "sha256": "c02bfa420f55d044e1023dc515d2477b7c79516c3a677b83e94fb79c97c111cb"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_release_noop/inventory/Inventory.java",
+        "sha256": "65ae5951d7aeffca9818d6d952d1c390f08c3a2830972c43129b96bc49b1d3b6"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_release_noop/orders/Orders.java",
+        "sha256": "505884fc1b583708a8823e18805c1f1ead82e361e4b4112d7b0b180ad0361ab9"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_wrong_key/events/Journal.java",
+        "sha256": "c02bfa420f55d044e1023dc515d2477b7c79516c3a677b83e94fb79c97c111cb"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_wrong_key/inventory/Inventory.java",
+        "sha256": "3a9dd340990782938d95d890e245a1e7f3e7940a82a57ed8d2db1e45a70f1ed5"
+      },
+      {
+        "path": "engineering/gold/G01/mutant_wrong_key/orders/Orders.java",
+        "sha256": "505884fc1b583708a8823e18805c1f1ead82e361e4b4112d7b0b180ad0361ab9"
+      },
+      {
+        "path": "engineering/gold/G01/public-tests/Smoke.java",
+        "sha256": "892b58448d84fb80b57793f4a4932a09787162192eb8867eeea950d838ccb72e"
+      },
+      {
+        "path": "engineering/gold/G01/reference/events/Journal.java",
+        "sha256": "c02bfa420f55d044e1023dc515d2477b7c79516c3a677b83e94fb79c97c111cb"
+      },
+      {
+        "path": "engineering/gold/G01/reference/inventory/Inventory.java",
+        "sha256": "0310202dca7b1126fb28ae02a11fb0103870f597fe1dcf2f7e6ecdfe2e6f3b1f"
+      },
+      {
+        "path": "engineering/gold/G01/reference/orders/Orders.java",
+        "sha256": "505884fc1b583708a8823e18805c1f1ead82e361e4b4112d7b0b180ad0361ab9"
+      },
+      {
+        "path": "engineering/gold/G01/run.py",
+        "sha256": "d74cd673b1205d0270f1382e8b5f584bab5b857426e9f74cabad1f2ff3b086bc"
+      },
+      {
+        "path": "engineering/gold/G01/run_selfcheck.py",
+        "sha256": "718603c9e95135d7963bad27b463241697793864354d3b0c3943d55eab4bf05f"
+      },
+      {
+        "path": "engineering/gold/G01/selfcheck.py",
+        "sha256": "0d5e0e9fa18c33d1ef489323e92f1ffa4e4817726aa5b8799fd35b1670ff8c8f"
+      },
+      {
+        "path": "engineering/gold/G01/task.json",
+        "sha256": "fd9fd63b624c38af45ce0ced562c524b9b5691e39da29190f713a5366a202066"
+      },
+      {
+        "path": "engineering/gold/G01/verification.md",
+        "sha256": "1d0fe228b3abc901a8642e2b0bf99dea967cb246d22c4184bd0c87aeae869e20"
+      },
+      {
+        "path": "engineering/gold/G01/verifier/Verify.java",
+        "sha256": "fce8d989d40c7c158c993294937263b677d89b40baf93a3cd40bc084b171f407"
+      },
+      {
+        "path": "engineering/gold/run_all.py",
+        "sha256": "18002970ecdc1edbdc94d8063ae4a3afe2a0883fcdf0164876db63559152d4ac"
+      },
+      {
+        "path": "engineering/king/candidate_runner.py",
+        "sha256": "b455eec13b786e9dc73bc95cee8bca4379a480d9609764467f1434598a75e2ff"
+      },
+      {
+        "path": "engineering/king/run_all.py",
+        "sha256": "2803da20284baa872720aedad00d444356ae746ef457b6b97e2e3830e75be28c"
+      },
+      {
+        "path": "engineering/king/verify.py",
+        "sha256": "4ce2d6b3c2d58e28557ec2cc40d80374c858a8bc8495b88fead085ca8c60710d"
+      },
+      {
+        "path": "engineering/silver/run_all.py",
+        "sha256": "82751e084ba425b33d392cb3d2d140b6b326caf6e99a58099fe71f740dfdbeec"
+      },
+      {
+        "path": "engineering/silver/setup_h2.py",
+        "sha256": "dc1b70cd8c630a30b26455a7aa3055d68da17003ba9c92bc1776eed7312a425b"
+      },
+      {
+        "path": "engineering/silver/verifier.py",
+        "sha256": "dcd9550f16ef0e6b5f2059e52107e749f2fddbe7737ee20b4aa2db64f9700844"
+      },
+      {
+        "path": "harness/INTEGRITY.md",
+        "sha256": "0b66b2a3c451745d9a19f3af04783a9ce5f894719d00f4c9b8adfe005d72b543"
+      },
+      {
+        "path": "harness/README.md",
+        "sha256": "5f3386677e2109e8590ffa77bc77bcdf2a1c7611ddb243946a840198bfe0280f"
+      },
+      {
+        "path": "harness/bench.py",
+        "sha256": "d0b67808841e2b1f7a303faf062f919a31586b5965714f08181f32301bb37fbb"
+      },
+      {
+        "path": "harness/results/R01-selfcheck.json",
+        "sha256": "c93c4c0d8c80c422bd3b857529a06a98e17cf0f9864fafb05d7e1b60d7062b7d"
+      },
+      {
+        "path": "harness/results/R02-selfcheck.json",
+        "sha256": "005b54cd4bbe02dbbceb0d538e8b01992ea6ca6a1cf3710a533bea9af104c3cf"
+      },
+      {
+        "path": "harness/results/R03-selfcheck.json",
+        "sha256": "b4241e9c8ee7da5917108f8d311f27c433f0634f44bac2b1c3d6abf30c187a44"
+      },
+      {
+        "path": "harness/results/unittest.txt",
+        "sha256": "f3d50f238531e53cb4c337dc2c9ffed5be4ddce648c78377f53d15010182831a"
+      },
+      {
+        "path": "schemas/m1-evidence.schema.json",
+        "sha256": "4fd76870f9d4eb2ff34d85350964e3190c9a57bbeaa476ffb551103b20417852"
+      },
+      {
+        "path": "schemas/run-result.schema.json",
+        "sha256": "605b6513e3603c84a9ca2871b0d93d31f0966580325ef2b33f0cd0dd1e42d4e3"
+      },
+      {
+        "path": "scripts/build_catalog.py",
+        "sha256": "83e7bd67afff0cffeaf9ba6efe6d3280ba7d2197f4fe0b381023e2a04375c25f"
+      },
+      {
+        "path": "scripts/build_implementations.py",
+        "sha256": "8e8c98e194519d025a6950255180d9c1838c08a25c0a837ed5f61ca8715633b5"
+      },
+      {
+        "path": "scripts/build_task_packages.py",
+        "sha256": "3157d6d2c23c4283915c58633ce5db83323ac272ac3b16b948b888735f853f27"
+      },
+      {
+        "path": "scripts/check_engineering.py",
+        "sha256": "38dbf54f62322e83b28c1eae9bdb355e0c3ad906add636dc9eef7148a36d7a6a"
+      },
+      {
+        "path": "scripts/check_fast.py",
+        "sha256": "3a0229d37587f5e1ddb7f8d38ff7ad2e58eb2f4b169cbd72638e3130622e7b41"
+      },
+      {
+        "path": "scripts/engineering.py",
+        "sha256": "4341943497df6aa4ea9cc73dcd0558736d008ad29aed6cd0042dfab65ee37926"
+      },
+      {
+        "path": "scripts/m1_gates.py",
+        "sha256": "c741130189da6e4f7767eee18452f2ff1c2d198373e25f441f186b03f48cceec"
+      },
+      {
+        "path": "scripts/m1_provenance.py",
+        "sha256": "efe2adecb67f4f9a1519d103f9b58bcab0dbad4dd3e1e1cce0448a8b4ae1731e"
+      },
+      {
+        "path": "scripts/process_supervisor.py",
+        "sha256": "28bccc18593bce51c7ffcb56e9fb098f1003a5b9056b7466db38ea60deaf96c1"
+      }
+    ]
+  },
+  "exit_type": "completed"
+}

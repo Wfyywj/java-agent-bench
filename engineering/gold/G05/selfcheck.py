@@ -29,6 +29,14 @@ def verify(variant,repeat):
         result=run(['java','-Xmx96m','-cp',str(classes),'bench.Verify'],tmp,60)
         return {'variant':variant,'repeat':repeat,'stage':'verify','incident':incident,**result}
 
+def semantic_failure(result):
+    lines=result.get('output','').splitlines()
+    passed=sum(line.startswith('PASS ') for line in lines);failed=sum(line.startswith('FAIL ') for line in lines)
+    return (result.get('exit_code')==1 and not result.get('failure')
+            and failed>0 and passed+failed==16
+            and lines.count(f'SUMMARY passed={passed} failed={failed}')==1
+            and not any(line.startswith('ERROR ') for line in lines))
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--variant');parser.add_argument('--candidate',action='store_true');parser.add_argument('--repeats',type=int,default=3);parser.add_argument('--write-evidence',action='store_true');args=parser.parse_args()
     for name,digest in json.loads((ROOT/'fixture-lock.json').read_text()).items():
@@ -42,7 +50,7 @@ def main():
             batch=list(pool.map(lambda n:verify(variant,n),range(1,args.repeats+1)))
         results.extend(batch)
         print(variant,[(r['repeat'],r['exit_code'],r['failure']) for r in batch],flush=True)
-    expected=all(r['stage']=='verify' and r['failure'] is None and r['incident']['exit_code']==0 and ((r['exit_code']==0)==(args.candidate or r['variant']=='reference')) for r in results)
+    expected=all(r['stage']=='verify' and r['failure'] is None and r['incident']['exit_code']==0 and not r['incident'].get('failure') and (r['exit_code']==0 if args.candidate or r['variant']=='reference' else semantic_failure(r)) for r in results)
     report={'schema':1,'status':'runnable_slice','public_development_only':True,'repeat_count':args.repeats,'selfcheck_pass':expected,'results':results}
     if args.write_evidence:(ROOT/'verification-results.json').write_text(json.dumps(report,indent=2)+'\n')
     if not expected:raise SystemExit(1)

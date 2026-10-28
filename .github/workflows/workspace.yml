@@ -5,6 +5,16 @@ on:
     paths:
       - 'experiment_tools/**'
       - 'cli_adapters/**'
+      - 'analysis_tools/**'
+      - 'scripts/engineering.py'
+      - 'engineering/**'
+      - '.github/workflows/workspace.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'experiment_tools/**'
+      - 'cli_adapters/**'
+      - 'analysis_tools/**'
       - 'scripts/engineering.py'
       - 'engineering/**'
       - '.github/workflows/workspace.yml'

@@ -226,7 +226,7 @@
                   "args": [
                     "race"
                   ],
-                  "actual": "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5",
+                  "actual": "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
                   "expected": [
                     "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
                     "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
@@ -700,7 +700,7 @@
                   "args": [
                     "race"
                   ],
-                  "actual": "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5",
+                  "actual": "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
                   "expected": [
                     "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
                     "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
@@ -1157,7 +1157,7 @@
                   "args": [
                     "race"
                   ],
-                  "actual": "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5",
+                  "actual": "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
                   "expected": [
                     "200 cancelled;409 cancelled;CANCELLED|CANCELLED|CANCELLED|10",
                     "409 shipped;200 shipped;OPEN|SHIPPED|PENDING|5"
@@ -1413,5 +1413,5 @@
   },
   "selfcheck_passed": true,
   "three_reference_runs_passed": true,
-  "elapsed_seconds": 44.499
+  "elapsed_seconds": 47.917
 }

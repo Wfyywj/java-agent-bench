@@ -38,34 +38,60 @@
       ],
       "results": [
         {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
           "id": "shared_bulkhead",
-          "runnable": true,
-          "failed": true,
-          "reason": null
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "I06 independent-price-isolation"
+          ]
         },
         {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
           "id": "unbounded_queue",
-          "runnable": true,
-          "failed": true,
-          "reason": null
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "I02 bounded-queue-budget",
+            "I07 deterministic-overload-rejection"
+          ]
         },
         {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
           "id": "cancelled_queue_leak",
-          "runnable": true,
-          "failed": true,
-          "reason": null
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "I10 cancelled-queue-slot-reusable"
+          ]
         },
         {
+          "runnable": true,
+          "failed": true,
+          "reason": null,
           "id": "lost_shutdown_futures",
-          "runnable": true,
-          "failed": true,
-          "reason": null
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "I13 shutdown-cancels-queued"
+          ]
         },
         {
-          "id": "result_defaulting",
           "runnable": true,
           "failed": true,
-          "reason": null
+          "reason": null,
+          "id": "result_defaulting",
+          "outcome": "semantic_assertion",
+          "failed_assertions": [
+            "I03 normal-seat-result",
+            "I04 normal-price-result",
+            "I06 independent-price-isolation",
+            "I09 queued-deadline-never-invokes-client",
+            "I15 completed-result-stable",
+            "I16 burst-drains-without-loss"
+          ]
         }
       ],
       "detail": "5 listed mutants failed"
@@ -81,5 +107,215 @@
   },
   "gaps": [],
   "pass": true,
-  "elapsed_seconds": 44.936
+  "elapsed_seconds": 45.322,
+  "run_id": "20261028T040939332173Z-38251c744c74",
+  "started_at": "2026-10-28T04:09:39.332201+00:00",
+  "ended_at": "2026-10-28T04:15:15.778442+00:00",
+  "evidence_fingerprint": {
+    "algorithm": "sha256-source-bundle/v1",
+    "sha256": "0b913a75f96d47d1961a7021fff0d8102b2ceaab1bd3cf94469671b4aecfe880",
+    "files": [
+      {
+        "path": "engineering/bronze/run_all.py",
+        "sha256": "dc3ad1ad12fe393199281bb7518c16a16fef0e64922ac2ea50bc2acf2a932275"
+      },
+      {
+        "path": "engineering/diamond/run_all.py",
+        "sha256": "170d22d5ddb4aee1aeda31d678326dd4fe5b288b7206c3dd0fdef7f955a2370a"
+      },
+      {
+        "path": "engineering/gold/G05/PROMPT.md",
+        "sha256": "caef6e607035e59374f64aacfeb93913846de24b7ead0e1504cc270dabc06d59"
+      },
+      {
+        "path": "engineering/gold/G05/README.md",
+        "sha256": "cfd9a69ba5690e78609b85faa19c09f663d38a41428c179758017b2e184b4ade"
+      },
+      {
+        "path": "engineering/gold/G05/agent-files.json",
+        "sha256": "748b77ccd165937248b1f732eaa11c647a45671cf813295541865bb3df7b6621"
+      },
+      {
+        "path": "engineering/gold/G05/baseline/src/bench/Service.java",
+        "sha256": "9db7ab9d275e5d52c593225426c00b8defe0f67ace548916fa431114abd411c7"
+      },
+      {
+        "path": "engineering/gold/G05/contract/CONTRACT.md",
+        "sha256": "e7387e01d3df5606ef15f2f083709cdc5fc7a54bee97fecf001eef5ee8959d44"
+      },
+      {
+        "path": "engineering/gold/G05/diagnostics/incident.md",
+        "sha256": "3591c0c3b26fcc7d2517bb8b67cbba042a9f7faaa15b2621698237b56b5f7c40"
+      },
+      {
+        "path": "engineering/gold/G05/fixture-lock.json",
+        "sha256": "8cbc6216b6098ad737d797dc85d1cb0262341c7974df3cc976fdf2b81b12e883"
+      },
+      {
+        "path": "engineering/gold/G05/integration-results.json",
+        "sha256": "cbaa7ca287f773dbeb441ae2181ee553671460d26fb2bb3d4ccdb2478f43f4fb"
+      },
+      {
+        "path": "engineering/gold/G05/modules/api/src/bench/Gateway.java",
+        "sha256": "e272e6005a6920375b56d089cc4a258f33a79ac04df2e554fa82d6f1fdcf7984"
+      },
+      {
+        "path": "engineering/gold/G05/modules/downstream/src/bench/SeatClient.java",
+        "sha256": "5be7514a56068c4f4f36ea2b7441a8510d8d6b212697f6836fada2179afcdfa3"
+      },
+      {
+        "path": "engineering/gold/G05/mutants/cancelled_queue_leak/src/bench/Service.java",
+        "sha256": "321ba8aea5d39f1ab68ce39d70c9f7ccbc8bf17438a75f464233c963053c2fd2"
+      },
+      {
+        "path": "engineering/gold/G05/mutants/lost_shutdown_futures/src/bench/Service.java",
+        "sha256": "3a20c201de544b8e6416c6c7c8fe1035c6c08fe90270ffcac0dc48ee49dee4af"
+      },
+      {
+        "path": "engineering/gold/G05/mutants/result_defaulting/src/bench/Service.java",
+        "sha256": "ee6ca94cfc902896eb7fb0d164421a73ee4a6637cf265967f2d35fc4891af049"
+      },
+      {
+        "path": "engineering/gold/G05/mutants/shared_bulkhead/src/bench/Service.java",
+        "sha256": "1ad9f3495ffbae4a65da66cc6d4c073ba7a690b483ce988651ae42be2cc28b29"
+      },
+      {
+        "path": "engineering/gold/G05/mutants/unbounded_queue/src/bench/Service.java",
+        "sha256": "4535e7d93327351a701ff6badc0b3e16a481ce074cd1ac9f17c2f6adab121668"
+      },
+      {
+        "path": "engineering/gold/G05/reference/delivery-note.md",
+        "sha256": "1635fbb6e3a69d0f9a226e0ae01de2f1ad16b27835df3ecfcddc2e63850d98bd"
+      },
+      {
+        "path": "engineering/gold/G05/reference/src/bench/Service.java",
+        "sha256": "2a14a986b8147c4ff36a73632d4b10b629f3593b80294b959fcc3f68dc80a619"
+      },
+      {
+        "path": "engineering/gold/G05/run_selfcheck.py",
+        "sha256": "555971b12d5182296ccf2ca6aaca458b0ea6836b2ca38bdccd7d3933f76ee52d"
+      },
+      {
+        "path": "engineering/gold/G05/selfcheck.py",
+        "sha256": "173f1bfd3898253e5e0546a1b0cad6eedafb965926f979e4c6e219cf47b80b48"
+      },
+      {
+        "path": "engineering/gold/G05/task.json",
+        "sha256": "fb01f990188093324156f2b8b0d058908f8188a47775eacb88f54c43b751cfbe"
+      },
+      {
+        "path": "engineering/gold/G05/verification.md",
+        "sha256": "50b38bab1adf2a87e5a813e07ced0bf9a9521004feb508acb6117c3c5b7817a8"
+      },
+      {
+        "path": "engineering/gold/G05/verifier/Incident.java",
+        "sha256": "299d80766b2a3a6d3f85266f0b81ba4bca1c51e113374ed73c40dc9de000006b"
+      },
+      {
+        "path": "engineering/gold/G05/verifier/Verify.java",
+        "sha256": "2e016f1001108c4ff5255dd55c18236975818bf87c4659605ddf192901c278d6"
+      },
+      {
+        "path": "engineering/gold/run_all.py",
+        "sha256": "18002970ecdc1edbdc94d8063ae4a3afe2a0883fcdf0164876db63559152d4ac"
+      },
+      {
+        "path": "engineering/king/candidate_runner.py",
+        "sha256": "b455eec13b786e9dc73bc95cee8bca4379a480d9609764467f1434598a75e2ff"
+      },
+      {
+        "path": "engineering/king/run_all.py",
+        "sha256": "2803da20284baa872720aedad00d444356ae746ef457b6b97e2e3830e75be28c"
+      },
+      {
+        "path": "engineering/king/verify.py",
+        "sha256": "4ce2d6b3c2d58e28557ec2cc40d80374c858a8bc8495b88fead085ca8c60710d"
+      },
+      {
+        "path": "engineering/silver/run_all.py",
+        "sha256": "82751e084ba425b33d392cb3d2d140b6b326caf6e99a58099fe71f740dfdbeec"
+      },
+      {
+        "path": "engineering/silver/setup_h2.py",
+        "sha256": "dc1b70cd8c630a30b26455a7aa3055d68da17003ba9c92bc1776eed7312a425b"
+      },
+      {
+        "path": "engineering/silver/verifier.py",
+        "sha256": "dcd9550f16ef0e6b5f2059e52107e749f2fddbe7737ee20b4aa2db64f9700844"
+      },
+      {
+        "path": "harness/INTEGRITY.md",
+        "sha256": "0b66b2a3c451745d9a19f3af04783a9ce5f894719d00f4c9b8adfe005d72b543"
+      },
+      {
+        "path": "harness/README.md",
+        "sha256": "5f3386677e2109e8590ffa77bc77bcdf2a1c7611ddb243946a840198bfe0280f"
+      },
+      {
+        "path": "harness/bench.py",
+        "sha256": "d0b67808841e2b1f7a303faf062f919a31586b5965714f08181f32301bb37fbb"
+      },
+      {
+        "path": "harness/results/R01-selfcheck.json",
+        "sha256": "c93c4c0d8c80c422bd3b857529a06a98e17cf0f9864fafb05d7e1b60d7062b7d"
+      },
+      {
+        "path": "harness/results/R02-selfcheck.json",
+        "sha256": "005b54cd4bbe02dbbceb0d538e8b01992ea6ca6a1cf3710a533bea9af104c3cf"
+      },
+      {
+        "path": "harness/results/R03-selfcheck.json",
+        "sha256": "b4241e9c8ee7da5917108f8d311f27c433f0634f44bac2b1c3d6abf30c187a44"
+      },
+      {
+        "path": "harness/results/unittest.txt",
+        "sha256": "f3d50f238531e53cb4c337dc2c9ffed5be4ddce648c78377f53d15010182831a"
+      },
+      {
+        "path": "schemas/m1-evidence.schema.json",
+        "sha256": "4fd76870f9d4eb2ff34d85350964e3190c9a57bbeaa476ffb551103b20417852"
+      },
+      {
+        "path": "schemas/run-result.schema.json",
+        "sha256": "605b6513e3603c84a9ca2871b0d93d31f0966580325ef2b33f0cd0dd1e42d4e3"
+      },
+      {
+        "path": "scripts/build_catalog.py",
+        "sha256": "83e7bd67afff0cffeaf9ba6efe6d3280ba7d2197f4fe0b381023e2a04375c25f"
+      },
+      {
+        "path": "scripts/build_implementations.py",
+        "sha256": "8e8c98e194519d025a6950255180d9c1838c08a25c0a837ed5f61ca8715633b5"
+      },
+      {
+        "path": "scripts/build_task_packages.py",
+        "sha256": "3157d6d2c23c4283915c58633ce5db83323ac272ac3b16b948b888735f853f27"
+      },
+      {
+        "path": "scripts/check_engineering.py",
+        "sha256": "38dbf54f62322e83b28c1eae9bdb355e0c3ad906add636dc9eef7148a36d7a6a"
+      },
+      {
+        "path": "scripts/check_fast.py",
+        "sha256": "3a0229d37587f5e1ddb7f8d38ff7ad2e58eb2f4b169cbd72638e3130622e7b41"
+      },
+      {
+        "path": "scripts/engineering.py",
+        "sha256": "4341943497df6aa4ea9cc73dcd0558736d008ad29aed6cd0042dfab65ee37926"
+      },
+      {
+        "path": "scripts/m1_gates.py",
+        "sha256": "c741130189da6e4f7767eee18452f2ff1c2d198373e25f441f186b03f48cceec"
+      },
+      {
+        "path": "scripts/m1_provenance.py",
+        "sha256": "efe2adecb67f4f9a1519d103f9b58bcab0dbad4dd3e1e1cce0448a8b4ae1731e"
+      },
+      {
+        "path": "scripts/process_supervisor.py",
+        "sha256": "28bccc18593bce51c7ffcb56e9fb098f1003a5b9056b7466db38ea60deaf96c1"
+      }
+    ]
+  },
+  "exit_type": "completed"
 }

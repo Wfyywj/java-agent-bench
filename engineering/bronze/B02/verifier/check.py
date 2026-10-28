@@ -28,7 +28,8 @@ def check(name,fn):
             try:fn(s)
             finally:s.stop()
         results[name]='PASS'
-    except Exception as e:results[name]='FAIL: '+str(e)[:200]
+    except AssertionError as e:results[name]='FAIL: '+str(e)[:200]
+    except Exception as e:results[name]='ERROR: '+type(e).__name__+': '+str(e)[:200]
 def require(ok,msg):
     if not ok:raise AssertionError(msg)
 def replay(s):
@@ -60,6 +61,33 @@ def authorization(s):
     require(s.request(loan='loan3',equipment='mat3')==s.request(loan='missing')==(404,'NOT_FOUND'),'tenant disclosure')
     require(s.file.read_bytes()==before,'rejected request changed data')
 check('B02-A04_tenant_lifecycle',authorization)
+def equipment_binding(s,damaged):
+    before=s.file.read_bytes()
+    # First use of a token must validate loan/equipment binding, not only replays.
+    require(s.request(equipment='ball2',damaged=damaged)==(409,'NOT_RETURNABLE'),
+            'first return accepted equipment belonging to another loan')
+    require(s.file.read_bytes()==before,'wrong equipment changed loan/event/job snapshot')
+    s.stop();s.__init__(s.file.parent)
+    require(s.file.read_bytes()==before,'rejected equipment effects persisted across restart')
+    require(s.request(equipment='ball2',damaged=damaged)==(409,'NOT_RETURNABLE'),
+            'wrong equipment accepted after restart')
+    require(s.file.read_bytes()==before,'repeated rejection changed persistent state')
+    state='REVIEW' if damaged=='true' else 'CLEANING'
+    expected=(200,'loan=loan1;state='+state)
+    require(s.request(damaged=damaged)==expected,'rejection consumed token or changed loan')
+    rows=s.rows()
+    require(next(r[4] for r in rows if r[:2]==['L','loan1'])==state,'corrected loan state')
+    require(next(r[4] for r in rows if r[:2]==['L','loan2'])=='BORROWED','unrelated loan changed')
+    events=[r for r in rows if r[0]=='E']
+    require(len(events)==1 and events[0][2:6]==['loan1','cabinet77','bat1',damaged],
+            'corrected return event binding')
+    require(sum(r[0]=='C' for r in rows)==(0 if damaged=='true' else 1),'corrected cleaning count')
+    committed=s.file.read_bytes()
+    s.stop();s.__init__(s.file.parent)
+    require(s.request(damaged=damaged)==expected,'corrected replay lost on restart')
+    require(s.file.read_bytes()==committed,'corrected replay duplicated persistent effects')
+for damage in ['false','true']:
+    check('B02-A04_equipment_binding_'+damage,lambda s,damage=damage:equipment_binding(s,damage))
 def simultaneous(s):
     import threading
     barrier=threading.Barrier(2)

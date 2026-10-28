@@ -50,7 +50,7 @@
     "B02-A01": "HTTP replay, disk cardinality, process restart; normal loan state persisted across restart and second token rejected",
     "B02-A02": "equipment/damage/loan conflicts",
     "B02-A03": "three staged-write failures; atomic file replacement, NOT PostgreSQL transaction",
-    "B02-A04": "tenant non-disclosure and unavailable/retired lifecycle",
+    "B02-A04": "tenant non-disclosure and unavailable/retired lifecycle; first-use wrong equipment (normal/damaged), full snapshot unchanged before/after restart, same-token corrected return and durable replay",
     "B02-A05": "two concurrent HTTP clients and damaged REVIEW; NOT database uniqueness"
   },
   "excluded": [
@@ -79,7 +79,8 @@
     "conflict_ignored",
     "partial_commit",
     "damaged_available",
-    "normal_loan_state_omitted"
+    "normal_loan_state_omitted",
+    "wrong_equipment_binding"
   ],
   "limits": {
     "subprocess_timeout_seconds": 30,
@@ -87,6 +88,6 @@
     "server_heap_mb": 96
   },
   "public_development_fixture": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "candidate_entrypoint": "python3 run_selfcheck.py --candidate /absolute/package"
 }

@@ -1,0 +1,26 @@
+COMMAND freeze EXIT 0 {
+  "run": "/tmp/jab-final-recipe-2fs80ueg/run",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "freeze_sha256": "b15ce59895129bc1412c7e03504fecb42dcb37a000f6c0ab79af006805225a63",
+  "planned_slots": 6,
+  "execution": "not_attempted"
+}
+ 
+COMMAND replay EXIT 0 {
+  "run": "/tmp/jab-final-recipe-2fs80ueg/run",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "planned_slots": 6,
+  "execution": "not_attempted"
+}
+ 
+COMMAND analyze EXIT 2 {
+  "run": "/tmp/jab-final-recipe-2fs80ueg/run",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "status": "incomplete",
+  "records": 4,
+  "planned_slots": 6,
+  "website_import_supported": false
+}
+ 
+Independent analyzer exit2 matches expected incomplete, 6 slots/4 synthetic records; actual execution absent.
+Artifacts /tmp/jab-final-recipe-2fs80ueg

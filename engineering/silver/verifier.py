@@ -81,6 +81,35 @@ def digest(source):
     for p in sorted(source.rglob('*.java')):h.update(str(p.relative_to(source)).encode());h.update(p.read_bytes())
     return h.hexdigest()
 
+def comparison_failed(comparison):
+    if not isinstance(comparison,dict) or comparison.get('passed') is not False or comparison.get('error'):return False
+    if 'actual' not in comparison or 'expected' not in comparison:return False
+    actual,expected=comparison['actual'],comparison['expected']
+    return actual not in expected if isinstance(expected,list) else actual!=expected
+
+
+def assertion_failure(check):
+    steps=check.get('steps') or []
+    if check.get('passed') is not False or check.get('error') or not steps:return False
+    for step in steps:
+        if not isinstance(step,dict) or step.get('error') or 'actual' not in step or 'expected' not in step:return False
+        probe=step.get('jdbc_probe')
+        if probe is not None and (not isinstance(probe,dict) or probe.get('error') or 'actual' not in probe or 'expected' not in probe):return False
+    return any(step.get('passed') is False and (comparison_failed(step) or comparison_failed(step.get('jdbc_probe'))) for step in steps)
+
+
+def semantic_failure(item):
+    """A killed negative control requires completed comparisons, never process errors."""
+    runs=item.get('runs') or []
+    if not item.get('compiled') or item.get('error') or not runs:return False
+    for run in runs:
+        checks=run.get('checks') or []
+        if not checks or any(c.get('error') or any(step.get('error') for step in c.get('steps', [])) for c in checks):return False
+        if any(c.get('passed') is False and not assertion_failure(c) for c in checks):return False
+        if not any(assertion_failure(c) for c in checks):return False
+    return True
+
+
 def selfcheck(task):
     start=time.monotonic();report={'id':task.name,'engine':'H2 2.3.232' if task.name in ('S04','S05') else 'Java 21 CLI + atomic file snapshot' if task.name!='S02' else 'Java 21 separate module classpaths','runtime':bounded(['java','--version'],task),'machine':{'system':platform.system(),'machine':platform.machine(),'python':platform.python_version()},'limits':{'compile_seconds':45,'command_seconds':15,'output_bytes':OUTPUT_LIMIT,'java_heap':'128m'},'visibility':'public development tests, not hidden','sandbox':'trusted local code; not a hostile-code security boundary','variants':{}}
     variants=[('baseline',task/'baseline/src',1),('reference',task/'reference/src',3)]+[(p.name,p/'src',1) for p in sorted((task/'mutants').iterdir())]
@@ -101,7 +130,7 @@ def selfcheck(task):
                     item['actual_explain_uses_message_index']='IDX_MESSAGES_RECENT' in plan
             except Exception as exc:item['error']=str(exc)
     v=report['variants'];ref=v['reference']
-    report['selfcheck_passed']=all(x['compiled'] for x in v.values()) and len(ref['runs'])==3 and all(r['passed']==r['total'] for r in ref['runs']) and all(x['runs'] and any(r['passed']<r['total'] for r in x['runs']) for k,x in v.items() if k!='reference')
+    report['selfcheck_passed']=all(x['compiled'] for x in v.values()) and len(ref['runs'])==3 and all(r['passed']==r['total'] for r in ref['runs']) and all(semantic_failure(x) for k,x in v.items() if k!='reference')
     # Race schedule may differ; deterministic acceptance outcomes, not identical race ordering.
     report['three_reference_runs_passed']=len(ref['runs'])==3 and all(r['passed']==r['total'] for r in ref['runs'])
     report['elapsed_seconds']=round(time.monotonic()-start,3)
