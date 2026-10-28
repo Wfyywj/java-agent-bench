@@ -429,3 +429,76 @@ test('saved placeholder identity is cleared and explicit numeric choices still e
  kept.get('#exportPlan').onclick();const plan=await kept.exported();
  assert.equal(plan.repeats,3);assert.equal(plan.budget,1800);assert.equal(plan.seed,42);assert.equal(plan.cost_usd,null);assert.equal(plan.execution_supported,false);
 });
+
+test('B01 detail lists slice scope and risks in readable labels, and marks duplicated rubric text',async()=>{
+ const implData=JSON.parse(await readFile(new URL('../dist/implementations.json',import.meta.url),'utf8'));
+ const taskData=JSON.parse(await readFile(new URL('../dist/tasks.json',import.meta.url),'utf8'));
+ const runData=JSON.parse(await readFile(new URL('../dist/runnable.json',import.meta.url),'utf8'));
+ const a=await app({implData,taskData,runData});
+ const schemaHead=/<(?:li|b|h3|h4|summary)[^>]*>\s*(?:failureCases|traps|invariants|criticalFailurePolicy)\b/;
+ const rawKeyDump=/&quot;(?:failureCases|traps|invariants|criticalFailurePolicy|runtimeTarget|prerequisiteInfrastructure|plannedAssets|objectiveTestStrategy|skillAxes|networkPolicy|resourceBudget)&quot;/;
+ a.run("detail('B01')");
+ const html=a.get('#detailContent').innerHTML;
+ assert.doesNotMatch(html,schemaHead);
+ assert.doesNotMatch(html,/<(?:li|b)[^>]*>[^<]*(?:failureCases|traps|invariants|criticalFailurePolicy)/);
+ assert.doesNotMatch(html,/(?:failureCases|traps|invariants|criticalFailurePolicy)[:：]/);
+ assert.doesNotMatch(html,rawKeyDump);
+ assert.match(html,/<b>失败情形<\/b>/);
+ assert.match(html,/<b>容易漏掉的陷阱<\/b>/);
+ assert.match(html,/<b>必须守住的不变量<\/b>/);
+ assert.match(html,/<b>核心失败判定<\/b>/);
+ assert.match(html,/<li>夏令时重叠时段<\/li>/);
+ const sliceAt=html.indexOf('<b>切片支持范围</b>');
+ const deliverAt=html.indexOf('<h3>交付物</h3>');
+ const fullAt=html.indexOf('<h3>完整设计尚未实现</h3>');
+ assert.ok(sliceAt>=0&&deliverAt>sliceAt&&fullAt>deliverAt);
+ const slicePanel=html.slice(html.indexOf('可运行工程变体'),deliverAt);
+ assert.match(slicePanel,/<li>CLI adapter verifies HTTP-compatible error value; does not run a live HTTP listener<\/li>/);
+ assert.match(slicePanel,/<li>No model runs, scores or difficulty calibration<\/li>/);
+ assert.doesNotMatch(slicePanel,/\[\s*\n\s*&quot;/);
+ assert.doesNotMatch(slicePanel,/当前不声称可构建/);
+ assert.ok(html.indexOf('当前不声称可构建')>fullAt);
+ assert.match(html,/<b>计划运行目标<\/b>/);
+ assert.match(html,/固定 Clock 与显式 ZoneId/);
+ const boilerplate='提交产物与可复演证据逐项映射验收 ID；定性项按缺失/部分/完整三个锚点评分。';
+ assert.equal(html.split(boilerplate).length-1,1);
+ assert.match(html,/<b>设计稿占位<\/b>/);
+ assert.match(html,/正确性与业务不变量/);
+ assert.match(html,/回归测试与边界覆盖<br><small>设计稿占位，说明见下方共用条目。<\/small>/);
+ assert.match(html,/定位或澄清证据<br><small>设计稿占位，说明见下方共用条目。<\/small>/);
+ assert.match(html,/兼容性与交付清晰度<br><small>设计稿占位，说明见下方共用条目。<\/small>/);
+ assert.match(html,/验收断言、独立参考模型或数据库状态；不能仅凭自述得分。/);
+ assert.match(html,/不是安全沙箱/);
+ assert.match(html,/可信代码/);
+ assert.match(html,/没有模型实测/);
+ assert.doesNotMatch(html,/模型得分|排行榜|成功率\s*\d/);
+ for(const task of taskData){
+  a.run(`detail(${JSON.stringify(task.id)})`);
+  const page=a.get('#detailContent').innerHTML;
+  assert.doesNotMatch(page,schemaHead,task.id);
+  assert.doesNotMatch(page,rawKeyDump,task.id);
+  assert.match(page,/<h3>完整设计尚未实现<\/h3>/,task.id);
+  assert.match(page,/<b>切片支持范围<\/b>/,task.id);
+  const panel=page.slice(page.indexOf('可运行工程变体'),page.indexOf('<h3>交付物</h3>'));
+  assert.doesNotMatch(panel,/当前不声称可构建/,task.id);
+  assert.doesNotMatch(panel,/\[\s*\n\s*&quot;/,task.id);
+  for(const impl of implData.filter(x=>x.id===task.id)){
+   const items=typeof impl.scope==='string'&&impl.scope.trim().startsWith('[')?JSON.parse(impl.scope):null;
+   if(!items)continue;
+   for(const item of items)assert.match(panel,new RegExp('<li>'+item.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'</li>'),task.id);
+  }
+  const counts=new Map();
+  for(const r of task.rubric||[])counts.set(r.evidence,(counts.get(r.evidence)||0)+1);
+  for(const [ev,n] of counts){
+   if(n>1){assert.equal(page.split(ev).length-1,1,task.id);assert.match(page,/<b>设计稿占位<\/b>/,task.id)}
+  }
+ }
+ a.run("detail('R01')");
+ const r01=a.get('#detailContent').innerHTML;
+ assert.match(r01,/<h3>环境与验证计划<\/h3>/);
+ assert.match(r01,/<b>安全边界<\/b>/);
+ assert.match(r01,/<b>任务版本<\/b>/);
+ assert.match(r01,/1\.0\.1/);
+ assert.doesNotMatch(r01,/完整设计尚未实现|&quot;task_version&quot;|&quot;runtime&quot;/);
+ assert.match(r01,/不是安全沙箱/);
+});
