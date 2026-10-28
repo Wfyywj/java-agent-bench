@@ -1,0 +1,86 @@
+{
+  "audit_schema": "engineering-assessment/v1",
+  "tested_commit": "5f4b58b54925b855cbe9ff6ffa0d30a1dc13c4c0",
+  "data_class": "trusted_synthetic_probes_not_model_results",
+  "model_calls": 0,
+  "production_code_modified": false,
+  "observations": {
+    "B02_missing_equipment_binding": {
+      "evaluator_passes": [
+        true,
+        true
+      ],
+      "checks_per_run": 8,
+      "independent_reference_status": [
+        409,
+        409
+      ],
+      "independent_probe_status": [
+        200,
+        200
+      ]
+    },
+    "S01_reverse_terminal_conflict": {
+      "evaluator_passes": [
+        true,
+        true
+      ],
+      "checks_per_run": 10,
+      "independent_reference_reply": "409 manual_review",
+      "independent_reference_state": "FAILED|0|true",
+      "independent_probe_reply": "200 stale",
+      "independent_probe_state": "FAILED|0|false",
+      "independent_repetitions": 2
+    },
+    "stale_gate_promotion": {
+      "known_bad_reference_actual_evaluation": "failed",
+      "build_implementations_exit": 0,
+      "B02_catalog_status": "gates_green"
+    },
+    "runner_controlled_tests": {
+      "spring_timeout": {
+        "control_pass": true,
+        "timeout_only_pass": true,
+        "gate_passes": {
+          "reference": true,
+          "nop_or_baseline": true,
+          "mutants": true,
+          "repeat": true
+        },
+        "mutant_count": 10,
+        "validation_errors": []
+      },
+      "missing_java": {
+        "exit": 1,
+        "FileNotFoundError": true,
+        "seven_evidence_files_unchanged": true,
+        "summary_still_pass": true,
+        "hashes": {
+          "engineering/bronze/B02/evidence/m1-four-gates.json": "e1f4324d795d7d066b759ce0fd4d62d8cba8a956e63e948171ff198d263ee13b",
+          "engineering/silver/S01/evidence/m1-four-gates.json": "ebc70c0f7b09f284f5ec07f3c1b2263383379a55f16340f1ed20f7bbda1e7cd3",
+          "engineering/silver/S04/evidence/m1-four-gates.json": "f3b027e6487af1d5cc7c06dfb7856466694339d9c1aec0a9b81b265d6bb9d84b",
+          "engineering/integration/S04-spring/evidence/m1-four-gates.json": "0620a880add35d3c01a464f09c6568e589d01d172a5bc2aaf88afe52ed64ab07",
+          "engineering/gold/G01/evidence/m1-four-gates.json": "a103b59c5886250ff10b80cdcaecb0111aa4ef7771800a2f23210f27a7348a6c",
+          "engineering/gold/G05/evidence/m1-four-gates.json": "8970c761ea259f5d0c94b850b07897fa56e6f83a3d96b5b9d3885fbf31fe66dd",
+          "engineering/m1-gates/evidence/summary.json": "01cc2206f6514685355ef38c7b044d938b9185fc862354721eb3c1498f1a6b27"
+        }
+      },
+      "detached_child": {
+        "outer_exit": 124,
+        "outer_timeout": true,
+        "outer_elapsed": 1.002,
+        "owned_child_state_after_outer_return": "S",
+        "owned_child_survived": true,
+        "inner_budget_seconds": 30,
+        "sleeper_lifetime_seconds": 8,
+        "cleanup_not_running": true
+      }
+    }
+  },
+  "limitations": [
+    "Targeted probes, not random sampling or global false-positive-rate estimate.",
+    "Spring mutant timeout tested via controlled transformation of real capture; not ten real JVM timeouts.",
+    "Process cleanup tested with owned short-lived sleep substitute; explicitly cleaned up.",
+    "No real CLI agent trials or secure-sandbox audit."
+  ]
+}
