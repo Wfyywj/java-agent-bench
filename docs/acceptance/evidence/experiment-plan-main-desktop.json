@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "plan_kind": "planning_draft",
+  "execution_supported": false,
+  "executable": false,
+  "name": "acceptance-draft-not-a-score",
+  "track": "skill",
+  "control": "control-workflow-a",
+  "treatment": "treatment-workflow-b",
+  "model": "acceptance-model-id-not-a-run",
+  "repeats": 2,
+  "budget": 60,
+  "seed": 7,
+  "tasks": [
+    {
+      "id": "B01",
+      "status": "runnable_slice",
+      "implementation_id": "B01-slice",
+      "manifest_sha256": "c41391568b038fe7684a1ea3bd4fcff8a13514b39f0292e51b316c513f2de54e"
+    }
+  ],
+  "dataset_version": "0.2-public-dev",
+  "network_policy": "off_except_controlled_model_proxy",
+  "cost_usd": null,
+  "cost_status": "unknown",
+  "cost_note": "费用为空表示未知，不是免费或零成本。",
+  "execution_status": "not_run",
+  "notice": "规划草案，不可执行。不能直接交给 experiment_tools 或 analysis_tools 执行，也不是已预注册的严格 A/B。费用为空表示未知，不是免费或零成本。",
+  "created_at": "2026-10-28T10:00:20.073Z"
+}
