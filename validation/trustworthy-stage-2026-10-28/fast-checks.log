@@ -1,0 +1,273 @@
+
+==> /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/build_catalog.py
+Validated and built 25 design tasks, 3 runnable mechanism tasks.
+
+==> /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/build_implementations.py
+26 candidate-adapter slices discovered; 6 gates_green; original catalog statuses remain design_only.
+
+==> /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m unittest discover -s tests -v
+test_business_failure_and_infrastructure_error_are_distinct (test_b02_failure_classes.FailureClassificationTest.test_business_failure_and_infrastructure_error_are_distinct) ... ok
+test_selfcheck_rejects_nonsemantic_negative_results (test_b02_failure_classes.FailureClassificationTest.test_selfcheck_rejects_nonsemantic_negative_results) ... ok
+test_all_bronze_prepare_whitelists_exclude_grading_assets (test_bronze_protocol.BronzeCandidateProtocolTests.test_all_bronze_prepare_whitelists_exclude_grading_assets) ... ok
+test_b02_missing_source_is_invalid_input_not_measured_failure (test_bronze_protocol.BronzeCandidateProtocolTests.test_b02_missing_source_is_invalid_input_not_measured_failure) ... ok
+test_b02_reference_passes_and_baseline_is_measured_failure (test_bronze_protocol.BronzeCandidateProtocolTests.test_b02_reference_passes_and_baseline_is_measured_failure) ... ok
+test_b03_accepts_standard_package_root (test_bronze_protocol.BronzeCandidateProtocolTests.test_b03_accepts_standard_package_root) ... ok
+test_b04_missing_review_is_invalid_input (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_missing_review_is_invalid_input) ... ok
+test_b04_rejects_unjustified_blocker_hidden_among_suggestions (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_rejects_unjustified_blocker_hidden_among_suggestions) ... ok
+test_b04_reviews_artifact_without_compiling_submitted_source (test_bronze_protocol.BronzeCandidateProtocolTests.test_b04_reviews_artifact_without_compiling_submitted_source) ... ok
+test_cli_refuses_without_trusted_code (test_engineering_launcher.LauncherTests.test_cli_refuses_without_trusted_code) ... ok
+test_cli_trusted_code_still_warns (test_engineering_launcher.LauncherTests.test_cli_trusted_code_still_warns) ... ok
+test_evaluation_json_wrapper (test_engineering_launcher.LauncherTests.test_evaluation_json_wrapper) ... NOT a secure sandbox; trusted code only; do not evaluate untrusted model or third-party output. See harness/INTEGRITY.md. 非安全沙箱；仅可信代码；禁止直接运行不可信模型或第三方输出。
+ok
+test_gate_before_execution (test_engineering_launcher.LauncherTests.test_gate_before_execution) ... ok
+test_hashes_stable (test_engineering_launcher.LauncherTests.test_hashes_stable) ... ok
+test_invalid_id (test_engineering_launcher.LauncherTests.test_invalid_id) ... ok
+test_invalid_report_not_pass (test_engineering_launcher.LauncherTests.test_invalid_report_not_pass) ... NOT a secure sandbox; trusted code only; do not evaluate untrusted model or third-party output. See harness/INTEGRITY.md. 非安全沙箱；仅可信代码；禁止直接运行不可信模型或第三方输出。
+ok
+test_no_overwrite (test_engineering_launcher.LauncherTests.test_no_overwrite) ... ok
+test_path_escape (test_engineering_launcher.LauncherTests.test_path_escape) ... ok
+test_prepare_only_allowlist (test_engineering_launcher.LauncherTests.test_prepare_only_allowlist) ... ok
+test_reject_inside_repo (test_engineering_launcher.LauncherTests.test_reject_inside_repo) ... ok
+test_reject_reference_whitelist (test_engineering_launcher.LauncherTests.test_reject_reference_whitelist) ... ok
+test_reject_source_symlink (test_engineering_launcher.LauncherTests.test_reject_source_symlink) ... ok
+test_all_baselines_fail_references_pass_and_mutants_are_killed (test_harness.RealJavaRegressionTests.test_all_baselines_fail_references_pass_and_mutants_are_killed) ... ok
+test_compile_failure_is_reported (test_harness.SafetyAndContractTests.test_compile_failure_is_reported) ... ok
+test_confined_rejects_absolute_and_parent (test_harness.SafetyAndContractTests.test_confined_rejects_absolute_and_parent) ... ok
+test_evaluate_and_selfcheck_emit_integrity_warning (test_harness.SafetyAndContractTests.test_evaluate_and_selfcheck_emit_integrity_warning) ... ok
+test_missing_java_rejected (test_harness.SafetyAndContractTests.test_missing_java_rejected) ... ok
+test_output_limit_terminates_chatty_process (test_harness.SafetyAndContractTests.test_output_limit_terminates_chatty_process) ... ok
+test_patch_hash_stable_and_sensitive (test_harness.SafetyAndContractTests.test_patch_hash_stable_and_sensitive) ... ok
+test_prepare_is_sanitized_and_non_overwriting (test_harness.SafetyAndContractTests.test_prepare_is_sanitized_and_non_overwriting) ... ok
+test_reject_source_symlink (test_harness.SafetyAndContractTests.test_reject_source_symlink) ... ok
+test_reject_task_traversal (test_harness.SafetyAndContractTests.test_reject_task_traversal) ... ok
+test_result_schema_contract (test_harness.SafetyAndContractTests.test_result_schema_contract) ... ok
+test_shell_metacharacters_are_data (test_harness.SafetyAndContractTests.test_shell_metacharacters_are_data) ... ok
+test_timeout_kills_process (test_harness.SafetyAndContractTests.test_timeout_kills_process) ... ok
+test_timeout_limit_rejected (test_harness.SafetyAndContractTests.test_timeout_limit_rejected) ... ok
+test_builder_matches_committed_discovery_files (test_m1_catalog_status.M1CatalogStatusTests.test_builder_matches_committed_discovery_files) ... ok
+test_design_validator_rejects_ready_vocabulary (test_m1_catalog_status.M1CatalogStatusTests.test_design_validator_rejects_ready_vocabulary) ... ok
+test_designs_stay_design_only_with_additive_slice_pointer (test_m1_catalog_status.M1CatalogStatusTests.test_designs_stay_design_only_with_additive_slice_pointer) ... ok
+test_full_catalog_ready_stays_false_on_task_manifests_and_summary (test_m1_catalog_status.M1CatalogStatusTests.test_full_catalog_ready_stays_false_on_task_manifests_and_summary) ... ok
+test_gate_names_match_the_runner (test_m1_catalog_status.M1CatalogStatusTests.test_gate_names_match_the_runner) ... ok
+test_list_discovery_uses_gates_green (test_m1_catalog_status.M1CatalogStatusTests.test_list_discovery_uses_gates_green) ... ok
+test_missing_evidence_does_not_invent_gates_green (test_m1_catalog_status.M1CatalogStatusTests.test_missing_evidence_does_not_invent_gates_green) ... ok
+test_six_implementations_are_gates_green_and_not_catalog_ready (test_m1_catalog_status.M1CatalogStatusTests.test_six_implementations_are_gates_green_and_not_catalog_ready) ... ok
+test_summary_cannot_promote_a_disagreeing_or_ready_claim (test_m1_catalog_status.M1CatalogStatusTests.test_summary_cannot_promote_a_disagreeing_or_ready_claim) ... ok
+test_actual_missing_java_persists_failure_after_green (test_m1_evidence_integrity.EvidenceIntegrityTests.test_actual_missing_java_persists_failure_after_green) ... ok
+test_added_deleted_renamed_sources_change_fingerprint (test_m1_evidence_integrity.EvidenceIntegrityTests.test_added_deleted_renamed_sources_change_fingerprint) ... ok
+test_b02_error_and_g05_timeout_are_not_assertions (test_m1_evidence_integrity.EvidenceIntegrityTests.test_b02_error_and_g05_timeout_are_not_assertions) ... ok
+test_competing_attempt_cannot_replace_active_selection (test_m1_evidence_integrity.EvidenceIntegrityTests.test_competing_attempt_cannot_replace_active_selection) ... ok
+test_completed_report_rejects_duplicate_assertion_names (test_m1_evidence_integrity.EvidenceIntegrityTests.test_completed_report_rejects_duplicate_assertion_names) ... ok
+test_each_input_change_invalidates_previous_green (test_m1_evidence_integrity.EvidenceIntegrityTests.test_each_input_change_invalidates_previous_green) ... ok
+test_exception_failure_keeps_history_and_selects_failure (test_m1_evidence_integrity.EvidenceIntegrityTests.test_exception_failure_keeps_history_and_selects_failure) ... ok
+test_input_mutation_during_run_fails (test_m1_evidence_integrity.EvidenceIntegrityTests.test_input_mutation_during_run_fails) ... ok
+test_kill_claim_requires_named_assertion (test_m1_evidence_integrity.EvidenceIntegrityTests.test_kill_claim_requires_named_assertion) ... ok
+test_legacy_unbound_success_not_promotable (test_m1_evidence_integrity.EvidenceIntegrityTests.test_legacy_unbound_success_not_promotable) ... ok
+test_malformed_selector_fails_closed (test_m1_evidence_integrity.EvidenceIntegrityTests.test_malformed_selector_fails_closed) ... ok
+test_partial_verifier_output_is_not_a_kill (test_m1_evidence_integrity.EvidenceIntegrityTests.test_partial_verifier_output_is_not_a_kill) ... ok
+test_running_sentinel_blocks_previous_green (test_m1_evidence_integrity.EvidenceIntegrityTests.test_running_sentinel_blocks_previous_green) ... ok
+test_silver_infrastructure_failure_is_not_assertion (test_m1_evidence_integrity.EvidenceIntegrityTests.test_silver_infrastructure_failure_is_not_assertion) ... ok
+test_silver_requires_completed_comparison_not_just_failed_flag (test_m1_evidence_integrity.EvidenceIntegrityTests.test_silver_requires_completed_comparison_not_just_failed_flag) ... ok
+test_spring_timeout_compile_start_and_missing_are_not_semantic (test_m1_evidence_integrity.EvidenceIntegrityTests.test_spring_timeout_compile_start_and_missing_are_not_semantic) ... ok
+test_checked_in_evidence_matches_the_locked_contract (test_m1_gates.M1CheckedInEvidenceTests.test_checked_in_evidence_matches_the_locked_contract) ... ok
+test_b02_critical_checks_use_the_acceptance_list (test_m1_gates.M1GateContractTests.test_b02_critical_checks_use_the_acceptance_list) ... ok
+test_baseline_noncritical_failure_does_not_pass (test_m1_gates.M1GateContractTests.test_baseline_noncritical_failure_does_not_pass) ... ok
+test_collect_task_restores_existing_selfcheck_bytes (test_m1_gates.M1GateContractTests.test_collect_task_restores_existing_selfcheck_bytes) ... ok
+test_m1_task_list_is_locked (test_m1_gates.M1GateContractTests.test_m1_task_list_is_locked) ... ok
+test_missing_java_records_every_task_without_running_fixtures (test_m1_gates.M1GateContractTests.test_missing_java_records_every_task_without_running_fixtures) ... ok
+test_missing_mutant_is_recorded (test_m1_gates.M1GateContractTests.test_missing_mutant_is_recorded) ... ok
+test_modes_do_not_call_the_other_suite (test_m1_gates.M1GateContractTests.test_modes_do_not_call_the_other_suite) ... Pass only one of --m1 or --all.
+ok
+test_mutant_that_passes_fails_the_gate (test_m1_gates.M1GateContractTests.test_mutant_that_passes_fails_the_gate) ... ok
+test_narrow_entry_fails_when_a_mocked_gate_fails (test_m1_gates.M1GateContractTests.test_narrow_entry_fails_when_a_mocked_gate_fails) ... 26 candidate-adapter slices discovered; 6 gates_green; original catalog statuses remain design_only.
+NOT a secure sandbox. M1 gates run checked-in trusted fixtures only; model submissions are not executed.
+M1 summary: /tmp/tmp71ucwggc/engineering/m1-gates/evidence/summary.json
+ok
+test_narrow_entry_fails_when_a_required_field_is_missing (test_m1_gates.M1GateContractTests.test_narrow_entry_fails_when_a_required_field_is_missing) ... NOT a secure sandbox. M1 gates run checked-in trusted fixtures only; model submissions are not executed.
+M1 summary: /tmp/tmpytkvtss4/engineering/m1-gates/evidence/summary.json
+ok
+test_synthetic_captures_pass_every_gate (test_m1_gates.M1GateContractTests.test_synthetic_captures_pass_every_gate) ... ok
+test_six_manifests_share_honest_scope_fields (test_m1_scope_schema.M1ScopeSchemaTests.test_six_manifests_share_honest_scope_fields) ... ok
+test_every_full_suite_runner_uses_supervisor (test_process_supervisor.FullSuiteSupervisorTests.test_every_full_suite_runner_uses_supervisor) ... ok
+test_incomplete_cleanup_cannot_be_success (test_process_supervisor.FullSuiteSupervisorTests.test_incomplete_cleanup_cannot_be_success) ... ok
+test_caller_death_triggers_helper_cleanup (test_process_supervisor.ProcessSupervisorTests.test_caller_death_triggers_helper_cleanup) ... ok
+test_exact_g05_nested_runner_timeout (test_process_supervisor.ProcessSupervisorTests.test_exact_g05_nested_runner_timeout) ... ok
+test_keyboard_interrupt_cleans_before_propagating (test_process_supervisor.ProcessSupervisorTests.test_keyboard_interrupt_cleans_before_propagating) ... ok
+test_launch_error_is_explicit (test_process_supervisor.ProcessSupervisorTests.test_launch_error_is_explicit) ... ok
+test_normal_parent_exit_still_cleans_detached_child (test_process_supervisor.ProcessSupervisorTests.test_normal_parent_exit_still_cleans_detached_child) ... ok
+test_output_limit_cleans_descendant (test_process_supervisor.ProcessSupervisorTests.test_output_limit_cleans_descendant) ... ok
+test_success_and_stderr (test_process_supervisor.ProcessSupervisorTests.test_success_and_stderr) ... ok
+test_timeout_cleans_detached_descendant_not_unrelated_child (test_process_supervisor.ProcessSupervisorTests.test_timeout_cleans_detached_descendant_not_unrelated_child) ... ok
+test_unexpected_caller_exception_cleans_before_propagating (test_process_supervisor.ProcessSupervisorTests.test_unexpected_caller_exception_cleans_before_propagating) ... ok
+test_unsupported_platform_does_not_launch_workload (test_process_supervisor.ProcessSupervisorTests.test_unsupported_platform_does_not_launch_workload) ... ok
+test_all_25_slice_whitelists (test_registry.RegistryTests.test_all_25_slice_whitelists) ... ok
+test_catalog_and_slice_identity (test_registry.RegistryTests.test_catalog_and_slice_identity) ... ok
+test_published_catalog_matches_source (test_registry.RegistryTests.test_published_catalog_matches_source) ... ok
+test_future_boundary_preserves_unknown_failures (test_spring_contract_boundaries.SpringContractBoundaries.test_future_boundary_preserves_unknown_failures) ... ok
+test_g01_adjacent_capacity_rejection_is_narrow (test_verifier_failure_classes.VerifierFailureClasses.test_g01_adjacent_capacity_rejection_is_narrow) ... ok
+test_java_wrappers_distinguish_assertions_from_errors (test_verifier_failure_classes.VerifierFailureClasses.test_java_wrappers_distinguish_assertions_from_errors) ... ok
+test_raw_selfchecks_require_completed_assertion_failure (test_verifier_failure_classes.VerifierFailureClasses.test_raw_selfchecks_require_completed_assertion_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 93 tests in 37.691s
+
+OK
+
+==> /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m unittest discover -s cli_adapters -p test_*.py -v
+test_cli_plan (test_adapters.FilesAndPlanTests.test_cli_plan) ... ok
+test_diff_add_delete_binary_no_newline (test_adapters.FilesAndPlanTests.test_diff_add_delete_binary_no_newline) ... ok
+test_invalid_plan_and_cli_has_no_run_mode (test_adapters.FilesAndPlanTests.test_invalid_plan_and_cli_has_no_run_mode) ... ok
+test_nested_roots_rejected (test_adapters.FilesAndPlanTests.test_nested_roots_rejected) ... ok
+test_parent_symlink_swap_rejected (test_adapters.FilesAndPlanTests.test_parent_symlink_swap_rejected) ... ok
+test_plan_never_launches (test_adapters.FilesAndPlanTests.test_plan_never_launches) ... ok
+test_special_and_oversize_rejected (test_adapters.FilesAndPlanTests.test_special_and_oversize_rejected) ... ok
+test_symlink_escape_rejected (test_adapters.FilesAndPlanTests.test_symlink_escape_rejected) ... ok
+test_actual_trials_cannot_be_asserted (test_adapters.NormalizeTests.test_actual_trials_cannot_be_asserted) ... ok
+test_duplicate_terminal_count_once (test_adapters.NormalizeTests.test_duplicate_terminal_count_once) ... ok
+test_failure_and_partial (test_adapters.NormalizeTests.test_failure_and_partial) ... ok
+test_fixtures_not_trials (test_adapters.NormalizeTests.test_fixtures_not_trials) ... ok
+test_large_integer_does_not_overflow_float_conversion (test_adapters.NormalizeTests.test_large_integer_does_not_overflow_float_conversion) ... ok
+test_malformed (test_adapters.NormalizeTests.test_malformed) ... ok
+test_missing_usage_is_unknown (test_adapters.NormalizeTests.test_missing_usage_is_unknown) ... ok
+test_partial_session_concatenation_rejected (test_adapters.NormalizeTests.test_partial_session_concatenation_rejected) ... ok
+test_process_and_cost_observation_semantics (test_adapters.NormalizeTests.test_process_and_cost_observation_semantics) ... ok
+test_stream_and_model_totals_never_added (test_adapters.NormalizeTests.test_stream_and_model_totals_never_added) ... ok
+test_unknown_fields_preserved_and_zero_means_measured (test_adapters.NormalizeTests.test_unknown_fields_preserved_and_zero_means_measured) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.006s
+
+OK
+
+==> /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m unittest discover -s analysis_tools -p test_*.py -v
+test_bootstrap_reproducible_and_incomplete_withheld (test_paired_analysis.PairedAnalysisTests.test_bootstrap_reproducible_and_incomplete_withheld) ... ok
+test_cli_exit_codes (test_paired_analysis.PairedAnalysisTests.test_cli_exit_codes) ... ok
+test_conflicting_plan_versions (test_paired_analysis.PairedAnalysisTests.test_conflicting_plan_versions) ... ok
+test_duplicate_planned_pair (test_paired_analysis.PairedAnalysisTests.test_duplicate_planned_pair) ... ok
+test_duplicate_slot (test_paired_analysis.PairedAnalysisTests.test_duplicate_slot) ... ok
+test_duplicate_trial_id (test_paired_analysis.PairedAnalysisTests.test_duplicate_trial_id) ... ok
+test_empty_records_accounted (test_paired_analysis.PairedAnalysisTests.test_empty_records_accounted) ... ok
+test_evidence_required (test_paired_analysis.PairedAnalysisTests.test_evidence_required) ... ok
+test_incompatible_track (test_paired_analysis.PairedAnalysisTests.test_incompatible_track) ... ok
+test_json_duplicate_keys (test_paired_analysis.PairedAnalysisTests.test_json_duplicate_keys) ... ok
+test_locked_record_metadata (test_paired_analysis.PairedAnalysisTests.test_locked_record_metadata) ... ok
+test_manifest_mismatch (test_paired_analysis.PairedAnalysisTests.test_manifest_mismatch) ... ok
+test_missing_not_dropped (test_paired_analysis.PairedAnalysisTests.test_missing_not_dropped) ... ok
+test_mixed_data_class_rejected (test_paired_analysis.PairedAnalysisTests.test_mixed_data_class_rejected) ... ok
+test_nonfinite_and_bool_rejected (test_paired_analysis.PairedAnalysisTests.test_nonfinite_and_bool_rejected) ... ok
+test_paired_math_and_fixed_denominator (test_paired_analysis.PairedAnalysisTests.test_paired_math_and_fixed_denominator) ... ok
+test_paired_resources_and_elapsed_coverage (test_paired_analysis.PairedAnalysisTests.test_paired_resources_and_elapsed_coverage) ... ok
+test_preregistration (test_paired_analysis.PairedAnalysisTests.test_preregistration) ... ok
+test_reference_rejected (test_paired_analysis.PairedAnalysisTests.test_reference_rejected) ... ok
+test_synthetic_opt_in (test_paired_analysis.PairedAnalysisTests.test_synthetic_opt_in) ... ok
+test_unknown_cost_keeps_failure (test_paired_analysis.PairedAnalysisTests.test_unknown_cost_keeps_failure) ... ok
+test_unknown_requires_reason (test_paired_analysis.PairedAnalysisTests.test_unknown_requires_reason) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.098s
+
+OK
+
+==> /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m unittest discover -s experiment_tools -p test_*.py -v
+test_complete_replay (test_recipe.RecipeTests.test_complete_replay) ... ok
+test_end_to_end_all_slots_and_unknowns (test_recipe.RecipeTests.test_end_to_end_all_slots_and_unknowns) ... ok
+test_evidence_tamper (test_recipe.RecipeTests.test_evidence_tamper) ... ok
+test_explicit_opt_in_and_actual_rejection (test_recipe.RecipeTests.test_explicit_opt_in_and_actual_rejection) ... ok
+test_hash_semantics_preparation_metadata (test_recipe.RecipeTests.test_hash_semantics_preparation_metadata) ... ok
+test_immutable_freeze_replay_analysis (test_recipe.RecipeTests.test_immutable_freeze_replay_analysis) ... ok
+test_independent_workspaces_and_mutation_rejection (test_recipe.RecipeTests.test_independent_workspaces_and_mutation_rejection) ... ok
+test_json_schema_preserves_resource_and_synthetic_constraints (test_recipe.RecipeTests.test_json_schema_preserves_resource_and_synthetic_constraints) ... ok
+test_missing_ledger_slot_rejected (test_recipe.RecipeTests.test_missing_ledger_slot_rejected) ... ok
+test_plan_and_version_tamper (test_recipe.RecipeTests.test_plan_and_version_tamper) ... ok
+test_source_binding_rejects_changed_version (test_recipe.RecipeTests.test_source_binding_rejects_changed_version) ... ok
+test_strict_analysis_actual_and_reference_remain_rejected (test_recipe.RecipeTests.test_strict_analysis_actual_and_reference_remain_rejected) ... ok
+test_unknown_fields_duplicate_json_symlink (test_recipe.RecipeTests.test_unknown_fields_duplicate_json_symlink) ... ok
+test_claude_plan (test_workspace.WorkspaceTests.test_claude_plan) ... ok
+test_cli_exit_codes_and_json (test_workspace.WorkspaceTests.test_cli_exit_codes_and_json) ... ok
+test_doctor_never_launches (test_workspace.WorkspaceTests.test_doctor_never_launches) ... ok
+test_empty_evidence_is_missing (test_workspace.WorkspaceTests.test_empty_evidence_is_missing) ... ok
+test_existing_file_never_overwritten (test_workspace.WorkspaceTests.test_existing_file_never_overwritten) ... ok
+test_existing_never_overwritten (test_workspace.WorkspaceTests.test_existing_never_overwritten) ... ok
+test_failure_rolls_back_new_workspace (test_workspace.WorkspaceTests.test_failure_rolls_back_new_workspace) ... ok
+test_git_plan_uses_outer_workspace_only (test_workspace.WorkspaceTests.test_git_plan_uses_outer_workspace_only) ... ok
+test_independent_identical_snapshots_and_provenance (test_workspace.WorkspaceTests.test_independent_identical_snapshots_and_provenance) ... ok
+test_init_never_launches_process (test_workspace.WorkspaceTests.test_init_never_launches_process) ... ok
+test_integration_explicit_identity (test_workspace.WorkspaceTests.test_integration_explicit_identity) ... ok
+test_invalid_task_and_option_fail_before_creation (test_workspace.WorkspaceTests.test_invalid_task_and_option_fail_before_creation) ... ok
+test_missing_candidate_and_baseline_are_visible (test_workspace.WorkspaceTests.test_missing_candidate_and_baseline_are_visible) ... ok
+test_oversized_evidence_rejected (test_workspace.WorkspaceTests.test_oversized_evidence_rejected) ... ok
+test_parent_must_exist (test_workspace.WorkspaceTests.test_parent_must_exist) ... ok
+test_path_traversal_rejected (test_workspace.WorkspaceTests.test_path_traversal_rejected) ... ok
+test_present_fake_success_never_passes (test_workspace.WorkspaceTests.test_present_fake_success_never_passes) ... ok
+test_prompt_only_requires_actual_common_material (test_workspace.WorkspaceTests.test_prompt_only_requires_actual_common_material) ... ok
+test_relocated_workspace_rejected (test_workspace.WorkspaceTests.test_relocated_workspace_rejected) ... ok
+test_repo_destination_rejected (test_workspace.WorkspaceTests.test_repo_destination_rejected) ... ok
+test_security_boundary_on_doctor_init_and_status (test_workspace.WorkspaceTests.test_security_boundary_on_doctor_init_and_status) ... ok
+test_special_evidence_rejected_without_blocking (test_workspace.WorkspaceTests.test_special_evidence_rejected_without_blocking) ... ok
+test_status_duplicate_keys_rejected (test_workspace.WorkspaceTests.test_status_duplicate_keys_rejected) ... ok
+test_status_identity_tamper_rejected (test_workspace.WorkspaceTests.test_status_identity_tamper_rejected) ... ok
+test_status_manifest_injection_rejected (test_workspace.WorkspaceTests.test_status_manifest_injection_rejected) ... ok
+test_status_missing_artifacts (test_workspace.WorkspaceTests.test_status_missing_artifacts) ... ok
+test_status_missing_evidence_and_changes (test_workspace.WorkspaceTests.test_status_missing_evidence_and_changes) ... ok
+test_status_symlink_evidence_rejected (test_workspace.WorkspaceTests.test_status_symlink_evidence_rejected) ... ok
+test_symlink_destination_rejected (test_workspace.WorkspaceTests.test_symlink_destination_rejected) ... ok
+test_symlink_parent_rejected (test_workspace.WorkspaceTests.test_symlink_parent_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.763s
+
+OK
+
+==> node --check dist/app.js
+
+==> node --test tests/test_web.mjs
+✔ zero seed survives save, fresh application reopen and exported plan (14.559619ms)
+✔ planner persists fields and filters obsolete IDs, using current task statuses (2.521874ms)
+✔ planner rejects noninteger or unsafe seeds and missing task selections (1.897041ms)
+✔ catalog tier and case-insensitive query filters intersect; unknown detail is a no-op (2.112288ms)
+✔ task titles, descriptions and detail markup are escaped (1.678558ms)
+✔ imported result metadata and raw evidence are HTML-escaped (2.599439ms)
+✔ unknown result task/status, missing versions and inconsistent success are rejected (2.750111ms)
+✔ malformed result shape and oversized files are rejected (1.799207ms)
+✔ checkbox handler updates selection used by save/export (1.702994ms)
+✔ valid JSON nonobjects in saved storage do not crash the planner (5.046712ms)
+✔ saved numeric fields and task IDs are escaped before interpolation (1.406427ms)
+✔ all 15 shipped baseline/reference/mutation records import with current task metadata (19.331295ms)
+✔ all 25 shipped design task details render with real nested data shapes (7.844444ms)
+✔ engineering slice plan and result use distinct implementation identity (3.009193ms)
+✔ multi-file import is atomic on malformed second file and supports retry (2.23449ms)
+✔ canonical deduplication ignores JSON key order across and within batches (2.284904ms)
+✔ evidence save restores after refresh; export backup reimports; selected deletion persists (4.805186ms)
+✔ unsaved evidence does not silently persist (3.113909ms)
+✔ corrupt or malicious local evidence does not crash or partially restore (4.044612ms)
+✔ storage failure keeps evidence in memory and blocks a stale saved deletion (2.043899ms)
+✔ same task and version comparison stays neutral and disallows cross-version records (2.257494ms)
+✔ quickstart generates only preparation commands with safe shell quoting and validation (1.773459ms)
+✔ design and multiple executable variants keep separate identities in plan and refresh (2.894043ms)
+✔ import preserves no fabricated agent provenance and HTML escapes prototype payload (7.856922ms)
+✔ import busy flag blocks overlapping batches and navigation does not crash completion (2.3025ms)
+✔ static header links the real repository before JavaScript runs (0.793963ms)
+✔ markup has native keyboard file/selection controls, status announcements and responsive CSS (3.45387ms)
+✔ deletion never silently saves newly imported evidence (2.392753ms)
+✔ large site-exported backups can be restored, while single large records are rejected (57.660223ms)
+✔ quickstart lists all engineering variants, task detail links preselect, Codex permissions are explicit (9.795454ms)
+✔ loaded app keeps the real repository link (1.355652ms)
+✔ quickstart leads with clone and prepare, and warns this is not a sandbox (1.184189ms)
+✔ slice and runnable details lead with clone, keep ZIP secondary, and explain security (3.906959ms)
+✔ design-only tasks without a slice stay unrealized, and a true flag invents no score (2.526541ms)
+✔ M1 gates-green slices stay design_only and are not full-catalog ready (4.505062ms)
+✔ exported plans explicitly remain non-executable planning drafts (1.656296ms)
+✔ planner blocks placeholder defaults and does not repeat implementation ids (1.907316ms)
+✔ shipped implementation tags show each implementation id once (2.032592ms)
+✔ saved placeholder identity is cleared and explicit numeric choices still export (2.73626ms)
+✔ B01 detail lists slice scope and risks in readable labels, and marks duplicated rubric text (9.778379ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 295.359687
+
+Offline tooling checks passed. No models executed; full Java fixture suite is separate.

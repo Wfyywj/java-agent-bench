@@ -83,3 +83,11 @@ python3 -m experiment_tools status --workspace "$PARENT_SMOKE/run"
 ```
 
 该 smoke 没有 trace 原件和 evaluator 证据，status 应继续显示它们缺失。测试覆盖双 CLI、实现 ID、独立副本、覆盖/路径穿越/符号链接拒绝、失败清理、manifest 篡改、缺失/伪成功证据和不启动进程的 doctor。
+
+## 阶段 B：明确标记的合成 Recipe 闭环
+
+新增 [RECIPE.md](RECIPE.md)：`python3 -m experiment_tools.recipe` 提供
+example → freeze → 独立 A/B 工作区 → synthetic replay envelope → 严格分析。
+仅 B01 合成数据契约回放，不启动 agent 或 Java evaluator；不接收真实/参考解证据。
+全部槽位（含 missing / 开始前 cancelled）保留，未知成本/耗时为 null。
+页面接口尚待接入，当前网站 importer 不支持该展示 fixture。

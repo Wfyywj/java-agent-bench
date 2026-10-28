@@ -1,0 +1,88 @@
+{
+  "schema": "trusted-stage-validation/v1",
+  "date": "2026-10-28",
+  "base_commit": "f706245720d1f82b3bb7eecb5b827c30d980047f",
+  "model_calls": 0,
+  "actual_agent_trials": 0,
+  "public_site_redeployed": false,
+  "fast_checks": {
+    "passed": true,
+    "core": 93,
+    "adapters": 19,
+    "analysis": 22,
+    "workspaces": 43,
+    "web": 40,
+    "total": 217
+  },
+  "full_suite": {
+    "exit": 0,
+    "tiers": [
+      "bronze",
+      "silver",
+      "gold",
+      "diamond",
+      "king"
+    ],
+    "spring_integration": true,
+    "scope": "checked-in trusted fixtures; no model quality score"
+  },
+  "m1": {
+    "exit": 0,
+    "run_id": "20261028T040939332173Z-38251c744c74",
+    "tasks": 6,
+    "listed_mutants": 29,
+    "source_fingerprints": {
+      "B02": "a2ce8d1d5726c61e8091507252dc101bb61f3d1fd7af0bd22d97a198b586e4eb",
+      "S01": "f6bf350790d5842ee4e67bf6e31108cd02102401c62e430a8aec53a5800c8a48",
+      "S04": "97018f814c6bdf8fd0296bed3a0d13488418bdab912f90293228a40b7155a2d3",
+      "S04-spring": "82ff4eae3fd8ec65cb361894330c59b05ba98cc4b069b9648734df704f45e6f6",
+      "G01": "38d8268737f302576421240d88c8ce2c75dccb2261fba7c2acd65295724b07e2",
+      "G05": "0b913a75f96d47d1961a7021fff0d8102b2ceaab1bd3cf94469671b4aecfe880"
+    }
+  },
+  "raw_full_suite_reports": [
+    {
+      "path": "engineering/silver/S01/evidence/selfcheck.json",
+      "sha256": "5a6476c7d404dcf97221dbe0214ceb77a36afdaabba2b6c5a95e07873f554171",
+      "execution": "separate-final-full-suite-not-m1-capture"
+    },
+    {
+      "path": "engineering/silver/S04/evidence/selfcheck.json",
+      "sha256": "caaf13810b563bf850d6ca4d92763717a9637d8191d329fa1b01b2941e8ee9d5",
+      "execution": "separate-final-full-suite-not-m1-capture"
+    },
+    {
+      "path": "engineering/integration/S04-spring/evidence/selfcheck.json",
+      "sha256": "192ac5d4414f1dd73c2fa86c9449fb45504e07c364db8805c094ca48edac4c48",
+      "execution": "separate-final-full-suite-not-m1-capture"
+    },
+    {
+      "path": "engineering/gold/G01/verification-results.json",
+      "sha256": "b97e8ca4ae3d1ddcf22465a3300748b8e3464554d23bc42d29af1e056ffb2f1f",
+      "execution": "separate-final-full-suite-not-m1-capture"
+    },
+    {
+      "path": "engineering/gold/G05/verification-results.json",
+      "sha256": "04da25e61bd811a46744604ae6aec8dc740ad9924a2665c1e236000d78af4544",
+      "execution": "separate-final-full-suite-not-m1-capture"
+    }
+  ],
+  "logs_sha256": {
+    "full-suite.log": "063f28e24fc6bd90b26067b5ad422677bc9ab0c715b64fdf9c1c83cc3c3a23a4",
+    "fast-checks.log": "72caabc47a8b7aeb60230823cbee5c5c4777821425377735661283940101635d",
+    "m1.log": "3c060bad599240c77ac4f3beed21c2616677ccd6b2ec6abfa84eb128a4305685",
+    "recipe-smoke.log": "9b9fd4735326a7fa54d533478de96db09e5a36439fe8e21480824dd7f49b4393"
+  },
+  "recipe": {
+    "synthetic_only": true,
+    "planned_slots": 6,
+    "records": 4,
+    "missing_analysis_slots": 2,
+    "analyzer_exit": 2,
+    "status": "incomplete",
+    "cost_and_time": "unknown",
+    "java_evaluator_executed": false,
+    "website_import_supported": false
+  },
+  "ci": "See exact PR commit checks; local results do not assert remote CI status."
+}

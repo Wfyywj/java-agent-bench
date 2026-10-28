@@ -98,7 +98,7 @@ def validate(plan, records, allow_synthetic=False):
         keys(record, 'schema_version plan_id data_class run_kind trial_id implementation_id manifest_sha256 repeat arm started_at metadata outcome elapsed_seconds elapsed_unknown_reason cost_usd cost_unknown_reason evidence', 'record')
         require(record['schema_version'] == '1.0' and record['plan_id'] == plan['plan_id'], 'record plan/version mismatch')
         require(record['data_class'] == plan['data_class'], 'mixed synthetic/actual records')
-        require(record['run_kind'] == 'agent_trial', 'selfcheck/localreference are not agent trials')
+        require(record['run_kind'] == 'agent_trial' or (allow_synthetic and plan['data_class'] == 'SYNTHETIC TEST FIXTURES NOT MODEL RESULTS' and record['run_kind'] == 'synthetic_replay'), 'selfcheck/localreference are not agent trials; synthetic_replay requires explicit synthetic mode')
         require(nonempty(record['trial_id']) and record['trial_id'] not in trial_ids, 'missing/duplicate trial_id')
         trial_ids.add(record['trial_id'])
         key = identity(record)

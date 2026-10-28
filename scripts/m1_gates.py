@@ -5,7 +5,14 @@ runs model submissions. Baseline is recorded as baseline: these tasks have
 no separate nop fixture.
 """
 from pathlib import Path
-import hashlib, json, os, re, signal, subprocess, sys, time
+import hashlib, json, os, re, signal, subprocess, sys, time, uuid
+from datetime import datetime, timezone
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from m1_provenance import source_fingerprint as _source_fingerprint, atomic_json
+
+def source_fingerprint(root, task_id):
+    return _source_fingerprint(root, TASK_DIRS[task_id])
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = 'm1-four-gates/v1'
@@ -116,14 +123,17 @@ def _clean_label(body):
 def _status_checks(output, task_id, manifest):
     checks = []
     for line in (output or '').splitlines():
-        if line.startswith('PASS '):
+        assertion_failure = line.startswith('FAIL ')
+        if line.startswith('ERROR '):
+            name, passed = _clean_label(line[6:]), False
+        elif line.startswith('PASS '):
             name, passed = _clean_label(line[5:]), True
         elif line.startswith('FAIL '):
             name, passed = _clean_label(line[5:]), False
         else:
             continue
         if name:
-            checks.append({'name': name, 'passed': passed, 'critical': _is_critical(task_id, name, manifest)})
+            checks.append({'name': name, 'passed': passed, 'critical': _is_critical(task_id, name, manifest), 'assertion_failure': assertion_failure, 'infrastructure_error': line.startswith('ERROR ')})
     return checks
 
 
@@ -152,7 +162,11 @@ def mutants_of(root, task_id):
     path = task_dir(root, task_id) / 'task.json'
     if not path.is_file():
         return None
-    mutants = json.loads(path.read_text()).get('mutants')
+    try:
+        document = json.loads(path.read_text())
+        mutants = document.get('mutants') if isinstance(document, dict) else None
+    except (OSError, ValueError):
+        return None
     return mutants if isinstance(mutants, list) else None
 
 
@@ -163,6 +177,7 @@ def _b02_checks(variant, manifest):
         checks.append({
             'name': name,
             'passed': value == 'PASS',
+            'assertion_failure': isinstance(value, str) and value.startswith('FAIL'),
             'critical': _is_critical('B02', name, manifest),
         })
     return checks
@@ -198,10 +213,36 @@ def _mutant_from_b02(variant, manifest):
     checks = _b02_checks(variant, manifest)
     if not checks:
         return {'runnable': False, 'failed': None, 'reason': 'mutant produced no checks'}
+    if any(v != 'PASS' and not (isinstance(v, str) and v.startswith('FAIL:')) for v in variant.get('checks', {}).values()):
+        return _nonsemantic('infrastructure_error', 'verifier reported non-assertion error')
     passed = _b02_passed(variant, checks)
+    if not passed and not any(c.get('assertion_failure') for c in checks):
+        return _nonsemantic('infrastructure_error', 'no explicit assertion failure')
     if passed:
         return {'runnable': True, 'failed': False, 'reason': 'mutant passed the verifier'}
-    return {'runnable': True, 'failed': True, 'reason': None}
+    return {'runnable': True, 'failed': True, 'reason': None, 'failed_assertions': [c['name'] for c in checks if c.get('assertion_failure')]}
+
+
+def _comparison_failed(comparison):
+    if not isinstance(comparison, dict) or comparison.get('passed') is not False or comparison.get('error'):
+        return False
+    if 'actual' not in comparison or 'expected' not in comparison:
+        return False
+    actual, expected = comparison['actual'], comparison['expected']
+    return actual not in expected if isinstance(expected, list) else actual != expected
+
+
+def _silver_assertion_failure(check):
+    steps = check.get('steps') or []
+    if check.get('passed') is not False or check.get('error') or not steps:
+        return False
+    for step in steps:
+        if not isinstance(step, dict) or step.get('error') or 'actual' not in step or 'expected' not in step:
+            return False
+        probe = step.get('jdbc_probe')
+        if probe is not None and (not isinstance(probe, dict) or probe.get('error') or 'actual' not in probe or 'expected' not in probe):
+            return False
+    return any(step.get('passed') is False and (_comparison_failed(step) or _comparison_failed(step.get('jdbc_probe'))) for step in steps)
 
 
 def _silver_run(run, manifest, task_id):
@@ -215,6 +256,8 @@ def _silver_run(run, manifest, task_id):
             'passed': item.get('passed') is True,
             'critical': _is_critical(task_id, label, manifest),
             'acceptance': acceptance if isinstance(acceptance, str) else None,
+            'assertion_failure': _silver_assertion_failure(item),
+            'infrastructure_error': bool(item.get('error') or any(step.get('error') for step in item.get('steps', []))),
         })
     passed = bool(checks) and run.get('passed') == run.get('total') == len(checks) and all(c['passed'] for c in checks)
     return {'passed': passed, 'checks': checks}
@@ -242,8 +285,8 @@ def _baseline_from_silver(item, manifest, task_id):
     if not runs:
         return [{'passed': False, 'checks': [], 'runnable': False, 'reason': 'baseline produced no runs'}]
     for run in runs:
-        run['runnable'] = True
-        run['reason'] = None
+        run['runnable'] = bool(run['checks']) and not any(c.get('infrastructure_error') for c in run['checks'])
+        run['reason'] = None if run['runnable'] else 'baseline infrastructure error'
     return runs
 
 
@@ -256,7 +299,7 @@ def _silver_run_failed(run):
     checks = run.get('checks') or []
     if not checks:
         return False
-    return run.get('passed') != run.get('total') or any(item.get('passed') is not True for item in checks)
+    return any(_silver_assertion_failure(item) for item in checks)
 
 
 def _mutant_from_silver(item):
@@ -265,12 +308,17 @@ def _mutant_from_silver(item):
     if not item.get('compiled'):
         return {'runnable': False, 'failed': None, 'reason': item.get('error') or 'mutant did not compile'}
     runs = item.get('runs') or []
+    if any(c.get('error') or any(step.get('error') for step in c.get('steps', [])) for run in runs for c in run.get('checks', [])):
+        reason = str([c for run in runs for c in run.get('checks', []) if c.get('error') or any(step.get('error') for step in c.get('steps', []))])
+        return _nonsemantic('timeout' if 'timeout' in reason.lower() else 'infrastructure_error', reason)
     if not runs or any(not run.get('checks') for run in runs):
         return {'runnable': False, 'failed': None, 'reason': 'mutant produced no runs'}
+    if any(c.get('passed') is False and not _silver_assertion_failure(c) for run in runs for c in run.get('checks', [])):
+        return _nonsemantic('missing_report', 'failed silver check lacks completed mismatching comparison evidence')
     if all(_silver_run_passed(run) for run in runs):
         return {'runnable': True, 'failed': False, 'reason': 'mutant passed the verifier'}
     if all(_silver_run_failed(run) for run in runs):
-        return {'runnable': True, 'failed': True, 'reason': None}
+        return {'runnable': True, 'failed': True, 'reason': None, 'failed_assertions': _unique([c['name'] for run in runs for c in run['checks'] if _silver_assertion_failure(c)])}
     return {'runnable': True, 'failed': False, 'reason': 'mutant did not fail every run'}
 
 
@@ -292,26 +340,59 @@ def _spring_compile_ok(item):
 
 def _spring_reference(item, manifest):
     checks = _status_checks((item.get('test') or {}).get('output'), 'S04-spring', manifest) if isinstance(item, dict) else []
-    passed = _spring_compile_ok(item) and item.get('passed') is True and bool(checks) and all(c['passed'] for c in checks)
+    passed = _spring_compile_ok(item) and (item.get('test') or {}).get('exit') == 0 and _completed_output((item.get('test') or {}).get('output'), 'S04-spring') and item.get('passed') is True and bool(checks) and all(c['passed'] for c in checks)
     return {'passed': passed, 'checks': checks}
 
 
 def _spring_baseline(item, manifest):
-    if not _spring_compile_ok(item):
+    if not _spring_compile_ok(item) or not _completed_output((item.get('test') or {}).get('output'), 'S04-spring'):
         return {'passed': False, 'checks': [], 'runnable': False, 'reason': 'baseline did not compile'}
     checks = _status_checks((item.get('test') or {}).get('output'), 'S04-spring', manifest)
     passed = item.get('passed') is True and bool(checks) and all(c['passed'] for c in checks)
-    return {'passed': passed, 'checks': checks, 'runnable': True, 'reason': None}
+    runnable = not any(c.get('infrastructure_error') for c in checks)
+    return {'passed': passed, 'checks': checks, 'runnable': runnable, 'reason': None if runnable else 'baseline infrastructure error'}
+
+
+def _nonsemantic(outcome, reason):
+    return {'runnable': False, 'failed': None, 'reason': reason, 'outcome': outcome, 'failed_assertions': []}
+
+
+def _completed_output(output, task_id):
+    lines = (output or '').splitlines()
+    statuses = [line.split(' ', 1)[0] for line in lines if line.startswith(('PASS ', 'FAIL ', 'ERROR '))]
+    patterns = {'G01': r'INVARIANTS=(\d+) FAILURES=(\d+)',
+                'G05': r'SUMMARY passed=(\d+) failed=(\d+)',
+                'S04-spring': r'RESULT tests=(\d+) failed=(\d+)'}
+    matches = [re.fullmatch(patterns[task_id], line) for line in lines]
+    matches = [m for m in matches if m]
+    names = [_clean_label(line.split(' ', 1)[1]) for line in lines if line.startswith(('PASS ', 'FAIL ', 'ERROR '))]
+    if len(set(names)) != len(names):
+        return False
+    if len(matches) != 1 or not statuses:
+        return False
+    first, failures = map(int, matches[0].groups())
+    total = first + failures if task_id == 'G05' else first
+    return total == len(statuses) and failures == sum(s != 'PASS' for s in statuses)
 
 
 def _spring_mutant(item):
     if not isinstance(item, dict):
-        return {'runnable': False, 'failed': None, 'reason': 'not present in selfcheck report'}
+        return _nonsemantic('missing_report', 'not present in selfcheck report')
     if not _spring_compile_ok(item):
-        return {'runnable': False, 'failed': None, 'reason': 'mutant did not compile'}
-    if item.get('passed') is True:
-        return {'runnable': True, 'failed': False, 'reason': 'mutant passed the verifier'}
-    return {'runnable': True, 'failed': True, 'reason': None}
+        return _nonsemantic('compile_error', 'mutant did not compile')
+    test = item.get('test') or {}
+    if test.get('timeout') or test.get('exit') == 124:
+        return _nonsemantic('timeout', 'mutant timed out')
+    if test.get('exit') not in (0, 1):
+        return _nonsemantic('startup_error', 'mutant did not complete verifier')
+    if (test.get('exit') == 0) != (item.get('passed') is True):
+        return _nonsemantic('infrastructure_error', 'inconsistent verifier exit and pass flag')
+    checks = _status_checks(test.get('output'), 'S04-spring', {})
+    if any(c.get('infrastructure_error') for c in checks):
+        return _nonsemantic('infrastructure_error', 'verifier reported non-assertion error')
+    if not checks or not _completed_output(test.get('output'), 'S04-spring'):
+        return _nonsemantic('missing_report', 'mutant produced no complete report')
+    return _grouped_mutant({'ran': True, 'passed': item.get('passed') is True, 'reason': None}, checks)
 
 
 def _row_checks(row, task_id, manifest):
@@ -327,7 +408,9 @@ def _normalize_g05(manifest, report):
 
 
 def _g01_state(row):
-    ran = row.get('phase') == 'verify' and row.get('exit') in (0, 1) and 'output' in row
+    if row.get('exit') == 124:
+        return {'ran': False, 'passed': False, 'reason': 'mutant timed out', 'outcome': 'timeout'}
+    ran = row.get('phase') == 'verify' and row.get('exit') in (0, 1) and (row.get('passed') is True) == (row.get('exit') == 0) and _completed_output(row.get('output'), 'G01')
     if not ran:
         reason = 'compile failure is not a killed mutant' if row.get('phase') == 'compile' else 'variant did not reach verify'
         return {'ran': False, 'passed': False, 'reason': reason}
@@ -338,7 +421,9 @@ def _g01_state(row):
 
 def _g05_state(row):
     incident = row.get('incident') or {}
-    ran = row.get('stage') == 'verify' and row.get('failure') is None and incident.get('exit_code') == 0 and 'exit_code' in row and 'output' in row
+    if row.get('exit_code') == 124 or incident.get('exit_code') == 124:
+        return {'ran': False, 'passed': False, 'reason': 'mutant timed out', 'outcome': 'timeout'}
+    ran = row.get('stage') == 'verify' and row.get('exit_code') in (0, 1) and row.get('failure') is None and incident.get('exit_code') == 0 and 'exit_code' in row and _completed_output(row.get('output'), 'G05')
     if not ran:
         reason = row.get('failure') or ('compile failure is not a killed mutant' if row.get('stage') == 'compile' else 'variant did not reach verify')
         return {'ran': False, 'passed': False, 'reason': str(reason)}
@@ -375,7 +460,7 @@ def _normalize_grouped(manifest, report, task_id, state_of):
         baseline.append({
             'passed': state['ran'] and state['passed'] and bool(checks) and all(c['passed'] for c in checks),
             'checks': checks,
-            'runnable': state['ran'] and bool(checks or not state['passed']),
+            'runnable': state['ran'] and bool(checks) and not any(c.get('infrastructure_error') for c in checks),
             'reason': None if state['ran'] else state['reason'],
         })
         if state['ran'] and not checks and not state['passed']:
@@ -391,15 +476,19 @@ def _normalize_grouped(manifest, report, task_id, state_of):
 
 
 def _grouped_mutant(state, checks):
+    if any(c.get('infrastructure_error') for c in checks):
+        return _nonsemantic('infrastructure_error', 'verifier reported non-assertion error')
     if not state['ran']:
-        return {'runnable': False, 'failed': None, 'reason': state['reason']}
+        return {'runnable': False, 'failed': None, 'reason': state['reason'], 'outcome': state.get('outcome', 'infrastructure_error')}
     if state['passed'] and checks and all(c['passed'] for c in checks):
         return {'runnable': True, 'failed': False, 'reason': 'mutant passed the verifier'}
     if state['passed']:
         return {'runnable': True, 'failed': False, 'reason': 'mutant passed the verifier'}
     if not checks:
         return {'runnable': False, 'failed': None, 'reason': 'mutant produced no checks'}
-    return {'runnable': True, 'failed': True, 'reason': None}
+    if not any(c.get('passed') is False for c in checks):
+        return _nonsemantic('infrastructure_error', 'nonzero exit without failed assertion')
+    return {'runnable': True, 'failed': True, 'reason': None, 'failed_assertions': [c['name'] for c in checks if c.get('passed') is False]}
 
 
 def _fold_mutant(runs):
@@ -412,6 +501,20 @@ def _fold_mutant(runs):
         return {'runnable': True, 'failed': True, 'reason': None}
     reason = next((run['reason'] for run in runs if run['reason']), 'mutant did not fail')
     return {'runnable': True, 'failed': False, 'reason': reason}
+
+
+def _failure_outcome(runs):
+    for run in runs:
+        if run.get('outcome'):
+            return run['outcome']
+    reason = ' '.join(str(run.get('reason', '')) for run in runs).lower()
+    if 'timeout' in reason or 'timed out' in reason:
+        return 'timeout'
+    if 'compile' in reason:
+        return 'compile_error'
+    if 'not present' in reason or 'no runs' in reason or 'no checks' in reason:
+        return 'missing_report'
+    return 'infrastructure_error'
 
 
 def _mapping(task_id):
@@ -442,7 +545,7 @@ def evidence_from_normalized(task_id, manifest, normalized, commands, captured_f
     baseline_ok = bool(baseline_runs)
     baseline_detail = 'Unfixed baseline failed at least one critical check. No separate nop fixture; baseline is this gate.'
     for run in baseline_runs:
-        names = [c['name'] for c in run.get('checks') or [] if c.get('critical') and not c.get('passed')]
+        names = [c['name'] for c in run.get('checks') or [] if c.get('critical') and c.get('assertion_failure') is True]
         if not run.get('runnable'):
             baseline_ok = False
             baseline_detail = run.get('reason') or 'baseline was not runnable'
@@ -465,8 +568,14 @@ def evidence_from_normalized(task_id, manifest, normalized, commands, captured_f
         baseline_detail = 'baseline was not runnable'
     results = []
     for mid in manifest['mutants']:
-        folded = _fold_mutant(normalized['mutants'].get(mid) or [])
-        results.append({'id': mid, 'runnable': folded['runnable'], 'failed': folded['failed'], 'reason': folded['reason']})
+        runs = normalized['mutants'].get(mid) or []
+        folded = _fold_mutant(runs)
+        assertions = _unique([name for run in runs for name in run.get('failed_assertions', [])])
+        outcome = 'semantic_assertion' if folded['failed'] is True and assertions else ('survived' if folded['runnable'] else _failure_outcome(runs))
+        if folded['failed'] is True and not assertions:
+            folded = _nonsemantic('infrastructure_error', 'no explicit failed assertion evidence')
+            outcome = 'infrastructure_error'
+        results.append(dict(folded, id=mid, outcome=outcome, failed_assertions=assertions))
     mutants_ok = bool(results) and all(item['runnable'] and item['failed'] is True for item in results)
     gaps = []
     for item in results:
@@ -547,7 +656,7 @@ def evidence_from_capture(task_id, manifest, captured, commands, captured_from):
 def gap_evidence(task_id, manifest, reason, commands, captured_from='unavailable'):
     listed = list(manifest.get('mutants') or [])
     results = [
-        {'id': mid, 'runnable': False, 'failed': None, 'reason': reason}
+        {'id': mid, 'runnable': False, 'failed': None, 'reason': reason, 'outcome': 'infrastructure_error', 'failed_assertions': []}
         for mid in listed
     ]
     detail = reason
@@ -653,6 +762,12 @@ def evidence_errors(doc, expected_mutants=None):
                 ids.append(item['id'])
                 if not isinstance(item.get('runnable'), bool):
                     errors.append(item['id'] + ' runnable')
+                if item.get('outcome') not in ('semantic_assertion', 'survived', 'timeout', 'compile_error', 'startup_error', 'infrastructure_error', 'missing_report'):
+                    errors.append(item['id'] + ' outcome')
+                if not isinstance(item.get('failed_assertions'), list) or not all(isinstance(name, str) and name for name in item.get('failed_assertions', [])):
+                    errors.append(item['id'] + ' failed_assertions')
+                if item.get('failed') is True and (item.get('outcome') != 'semantic_assertion' or not item.get('failed_assertions')):
+                    errors.append(item['id'] + ' missing semantic assertion evidence')
                 failed = item.get('failed')
                 reason = item.get('reason')
                 if item.get('runnable') is True:
@@ -758,19 +873,35 @@ def summary_errors(summary):
 
 
 def _write_json(path, document):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(document, indent=2, ensure_ascii=False) + '\n')
+    atomic_json(path, document)
 
 
 def write_evidence(root, docs, summary):
     root = Path(root)
+    base = root / 'engineering/m1-gates/evidence'
+    run_id = summary['run_id']
+    run_dir = base / 'runs' / run_id
+    # Archive the pre-migration successful snapshots before replacing them.
+    legacy = base / 'legacy'
+    if not legacy.exists() and (base / 'summary.json').exists():
+        legacy.mkdir(parents=True)
+        (legacy / 'summary.json').write_bytes((base / 'summary.json').read_bytes())
+        for task_id in M1_TASK_IDS:
+            old = root / evidence_rel(task_id)
+            if old.is_file():
+                (legacy / (task_id + '.json')).write_bytes(old.read_bytes())
     for doc in docs:
         task_id = doc.get('task_id') if isinstance(doc, dict) else None
         if task_id not in TASK_DIRS:
             continue
+        _write_json(run_dir / (task_id + '.json'), doc)
         _write_json(root / evidence_rel(task_id), doc)
-    path = root / 'engineering/m1-gates/evidence/summary.json'
+    _write_json(run_dir / 'summary.json', summary)
+    path = base / 'summary.json'
     _write_json(path, summary)
+    _write_json(base / 'latest.json', {'schema': 'm1-latest/v1', 'run_id': run_id,
+        'state': 'completed' if summary.get('pass') else 'verification_failed',
+        'summary': str((run_dir / 'summary.json').relative_to(root))})
     return path
 
 
@@ -801,31 +932,8 @@ def _command_text(argv, root):
 
 
 def default_executor(argv, cwd, timeout):
-    proc = subprocess.Popen(
-        argv,
-        cwd=str(cwd),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        start_new_session=True,
-    )
-    timed_out = False
-    try:
-        out, err = proc.communicate(timeout=timeout)
-    except subprocess.TimeoutExpired:
-        timed_out = True
-        try:
-            os.killpg(proc.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
-        out, err = proc.communicate()
-    return {
-        'argv': list(argv),
-        'exit': 124 if timed_out else proc.returncode,
-        'stdout': out or '',
-        'stderr': err or '',
-        'timeout': timed_out,
-    }
+    from process_supervisor import executor
+    return executor(argv, cwd, timeout)
 
 
 def _h2_ready():
@@ -859,8 +967,11 @@ def _tail(result):
 
 
 def java_available(executor):
-    result = executor(['java', '-version'], ROOT, 30)
-    return result.get('exit') == 0 and not result.get('timeout')
+    try:
+        result = executor(['java', '-version'], ROOT, 30)
+    except OSError:
+        return False
+    return result.get('exit') == 0 and not result.get('timeout') and result.get('cleanup_complete', True)
 
 
 def collect_task(root, task_id, executor):
@@ -901,8 +1012,12 @@ def collect_task(root, task_id, executor):
             else:
                 report_path.parent.mkdir(parents=True, exist_ok=True)
                 report_path.write_bytes(before)
+    if any(result.get('cleanup_complete') is False or result.get('failure') for result in results):
+        return gap_evidence(task_id, manifest, 'selfcheck infrastructure failure: ' + _tail(results[-1]), commands, report_rel or 'stdout')
     if any(result.get('timeout') for result in results):
         return gap_evidence(task_id, manifest, 'selfcheck timed out', commands, report_rel or 'stdout')
+    if any(result.get('exit') not in (0, 1) for result in results):
+        return gap_evidence(task_id, manifest, 'selfcheck did not complete: ' + _tail(results[-1]), commands, report_rel or 'stdout')
     try:
         if task_id == 'B02':
             captured = []
@@ -935,7 +1050,10 @@ def collect_live(root, executor=None):
     for task_id in M1_TASK_IDS:
         print(f'=== M1 {task_id} ===', flush=True)
         started = time.monotonic()
-        doc = collect_task(root, task_id, executor)
+        try:
+            doc = collect_task(root, task_id, executor)
+        except Exception as exc:
+            doc = gap_evidence(task_id, {'mutants': mutants_of(root, task_id) or []}, type(exc).__name__ + ': ' + str(exc), [])
         doc['elapsed_seconds'] = round(time.monotonic() - started, 3)
         print(
             task_id + ' ' + ' '.join(f'{name}={"pass" if doc["gates"][name]["pass"] else "fail"}' for name in GATE_NAMES),
@@ -945,21 +1063,72 @@ def collect_live(root, executor=None):
     return docs
 
 
-def run(root=None, collect=None):
+def _now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _run_locked(root=None, collect=None):
     root = Path(root) if root is not None else ROOT
     print(WARNING, flush=True)
-    docs = (collect or collect_live)(root)
-    if not isinstance(docs, list):
-        print('M1 gate runner returned no report list', file=sys.stderr)
-        return 1
+    run_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ-') + uuid.uuid4().hex[:12]
+    started = _now()
+    base = root / 'engineering/m1-gates/evidence'
+    run_dir = base / 'runs' / run_id
+    run_dir.mkdir(parents=True, exist_ok=False)
+    attempt = {'schema': 'm1-attempt/v1', 'run_id': run_id, 'started_at': started,
+               'state': 'running', 'python_version': sys.version, 'platform': sys.platform}
+    _write_json(run_dir / 'attempt.json', attempt)
+    # Publish before fingerprinting or launching anything: an interrupted attempt
+    # must invalidate the previous successful selection, even after SIGKILL.
+    _write_json(base / 'latest.json', {'schema': 'm1-latest/v1', 'run_id': run_id, 'state': 'running',
+                                    'summary': str((run_dir / 'summary.json').relative_to(root))})
+    fingerprints, errors = {}, []
+    for task_id in M1_TASK_IDS:
+        try:
+            fingerprints[task_id] = source_fingerprint(root, task_id)
+        except (OSError, ValueError) as exc:
+            errors.append(task_id + ' fingerprint: ' + str(exc))
+    environment = {'python_version': sys.version, 'platform': sys.platform, 'java_version': None,
+                   'execution_kind': 'trusted_fixture_selfcheck' if collect is None else 'injected_collector'}
+    if collect is None:
+        try:
+            java = default_executor(['java', '-version'], root, 30)
+            environment['java_version'] = ((java.get('stdout') or '') + (java.get('stderr') or '')).strip()
+            environment['java_probe_exit'] = java.get('exit')
+        except Exception as exc:
+            environment['java_probe_error'] = str(exc)
+    try:
+        docs = (collect or collect_live)(root)
+        if not isinstance(docs, list):
+            raise ValueError('M1 gate runner returned no report list')
+    except (Exception, KeyboardInterrupt) as exc:
+        errors.append(type(exc).__name__ + ': ' + str(exc))
+        docs = []
+    by_id = {doc.get('task_id'): doc for doc in docs if isinstance(doc, dict)}
+    docs = []
+    for task_id in M1_TASK_IDS:
+        doc = by_id.get(task_id)
+        manifest = {'mutants': mutants_of(root, task_id) or []}
+        if doc is None:
+            doc = gap_evidence(task_id, manifest, 'attempt failed: ' + '; '.join(errors), [])
+        validation = evidence_errors(doc, mutants_of(root, task_id))
+        if validation:
+            errors.extend(task_id + ': ' + item for item in validation)
+            doc = gap_evidence(task_id, manifest, 'invalid evidence: ' + '; '.join(validation), [])
+        fingerprint = fingerprints.get(task_id)
+        try:
+            if fingerprint is None or source_fingerprint(root, task_id) != fingerprint:
+                raise ValueError('source bundle missing or changed during run')
+        except (OSError, ValueError) as exc:
+            doc = gap_evidence(task_id, manifest, str(exc), doc.get('commands', []))
+        doc.update(run_id=run_id, started_at=started, ended_at=_now(), evidence_fingerprint=fingerprint,
+                   exit_type='completed' if doc.get('pass') else 'verification_failed')
+        docs.append(doc)
     summary = build_summary(docs)
+    summary.update(run_id=run_id, started_at=started, ended_at=_now(), errors=errors, environment=environment)
+    attempt.update(state='completed' if summary.get('pass') else 'verification_failed', ended_at=summary['ended_at'], environment=environment)
+    _write_json(run_dir / 'attempt.json', attempt)
     summary_path = write_evidence(root, docs, summary)
-    errors = []
-    for doc in docs:
-        if isinstance(doc, dict):
-            errors.extend(f"{doc.get('task_id')}: {item}" for item in evidence_errors(doc, mutants_of(root, doc.get('task_id'))))
-        else:
-            errors.append('evidence is not an object')
     errors.extend(summary_errors(summary))
     print(f'M1 summary: {summary_path}', flush=True)
     if errors or summary.get('pass') is not True:
@@ -969,3 +1138,21 @@ def run(root=None, collect=None):
         return 1
     print('M1 four-gate check passed', flush=True)
     return 0
+
+
+def run(root=None, collect=None):
+    """Serialize latest selection; a competing caller cannot supersede a live run."""
+    import fcntl
+    root = Path(root) if root is not None else ROOT
+    base = root / 'engineering/m1-gates/evidence'
+    base.mkdir(parents=True, exist_ok=True)
+    with (base / '.run.lock').open('a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print('M1 attempt already running; latest selection unchanged', file=sys.stderr)
+            return 1
+        try:
+            return _run_locked(root, collect)
+        finally:
+            fcntl.flock(lock, fcntl.LOCK_UN)

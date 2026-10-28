@@ -14,7 +14,7 @@ public class IntegrationVerifier {
     static void check(boolean condition,String message) {if(!condition)throw new AssertionError(message);}
     static void test(String name,Checked body) {
         try {body.run();System.out.println("PASS "+name);}
-        catch(Throwable e){failures.add(name);System.out.println("FAIL "+name+" "+e);}
+        catch(Throwable e){failures.add(name);System.out.println((e instanceof AssertionError ? "FAIL " : "ERROR ")+name+" "+e);}
     }
     static void rejected(Checked body) throws Exception {
         try {body.run();throw new AssertionError("Expected checked business rejection");}
@@ -46,6 +46,30 @@ public class IntegrationVerifier {
         catch(InterruptedException e){Thread.currentThread().interrupt();throw new AssertionError(e);}
     }
     static Object outcome(Checked body){try{body.run();return "OK";}catch(BusinessFailure e){return "REJECTED";}catch(Exception e){throw new CompletionException(e);}}
+    // Future wrappers do not change an explicit assertion into infrastructure failure.
+    // Unknown worker exceptions (including JDBC/startup failures) remain ERROR.
+    static Object workerResult(Future<Object> future, int seconds) throws Exception {
+        try {return future.get(seconds,TimeUnit.SECONDS);}
+        catch(ExecutionException e) {
+            Throwable cause=e.getCause();
+            while(cause instanceof CompletionException && cause.getCause()!=null)cause=cause.getCause();
+            if(cause instanceof AssertionError assertion)throw assertion;
+            throw e;
+        }
+    }
+    static Object orderedResult(Future<Object> future) throws Exception {
+        try {return workerResult(future,6);}
+        catch(ExecutionException e) {
+            Throwable cause=e.getCause();
+            while(cause instanceof CompletionException && cause.getCause()!=null)cause=cause.getCause();
+            // Frozen repository transition guard: losing a serialized transition must
+            // yield BusinessFailure, never the concurrent-update guard exception.
+            if(cause!=null && cause.getClass()==IllegalStateException.class
+                && "Concurrent order transition".equals(cause.getMessage()))
+                throw new AssertionError("per-batch serialization violated",cause);
+            throw e;
+        }
+    }
     static void orderedRace(boolean cancelFirst) throws Exception {
         CountDownLatch locked=new CountDownLatch(1),release=new CountDownLatch(1),started=new CountDownLatch(1);
         AtomicBoolean first=new AtomicBoolean(true);
@@ -55,8 +79,8 @@ public class IntegrationVerifier {
             await(locked);
             Future<Object> b=pool.submit(()->{started.countDown();return outcome(()->{if(cancelFirst)f.service.deliver(1);else f.service.cancel(1);});});
             await(started);release.countDown();
-            check(a.get(6,TimeUnit.SECONDS).equals("OK"),"first operation failed");
-            check(b.get(6,TimeUnit.SECONDS).equals("REJECTED"),"losing transition must reject");
+            check(orderedResult(a).equals("OK"),"first operation failed");
+            check(orderedResult(b).equals("REJECTED"),"losing transition must reject");
             check(f.states(1).equals(cancelFirst?"CANCELLED,CANCELLED":"DELIVERED,DELIVERED"),"mixed terminal states");
             check(f.stock(1)==(cancelFirst?16:11),"stock inconsistent with winner");
         } finally {release.countDown();}
@@ -125,7 +149,7 @@ public class IntegrationVerifier {
             OperationProbe p=new OperationProbe(){public void beforeRelease(int sku){if(sku==1&&seen.add(Thread.currentThread().threadId()))try{readBarrier.await(3,TimeUnit.SECONDS);}catch(Exception e){throw new AssertionError(e);}}};
             try(Fixture f=new Fixture(p);ExecutorService pool=Executors.newFixedThreadPool(2)){
                 Future<Object>a=pool.submit(()->outcome(()->f.service.cancel(1))),b=pool.submit(()->outcome(()->f.service.cancel(2)));
-                check(a.get(6,TimeUnit.SECONDS).equals("OK")&&b.get(6,TimeUnit.SECONDS).equals("OK"),"cancel failed");
+                check(workerResult(a,6).equals("OK")&&workerResult(b,6).equals("OK"),"cancel failed");
                 check(f.stock(1)==20,"lost inventory increment");check(f.states(1).equals("CANCELLED,CANCELLED")&&f.states(2).equals("CANCELLED"),"missing states");
             }
         });
@@ -133,9 +157,10 @@ public class IntegrationVerifier {
             CountDownLatch locked=new CountDownLatch(1),release=new CountDownLatch(1);
             try(Fixture f=new Fixture(new OperationProbe(){public void locked(int b){if(b==1){locked.countDown();await(release);}}});ExecutorService pool=Executors.newFixedThreadPool(2)){
                 Future<Object>a=pool.submit(()->outcome(()->f.service.cancel(1)));await(locked);
-                try {Future<Object>b=pool.submit(()->outcome(()->f.service.cancel(3)));check(b.get(2,TimeUnit.SECONDS).equals("OK"),"unrelated blocked");}
+                try {Future<Object>b=pool.submit(()->outcome(()->f.service.cancel(3)));try {check(workerResult(b,2).equals("OK"),"unrelated blocked");}
+                    catch(TimeoutException e){throw new AssertionError("unrelated batch violated bounded progress contract",e);}}
                 finally {release.countDown();}
-                check(a.get(6,TimeUnit.SECONDS).equals("OK"),"first cancel failed");
+                check(workerResult(a,6).equals("OK"),"first cancel failed");
             }finally{release.countDown();}
         });
         System.out.println("RESULT tests=20 failed="+failures.size());

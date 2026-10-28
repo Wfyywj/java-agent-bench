@@ -48,6 +48,7 @@ def main():
         print(json.dumps(result,indent=2));return 0 if result['passed'] else 1
     report={}
     mutations={
+      'wrong_equipment_binding':('!l.equipment().equals(r.equipment()) || ',''),
       'normal_loan_state_omitted':('next.loans.put(l.id(),new Loan(l.id(),l.tenant(),l.equipment(),state));','if(r.damaged()) next.loans.put(l.id(),new Loan(l.id(),l.tenant(),l.equipment(),state));'),
       'conflict_ignored':('if (!previous.loan().equals(r.loan()) || !previous.equipment().equals(r.equipment()) || previous.damaged()!=r.damaged())','if (false)'),
       'partial_commit':('fail(fault,1);','store.commit(next); fail(fault,1);'),
@@ -66,6 +67,10 @@ def main():
             code,out=bounded(['python3',str(ROOT/'verifier/check.py'),str(classes),str(ROOT/'evidence/seed.tsv')])
             checks=json.loads(out)
             report[variant]={'passed':code==0,'checks':checks}
+            if not checks or any(not (v=='PASS' or v.startswith('FAIL: ')) for v in checks.values()):
+                raise RuntimeError('infrastructure or malformed result '+variant+': '+out)
+            if variant!='reference' and not any(v.startswith('FAIL: ') for v in checks.values()):
+                raise RuntimeError('no semantic assertion failure '+variant+': '+out)
             if (variant=='reference')!=(code==0):raise RuntimeError('unexpected outcome '+variant+': '+out)
     print(json.dumps({'task':'B02','scope':'local_file_adapter_not_postgresql','selfcheck':'PASS','variants':report},indent=2,sort_keys=True))
 if __name__=='__main__':raise SystemExit(main())

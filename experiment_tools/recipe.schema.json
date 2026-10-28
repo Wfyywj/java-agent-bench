@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://java-agent-bench.local/experiment_tools/recipe.schema.json",
+  "title": "Synthetic-only recipe and trial envelope; runtime checks add identity, hashes, time and cross-slot constraints",
+  "$defs": {
+    "recipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "data_class",
+        "recipe_id",
+        "task",
+        "track",
+        "arms",
+        "repeats",
+        "policy"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "recipe-1.0"
+        },
+        "data_class": {
+          "const": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS"
+        },
+        "recipe_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "task": {
+          "const": "B01"
+        },
+        "track": {
+          "enum": [
+            "model",
+            "workflow",
+            "budget",
+            "system"
+          ]
+        },
+        "arms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "A",
+            "B"
+          ],
+          "properties": {
+            "A": {
+              "$ref": "../analysis_tools/input.schema.json#/$defs/metadata"
+            },
+            "B": {
+              "$ref": "../analysis_tools/input.schema.json#/$defs/metadata"
+            }
+          }
+        },
+        "repeats": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "repeat",
+              "A",
+              "B"
+            ],
+            "properties": {
+              "repeat": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "A": {
+                "enum": [
+                  "success",
+                  "failure",
+                  "infrastructure_failure",
+                  "missing",
+                  "cancelled"
+                ]
+              },
+              "B": {
+                "enum": [
+                  "success",
+                  "failure",
+                  "infrastructure_failure",
+                  "missing",
+                  "cancelled"
+                ]
+              }
+            }
+          }
+        },
+        "policy": {
+          "const": {
+            "assignment": "pair order, A then B; no retries",
+            "outcomes": "explicit synthetic fixture assertions; never evaluator or CLI inference",
+            "cancelled": "no attempted trial; retain ledger entry and missing analysis slot",
+            "resources": "unknown; replay runtime is not agent wall time or model cost",
+            "execution": "synthetic-only; no actual execution/import supported"
+          }
+        }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "data_class",
+        "run_kind",
+        "freeze_sha256",
+        "slot_id",
+        "identity",
+        "metadata",
+        "state",
+        "replayed_at",
+        "source_content_sha256",
+        "workspace_artifact_sha256",
+        "elapsed_seconds",
+        "cost_usd",
+        "resource_unknown_reason",
+        "evidence",
+        "run_artifact_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "trial-envelope-1.0"
+        },
+        "data_class": {
+          "const": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS"
+        },
+        "run_kind": {
+          "const": "synthetic_replay"
+        },
+        "freeze_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "implementation_id",
+            "manifest_sha256",
+            "repeat",
+            "arm"
+          ],
+          "properties": {
+            "implementation_id": {
+              "const": "B01-slice"
+            },
+            "manifest_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "repeat": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "arm": {
+              "enum": [
+                "A",
+                "B"
+              ]
+            }
+          }
+        },
+        "metadata": {
+          "$ref": "../analysis_tools/input.schema.json#/$defs/metadata"
+        },
+        "state": {
+          "enum": [
+            "success",
+            "failure",
+            "infrastructure_failure",
+            "missing",
+            "cancelled"
+          ]
+        },
+        "replayed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "workspace_artifact_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "elapsed_seconds": {
+          "type": "null"
+        },
+        "cost_usd": {
+          "type": "null"
+        },
+        "resource_unknown_reason": {
+          "const": "No actual agent execution or resource measurement"
+        },
+        "evidence": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "trace",
+                "evaluation"
+              ],
+              "properties": {
+                "trace": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "evaluation": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "run_artifact_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/recipe"
+    },
+    {
+      "$ref": "#/$defs/envelope"
+    }
+  ]
+}

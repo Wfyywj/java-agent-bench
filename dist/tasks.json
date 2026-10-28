@@ -249,6 +249,7 @@
       "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
     },
     "status": "design_only",
+    "difficultyRationale": "暂定青铜：主要限制在单服务、明确上下文和一种核心故障机制；仍要求真实业务边界而非算法小题。须待多模型试跑后校准。",
     "slice_implementation": {
       "engineering_status": "gates_green",
       "full_catalog_ready": false,
@@ -256,8 +257,7 @@
         "B02-slice"
       ],
       "evidence": "engineering/m1-gates/evidence/summary.json"
-    },
-    "difficultyRationale": "暂定青铜：主要限制在单服务、明确上下文和一种核心故障机制；仍要求真实业务边界而非算法小题。须待多模型试跑后校准。"
+    }
   },
   {
     "id": "B03",
@@ -762,6 +762,7 @@
       "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
     },
     "status": "design_only",
+    "difficultyRationale": "暂定白银：涉及两个以上模块、兼容/授权/事务边界，需组合测试与集成证据；尚不要求长链路全生命周期恢复。须待试跑校准。",
     "slice_implementation": {
       "engineering_status": "gates_green",
       "full_catalog_ready": false,
@@ -769,8 +770,7 @@
         "S01-slice"
       ],
       "evidence": "engineering/m1-gates/evidence/summary.json"
-    },
-    "difficultyRationale": "暂定白银：涉及两个以上模块、兼容/授权/事务边界，需组合测试与集成证据；尚不要求长链路全生命周期恢复。须待试跑校准。"
+    }
   },
   {
     "id": "S02",
@@ -1150,6 +1150,7 @@
       "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
     },
     "status": "design_only",
+    "difficultyRationale": "暂定白银：涉及两个以上模块、兼容/授权/事务边界，需组合测试与集成证据；尚不要求长链路全生命周期恢复。须待试跑校准。",
     "slice_implementation": {
       "engineering_status": "gates_green",
       "full_catalog_ready": false,
@@ -1158,8 +1159,7 @@
         "S04-slice"
       ],
       "evidence": "engineering/m1-gates/evidence/summary.json"
-    },
-    "difficultyRationale": "暂定白银：涉及两个以上模块、兼容/授权/事务边界，需组合测试与集成证据；尚不要求长链路全生命周期恢复。须待试跑校准。"
+    }
   },
   {
     "id": "S05",
@@ -1420,6 +1420,7 @@
       "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
     },
     "status": "design_only",
+    "difficultyRationale": "暂定黄金：包含多仓传播、异步状态及至少一次投递或复杂并发，要求恢复路径与独立证据，局部修补不足以过关。须待试跑校准。",
     "slice_implementation": {
       "engineering_status": "gates_green",
       "full_catalog_ready": false,
@@ -1427,8 +1428,7 @@
         "G01-slice"
       ],
       "evidence": "engineering/m1-gates/evidence/summary.json"
-    },
-    "difficultyRationale": "暂定黄金：包含多仓传播、异步状态及至少一次投递或复杂并发，要求恢复路径与独立证据，局部修补不足以过关。须待试跑校准。"
+    }
   },
   {
     "id": "G02",
@@ -1960,6 +1960,7 @@
       "resourceBudget": "待 pilot 根据固定工作负载校准；不能将设计阶段估计作为实际成本或完成时长。"
     },
     "status": "design_only",
+    "difficultyRationale": "暂定黄金：包含多仓传播、异步状态及至少一次投递或复杂并发，要求恢复路径与独立证据，局部修补不足以过关。须待试跑校准。",
     "slice_implementation": {
       "engineering_status": "gates_green",
       "full_catalog_ready": false,
@@ -1967,8 +1968,7 @@
         "G05-slice"
       ],
       "evidence": "engineering/m1-gates/evidence/summary.json"
-    },
-    "difficultyRationale": "暂定黄金：包含多仓传播、异步状态及至少一次投递或复杂并发，要求恢复路径与独立证据，局部修补不足以过关。须待试跑校准。"
+    }
   },
   {
     "id": "D01",

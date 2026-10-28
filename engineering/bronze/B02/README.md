@@ -27,3 +27,5 @@ See prompt.md for exact scope limitations, especially the missing PostgreSQL acc
 `python3 engineering/bronze/B02/run_selfcheck.py --candidate /absolute/path/to/package`
 
 The package contains `src/`; compilation uses a fresh temporary directory with annotation processing disabled. Existing class files are never reused. Results distinguish build failure from functional failure; infrastructure/input errors exit 2.
+
+The verifier distinguishes `FAIL:` business assertions from `ERROR:` infrastructure exceptions; infrastructure errors are not semantic mutant kills. Classification regression: `python3 -m unittest discover -s tests -p 'test_b02_failure_classes.py' -v` from repository root.

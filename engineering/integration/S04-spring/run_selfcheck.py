@@ -34,10 +34,18 @@ def evaluate(package):
        and result['test']['output'].splitlines().count('RESULT tests=20 failed=0')==1
        and sum(line.startswith('PASS ') for line in result['test']['output'].splitlines())==20)
   return result
+def semantic_failure(result):
+ test=result.get('test',{});lines=test.get('output','').splitlines()
+ passed=sum(line.startswith('PASS ') for line in lines);failed=sum(line.startswith('FAIL ') for line in lines)
+ return (result.get('compile',{}).get('exit')==0 and test.get('exit')==1
+     and not test.get('timeout') and not test.get('failure')
+     and failed>0 and passed+failed==20
+     and lines.count(f'RESULT tests=20 failed={failed}')==1
+     and not any(line.startswith('ERROR ') for line in lines))
 p=argparse.ArgumentParser();p.add_argument('--candidate',type=pathlib.Path);a=p.parse_args()
 if a.candidate:
  r=evaluate(a.candidate);print(json.dumps(r,indent=2));sys.exit(0 if r['passed'] else 1)
 results={'baseline':evaluate(R/'baseline'),'reference':[evaluate(R/'reference') for _ in range(3)],'mutants':{d.name:evaluate(d) for d in sorted((R/'mutants').iterdir())}}
-results['passed']=not results['baseline']['passed'] and results['baseline'].get('compile',{}).get('exit')==0 and all(r['passed'] for r in results['reference']) and all(not r['passed'] and r.get('compile',{}).get('exit')==0 for r in results['mutants'].values())
+results['passed']=semantic_failure(results['baseline']) and all(r['passed'] for r in results['reference']) and all(semantic_failure(r) for r in results['mutants'].values())
 (R/'evidence/selfcheck.json').write_text(json.dumps(results,indent=2)+'\n')
 print(json.dumps({'passed':results['passed'],'baseline':results['baseline']['passed'],'reference':[r['passed'] for r in results['reference']],'mutants':{n:r['passed'] for n,r in results['mutants'].items()}},indent=2));sys.exit(0 if results['passed'] else 1)

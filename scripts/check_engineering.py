@@ -7,13 +7,23 @@ With no arguments, or with --all, every tier run_all.py plus S04-spring runs.
 and exits non-zero unless every required gate passes. --m1 is not used by check_fast.py.
 """
 from pathlib import Path
-import argparse, os, signal, subprocess, sys, tempfile, time
+import argparse, sys
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = Path(__file__).resolve().parent
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 import m1_gates
+from process_supervisor import executor
+
+
+def _run_check(argv, label, timeout):
+    result = executor(argv, ROOT, timeout)
+    print(result['stdout'], end='', flush=True)
+    print(result['stderr'], end='', file=sys.stderr, flush=True)
+    if result['exit'] or not result.get('cleanup_complete', False):
+        reason = result.get('failure') or 'nonzero_exit'
+        raise SystemExit(f"{label}: failed ({result['exit']}; {reason})")
 
 
 def run_full_suite():
@@ -23,25 +33,11 @@ def run_full_suite():
             print(f'{tier}: suite not implemented; skipped (not a pass)', flush=True)
             continue
         print(f'=== {tier} ===', flush=True)
-        with tempfile.TemporaryFile() as out:
-            proc = subprocess.Popen([sys.executable, '-B', str(runner)], cwd=ROOT, stdout=out, stderr=subprocess.STDOUT, start_new_session=True)
-            deadline = time.monotonic() + 600
-            while proc.poll() is None:
-                if time.monotonic() > deadline or os.fstat(out.fileno()).st_size > 4 * 1024 * 1024:
-                    os.killpg(proc.pid, signal.SIGKILL)
-                    proc.wait()
-                    raise SystemExit(f'{tier}: time/output limit')
-                time.sleep(.2)
-            out.seek(0)
-            print(out.read(4 * 1024 * 1024).decode(errors='replace'))
-            if proc.returncode:
-                raise SystemExit(f'{tier}: failed ({proc.returncode})')
+        _run_check([sys.executable, '-B', str(runner)], tier, 600)
     spring = ROOT / 'engineering/integration/S04-spring/run_selfcheck.py'
     if spring.exists():
         print('=== S04-spring integration ===', flush=True)
-        result = subprocess.run([sys.executable, '-B', str(spring)], cwd=ROOT, timeout=240)
-        if result.returncode:
-            raise SystemExit('S04-spring failed')
+        _run_check([sys.executable, '-B', str(spring)], 'S04-spring', 240)
     return 0
 
 

@@ -59,7 +59,7 @@ python3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result
 
 ## 验证与 CI
 
-本地运行 `python3 scripts/check_engineering.py` 可执行全部已存在切片的可信自检。只检查 M1 六题四门禁（B02、S01、S04、S04-spring、G01、G05 的 reference / baseline / mutants / repeat）并用非零退出表示失败：`python3 scripts/check_engineering.py --m1`。这条窄命令不在 `scripts/check_fast.py` 里。S04/S05 的 H2 依赖从 Maven Central 按固定版本与 SHA256 获取，不随仓库分发。GitHub Actions 配置只在 main 推送或手动触发运行，不提交密钥；CI 仍执行不带参数的全量 `check_engineering.py`。CI 状态以具体提交的实际运行结果为准。
+本地运行 `python3 scripts/check_engineering.py` 可执行全部已存在切片的可信自检。只检查 M1 六题四门禁（B02、S01、S04、S04-spring、G01、G05 的 reference / baseline / mutants / repeat）并用非零退出表示失败：`python3 scripts/check_engineering.py --m1`。这条窄命令不在 `scripts/check_fast.py` 里。S04/S05 的 H2 依赖从 Maven Central 按固定版本与 SHA256 获取，不随仓库分发。GitHub Actions 在 main 推送、针对 main 的 PR 或手动触发时运行，不提交密钥；CI 分别执行全量 `check_engineering.py` 与当前源码的 `--m1` 门禁。CI 状态以具体提交的实际运行结果为准。
 
 候选任务 ZIP 只在网站任务详情作为可选项出现。仓库不提交生成包（`dist/packages/` 被忽略），站点能否下载取决于部署，边缘或缓存可能失败。失败时以 `git clone` 与 `prepare` 为准，ZIP 不能代替完整仓库。运行 `python3 scripts/build_implementations.py && python3 scripts/build_task_packages.py` 可重建。不会在包中复制评分器或参考答案，但公开仓库依然可访问，不能当成防泄漏隔离。
 
@@ -77,3 +77,9 @@ python3 -m unittest discover -s cli_adapters -p 'test_*.py' -v
 ```
 
 CLI/分析/实验工作区工具使用独立快速 CI；仅修改这些目录或文档时不重复运行全部 Java 工程题。修改整库验证 workflow 自身仍会触发完整验证。
+
+## 当前阶段：可信验收与合成实验闭环
+
+参见 [阶段设计与验收标准](docs/TRUSTWORTHY_EXPERIMENTS.md)。B02/S01 新增审计发现的业务反例和永久 mutant；M1 门禁按源码指纹和最新运行选择证据，保留历史，不把超时/启动错误当作杀死错误变体。完整可信自检及 M1 使用 Linux subreaper/pidfd 监督器，超时/取消时回收本次后代进程；不支持的平台拒绝启动。这是 Linux 本地可信代码运行条件，**不是恶意代码隔离**；离线准备/分析不需要该监督器。
+
+新增 [B01 合成 Recipe 回放](experiment_tools/RECIPE.md)：冻结 A/B 配置 → 独立槽位工作区 → 合成证据 → 严格分析。保留缺失与执行前取消，费用/时间未知保持 null。所有产物明确标为 synthetic；不执行模型或 Java 验收、不导入真实 trial、不冒充网站现有结果格式。此入口用于验收实验协议，不用于判断模型或 Skill 优劣。

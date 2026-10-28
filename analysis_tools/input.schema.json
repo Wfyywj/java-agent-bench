@@ -198,7 +198,10 @@
           ]
         },
         "run_kind": {
-          "const": "agent_trial"
+          "enum": [
+            "agent_trial",
+            "synthetic_replay"
+          ]
         },
         "trial_id": {
           "type": "string",
@@ -350,6 +353,22 @@
             "properties": {
               "cost_unknown_reason": {
                 "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "run_kind": {
+                "const": "synthetic_replay"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data_class": {
+                "const": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS"
               }
             }
           }

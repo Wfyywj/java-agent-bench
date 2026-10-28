@@ -1,1 +1,3 @@
 From this directory run `python3 ../../run_selfcheck.py`. Executable independent assertions are in `../../verifier/check.py`: A01 replay/restart; A02 payload conflicts; A03 each staged-write failure; A04 lifecycle and tenant concealment; A05 two simultaneous HTTP clients and damaged review. Task-level verification-results.json records actual final execution.
+
+A04 also rejects a first-use token with another loan's equipment, for normal and damaged returns. It compares the entire persisted snapshot before/after rejection and restart, then corrects the equipment using the same token and checks exactly one bound event, the expected job count, unchanged unrelated loan, and restart replay. `wrong_equipment_binding` permanently deletes only the binding guard.

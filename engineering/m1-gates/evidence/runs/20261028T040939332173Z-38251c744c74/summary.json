@@ -1,0 +1,94 @@
+{
+  "schema": "m1-four-gates-summary/v1",
+  "task_ids": [
+    "B02",
+    "S01",
+    "S04",
+    "S04-spring",
+    "G01",
+    "G05"
+  ],
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "tasks": {
+    "B02": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/bronze/B02/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "S01": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/silver/S01/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "S04": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/silver/S04/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "S04-spring": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/integration/S04-spring/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "G01": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/gold/G01/evidence/m1-four-gates.json",
+      "gaps": []
+    },
+    "G05": {
+      "pass": true,
+      "gates": {
+        "reference": true,
+        "nop_or_baseline": true,
+        "mutants": true,
+        "repeat": true
+      },
+      "evidence": "engineering/gold/G05/evidence/m1-four-gates.json",
+      "gaps": []
+    }
+  },
+  "pass": true,
+  "run_id": "20261028T040939332173Z-38251c744c74",
+  "started_at": "2026-10-28T04:09:39.332201+00:00",
+  "ended_at": "2026-10-28T04:15:15.778477+00:00",
+  "errors": [],
+  "environment": {
+    "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "linux",
+    "java_version": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+    "execution_kind": "trusted_fixture_selfcheck",
+    "java_probe_exit": 0
+  }
+}

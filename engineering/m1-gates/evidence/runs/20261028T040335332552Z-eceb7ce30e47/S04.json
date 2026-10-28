@@ -1,0 +1,329 @@
+{
+  "schema": "m1-four-gates/v1",
+  "task_id": "S04",
+  "trusted_code_only": true,
+  "secure_sandbox": false,
+  "full_catalog_ready": false,
+  "baseline_role": "baseline",
+  "commands": [
+    "python3 -B engineering/silver/S04/run_selfcheck.py"
+  ],
+  "captured_from": "unavailable",
+  "gates": {
+    "reference": {
+      "pass": false,
+      "run_count": 0,
+      "detail": "source bundle missing or changed during run"
+    },
+    "nop_or_baseline": {
+      "pass": false,
+      "role": "baseline",
+      "variant": "baseline",
+      "mapping": "acceptance-id",
+      "critical_failures": [],
+      "detail": "source bundle missing or changed during run"
+    },
+    "mutants": {
+      "pass": false,
+      "listed": [
+        "partial_commit",
+        "repeat_inventory_change"
+      ],
+      "results": [
+        {
+          "id": "partial_commit",
+          "runnable": false,
+          "failed": null,
+          "reason": "source bundle missing or changed during run",
+          "outcome": "infrastructure_error",
+          "failed_assertions": []
+        },
+        {
+          "id": "repeat_inventory_change",
+          "runnable": false,
+          "failed": null,
+          "reason": "source bundle missing or changed during run",
+          "outcome": "infrastructure_error",
+          "failed_assertions": []
+        }
+      ],
+      "detail": "source bundle missing or changed during run"
+    },
+    "repeat": {
+      "pass": false,
+      "run_count": 0,
+      "agreement": "unavailable",
+      "sha256": null,
+      "source": "reference repeats inside one selfcheck",
+      "detail": "source bundle missing or changed during run"
+    }
+  },
+  "gaps": [
+    "source bundle missing or changed during run",
+    "partial_commit: not runnable (source bundle missing or changed during run)",
+    "repeat_inventory_change: not runnable (source bundle missing or changed during run)"
+  ],
+  "pass": false,
+  "run_id": "20261028T040335332552Z-eceb7ce30e47",
+  "started_at": "2026-10-28T04:03:35.332581+00:00",
+  "ended_at": "2026-10-28T04:09:22.237174+00:00",
+  "evidence_fingerprint": {
+    "algorithm": "sha256-source-bundle/v1",
+    "sha256": "09037014a810f30679af49b8f6fe86d0be78390a6eea8fc236d4ad5dc0f48981",
+    "files": [
+      {
+        "path": "engineering/bronze/run_all.py",
+        "sha256": "dc3ad1ad12fe393199281bb7518c16a16fef0e64922ac2ea50bc2acf2a932275"
+      },
+      {
+        "path": "engineering/diamond/run_all.py",
+        "sha256": "170d22d5ddb4aee1aeda31d678326dd4fe5b288b7206c3dd0fdef7f955a2370a"
+      },
+      {
+        "path": "engineering/gold/run_all.py",
+        "sha256": "18002970ecdc1edbdc94d8063ae4a3afe2a0883fcdf0164876db63559152d4ac"
+      },
+      {
+        "path": "engineering/king/candidate_runner.py",
+        "sha256": "b455eec13b786e9dc73bc95cee8bca4379a480d9609764467f1434598a75e2ff"
+      },
+      {
+        "path": "engineering/king/run_all.py",
+        "sha256": "2803da20284baa872720aedad00d444356ae746ef457b6b97e2e3830e75be28c"
+      },
+      {
+        "path": "engineering/king/verify.py",
+        "sha256": "4ce2d6b3c2d58e28557ec2cc40d80374c858a8bc8495b88fead085ca8c60710d"
+      },
+      {
+        "path": "engineering/silver/S04/PROMPT.md",
+        "sha256": "c34fa8e4b8b3085be229680feb232db01c762019a2de4ea94db2dbe31afc5d44"
+      },
+      {
+        "path": "engineering/silver/S04/README.md",
+        "sha256": "144c8323e8f4c4825a57a4a8020734ea2b05cf2568f847fd4fda523228e9a45f"
+      },
+      {
+        "path": "engineering/silver/S04/agent-files.json",
+        "sha256": "b826d1eadce2e81dffcd67ff59cc89f4c78276bd729bf54db5da780e595bebe0"
+      },
+      {
+        "path": "engineering/silver/S04/baseline/src/bench/BatchActions.java",
+        "sha256": "db78351cb22121995c0f2404feb1a03d1d4ccbf66b06d8c4d88982c5d02fbf60"
+      },
+      {
+        "path": "engineering/silver/S04/baseline/src/bench/BatchService.java",
+        "sha256": "f8a8e9a1e552f2c34e37627c8881e91728564580af1b04ccc6c07d474e8682cc"
+      },
+      {
+        "path": "engineering/silver/S04/baseline/src/bench/Database.java",
+        "sha256": "86bc0f0623208623ca3c466c060287d7a134c3c87f478bce4cafbd986dbae731"
+      },
+      {
+        "path": "engineering/silver/S04/baseline/src/bench/Main.java",
+        "sha256": "66039502655c2e08068632463ce8e66971d0458abd9e3725f084ca182640baca"
+      },
+      {
+        "path": "engineering/silver/S04/baseline/src/bench/TransactionEntry.java",
+        "sha256": "b2b9ebc4a8f5ba3e088a69204dd45c047989e4edec1f465cc639c9fe78c71ede"
+      },
+      {
+        "path": "engineering/silver/S04/delivery-note.md",
+        "sha256": "0b1a5c274d26efa1495fbee4d6cf5b1a342693a909b82e38c5f681abb35a1a61"
+      },
+      {
+        "path": "engineering/silver/S04/evidence/acceptance-coverage.json",
+        "sha256": "74f68a33156a35fe11f5b1cc19130a4ef13a1dd1c6fde82e4cf0e6170d4d4bdb"
+      },
+      {
+        "path": "engineering/silver/S04/evidence/requirement-decisions.json",
+        "sha256": "1588e4dc7fb88ede97122f438adbdf229cb20d0a3f9522cd3ee0a34cc136e632"
+      },
+      {
+        "path": "engineering/silver/S04/evidence/review.json",
+        "sha256": "26f4d309a9c287b114f8ca6f8c7477e4622c98adb8f7122337d4ac449194c05c"
+      },
+      {
+        "path": "engineering/silver/S04/evidence-map.md",
+        "sha256": "65b4089debc82aef17e328340bb6a167a9ef8d3449f5a0c31aec0b6721546b24"
+      },
+      {
+        "path": "engineering/silver/S04/fixtures/cases.json",
+        "sha256": "59a836ecb01aedf29bd446a3b26540cffefd70436e75a91d282d832dc43665d6"
+      },
+      {
+        "path": "engineering/silver/S04/fixtures/public-smoke.json",
+        "sha256": "cda83060feff45ca2ed1735a572627834592bbab8ea3bcbfff70c06009818942"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/partial_commit/src/bench/BatchActions.java",
+        "sha256": "db78351cb22121995c0f2404feb1a03d1d4ccbf66b06d8c4d88982c5d02fbf60"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/partial_commit/src/bench/BatchService.java",
+        "sha256": "f8a8e9a1e552f2c34e37627c8881e91728564580af1b04ccc6c07d474e8682cc"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/partial_commit/src/bench/Database.java",
+        "sha256": "86bc0f0623208623ca3c466c060287d7a134c3c87f478bce4cafbd986dbae731"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/partial_commit/src/bench/Main.java",
+        "sha256": "66039502655c2e08068632463ce8e66971d0458abd9e3725f084ca182640baca"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/partial_commit/src/bench/TransactionEntry.java",
+        "sha256": "b2b9ebc4a8f5ba3e088a69204dd45c047989e4edec1f465cc639c9fe78c71ede"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/repeat_inventory_change/src/bench/BatchActions.java",
+        "sha256": "db78351cb22121995c0f2404feb1a03d1d4ccbf66b06d8c4d88982c5d02fbf60"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/repeat_inventory_change/src/bench/BatchService.java",
+        "sha256": "e5e94d8e47f00b179cca1e2d5cb7a037a364c2127192ce8426f570e6597ca5f7"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/repeat_inventory_change/src/bench/Database.java",
+        "sha256": "86bc0f0623208623ca3c466c060287d7a134c3c87f478bce4cafbd986dbae731"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/repeat_inventory_change/src/bench/Main.java",
+        "sha256": "66039502655c2e08068632463ce8e66971d0458abd9e3725f084ca182640baca"
+      },
+      {
+        "path": "engineering/silver/S04/mutants/repeat_inventory_change/src/bench/TransactionEntry.java",
+        "sha256": "b2b9ebc4a8f5ba3e088a69204dd45c047989e4edec1f465cc639c9fe78c71ede"
+      },
+      {
+        "path": "engineering/silver/S04/original-task.json",
+        "sha256": "055d207ff35c5e487968728ccdab644b37e13d5e9395e87621352014112e35f2"
+      },
+      {
+        "path": "engineering/silver/S04/reference/src/bench/BatchActions.java",
+        "sha256": "db78351cb22121995c0f2404feb1a03d1d4ccbf66b06d8c4d88982c5d02fbf60"
+      },
+      {
+        "path": "engineering/silver/S04/reference/src/bench/BatchService.java",
+        "sha256": "29999181fd50072b11e937c748beed3197a1380f47c693458879bd4167edd27a"
+      },
+      {
+        "path": "engineering/silver/S04/reference/src/bench/Database.java",
+        "sha256": "86bc0f0623208623ca3c466c060287d7a134c3c87f478bce4cafbd986dbae731"
+      },
+      {
+        "path": "engineering/silver/S04/reference/src/bench/Main.java",
+        "sha256": "66039502655c2e08068632463ce8e66971d0458abd9e3725f084ca182640baca"
+      },
+      {
+        "path": "engineering/silver/S04/reference/src/bench/TransactionEntry.java",
+        "sha256": "b2b9ebc4a8f5ba3e088a69204dd45c047989e4edec1f465cc639c9fe78c71ede"
+      },
+      {
+        "path": "engineering/silver/S04/regression-tests/README.md",
+        "sha256": "5c1c546ede2417e1e36ec6cbc6e4edc920ad8d0dd8031c7de4a84eb30d9cc491"
+      },
+      {
+        "path": "engineering/silver/S04/requirement-decisions.md",
+        "sha256": "b8a504b45a55c68f4bfd6021a431823a770ab4232a20296c3f399194b5984070"
+      },
+      {
+        "path": "engineering/silver/S04/run_selfcheck.py",
+        "sha256": "77a76e66915a430abf5b31b0575aa3bfec58eebf07f829215afd6040cc5dbfad"
+      },
+      {
+        "path": "engineering/silver/S04/sql/schema-h2-measured.sql",
+        "sha256": "1cd2fa5b358f9b4a9564c0d44a3bfd25d385c1b4a60be5f36465f88f71279d78"
+      },
+      {
+        "path": "engineering/silver/S04/task.json",
+        "sha256": "b70fbfa9d9a7563e82b9578592f0448c02989f8d8ef4d9f139efc88186c63927"
+      },
+      {
+        "path": "engineering/silver/run_all.py",
+        "sha256": "82751e084ba425b33d392cb3d2d140b6b326caf6e99a58099fe71f740dfdbeec"
+      },
+      {
+        "path": "engineering/silver/setup_h2.py",
+        "sha256": "dc1b70cd8c630a30b26455a7aa3055d68da17003ba9c92bc1776eed7312a425b"
+      },
+      {
+        "path": "engineering/silver/verifier.py",
+        "sha256": "f13282bde0659b38d39437ab428397066ccd3ad1b7bb37a4a53b9bf522d1183f"
+      },
+      {
+        "path": "harness/INTEGRITY.md",
+        "sha256": "0b66b2a3c451745d9a19f3af04783a9ce5f894719d00f4c9b8adfe005d72b543"
+      },
+      {
+        "path": "harness/README.md",
+        "sha256": "5f3386677e2109e8590ffa77bc77bcdf2a1c7611ddb243946a840198bfe0280f"
+      },
+      {
+        "path": "harness/bench.py",
+        "sha256": "d0b67808841e2b1f7a303faf062f919a31586b5965714f08181f32301bb37fbb"
+      },
+      {
+        "path": "harness/results/R01-selfcheck.json",
+        "sha256": "c93c4c0d8c80c422bd3b857529a06a98e17cf0f9864fafb05d7e1b60d7062b7d"
+      },
+      {
+        "path": "harness/results/R02-selfcheck.json",
+        "sha256": "005b54cd4bbe02dbbceb0d538e8b01992ea6ca6a1cf3710a533bea9af104c3cf"
+      },
+      {
+        "path": "harness/results/R03-selfcheck.json",
+        "sha256": "b4241e9c8ee7da5917108f8d311f27c433f0634f44bac2b1c3d6abf30c187a44"
+      },
+      {
+        "path": "harness/results/unittest.txt",
+        "sha256": "f3d50f238531e53cb4c337dc2c9ffed5be4ddce648c78377f53d15010182831a"
+      },
+      {
+        "path": "schemas/m1-evidence.schema.json",
+        "sha256": "4fd76870f9d4eb2ff34d85350964e3190c9a57bbeaa476ffb551103b20417852"
+      },
+      {
+        "path": "schemas/run-result.schema.json",
+        "sha256": "605b6513e3603c84a9ca2871b0d93d31f0966580325ef2b33f0cd0dd1e42d4e3"
+      },
+      {
+        "path": "scripts/build_catalog.py",
+        "sha256": "83e7bd67afff0cffeaf9ba6efe6d3280ba7d2197f4fe0b381023e2a04375c25f"
+      },
+      {
+        "path": "scripts/build_implementations.py",
+        "sha256": "8e8c98e194519d025a6950255180d9c1838c08a25c0a837ed5f61ca8715633b5"
+      },
+      {
+        "path": "scripts/build_task_packages.py",
+        "sha256": "3157d6d2c23c4283915c58633ce5db83323ac272ac3b16b948b888735f853f27"
+      },
+      {
+        "path": "scripts/check_engineering.py",
+        "sha256": "38dbf54f62322e83b28c1eae9bdb355e0c3ad906add636dc9eef7148a36d7a6a"
+      },
+      {
+        "path": "scripts/check_fast.py",
+        "sha256": "3a0229d37587f5e1ddb7f8d38ff7ad2e58eb2f4b169cbd72638e3130622e7b41"
+      },
+      {
+        "path": "scripts/engineering.py",
+        "sha256": "4341943497df6aa4ea9cc73dcd0558736d008ad29aed6cd0042dfab65ee37926"
+      },
+      {
+        "path": "scripts/m1_gates.py",
+        "sha256": "a32e2aa2a1ca4adb391f49549a14af1101715fee5e1a4b199103d63164475826"
+      },
+      {
+        "path": "scripts/m1_provenance.py",
+        "sha256": "efe2adecb67f4f9a1519d103f9b58bcab0dbad4dd3e1e1cce0448a8b4ae1731e"
+      },
+      {
+        "path": "scripts/process_supervisor.py",
+        "sha256": "28bccc18593bce51c7ffcb56e9fb098f1003a5b9056b7466db38ea60deaf96c1"
+      }
+    ]
+  },
+  "exit_type": "verification_failed"
+}

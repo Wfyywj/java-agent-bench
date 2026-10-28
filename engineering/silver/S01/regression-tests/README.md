@@ -1,1 +1,7 @@
 Run `python3 ../run_selfcheck.py` from this directory. Independent black-box scenarios and acceptance IDs live in ../fixtures/cases.json. Candidate source cannot supply its own expected outputs. Report records successful/failed/not-executed states separately.
+
+## Terminal conflict direction matrix (F2 regression)
+
+Four `terminal_*_restart` scenarios pair SUCCEEDED → FAILED and FAILED → SUCCEEDED, each with a newer and an older, previously unseen event sequence. Every CLI step starts a fresh JVM and reopens persisted state, so every subsequent `get`/callback checks restart behavior. Assertions preserve the original terminal state and ledger count (1 for success, 0 for failure), require manual review in both directions, distinguish same-event duplicate from same-terminal/new-event stale, and retain the review flag through subsequent replays. Two additional paired precommit scenarios verify that an injected precommit failure does not persist review or consume the event. Retrying the conflict must persist review, and replay must retain it without booking money. Older same-terminal and processing events stay stale.
+
+The frozen S01-A02 contract and requirement-decisions.md remain unchanged. `reverse_terminal_conflict` is a permanent reference-derived mutant deleting only FAILED → SUCCEEDED conflict detection; it must compile and fail the explicit `409 manual_review` business assertion, not an infrastructure check. Fixed signatures are independently calculated with the documented synthetic fixture key; no production credentials are used.

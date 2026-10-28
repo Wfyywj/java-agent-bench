@@ -1,5 +1,14 @@
 # Changelog
 
+## Trustworthy verification and synthetic recipes — 2026-10-28
+
+- Fixed B02 first-use equipment ownership and S01 reverse terminal-conflict oracle gaps; retained minimal semantic mutants and bumped their task versions.
+- Bound M1 promotion to current source bundles and latest completed attempt; preserved historical evidence, recorded failures/running state, and serialized concurrent runs.
+- Separated assertion kills from missing reports, compile/start errors, timeouts and infrastructure exceptions; required completed verifier reports. Task-specific progress/transition violations have explicit assertions rather than blanket exception conversion.
+- Added Linux subreaper/pidfd lifecycle supervision for trusted full/M1 checks, including detached children and cancellation. Unsupported platforms fail closed; this is not a malicious-code sandbox.
+- Added B01 synthetic-only Recipe freeze/replay/analysis with independent workspaces, typed slot ledger, source/artifact hashes, missing/cancelled slots and unknown costs. No actual agent/evaluator launch or website-import compatibility is claimed.
+- Enabled read-only PR verification alongside main CI and added a separate current-source M1 job. Preserved the independently merged task-detail UI change.
+
 ## Planner export placeholders — 2026-10-28
 
 - The comparison planner no longer prefills an experiment name, control id, treatment id, model text, repeat count, budget, or seed. Those old strings are not model, control, or treatment values.
