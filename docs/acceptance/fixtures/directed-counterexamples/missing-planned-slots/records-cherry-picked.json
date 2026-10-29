@@ -1,0 +1,68 @@
+[
+  {
+    "schema_version": "1.0",
+    "plan_id": "directed-missing-slots",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "synthetic_replay",
+    "trial_id": "directed-r1-A",
+    "implementation_id": "synthetic-directed-task",
+    "manifest_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "repeat": 1,
+    "arm": "A",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-A@fixture-v1",
+      "tool": "synthetic-cli@fixture-v1",
+      "workflow": "synthetic-prompt@fixture-v1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@fixture-v1",
+      "evaluator": "synthetic-assertions@fixture-v1-not-executed"
+    },
+    "outcome": "success",
+    "elapsed_seconds": null,
+    "elapsed_unknown_reason": "synthetic fixture; elapsed time not measured",
+    "cost_usd": null,
+    "cost_unknown_reason": "synthetic fixture; cost not measured",
+    "evidence": {
+      "agent_trace_sha256": "abababababababababababababababababababababababababababababababab",
+      "evaluation_sha256": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "plan_id": "directed-missing-slots",
+    "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+    "run_kind": "synthetic_replay",
+    "trial_id": "directed-r1-B",
+    "implementation_id": "synthetic-directed-task",
+    "manifest_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "repeat": 1,
+    "arm": "B",
+    "started_at": "2026-01-02T00:00:00Z",
+    "metadata": {
+      "model": "synthetic-model-B@fixture-v1",
+      "tool": "synthetic-cli@fixture-v1",
+      "workflow": "synthetic-prompt@fixture-v1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@fixture-v1",
+      "evaluator": "synthetic-assertions@fixture-v1-not-executed"
+    },
+    "outcome": "success",
+    "elapsed_seconds": null,
+    "elapsed_unknown_reason": "synthetic fixture; elapsed time not measured",
+    "cost_usd": null,
+    "cost_unknown_reason": "synthetic fixture; cost not measured",
+    "evidence": {
+      "agent_trace_sha256": "abababababababababababababababababababababababababababababababab",
+      "evaluation_sha256": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+    }
+  }
+]

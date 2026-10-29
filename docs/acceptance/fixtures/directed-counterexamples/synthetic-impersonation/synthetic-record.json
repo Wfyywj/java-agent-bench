@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "directed-synthetic-impersonation",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "run_kind": "synthetic_replay",
+  "trial_id": "not-a-website-result",
+  "implementation_id": "B01-slice",
+  "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "repeat": 1,
+  "arm": "A",
+  "outcome": "success"
+}

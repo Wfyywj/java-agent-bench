@@ -1,6 +1,8 @@
 """Synthetic contract tests; no models, subprocesses or candidate execution."""
 import copy
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -149,6 +151,17 @@ class RecipeTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.freeze()
         link = self.parent/'link'; link.symlink_to(self.recipe)
         with self.assertRaises(ValueError): r.freeze(link, self.run, True)
+
+    def test_directed_synthetic_impersonation_repro_blocks(self):
+        repo = Path(__file__).resolve().parents[1]
+        script = repo / 'docs/acceptance/fixtures/directed-counterexamples/synthetic-impersonation/repro.py'
+        run = subprocess.run([sys.executable, str(script)], cwd=repo, capture_output=True, text=True, timeout=120)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn('verdict: blocks', run.stdout)
+        self.assertIn('website_import_supported=false', run.stdout)
+        self.assertIn('actual_recipe_exit: 1', run.stdout)
+        self.assertIn('evidence_rejected: True', run.stdout)
+        self.assertNotIn('verdict: still-fails', run.stdout)
 
 
 if __name__ == '__main__':

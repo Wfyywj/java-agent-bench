@@ -1,0 +1,57 @@
+{
+  "schema_version": "recipe-1.0",
+  "data_class": "actual_agent_trials",
+  "recipe_id": "B01-offline-replay",
+  "task": "B01",
+  "track": "model",
+  "arms": {
+    "A": {
+      "model": "synthetic-model-A@fixture-v1",
+      "tool": "synthetic-cli@fixture-v1",
+      "workflow": "synthetic-prompt@fixture-v1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@fixture-v1",
+      "evaluator": "synthetic-assertions@fixture-v1-not-executed"
+    },
+    "B": {
+      "model": "synthetic-model-B@fixture-v1",
+      "tool": "synthetic-cli@fixture-v1",
+      "workflow": "synthetic-prompt@fixture-v1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@fixture-v1",
+      "evaluator": "synthetic-assertions@fixture-v1-not-executed"
+    }
+  },
+  "repeats": [
+    {
+      "repeat": 1,
+      "A": "failure",
+      "B": "success"
+    },
+    {
+      "repeat": 2,
+      "A": "infrastructure_failure",
+      "B": "cancelled"
+    },
+    {
+      "repeat": 3,
+      "A": "missing",
+      "B": "failure"
+    }
+  ],
+  "policy": {
+    "assignment": "pair order, A then B; no retries",
+    "outcomes": "explicit synthetic fixture assertions; never evaluator or CLI inference",
+    "cancelled": "no attempted trial; retain ledger entry and missing analysis slot",
+    "resources": "unknown; replay runtime is not agent wall time or model cost",
+    "execution": "synthetic-only; no actual execution/import supported"
+  }
+}

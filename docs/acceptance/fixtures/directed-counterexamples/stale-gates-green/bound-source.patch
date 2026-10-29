@@ -1,0 +1,7 @@
+--- a/engineering/bronze/B02/prompt.md
++++ b/engineering/bronze/B02/prompt.md
+@@ -21,3 +21,4 @@
+ 
+ ## Prepared workspace layout
+ The sanitized presentation copy contains `src/` (from repository `baseline/src/`), the prompt, task metadata, and the explicitly listed public input files under `evidence/`. It does not include the local evaluator, reference answers, verdict/diagnosis contracts, or selfcheck results. Run evaluation commands from the benchmark repository, passing this package root with `--candidate`. The original repository remains public; this is presentation separation, not a hidden or secure evaluation.
++directed-counterexample: bound source byte after gates_green evidence (F3)
