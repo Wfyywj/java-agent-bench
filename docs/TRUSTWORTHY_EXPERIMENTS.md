@@ -57,7 +57,7 @@ python3 -m experiment_tools.recipe replay --run "$PARENT/run" --allow-synthetic
 python3 -m experiment_tools.recipe analyze --run "$PARENT/run" --allow-synthetic
 ```
 
-最后一步预期退出码为 **2**，不是程序崩溃：示例刻意包含 6 个预定槽位，其中 1 个缺失、1 个执行前取消，因此结果必须是 `incomplete`。4 条合成记录包含失败，时间/费用均为 null。查看 `$PARENT/run/analysis/report.json` 和 `display.json` 可核对完整槽位。
+最后一步预期退出码为 **2**，不是程序崩溃：示例刻意包含 6 个预定槽位，其中 1 个缺失、1 个执行前取消，因此结果必须是 `incomplete`。4 条合成记录包含失败，时间/费用均为 null。查看 `$PARENT/run/analysis/report.json` 和 `display.json` 可核对完整槽位。同一次命令写出的 `display.json` 已按字节冻结在 [samples/synthetic-replay-display-1.0.md](samples/synthetic-replay-display-1.0.md)，只供前端审阅接口；本文件不表示 UI 已接通。
 
 若要演练完整报告，在冻结前把示例的 `repeats` 改为 `[{"repeat":1,"A":"failure","B":"success"}]`，然后使用全新的运行目录。旧计划、回放和分析不能覆盖。详细协议见 [RECIPE.md](../experiment_tools/RECIPE.md)。
 
