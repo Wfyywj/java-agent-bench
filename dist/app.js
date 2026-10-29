@@ -4,6 +4,7 @@ const tiers={bronze:'青铜',silver:'白银',gold:'黄金',diamond:'钻石',king
 let tasks=[],runnables=[],implementations=[],view='catalog',tier='all',query='',selected=new Set(),results=[];
 const stateKey='jab-planner-v1', resultKey='jab-results-v1';
 let resultSelection=new Set(), resultFilter='', resultMessage='', storageMessage='', importing=false, planDraft=null, setupTaskId='B01-slice';
+let syntheticDoc=null, syntheticMessage='', syntheticSource='', syntheticError=false, syntheticLoading=false, syntheticAttempted=false, syntheticToken=0;
 const MAX_RESULTS=100, MAX_IMPORT_BYTES=8*1024*1024;
 const shellQuote=s=>"'"+String(s).replace(/'/g,"'\"'\"'")+"'";
 const REPO_URL='https://github.com/Wfyywj/java-agent-bench';
@@ -122,7 +123,154 @@ function renderEnvironmentBlock(t, taskImpls, body){
  return `<h3>完整设计尚未实现</h3>${intro}${body}`;
 }
 function download(name,data){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function render(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));({start:renderStart,catalog:renderCatalog,planner:renderPlanner,results:renderResults,protocol:renderProtocol,roadmap:renderRoadmap}[view])()}
+// Read-only viewer for synthetic-replay-display-1.0. Never calls validateResult or writes `results`.
+const SYNTHETIC_SCHEMA='synthetic-replay-display-1.0', SYNTHETIC_CLASS='SYNTHETIC TEST FIXTURES NOT MODEL RESULTS';
+const SYNTHETIC_SAMPLE_URLS=[
+ ['../docs/samples/synthetic-replay-display-1.0.example.json','仓库冻结样本 docs/samples/synthetic-replay-display-1.0.example.json'],
+ ['samples/synthetic-replay-display-1.0.example.json','站点副本 dist/samples/synthetic-replay-display-1.0.example.json']
+];
+const SLOT_STATES={
+ success:{zh:'成功', note:'夹具断言为成功。这不是模型得分。'},
+ failure:{zh:'失败', note:'夹具断言为失败。计入非成功，不从列表移除。'},
+ infrastructure_failure:{zh:'基础设施失败', note:'单独的非成功结果。不并入失败，也不丢弃。'},
+ missing:{zh:'缺失', note:'预定观测不可用。与执行前取消不是同一状态。'},
+ cancelled:{zh:'执行前取消', note:'取消发生在任何 agent 试验之前。账本条目已终结。不是运行中超时，也不是缺失。'}
+};
+function rejectSynthetic(message){throw Error(message)}
+function validateSyntheticDisplay(doc){
+ if(Array.isArray(doc))rejectSynthetic('已拒绝：这是 JSON 数组，属于普通结果备份或批量导入。合成演练页只打开一份 synthetic-replay-display-1.0，不会把数组写入「结果与证据」。');
+ if(!isObject(doc))rejectSynthetic('已拒绝：文件不是 JSON 对象。请选择 analysis/display.json（schema synthetic-replay-display-1.0）。');
+ const schema=doc.schema_version;
+ if(schema!==SYNTHETIC_SCHEMA){
+  if(schema==='engineering-1.0')rejectSynthetic('已拒绝：这是工程切片验收结果（schema_version engineering-1.0），属于普通网站导入格式。请到「结果与证据」导入。合成演练页只接受 synthetic-replay-display-1.0。');
+  if(schema==='0.1')rejectSynthetic('已拒绝：这是实验计划草案（schema_version 0.1），不是合成演练 display.json。');
+  if(schema==='recipe-1.0')rejectSynthetic('已拒绝：这是 recipe 配置（schema_version recipe-1.0），不是 analysis/display.json。');
+  if(schema==='trial-envelope-1.0')rejectSynthetic('已拒绝：这是单个槽位信封（schema_version trial-envelope-1.0）。请打开整份 display.json，不要把单个 slot 当结果导入。');
+  if(schema==='1.0'&&doc.data_class===SYNTHETIC_CLASS)rejectSynthetic('已拒绝：这是嵌套的严格分析报告（schema_version 1.0），不是 synthetic-replay-display-1.0。不要把 analysis 单独送进结果导入。请选择 analysis/display.json。');
+  if(schema==='1.0')rejectSynthetic('已拒绝：这是普通网站导入格式（schema_version 1.0 的单次验收结果）。请到「结果与证据」导入。本页只接受 synthetic-replay-display-1.0，该文件没有进入结果列表。');
+  rejectSynthetic('已拒绝：schema_version 必须是 synthetic-replay-display-1.0。当前为 '+String(schema??'（缺失）')+'。文件没有进入结果列表。');
+ }
+ if(doc.data_class!==SYNTHETIC_CLASS)rejectSynthetic('已拒绝：data_class 必须是 SYNTHETIC TEST FIXTURES NOT MODEL RESULTS。');
+ if(doc.website_import_supported!==false)rejectSynthetic('已拒绝：website_import_supported 必须为 false。本页不会把该文件送进现有结果导入。');
+ if(typeof doc.freeze_sha256!=='string'||!/^[a-f0-9]{64}$/.test(doc.freeze_sha256))rejectSynthetic('已拒绝：缺少有效的 freeze_sha256。');
+ if(!Array.isArray(doc.slots))rejectSynthetic('已拒绝：缺少 slots 数组。预定槽位必须来自 slots[]。');
+ if(!isObject(doc.analysis))rejectSynthetic('已拒绝：缺少 analysis 对象。');
+ return doc;
+}
+function unknownHtml(){return '<b class="unknown">「未知」</b>'}
+function measuredValue(value){return value==null?unknownHtml():esc(value)}
+function measuredTotal(block){if(!isObject(block)||block.total==null||block.known_count===0)return unknownHtml();return esc(block.total)}
+function pairedDelta(block){if(!isObject(block)||block.mean_delta_B_minus_A==null)return unknownHtml();return esc(block.mean_delta_B_minus_A)}
+function boundsText(bounds){if(!Array.isArray(bounds)||bounds.length<2||bounds[0]==null||bounds[1]==null)return unknownHtml();return esc(bounds[0])+' … '+esc(bounds[1])}
+function slotKind(state){return Object.prototype.hasOwnProperty.call(SLOT_STATES, state)?state:'unknown'}
+function slotMeta(state){if(slotKind(state)==='unknown')return {zh:state?String(state):'未标明', note:'文件给出了名单以外的状态。该槽位仍然保留，不并入缺失或执行前取消。'};return SLOT_STATES[state]}
+function statePill(state){const kind=slotKind(state), meta=slotMeta(state), raw=kind==='unknown'?(state||'unknown'):state;return `<span class="statepill state-${kind}">${esc(meta.zh)} · ${esc(raw)}</span>`}
+function slotIdentity(slot){const ident=isObject(slot.identity)?slot.identity:{};return `<span class="small">${esc(ident.implementation_id)} · repeat ${esc(ident.repeat)} · arm ${esc(ident.arm)}</span>`}
+function evidenceCells(ev){
+ if(ev==null)return '<td>无证据引用</td><td>无证据引用</td><td>无证据引用</td><td>无证据引用</td>';
+ const cell=item=>!isObject(item)?'<td>引用缺失</td><td>引用缺失</td>':`<td class="mono">${item.path==null?'（无 path）':esc(item.path)}</td><td class="mono">${item.sha256==null?'（无 sha256）':esc(item.sha256)}</td>`;
+ return cell(ev.trace)+cell(ev.evaluation);
+}
+function evidenceBlock(ev){
+ if(ev==null)return '<p>无证据引用（evidence 为 null）。没有轨迹或验收文件。</p>';
+ const part=(kind,item)=>!isObject(item)?`<p>${esc(kind)}：引用缺失</p>`:`<p class="mono">${esc(kind)} path ${item.path==null?'（无 path）':esc(item.path)}<br>${esc(kind)} sha256 ${item.sha256==null?'（无 sha256）':esc(item.sha256)}</p>`;
+ return part('trace', ev.trace)+part('evaluation', ev.evaluation);
+}
+function hashParagraph(label, value){return `<p class="small"><b>${esc(label)}</b><br><span class="mono">${value==null?'（无）':esc(value)}</span></p>`}
+function armNames(arms){const names=['A','B'];if(isObject(arms))for(const key of Object.keys(arms))if(!names.includes(key))names.push(key);return names}
+function armRow(name, arm){
+ if(!isObject(arm))return `<tr><td>${esc(name)}</td><td colspan="10">无此臂的严格汇总</td></tr>`;
+ return `<tr><td>${esc(name)}</td><td>${esc(arm.planned)}</td><td>${esc(arm.observed)}</td><td>${esc(arm.successes)}</td><td>${esc(arm.failures)}</td><td>${esc(arm.infrastructure_failures)}</td><td>${esc(arm.missing)}</td><td>${measuredValue(arm.success_rate)}</td><td>${boundsText(arm.success_rate_bounds)}</td><td>${measuredTotal(arm.elapsed_seconds)}</td><td>${measuredTotal(arm.cost_usd)}</td></tr>`;
+}
+function matchedSlot(entry, slots){
+ if(!isObject(entry)||!Array.isArray(slots))return null;
+ return slots.find(s=>{
+  if(!isObject(s)||!isObject(s.identity))return false;
+  const id=s.identity;
+  if(id.arm!==entry.arm||id.repeat!==entry.repeat||id.implementation_id!==entry.implementation_id)return false;
+  if(entry.manifest_sha256&&id.manifest_sha256&&entry.manifest_sha256!==id.manifest_sha256)return false;
+  return true;
+ })||null;
+}
+function missingItem(entry, slots){
+ const slot=matchedSlot(entry, slots);
+ const state=slot?slot.state:null;
+ const slotId=slot&&slot.slot_id?slot.slot_id:'（slots[] 无对应项）';
+ const extra=state==='cancelled'?' <span class="small">分析器把它记在 missing_slots 里，因为没有严格记录。槽位状态仍是执行前取消，不是缺失。</span>':(state==='missing'?' <span class="small">预定观测不可用。</span>':'');
+ return `<li><span class="mono">${esc(slotId)}</span> · repeat ${esc(isObject(entry)?entry.repeat:'')} · arm ${esc(isObject(entry)?entry.arm:'')} · ${statePill(state)}${extra}</li>`;
+}
+function warningList(warnings){if(!Array.isArray(warnings)||!warnings.length)return '';return `<div class="notice">${warnings.map(w=>`<p>${esc(typeof w==='string'?w:JSON.stringify(w))}</p>`).join('')}</div>`}
+function fixtureNote(armMeta){
+ if(!isObject(armMeta))return '';
+ return '<h3>夹具元数据</h3>'+armNames(armMeta).map(name=>{
+  const md=armMeta[name];
+  if(!isObject(md))return '';
+  const budget=isObject(md.budget)?md.budget:{};
+  return `<p class="small"><b>臂 ${esc(name)}</b> · 夹具标签，不是实测版本：model ${esc(md.model)} · tool ${esc(md.tool)} · workflow ${esc(md.workflow)} · environment ${esc(md.environment)} · evaluator ${esc(md.evaluator)}。声明上限 wall_seconds ${esc(budget.wall_seconds)} · max_tokens ${esc(budget.max_tokens)} · max_tool_calls ${esc(budget.max_tool_calls)}。这不是已消耗的 token、调用次数或费用。</p>`;
+ }).join('');
+}
+function legendHtml(slots){
+ const counts={};for(const key of Object.keys(SLOT_STATES))counts[key]=0;let other=0;
+ for(const slot of slots){if(isObject(slot)&&Object.prototype.hasOwnProperty.call(counts, slot.state))counts[slot.state]++;else other++}
+ return `<div class="legend" aria-label="槽位状态图例">${Object.keys(SLOT_STATES).map(state=>`<span>${statePill(state)} <span class="small">${counts[state]}</span></span>`).join('')}${other?`<span class="small">其他 ${other}</span>`:''}</div><p class="small">缺失用虚线标出，执行前取消用蓝色双线标出。两者都留在列表里，证据都是 null，但不是同一种状态。</p>`;
+}
+function syntheticLedgerRow(slot, index){
+ if(!isObject(slot))return `<tr class="slotrow slotrow-unknown" data-state="unknown"><td>槽位 ${index+1}</td><td>不是对象</td><td>${unknownHtml()}</td><td>${unknownHtml()}</td><td colspan="4">仍保留该位置</td></tr>`;
+ const kind=slotKind(slot.state);
+ return `<tr class="slotrow slotrow-${kind}" data-state="${esc(slot.state)}"><td><b class="mono">${esc(slot.slot_id)}</b><br>${slotIdentity(slot)}</td><td>${statePill(slot.state)}</td><td>${measuredValue(slot.elapsed_seconds)}</td><td>${measuredValue(slot.cost_usd)}</td>${evidenceCells(slot.evidence)}</tr>`;
+}
+function syntheticSlotCard(doc, slot, index){
+ if(!isObject(slot))return `<article class="slot slot-unknown" data-state="unknown"><h3>槽位 ${index+1}</h3><p>这条记录不是对象，仍保留在列表中。</p></article>`;
+ const kind=slotKind(slot.state), meta=slotMeta(slot.state), ident=isObject(slot.identity)?slot.identity:{}, md=isObject(slot.metadata)?slot.metadata:{}, budget=isObject(md.budget)?md.budget:{};
+ const freezeNote=slot.freeze_sha256===doc.freeze_sha256?'此槽位 freeze_sha256 与文档一致。':'此槽位 freeze_sha256 与文档不一致。';
+ return `<article class="slot slot-${kind}" data-state="${esc(kind==='unknown'?String(slot.state??'unknown'):slot.state)}"><h3><span class="mono">${esc(slot.slot_id)}</span> ${statePill(slot.state)}</h3><p>${esc(meta.note)}</p><p class="small">${esc(ident.implementation_id)} · repeat ${esc(ident.repeat)} · arm ${esc(ident.arm)}</p><p>耗时 elapsed_seconds：${measuredValue(slot.elapsed_seconds)} · 费用 cost_usd：${measuredValue(slot.cost_usd)}</p>${slot.elapsed_seconds==null||slot.cost_usd==null?`<p class="small">resource_unknown_reason：${esc(slot.resource_unknown_reason||'未提供')}</p>`:''}<div class="small"><b>证据引用</b>${evidenceBlock(slot.evidence)}</div>${hashParagraph('manifest_sha256', ident.manifest_sha256)}${hashParagraph('source_content_sha256', slot.source_content_sha256)}${hashParagraph('workspace_artifact_sha256', slot.workspace_artifact_sha256)}${hashParagraph('run_artifact_sha256', slot.run_artifact_sha256)}${hashParagraph('freeze_sha256', slot.freeze_sha256)}<p class="small">${esc(freezeNote)} 哈希是本地内容核对，不是签名。</p><p class="small">夹具标签，不是实测模型或 CLI 版本：model ${esc(md.model)} · tool ${esc(md.tool)} · workflow ${esc(md.workflow)} · environment ${esc(md.environment)} · evaluator ${esc(md.evaluator)}</p><p class="small">声明上限，不是已消耗：wall_seconds ${esc(budget.wall_seconds)} · max_tokens ${esc(budget.max_tokens)} · max_tool_calls ${esc(budget.max_tool_calls)}</p><p class="small">replayed_at ${esc(slot.replayed_at)} · 回放记账时间，不是 agent 开始时间，也不是耗时。run_kind ${esc(slot.run_kind)} · 槽位 schema ${esc(slot.schema_version)}（信封版本，不是本页的 synthetic-replay-display-1.0）。</p></article>`;
+}
+function syntheticBody(doc){
+ const analysis=isObject(doc.analysis)?doc.analysis:{}, overall=isObject(analysis.overall)?analysis.overall:{}, arms=isObject(overall.arms)?overall.arms:{}, slots=Array.isArray(doc.slots)?doc.slots:[], paired=isObject(overall.paired_resources)?overall.paired_resources:{}, missing=Array.isArray(analysis.missing_slots)?analysis.missing_slots:[];
+ return `<div class="panel"><h3>文档</h3><p class="small">schema_version <b>${esc(doc.schema_version)}</b> · website_import_supported <b>${esc(String(doc.website_import_supported))}</b> · 不进入现有单次结果导入。</p><p class="small">data_class ${esc(doc.data_class)}</p><p class="small mono">freeze_sha256 ${esc(doc.freeze_sha256)}</p><p class="small mono">analysis.plan_sha256 ${esc(analysis.plan_sha256)}</p><p class="small">analysis.schema_version ${esc(analysis.schema_version)} 是嵌套严格报告的版本，不是本页 schema。status <b>${esc(analysis.status)}</b>。预定槽位 ${esc(slots.length)}，计划配对 ${esc(overall.planned_pairs)}，完整配对 ${esc(overall.complete_pairs)}。有预定槽位没有严格记录时，status 保持 incomplete，不要显示成完成。</p><p class="small">success_delta_B_minus_A：${measuredValue(overall.success_delta_B_minus_A)} · 耗时差 mean_delta：${pairedDelta(paired.elapsed_seconds)} · 费用差 mean_delta：${pairedDelta(paired.cost_usd)}</p><p class="small">分母政策：${esc(analysis.denominator_policy)}</p></div><h3>预定槽位 · slots[] 共 ${esc(slots.length)} 条</h3><p class="sub">按文件顺序全部列出，包括失败、基础设施失败、缺失和执行前取消。列表不从 analysis 重建。</p>${legendHtml(slots)}<div class="tablewrap"><table class="synthetic-ledger" id="syntheticLedger"><thead><tr><th>槽位</th><th>状态</th><th>耗时</th><th>费用</th><th>trace path</th><th>trace sha256</th><th>evaluation path</th><th>evaluation sha256</th></tr></thead><tbody>${slots.map(syntheticLedgerRow).join('')}</tbody></table></div><div id="syntheticSlots">${slots.map((slot,i)=>syntheticSlotCard(doc, slot, i)).join('')}</div>${warningList(analysis.warnings)}<h3>严格报告摘要 · 不是排行榜</h3><p class="sub">臂上的模型名是 @fixture-v1 夹具标签，不是参与比较的真实模型。success_rate 为 null 时显示「未知」。success_rate_bounds 是缺失试验策略下的界，不是点估计，也不是排行榜单元格。known_count 为 0 时忽略 known_sum，不把空集的和显示成测到的 0。</p><div class="tablewrap"><table><thead><tr><th>臂</th><th>计划</th><th>已观测</th><th>成功</th><th>失败</th><th>基础设施失败</th><th>分析器 missing</th><th>成功率</th><th>成功率界</th><th>耗时合计</th><th>费用合计</th></tr></thead><tbody>${armNames(arms).map(name=>armRow(name, arms[name])).join('')}</tbody></table></div><p class="small">分析器 missing 只表示没有严格记录，执行前取消也会计入。不要把这一列读成缺失。槽位真状态见上方 slots[].state。</p><h3>analysis.missing_slots</h3><ul>${missing.length?missing.map(entry=>missingItem(entry, slots)).join(''):'<li>无</li>'}</ul>${fixtureNote(analysis.arm_metadata)}`;
+}
+async function loadSyntheticSample(){
+ if(syntheticLoading)return;
+ const token=++syntheticToken;
+ syntheticLoading=true;syntheticError=false;syntheticMessage='正在读取冻结样本…';
+ if(view==='synthetic')renderSynthetic();
+ let failure='未能读取冻结样本。';
+ try{
+  for(const [url,label] of SYNTHETIC_SAMPLE_URLS){
+   try{
+    const res=await fetch(url);
+    if(!res.ok){failure=label+' 不可用（HTTP '+res.status+'）。';continue}
+    const doc=validateSyntheticDisplay(await res.json());
+    if(token!==syntheticToken)return;
+    syntheticDoc=doc;syntheticSource=label;syntheticError=false;syntheticMessage='已只读打开冻结样本。夹具断言不是模型分数，也没有进入「结果与证据」。';
+    return;
+   }catch(err){failure=err.message||failure}
+  }
+  if(token!==syntheticToken)return;
+  syntheticError=true;syntheticMessage=failure+' 请改用文件选择 analysis/display.json。本页只接受 synthetic-replay-display-1.0，普通验收结果会被拒绝。';
+ }finally{
+  if(token===syntheticToken){syntheticLoading=false;if(view==='synthetic')renderSynthetic()}
+ }
+}
+async function onSyntheticFile(e){
+ const input=e.target, file=input.files&&input.files[0];
+ if(!file)return;
+ syntheticToken++;syntheticLoading=false;
+ try{
+  if(file.size>2*1024*1024)throw Error('已拒绝：文件超过 2 MB。本页没有把该文件写入「结果与证据」。');
+  let parsed;try{parsed=JSON.parse(await file.text())}catch{throw Error('已拒绝：不是合法 JSON。结果列表没有变化。')}
+  syntheticDoc=validateSyntheticDisplay(parsed);syntheticSource=file.name;syntheticError=false;syntheticMessage='已只读打开 '+file.name+'。这不是模型成绩，也没有进入「结果与证据」。';
+ }catch(err){syntheticError=true;syntheticMessage=err.message||'已拒绝该文件。'}
+ finally{input.value='';if(view==='synthetic')renderSynthetic()}
+}
+function renderSynthetic(){
+ const banner='<div class="synthetic-banner" id="syntheticBanner"><b>SYNTHETIC TEST FIXTURES NOT MODEL RESULTS</b><p>合成演练。这是工具写入的夹具断言，不是模型试点，不是 Java 验收输出，也不是模型分数或已校准的排行榜。</p></div>';
+ $('#content').innerHTML=`${banner}<div class="sectionhead"><div><h2>合成演练 · 只读槽位</h2><p class="sub">读取 analysis/display.json（schema synthetic-replay-display-1.0）。website_import_supported 为 false，本页不把文件送进「结果与证据」。</p></div></div><div class="panel"><h3>打开冻结样本或本地文件</h3><p class="sub">本地预览会先读仓库里的 docs/samples/synthetic-replay-display-1.0.example.json。从 dist 目录单独打开站点时，改读同内容的 samples 副本。两者都是冻结样本的字节，不是新的试验结果。</p><div class="actions"><button type="button" class="secondary" id="loadSyntheticSample" ${syntheticLoading?'disabled':''}>重新加载冻结样本</button></div><label for="syntheticFile"><b>或选择 analysis/display.json</b></label><input id="syntheticFile" type="file" accept=".json,application/json" aria-label="选择合成演练 display.json"><p class="small">只接受 synthetic-replay-display-1.0。R 系列验收、工程切片、实验计划和单独的 analysis 报告会被拒绝，并说明原因。</p><p class="small">当前来源：${esc(syntheticSource||'尚未打开')}</p><p id="syntheticStatus" class="${syntheticError?'error':''}" role="status" aria-live="polite">${esc(syntheticMessage)}</p></div>${syntheticDoc?syntheticBody(syntheticDoc):'<p class="empty">尚未打开 display.json。</p>'}`;
+ $('#loadSyntheticSample').onclick=()=>{loadSyntheticSample()};
+ $('#syntheticFile').onchange=onSyntheticFile;
+ if(!syntheticDoc&&!syntheticLoading&&!syntheticAttempted){syntheticAttempted=true;loadSyntheticSample()}
+}
+function render(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));({start:renderStart,catalog:renderCatalog,planner:renderPlanner,results:renderResults,synthetic:renderSynthetic,protocol:renderProtocol,roadmap:renderRoadmap}[view])()}
 function card(t){const impls=implementations.filter(x=>x.id===t.id);const secured=impls.find(x=>x.security);const security=t.status==='runnable'?securityMeaning(t.security||t.environment?.security):(secured?`切片 ${securityMeaning(secured.security, impls.length&&impls.every(x=>x.model_evaluated===false)?false:undefined)}`:'');return `<article class="card"><div class="cardtop"><span class="tier ${esc(t.tier)}">${esc(tiers[t.tier]||'机制预实验')} · 暂定</span><span class="id">${esc(t.id)}</span></div><h3>${esc(t.title)}</h3><p>${esc(t.summary)}</p>${security?`<p class="securitynote">${esc(security)}</p>`:''}<div class="cardbottom"><span>${sliceStateLabel(t,impls)}</span><button data-detail="${esc(t.id)}">查看任务 ↗</button></div></article>`}
 function renderCatalog(){const filtered=[...runnables,...tasks].filter(t=>(tier==='all'||t.tier===tier)&&(!query||JSON.stringify(t).toLowerCase().includes(query.toLowerCase())));$('#content').innerHTML=`<div class="startbanner"><div><b>第一次使用？从 Codex CLI / Claude Code 开始。</b><p>选变体 → 克隆仓库并 prepare → 仅对可信代码验收 → 导入证据</p></div><button class="primary" id="catalogStart">快速开始 →</button></div><div class="sectionhead"><div><h2>任务实验室</h2><p class="sub">业务边界、跨模块约束与独立验收，让难度来自真实复杂性。</p></div><span class="small">${filtered.length} 个任务</span></div><div class="toolbar"><div class="tiers"><button data-tier="all" class="${tier==='all'?'active':''}">全部</button>${Object.entries(tiers).map(([k,v])=>`<button data-tier="${k}" class="${tier===k?'active':''}">${v}</button>`).join('')}</div><input id="search" aria-label="搜索任务" placeholder="搜索任务、能力或场景…" value="${esc(query)}"></div><div class="grid">${filtered.map(card).join('')||'<p class="empty">没有匹配的任务。试试其他关键词。</p>'}</div><div class="notice">状态说明：25 个分级场景的原设计仍是 design_only，工程切片只覆盖其中声明的部分；R 系列是独立机制预实验。M1 四门通过的切片标为 gates_green，不是完整目录就绪。难度尚未经多模型实测校准，不能据此声称达到任何模型段位。</div>`;$('#catalogStart').onclick=()=>{view='start';render()};$('#search').oninput=e=>{query=e.target.value;const pos=e.target.selectionStart;renderCatalog();$('#search').focus();$('#search').setSelectionRange(pos,pos)};document.querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{tier=b.dataset.tier;renderCatalog()});bindDetails()}
 function bindDetails(){document.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>detail(b.dataset.detail))}
