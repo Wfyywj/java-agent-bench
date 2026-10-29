@@ -6,6 +6,7 @@ import json
 import os
 from unittest.mock import patch
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -213,6 +214,14 @@ class EvidenceIntegrityTests(unittest.TestCase):
         doc = passing_documents()[0]
         doc['gates']['mutants']['results'][0]['failed_assertions'] = []
         self.assertTrue(any('semantic assertion' in e for e in G.evidence_errors(doc)))
+
+    def test_directed_stale_gates_green_repro_blocks(self):
+        script = ROOT / 'docs/acceptance/fixtures/directed-counterexamples/stale-gates-green/repro.py'
+        run = subprocess.run([sys.executable, str(script)], cwd=ROOT, capture_output=True, text=True, timeout=180)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn('verdict: blocks', run.stdout)
+        self.assertIn('gate_status=stale', run.stdout)
+        self.assertNotIn('verdict: still-fails', run.stdout)
 
 
 if __name__ == '__main__':

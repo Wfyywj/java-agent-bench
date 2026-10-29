@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "directed-missing-slots",
+  "preregistered_at": "2026-01-01T00:00:00Z",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "track": "model",
+  "arms": {
+    "A": {
+      "model": "synthetic-model-A@fixture-v1",
+      "tool": "synthetic-cli@fixture-v1",
+      "workflow": "synthetic-prompt@fixture-v1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@fixture-v1",
+      "evaluator": "synthetic-assertions@fixture-v1-not-executed"
+    },
+    "B": {
+      "model": "synthetic-model-B@fixture-v1",
+      "tool": "synthetic-cli@fixture-v1",
+      "workflow": "synthetic-prompt@fixture-v1",
+      "budget": {
+        "wall_seconds": 120,
+        "max_tokens": 1000,
+        "max_tool_calls": 20
+      },
+      "environment": "synthetic-environment@fixture-v1",
+      "evaluator": "synthetic-assertions@fixture-v1-not-executed"
+    }
+  },
+  "pairs": [
+    {
+      "implementation_id": "synthetic-directed-task",
+      "manifest_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "repeat": 1
+    }
+  ]
+}

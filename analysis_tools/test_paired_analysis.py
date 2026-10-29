@@ -165,6 +165,15 @@ class PairedAnalysisTests(unittest.TestCase):
                 if expected != 1:
                     self.assertIn('SYNTHETIC TEST FIXTURES NOT MODEL RESULTS', run.stdout)
 
+    def test_directed_missing_planned_slot_repro_blocks(self):
+        script = ROOT.parent / 'docs/acceptance/fixtures/directed-counterexamples/missing-planned-slots/repro.py'
+        run = subprocess.run([sys.executable, str(script)], cwd=ROOT.parent, capture_output=True, text=True, timeout=120)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn('verdict: blocks', run.stdout)
+        self.assertIn('full_plan_exit: 2', run.stdout)
+        self.assertIn('status=incomplete', run.stdout)
+        self.assertIn('recipe_analyze_exit: 2', run.stdout)
+
 
 if __name__ == '__main__':
     unittest.main()

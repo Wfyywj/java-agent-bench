@@ -1,0 +1,10 @@
+{
+  "schema_version": "synthetic-replay-display-1.0",
+  "data_class": "SYNTHETIC TEST FIXTURES NOT MODEL RESULTS",
+  "website_import_supported": true,
+  "freeze_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "slots": [],
+  "analysis": {
+    "status": "incomplete"
+  }
+}
