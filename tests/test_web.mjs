@@ -502,3 +502,30 @@ test('B01 detail lists slice scope and risks in readable labels, and marks dupli
  assert.doesNotMatch(r01,/完整设计尚未实现|&quot;task_version&quot;|&quot;runtime&quot;/);
  assert.match(r01,/不是安全沙箱/);
 });
+
+test('an earlier synthetic file read that finishes later does not replace the later selection',async()=>{
+ const display=name=>({schema_version:'synthetic-replay-display-1.0',data_class:'SYNTHETIC TEST FIXTURES NOT MODEL RESULTS',website_import_supported:false,freeze_sha256:name==='A'?'a'.repeat(64):'b'.repeat(64),slots:[{slot_id:'slot-'+name,state:'success'}],analysis:{status:'incomplete'}});
+ const textOf=doc=>JSON.stringify(doc);
+ const docA=display('A'), docB=display('B');
+ let releaseA;const gateA=new Promise(resolve=>{releaseA=resolve});
+ const file=(name,doc,read)=>({name,size:Buffer.byteLength(textOf(doc)),text:read});
+ const a=await app();
+ a.run("syntheticAttempted=true;view='synthetic';render()");
+ const input=a.get('#syntheticFile');
+ const selectA=input.onchange({target:{files:[file('selection-a.json',docA,()=>gateA.then(()=>textOf(docA)))]}});
+ const selectB=input.onchange({target:{files:[file('selection-b.json',docB,async()=>textOf(docB))]}});
+ await selectB;
+ assert.match(a.get('#content').innerHTML,/已只读打开 selection-b\.json/);
+ assert.match(a.get('#content').innerHTML,/slot-B/);
+ releaseA();
+ await selectA;
+ const page=a.get('#content').innerHTML;
+ assert.match(page,/当前来源：selection-b\.json/);
+ assert.match(page,/已只读打开 selection-b\.json/);
+ assert.match(page,/slot-B/);
+ assert.doesNotMatch(page,/selection-a\.json/);
+ assert.doesNotMatch(page,/slot-A/);
+ assert.equal(a.run('syntheticSource'),'selection-b.json');
+ assert.equal(a.run('syntheticDoc.slots[0].slot_id'),'slot-B');
+ assert.equal(a.run('syntheticError'),false);
+});
