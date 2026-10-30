@@ -1,0 +1,1558 @@
+{
+  "schema_version": "engineering-1.0",
+  "implementation_id": "S01-slice",
+  "design_id": "S01",
+  "dataset": "public-dev-slices",
+  "timestamp_utc": "2026-10-30T09:57:01.066470+00:00",
+  "submission_sha256": "51c3895152e875afa7d8fe4873f89fa838ad8fda54258614246582c9d29e141b",
+  "manifest_sha256": "0e5da45d2cfab79fcf1abf870ebb9d53a7f99e01c6018a0dbe2df47f6d81eba6",
+  "candidate_files": {
+    "src/bench/Main.java": "c63ab1ae9c804e007bec76f9803c16a71d0ce7852c9a412d1a4cce0746dacb29",
+    "src/bench/RefundService.java": "021310875cd70c2c03310b4b0a3980dd93e0d7b908bebb3996e6af5b179fc68e",
+    "src/bench/Signature.java": "0c6dbe3e7aa4b32c791942aec242d137c45f803fc60f14e8eb4bbb586fcc08e4",
+    "src/bench/Store.java": "a557cc7bfd20ce39be29d72939aee8f16880ad156fef185c6bc58c393635647f"
+  },
+  "environment": {
+    "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "platform": "Linux-6.12.94+-x86_64-with-glibc2.39"
+  },
+  "evaluator_provenance": {
+    "git_head": "a2022a15e643f3ef4be7696adf2ccc433ae24ccf",
+    "working_tree_dirty": false,
+    "note": "Official comparisons require a clean checkout at this commit; manifest hash alone does not lock all evaluator code."
+  },
+  "elapsed_seconds": 12.456,
+  "status": "passed",
+  "passed": true,
+  "exit_code": 0,
+  "cost_usd": null,
+  "model": null,
+  "security": "TRUSTED LOCAL CODE ONLY; NOT A SECURITY SANDBOX",
+  "warning": "NOT a secure sandbox; trusted code only; do not evaluate untrusted model or third-party output. See harness/INTEGRITY.md. 非安全沙箱；仅可信代码；禁止直接运行不可信模型或第三方输出。",
+  "report": {
+    "id": "S01",
+    "candidate": "/tmp/jab-accept-s01-ref",
+    "compiled": true,
+    "passed": true,
+    "checks": [
+      {
+        "name": "terminal_and_out_of_order",
+        "acceptance": "S01-A01",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "SUCCEEDED",
+              "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "PROCESSING",
+              "9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "PROCESSING",
+              "981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "duplicate_after_restart",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "conflicting_terminal",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "FAILED",
+              "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "invalid_signature_no_write",
+        "acceptance": "S01-A03",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "00",
+              "none"
+            ],
+            "actual": "401 invalid_signature",
+            "expected": "401 invalid_signature",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "PENDING|0|false",
+            "expected": "PENDING|0|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "precommit_retry",
+        "acceptance": "S01-A04",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "before"
+            ],
+            "actual": "503 retry",
+            "expected": "503 retry",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "PENDING|0|false",
+            "expected": "PENDING|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "postcommit_lost_response",
+        "acceptance": "S01-A04",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "after"
+            ],
+            "actual": "503 response_lost",
+            "expected": "503 response_lost",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "cancel_after_success",
+        "acceptance": "S01-A05",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "CANCELLED",
+              "a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "bad_sequence_and_unknown",
+        "acceptance": "S01-A05",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "-",
+              "SUCCEEDED",
+              "35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e",
+              "none"
+            ],
+            "actual": "422 invalid_sequence",
+            "expected": "422 invalid_sequence",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "missing",
+              "1",
+              "SUCCEEDED",
+              "3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5",
+              "none"
+            ],
+            "actual": "404 unknown_refund",
+            "expected": "404 unknown_refund",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "PENDING|0|false",
+            "expected": "PENDING|0|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "same_sequence_conflict",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "PROCESSING",
+              "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "409 event_conflict",
+            "expected": "409 event_conflict",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "success_over_cancellation_request",
+        "acceptance": "S01-A05",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "CANCELLED",
+              "7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "terminal_succeeded_to_failed_newer_restart",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "SUCCEEDED",
+              "4cf48aee8f637b3cb1c113d3d444c1a5839fad17f4bbdf154e86bd15c1ace14f",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "terminal_succeeded_to_failed_older_restart",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "SUCCEEDED",
+              "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "SUCCEEDED",
+              "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "SUCCEEDED",
+              "4cf48aee8f637b3cb1c113d3d444c1a5839fad17f4bbdf154e86bd15c1ace14f",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "PROCESSING",
+              "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "SUCCEEDED",
+              "dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "terminal_failed_to_succeeded_newer_restart",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "FAILED",
+              "cdc47ed7649cd7453a7c87f5980052935f69c220f2391f3cb86a9f61af6ee668",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "terminal_failed_to_succeeded_older_restart",
+        "acceptance": "S01-A02",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "FAILED",
+              "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "FAILED",
+              "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "FAILED",
+              "cdc47ed7649cd7453a7c87f5980052935f69c220f2391f3cb86a9f61af6ee668",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "PROCESSING",
+              "f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "3",
+              "FAILED",
+              "dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "terminal_succeeded_to_failed_precommit_retry_restart",
+        "acceptance": "S01-A04",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "SUCCEEDED",
+              "4cf48aee8f637b3cb1c113d3d444c1a5839fad17f4bbdf154e86bd15c1ace14f",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "before"
+            ],
+            "actual": "503 retry",
+            "expected": "503 retry",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|false",
+            "expected": "SUCCEEDED|1|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "FAILED",
+              "e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "SUCCEEDED",
+              "faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "SUCCEEDED|1|true",
+            "expected": "SUCCEEDED|1|true",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "name": "terminal_failed_to_succeeded_precommit_retry_restart",
+        "acceptance": "S01-A04",
+        "passed": true,
+        "steps": [
+          {
+            "args": [
+              "init"
+            ],
+            "actual": "200 initialized",
+            "expected": "200 initialized",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 applied",
+            "expected": "200 applied",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "4",
+              "FAILED",
+              "cdc47ed7649cd7453a7c87f5980052935f69c220f2391f3cb86a9f61af6ee668",
+              "none"
+            ],
+            "actual": "200 stale",
+            "expected": "200 stale",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "before"
+            ],
+            "actual": "503 retry",
+            "expected": "503 retry",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|false",
+            "expected": "FAILED|0|false",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "409 manual_review",
+            "expected": "409 manual_review",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "2",
+              "SUCCEEDED",
+              "8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          },
+          {
+            "args": [
+              "callback",
+              "r1",
+              "1",
+              "FAILED",
+              "13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d",
+              "none"
+            ],
+            "actual": "200 duplicate",
+            "expected": "200 duplicate",
+            "passed": true
+          },
+          {
+            "args": [
+              "get",
+              "r1"
+            ],
+            "actual": "FAILED|0|true",
+            "expected": "FAILED|0|true",
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "visibility": "public development tests; not hidden",
+    "sandbox": "trusted local code only"
+  },
+  "log": "{\"id\": \"S01\", \"candidate\": \"/tmp/jab-accept-s01-ref\", \"compiled\": true, \"passed\": true, \"checks\": [{\"name\": \"terminal_and_out_of_order\", \"acceptance\": \"S01-A01\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"SUCCEEDED\", \"dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"PROCESSING\", \"9d8883b7a1d34497695de938dd1224219535742554179e88a4af832d8564b475\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"PROCESSING\", \"981acf2abcec374508d7e73bc4539486b8d549e673f353ac883a0a8f53c37cae\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}]}, {\"name\": \"duplicate_after_restart\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}]}, {\"name\": \"conflicting_terminal\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"FAILED\", \"dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}]}, {\"name\": \"invalid_signature_no_write\", \"acceptance\": \"S01-A03\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"00\", \"none\"], \"actual\": \"401 invalid_signature\", \"expected\": \"401 invalid_signature\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"PENDING|0|false\", \"expected\": \"PENDING|0|false\", \"passed\": true}]}, {\"name\": \"precommit_retry\", \"acceptance\": \"S01-A04\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"before\"], \"actual\": \"503 retry\", \"expected\": \"503 retry\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"PENDING|0|false\", \"expected\": \"PENDING|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}]}, {\"name\": \"postcommit_lost_response\", \"acceptance\": \"S01-A04\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"after\"], \"actual\": \"503 response_lost\", \"expected\": \"503 response_lost\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}]}, {\"name\": \"cancel_after_success\", \"acceptance\": \"S01-A05\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"CANCELLED\", \"a30a1b581a15b742c773b66f100242c2eac1f23576e30273233b372f5bb6d3c8\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}]}, {\"name\": \"bad_sequence_and_unknown\", \"acceptance\": \"S01-A05\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"-\", \"SUCCEEDED\", \"35ccdff3335b938a55d813a52fda82cc7c5d3fdb9fe343687a99d9ab81fef63e\", \"none\"], \"actual\": \"422 invalid_sequence\", \"expected\": \"422 invalid_sequence\", \"passed\": true}, {\"args\": [\"callback\", \"missing\", \"1\", \"SUCCEEDED\", \"3061b2eac1d9ac9ad8169ca714991a1d2b3f234710a23cf495231b52fa7710e5\", \"none\"], \"actual\": \"404 unknown_refund\", \"expected\": \"404 unknown_refund\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"PENDING|0|false\", \"expected\": \"PENDING|0|false\", \"passed\": true}]}, {\"name\": \"same_sequence_conflict\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"PROCESSING\", \"f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"409 event_conflict\", \"expected\": \"409 event_conflict\", \"passed\": true}]}, {\"name\": \"success_over_cancellation_request\", \"acceptance\": \"S01-A05\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"CANCELLED\", \"7aab69c072a6ab76cb3d52fdfde07fc58382e9658072feb30220186aa1695e70\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}]}, {\"name\": \"terminal_succeeded_to_failed_newer_restart\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"SUCCEEDED\", \"4cf48aee8f637b3cb1c113d3d444c1a5839fad17f4bbdf154e86bd15c1ace14f\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}]}, {\"name\": \"terminal_succeeded_to_failed_older_restart\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"SUCCEEDED\", \"dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"SUCCEEDED\", \"dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"SUCCEEDED\", \"4cf48aee8f637b3cb1c113d3d444c1a5839fad17f4bbdf154e86bd15c1ace14f\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"PROCESSING\", \"f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"SUCCEEDED\", \"dcdf7311001e905d720eae7cad89c0455c66b4c21ced7f8bfd53355c1c00e483\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}]}, {\"name\": \"terminal_failed_to_succeeded_newer_restart\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"FAILED\", \"cdc47ed7649cd7453a7c87f5980052935f69c220f2391f3cb86a9f61af6ee668\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}]}, {\"name\": \"terminal_failed_to_succeeded_older_restart\", \"acceptance\": \"S01-A02\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"FAILED\", \"dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"FAILED\", \"dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"FAILED\", \"cdc47ed7649cd7453a7c87f5980052935f69c220f2391f3cb86a9f61af6ee668\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"PROCESSING\", \"f5a7a8b6827f9cad5ed1cc8bc6f6d62e8549b1f300582b6616d68702a8561d44\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"3\", \"FAILED\", \"dde14eeb002568c730e95345b3809b194fef7966132deed5e0d3fe086e2555c6\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}]}, {\"name\": \"terminal_succeeded_to_failed_precommit_retry_restart\", \"acceptance\": \"S01-A04\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"SUCCEEDED\", \"4cf48aee8f637b3cb1c113d3d444c1a5839fad17f4bbdf154e86bd15c1ace14f\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"before\"], \"actual\": \"503 retry\", \"expected\": \"503 retry\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|false\", \"expected\": \"SUCCEEDED|1|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"FAILED\", \"e50957f1b3d4691a9ba498562ec3fef397f95de0b3c06b58f392aacda8501f0b\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"SUCCEEDED\", \"faf39bd6490b2f125ba930536572d6aa9058d52292e5985cd0dae7a76df72688\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"SUCCEEDED|1|true\", \"expected\": \"SUCCEEDED|1|true\", \"passed\": true}]}, {\"name\": \"terminal_failed_to_succeeded_precommit_retry_restart\", \"acceptance\": \"S01-A04\", \"passed\": true, \"steps\": [{\"args\": [\"init\"], \"actual\": \"200 initialized\", \"expected\": \"200 initialized\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 applied\", \"expected\": \"200 applied\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"4\", \"FAILED\", \"cdc47ed7649cd7453a7c87f5980052935f69c220f2391f3cb86a9f61af6ee668\", \"none\"], \"actual\": \"200 stale\", \"expected\": \"200 stale\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"before\"], \"actual\": \"503 retry\", \"expected\": \"503 retry\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|false\", \"expected\": \"FAILED|0|false\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"409 manual_review\", \"expected\": \"409 manual_review\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"2\", \"SUCCEEDED\", \"8c9f0251bb6741fe0856639e05ac3ec73d42b059995149a522246507f456563e\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}, {\"args\": [\"callback\", \"r1\", \"1\", \"FAILED\", \"13eb5449c7828aef75dc98acb9db9f18f98e5aed84d4057b6dd242670ec1c72d\", \"none\"], \"actual\": \"200 duplicate\", \"expected\": \"200 duplicate\", \"passed\": true}, {\"args\": [\"get\", \"r1\"], \"actual\": \"FAILED|0|true\", \"expected\": \"FAILED|0|true\", \"passed\": true}]}], \"visibility\": \"public development tests; not hidden\", \"sandbox\": \"trusted local code only\"}\n"
+}
