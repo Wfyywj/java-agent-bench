@@ -91,3 +91,8 @@ example → freeze → 独立 A/B 工作区 → synthetic replay envelope → �
 仅 B01 合成数据契约回放，不启动 agent 或 Java evaluator；不接收真实/参考解证据。
 全部槽位（含 missing / 开始前 cancelled）保留，未知成本/耗时为 null。
 页面接口尚待接入，当前网站 importer 不支持该展示 fixture。
+
+## B02/S01 workflow pilot 启动前材料
+
+[离线 pilot packet](PILOT.md) 提供一个 B02 smoke 与 12 个正式对比预留槽位，
+锁定六阶段用户 workflow 文本及相同任务输入。全部标记 NOT_RUN；不是模型执行器或结果。
