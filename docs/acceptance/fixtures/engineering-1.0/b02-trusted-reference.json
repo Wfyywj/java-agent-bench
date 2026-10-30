@@ -1,0 +1,52 @@
+{
+  "schema_version": "engineering-1.0",
+  "implementation_id": "B02-slice",
+  "design_id": "B02",
+  "dataset": "public-dev-slices",
+  "timestamp_utc": "2026-10-30T09:56:56.951115+00:00",
+  "submission_sha256": "49c5f7dec32ed98cc640c195346c545468d316ea5e30b8609c5753100ca0ca9f",
+  "manifest_sha256": "8a85b5f838361506ab14bf9c1b5182c7fa20e8ea475bba85a847bc64d66e374f",
+  "candidate_files": {
+    "src/App.java": "f2e0e5bd3a03cb1b27d5dd49a0fc8b2a805a0fde340b6df8890d29bd6771a304",
+    "src/Model.java": "74728fe0c22d6ede5d9ba84052eefdaafb0349eed504c9e9dd98eb7351d6f71a",
+    "src/ReturnService.java": "8a82efd3815319ffc8c4bd1dc3b5fa50db522d984c1023c9efd38b18df5f9c74",
+    "src/Store.java": "c398f406abca667fe5e4b0b4f6b289e7b8b8eef42cde2ec579207c28ba993d08"
+  },
+  "environment": {
+    "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "platform": "Linux-6.12.94+-x86_64-with-glibc2.39"
+  },
+  "evaluator_provenance": {
+    "git_head": "a2022a15e643f3ef4be7696adf2ccc433ae24ccf",
+    "working_tree_dirty": false,
+    "note": "Official comparisons require a clean checkout at this commit; manifest hash alone does not lock all evaluator code."
+  },
+  "elapsed_seconds": 8.344,
+  "status": "passed",
+  "passed": true,
+  "exit_code": 0,
+  "cost_usd": null,
+  "model": null,
+  "security": "TRUSTED LOCAL CODE ONLY; NOT A SECURITY SANDBOX",
+  "warning": "NOT a secure sandbox; trusted code only; do not evaluate untrusted model or third-party output. See harness/INTEGRITY.md. 非安全沙箱；仅可信代码；禁止直接运行不可信模型或第三方输出。",
+  "report": {
+    "task_id": "B02",
+    "passed": true,
+    "status": "passed",
+    "checks": {
+      "B02-A01_replay_restart": "PASS",
+      "B02-A02_payload_conflicts": "PASS",
+      "B02-A03_rollback_write_1": "PASS",
+      "B02-A03_rollback_write_2": "PASS",
+      "B02-A03_rollback_write_3": "PASS",
+      "B02-A04_equipment_binding_false": "PASS",
+      "B02-A04_equipment_binding_true": "PASS",
+      "B02-A04_tenant_lifecycle": "PASS",
+      "B02-A05_concurrent_http": "PASS",
+      "B02-A05_damaged_review": "PASS"
+    },
+    "scope": "trusted local file adapter; not PostgreSQL or a secure sandbox"
+  },
+  "log": "{\n  \"task_id\": \"B02\",\n  \"passed\": true,\n  \"status\": \"passed\",\n  \"checks\": {\n    \"B02-A01_replay_restart\": \"PASS\",\n    \"B02-A02_payload_conflicts\": \"PASS\",\n    \"B02-A03_rollback_write_1\": \"PASS\",\n    \"B02-A03_rollback_write_2\": \"PASS\",\n    \"B02-A03_rollback_write_3\": \"PASS\",\n    \"B02-A04_equipment_binding_false\": \"PASS\",\n    \"B02-A04_equipment_binding_true\": \"PASS\",\n    \"B02-A04_tenant_lifecycle\": \"PASS\",\n    \"B02-A05_concurrent_http\": \"PASS\",\n    \"B02-A05_damaged_review\": \"PASS\"\n  },\n  \"scope\": \"trusted local file adapter; not PostgreSQL or a secure sandbox\"\n}\n"
+}
