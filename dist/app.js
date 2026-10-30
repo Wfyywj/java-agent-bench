@@ -255,13 +255,14 @@ async function loadSyntheticSample(){
 async function onSyntheticFile(e){
  const input=e.target, file=input.files&&input.files[0];
  if(!file)return;
- syntheticToken++;syntheticLoading=false;
+ const token=++syntheticToken;syntheticLoading=false;
  try{
   if(file.size>2*1024*1024)throw Error('已拒绝：文件超过 2 MB。本页没有把该文件写入「结果与证据」。');
   let parsed;try{parsed=JSON.parse(await file.text())}catch{throw Error('已拒绝：不是合法 JSON。结果列表没有变化。')}
+  if(token!==syntheticToken)return;
   syntheticDoc=validateSyntheticDisplay(parsed);syntheticSource=file.name;syntheticError=false;syntheticMessage='已只读打开 '+file.name+'。这不是模型成绩，也没有进入「结果与证据」。';
- }catch(err){syntheticError=true;syntheticMessage=err.message||'已拒绝该文件。'}
- finally{input.value='';if(view==='synthetic')renderSynthetic()}
+ }catch(err){if(token!==syntheticToken)return;syntheticError=true;syntheticMessage=err.message||'已拒绝该文件。'}
+ finally{input.value='';if(token===syntheticToken&&view==='synthetic')renderSynthetic()}
 }
 function renderSynthetic(){
  const banner='<div class="synthetic-banner" id="syntheticBanner"><b>SYNTHETIC TEST FIXTURES NOT MODEL RESULTS</b><p>合成演练。这是工具写入的夹具断言，不是模型试点，不是 Java 验收输出，也不是模型分数或已校准的排行榜。</p></div>';
