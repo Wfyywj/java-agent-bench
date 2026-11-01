@@ -118,7 +118,7 @@ const kept = r01Import.results;
 const failures = [];
 if (r01Import.results !== 1) failures.push('ordinary R01 reference was not imported');
 if (displayImport.results !== kept) failures.push('display import changed the result list');
-if (!String(displayImport.message).includes('不是支持的单次验收结果')) failures.push('display import error: ' + displayImport.message);
+if (!String(displayImport.message).includes('已拒绝：这是合成演练 display，不是单次验收结果')) failures.push('display import error: ' + displayImport.message);
 
 if (!String(displayImport.message).includes('本批未导入任何记录')) failures.push('display import was not refused as a batch');
 for (const [name, value] of [

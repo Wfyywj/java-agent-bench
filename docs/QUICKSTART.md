@@ -63,6 +63,8 @@ python3 scripts/engineering.py evaluate B01 /tmp/jab-b01-control/candidate \
 
 在网站“结果与证据”导入 evaluation.json。先看任务身份、manifest 版本、严格通过状态和失败细节。文件导入并不认证来源，参考解自检也不是模型成绩。未测费用保留未知，不能填零。
 
+“真实实验”是另一页，不从这里导入。它读 `dot-native-results-1.0`：冒烟单独一区，不进入 12 格对照；失败、取消、超时、缺失和未评估留在默认视图；未知费用显示「未知」。这不是模型排行榜。说明见 [真实实验页](samples/real-experiment-board.md)。
+
 真正比较 skill 或工作流时，保持模型与其他条件相同，以全新的独立工作区运行 A/B，提前登记题目与重复次数，保留失败、缺失和基础设施错误。正式配对分析仍使用 [analysis_tools](../analysis_tools/README.md) 的严格计划与记录格式；普通验收 JSON 不能直接当作完整 agent trial。
 
 ## 维护者：一个命令检查工具
