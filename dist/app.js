@@ -45,6 +45,8 @@ function restoreResults(){try{const raw=localStorage.getItem(resultKey);if(!raw)
 const isObject=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 function savedPlan(){try{const p=JSON.parse(localStorage.getItem(stateKey)||'{}');return isObject(p)?p:{}}catch{return {}}}
 function validateResult(r){
+ if(r?.schema_version==='provisional-real-experiment-board-0'||r?.data_class==='PLACEHOLDER SAMPLE NOT MODEL RESULTS')throw Error('已拒绝：这是真实实验页的占位样例，不是单次验收结果。它没有进入结果列表，也不能当作模型成绩。请到「真实实验」查看。');
+ if(r?.schema_version==='synthetic-replay-display-1.0'||r?.data_class==='SYNTHETIC TEST FIXTURES NOT MODEL RESULTS')throw Error('已拒绝：这是合成演练 display，不是单次验收结果。请到「合成演练」打开，不要导入「结果与证据」。');
  if(r?.schema_version==='engineering-1.0')return validateEngineeringResult(r);
  const known=runnables.find(t=>t.id===r?.task_id&&t.status==='runnable');
  const statuses=['build_failed','compile_timeout','run_timeout','verification_failed','passed','compile_output_limit','run_output_limit'];
@@ -146,6 +148,7 @@ function validateSyntheticDisplay(doc){
   if(schema==='0.1')rejectSynthetic('已拒绝：这是实验计划草案（schema_version 0.1），不是合成演练 display.json。');
   if(schema==='recipe-1.0')rejectSynthetic('已拒绝：这是 recipe 配置（schema_version recipe-1.0），不是 analysis/display.json。');
   if(schema==='trial-envelope-1.0')rejectSynthetic('已拒绝：这是单个槽位信封（schema_version trial-envelope-1.0）。请打开整份 display.json，不要把单个 slot 当结果导入。');
+  if(schema==='provisional-real-experiment-board-0')rejectSynthetic('已拒绝：这是真实实验页的占位样例（provisional-real-experiment-board-0），不是合成演练 display.json。请到「真实实验」打开。文件没有进入结果列表。');
   if(schema==='1.0'&&doc.data_class===SYNTHETIC_CLASS)rejectSynthetic('已拒绝：这是嵌套的严格分析报告（schema_version 1.0），不是 synthetic-replay-display-1.0。不要把 analysis 单独送进结果导入。请选择 analysis/display.json。');
   if(schema==='1.0')rejectSynthetic('已拒绝：这是普通网站导入格式（schema_version 1.0 的单次验收结果）。请到「结果与证据」导入。本页只接受 synthetic-replay-display-1.0，该文件没有进入结果列表。');
   rejectSynthetic('已拒绝：schema_version 必须是 synthetic-replay-display-1.0。当前为 '+String(schema??'（缺失）')+'。文件没有进入结果列表。');
@@ -271,7 +274,241 @@ function renderSynthetic(){
  $('#syntheticFile').onchange=onSyntheticFile;
  if(!syntheticDoc&&!syntheticLoading&&!syntheticAttempted){syntheticAttempted=true;loadSyntheticSample()}
 }
-function render(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));({start:renderStart,catalog:renderCatalog,planner:renderPlanner,results:renderResults,synthetic:renderSynthetic,protocol:renderProtocol,roadmap:renderRoadmap}[view])()}
+// Provisional read-only board. Never calls validateResult and never writes `results`.
+// Placement comes from EXPERIMENT_ROSTER. Swap in a later sample by editing this adapter.
+const EXPERIMENT_SCHEMA='provisional-real-experiment-board-0';
+const EXPERIMENT_CLASS='PLACEHOLDER SAMPLE NOT MODEL RESULTS';
+const EXPERIMENT_SAMPLE_URLS=[
+ ['../docs/samples/real-experiment-board.placeholder.json','仓库占位样例 docs/samples/real-experiment-board.placeholder.json'],
+ ['samples/real-experiment-board.placeholder.json','站点副本 dist/samples/real-experiment-board.placeholder.json']
+];
+const EXPERIMENT_ROSTER=[
+ {slot_id:'smoke-B02-no-skill',phase:'smoke',task:'B02',arm:'no-skill',repeat:null},
+ {slot_id:'B02-r1-no-skill',phase:'comparison',task:'B02',arm:'no-skill',repeat:1},
+ {slot_id:'B02-r1-workflow',phase:'comparison',task:'B02',arm:'workflow',repeat:1},
+ {slot_id:'B02-r2-workflow',phase:'comparison',task:'B02',arm:'workflow',repeat:2},
+ {slot_id:'B02-r2-no-skill',phase:'comparison',task:'B02',arm:'no-skill',repeat:2},
+ {slot_id:'B02-r3-no-skill',phase:'comparison',task:'B02',arm:'no-skill',repeat:3},
+ {slot_id:'B02-r3-workflow',phase:'comparison',task:'B02',arm:'workflow',repeat:3},
+ {slot_id:'S01-r1-no-skill',phase:'comparison',task:'S01',arm:'no-skill',repeat:1},
+ {slot_id:'S01-r1-workflow',phase:'comparison',task:'S01',arm:'workflow',repeat:1},
+ {slot_id:'S01-r2-workflow',phase:'comparison',task:'S01',arm:'workflow',repeat:2},
+ {slot_id:'S01-r2-no-skill',phase:'comparison',task:'S01',arm:'no-skill',repeat:2},
+ {slot_id:'S01-r3-no-skill',phase:'comparison',task:'S01',arm:'no-skill',repeat:3},
+ {slot_id:'S01-r3-workflow',phase:'comparison',task:'S01',arm:'workflow',repeat:3}
+];
+const EXPERIMENT_STATES={
+ not_run:{zh:'未运行', note:'启动条件待确认。不是失败，不是零分，不计入成绩。'},
+ success:{zh:'样例·成功', note:'占位文件里的状态词。不是模型通过，不计入成绩。'},
+ failure:{zh:'失败', note:'失败槽位留在默认视图里。'},
+ infrastructure_failure:{zh:'基础设施失败', note:'单独保留。不并入失败，也不从板上拿掉。'},
+ missing:{zh:'缺失', note:'预定观测不可用。格子仍在。与取消不是同一状态。'},
+ cancelled:{zh:'取消', note:'取消后的槽位仍可见。不改写成缺失，也不隐藏。'}
+};
+let experimentDoc=null, experimentBoard=null, experimentMessage='', experimentSource='', experimentError=false, experimentLoading=false, experimentAttempted=false, experimentToken=0;
+function rejectExperiment(message){throw Error(message)}
+function validateExperimentBoard(doc){
+ if(Array.isArray(doc))rejectExperiment('已拒绝：这是 JSON 数组，属于普通结果备份或批量导入。真实实验页不把数组写入「结果与证据」。');
+ if(!isObject(doc))rejectExperiment('已拒绝：文件不是 JSON 对象。');
+ const schema=doc.schema_version;
+ if(schema!==EXPERIMENT_SCHEMA){
+  if(schema==='synthetic-replay-display-1.0')rejectExperiment('已拒绝：这是合成演练 display.json。请到「合成演练」打开。本页没有把它当成真实实验。');
+  if(schema==='engineering-1.0'||schema==='1.0')rejectExperiment('已拒绝：这是单次验收结果。请到「结果与证据」导入。本页不接收成绩。');
+  if(schema==='recipe-1.0'||schema==='0.1'||schema==='trial-envelope-1.0')rejectExperiment('已拒绝：这不是真实实验占位板。schema_version 为 '+schema+'。');
+  rejectExperiment('已拒绝：schema_version 必须是 provisional-real-experiment-board-0（占位，不是已冻结协议）。当前为 '+String(schema??'（缺失）')+'。');
+ }
+ if(doc.data_class!==EXPERIMENT_CLASS)rejectExperiment('已拒绝：data_class 必须是 PLACEHOLDER SAMPLE NOT MODEL RESULTS。本页不接收 actual 或合成标签。');
+ if(doc.website_import_supported!==false)rejectExperiment('已拒绝：website_import_supported 必须为 false。');
+ if(doc.protocol_status!=='provisional_pending_fixed_format')rejectExperiment('已拒绝：protocol_status 必须为 provisional_pending_fixed_format。正式协议尚未接入。');
+ if(doc.counts_as_leaderboard!==false)rejectExperiment('已拒绝：counts_as_leaderboard 必须为 false。这不是排行榜。');
+ if(!Array.isArray(doc.slots))rejectExperiment('已拒绝：缺少 slots 数组。');
+ if(!Array.isArray(doc.predetermined_slots))rejectExperiment('已拒绝：缺少 predetermined_slots。页面要用它核对 1 个冒烟槽和 12 个对照槽。');
+ if(doc.predetermined_slots.length!==EXPERIMENT_ROSTER.length)rejectExperiment('已拒绝：预定槽位数量必须是 13（冒烟 1 + 对照 12）。');
+ for(let i=0;i<EXPERIMENT_ROSTER.length;i++){
+  const got=doc.predetermined_slots[i], exp=EXPERIMENT_ROSTER[i];
+  if(!isObject(got)||got.slot_id!==exp.slot_id||got.phase!==exp.phase||got.task!==exp.task||got.arm!==exp.arm||got.repeat!==exp.repeat)rejectExperiment('已拒绝：predetermined_slots['+i+'] 与页面预定名册不一致。');
+ }
+ if(doc.version!=null&&!isObject(doc.version))rejectExperiment('已拒绝：version 必须是对象或 null。');
+ return doc;
+}
+function experimentResourceKnown(value, reason){
+ if(value==null||value==='')return false;
+ if(typeof value!=='number'||!Number.isFinite(value)||value<0)return false;
+ if(typeof reason==='string'&&reason.trim())return false;
+ return true;
+}
+function experimentCostKind(value, reason){return experimentResourceKnown(value, reason)?'measured':'unknown'}
+function experimentResourceHtml(value, reason){
+ if(!experimentResourceKnown(value, reason))return unknownHtml();
+ return '<b class="measured">'+esc(value)+'</b>';
+}
+function experimentStateKind(state){return Object.prototype.hasOwnProperty.call(EXPERIMENT_STATES, state)?state:'unknown'}
+function experimentStateMeta(state){
+ if(experimentStateKind(state)==='unknown')return {zh:state?String(state):'未标明', note:'文件给出了名单以外的状态。该槽位仍然保留。'};
+ return EXPERIMENT_STATES[state];
+}
+function experimentStatePill(state){
+ const kind=experimentStateKind(state), meta=experimentStateMeta(state), raw=kind==='unknown'?(state||'unknown'):state;
+ return `<span class="statepill state-${kind}">${esc(meta.zh)} · ${esc(raw)}</span>`;
+}
+function experimentPlaceLabel(slot){
+ if(slot.phase==='smoke')return '冒烟 · 不计入 12 个对照槽';
+ if(slot.phase==='extra')return '不在预定名册内 · 不占 12 槽';
+ if(slot.arm==='no-skill')return '对照臂 · no-skill';
+ if(slot.arm==='workflow')return '处理臂 · workflow';
+ return '臂 · '+String(slot.arm??'');
+}
+function experimentRepeatLabel(slot){return slot.phase==='smoke'||slot.repeat==null?'不计入重复编号':'repeat '+String(slot.repeat)}
+function experimentBusinessHtml(value){
+ if(value==null||value==='')return unknownHtml();
+ if(value==='not_evaluated')return esc('未评估 · not_evaluated');
+ if(typeof value!=='string')return unknownHtml();
+ return esc(value)+'<span class="small"> 文件原文，不是分数。</span>';
+}
+function experimentFingerprintValue(key, value){
+ if(value==null||value==='')return unknownHtml();
+ if(typeof value==='number'||(typeof value!=='string'))return unknownHtml();
+ if(key==='fingerprint_status'&&value==='unfrozen')return esc('未冻结');
+ return `<span class="mono">${esc(value)}</span>`;
+}
+function experimentFingerprint(version){
+ const v=isObject(version)?version:{};
+ const rows=[['fingerprint_status','指纹状态'],['model','模型'],['cli_tool','CLI'],['cli_version','CLI 版本'],['auth_mode','认证模式'],['skill_repository','skill 仓库'],['skill_revision','skill 提交'],['skill_config_sha256','skill 配置摘要'],['evaluator','验收器']];
+ const tasks=isObject(v.tasks)?v.tasks:{};
+ const taskBody=['B02','S01'].map(task=>{
+  const t=isObject(tasks[task])?tasks[task]:{};
+  const impl=typeof t.implementation_id==='string'?esc(t.implementation_id):unknownHtml();
+  return `<p class="small"><b>${esc(task)}</b><br>implementation_id ${impl}<br>manifest_sha256 ${experimentFingerprintValue('manifest_sha256', t.manifest_sha256)}<br>task_version ${experimentFingerprintValue('task_version', t.task_version)}</p>`;
+ }).join('');
+ return rows.map(([key,label])=>`<p class="small"><b>${esc(label)}</b><br>${experimentFingerprintValue(key, v[key])}</p>`).join('')+taskBody;
+}
+function experimentSlotFingerprint(slot){
+ const version=isObject(slot.version)?slot.version:{};
+ const keys=['manifest_sha256','source_content_sha256','workspace_artifact_sha256','run_artifact_sha256','freeze_sha256'];
+ const known=keys.map(key=>`<p class="small"><b>${esc(key)}</b><br>${experimentFingerprintValue(key, version[key])}</p>`).join('');
+ const extra=Object.keys(version).filter(key=>!keys.includes(key)).map(key=>`<p class="small"><b>${esc(key)}</b><br>${experimentFingerprintValue(key, version[key])}</p>`).join('');
+ return known+extra;
+}
+function experimentReasonLine(slot){
+ const costUnknown=!experimentResourceKnown(slot.cost_usd, slot.resource_unknown_reason);
+ const timeUnknown=!experimentResourceKnown(slot.elapsed_seconds, slot.resource_unknown_reason);
+ if(!costUnknown&&!timeUnknown)return '';
+ const reason=typeof slot.resource_unknown_reason==='string'&&slot.resource_unknown_reason.trim()?slot.resource_unknown_reason:'未提供';
+ return `<p class="small">resource_unknown_reason：${esc(reason)}</p>`;
+}
+function blankExperimentSlot(roster){
+ return {slot_id:roster.slot_id,phase:roster.phase,task:roster.task,arm:roster.arm,repeat:roster.repeat,state:'missing',absent:true,cost_usd:null,elapsed_seconds:null,resource_unknown_reason:'文件没有这条预定槽位',evidence:null,business_status:null,phase_mismatch:false,file_phase:null,version:null,extra_note:''};
+}
+function filledExperimentSlot(roster, raw){
+ return {slot_id:roster.slot_id,phase:roster.phase,task:roster.task,arm:roster.arm,repeat:roster.repeat,state:typeof raw.state==='string'&&raw.state?raw.state:'unknown',absent:false,cost_usd:Object.prototype.hasOwnProperty.call(raw,'cost_usd')?raw.cost_usd:null,elapsed_seconds:Object.prototype.hasOwnProperty.call(raw,'elapsed_seconds')?raw.elapsed_seconds:null,resource_unknown_reason:typeof raw.resource_unknown_reason==='string'?raw.resource_unknown_reason:null,evidence:raw.evidence===undefined?null:raw.evidence,business_status:typeof raw.business_status==='string'?raw.business_status:null,phase_mismatch:typeof raw.phase==='string'&&raw.phase!==roster.phase,file_phase:typeof raw.phase==='string'?raw.phase:null,version:isObject(raw.version)?raw.version:null,extra_note:''};
+}
+function extraExperimentSlot(raw, note){
+ return {slot_id:typeof raw.slot_id==='string'&&raw.slot_id?raw.slot_id:'（无 slot_id）',phase:'extra',task:typeof raw.task==='string'?raw.task:'',arm:typeof raw.arm==='string'?raw.arm:'',repeat:null,state:typeof raw.state==='string'&&raw.state?raw.state:'unknown',absent:false,cost_usd:Object.prototype.hasOwnProperty.call(raw,'cost_usd')?raw.cost_usd:null,elapsed_seconds:Object.prototype.hasOwnProperty.call(raw,'elapsed_seconds')?raw.elapsed_seconds:null,resource_unknown_reason:typeof raw.resource_unknown_reason==='string'?raw.resource_unknown_reason:null,evidence:raw.evidence===undefined?null:raw.evidence,business_status:typeof raw.business_status==='string'?raw.business_status:null,phase_mismatch:false,file_phase:typeof raw.phase==='string'?raw.phase:null,version:isObject(raw.version)?raw.version:null,extra_note:note};
+}
+function adaptExperimentBoard(doc){
+ validateExperimentBoard(doc);
+ const seen=new Map(), extras=[];
+ for(const raw of doc.slots){
+  if(!isObject(raw)){extras.push(extraExperimentSlot({}, '这条记录不是对象，仍留在额外区，不进入 12 槽。'));continue}
+  const id=typeof raw.slot_id==='string'?raw.slot_id:'';
+  const roster=EXPERIMENT_ROSTER.find(item=>item.slot_id===id);
+  if(!roster){extras.push(extraExperimentSlot(raw, '不在预定名册里。不进入冒烟区，也不占 12 个对照格。'));continue}
+  if(seen.has(id)){extras.push(extraExperimentSlot(raw, '重复的 slot_id。没有覆盖预定格。'));continue}
+  seen.set(id, raw);
+ }
+ const placed=EXPERIMENT_ROSTER.map(roster=>seen.has(roster.slot_id)?filledExperimentSlot(roster, seen.get(roster.slot_id)):blankExperimentSlot(roster));
+ return {smoke:placed.filter(slot=>slot.phase==='smoke'), comparison:placed.filter(slot=>slot.phase==='comparison'), extras};
+}
+function experimentLegend(slots){
+ const counts={};for(const key of Object.keys(EXPERIMENT_STATES))counts[key]=0;let other=0;
+ for(const slot of slots){if(Object.prototype.hasOwnProperty.call(counts, slot.state))counts[slot.state]++;else other++}
+ const shown=Object.keys(EXPERIMENT_STATES).filter(state=>counts[state]>0).map(state=>`<span>${experimentStatePill(state)} <span class="small">${counts[state]}</span></span>`).join('');
+ return `<div class="legend" aria-label="槽位状态图例">${shown}${other?`<span class="small">其他 ${other}</span>`:''}</div><p class="small">这些是格子数量，不是成功率，也不是排行榜。默认视图没有成功筛选。</p>`;
+}
+function experimentCard(slot){
+ const kind=experimentStateKind(slot.state), meta=experimentStateMeta(slot.state);
+ const mismatch=slot.phase_mismatch?`<p class="small">文件把 phase 写成 ${esc(slot.file_phase)}，预定分区仍是${slot.phase==='comparison'?'对照':'冒烟'}。没有把它挪到另一个区。</p>`:'';
+ const absent=slot.absent?'<p class="small">预定格子仍留下。状态按缺失显示。</p>':'';
+ const extra=slot.extra_note?`<p class="small">${esc(slot.extra_note)}</p>`:'';
+ return `<div class="experiment-slot slot slot-${kind}" data-phase="${esc(slot.phase)}" data-state="${esc(slot.state)}" data-slot-id="${esc(slot.slot_id)}" data-cost="${esc(experimentCostKind(slot.cost_usd, slot.resource_unknown_reason))}"><h3><span class="mono">${esc(slot.slot_id)}</span> ${experimentStatePill(slot.state)}</h3><p>${esc(meta.note)}</p><p class="small">${esc(slot.task)} · ${esc(experimentPlaceLabel(slot))} · ${esc(experimentRepeatLabel(slot))}</p><p class="small">执行状态 ${esc(slot.state)} · 业务状态 ${experimentBusinessHtml(slot.business_status)}</p><p>耗时 ${experimentResourceHtml(slot.elapsed_seconds, slot.resource_unknown_reason)} · 费用 ${experimentResourceHtml(slot.cost_usd, slot.resource_unknown_reason)}</p>${experimentReasonLine(slot)}${mismatch}${absent}${extra}<div class="actions"><button type="button" class="secondary" data-slot-detail="${esc(slot.slot_id)}">版本与证据</button></div></div>`;
+}
+function experimentTaskGroups(slots){
+ const groups=[];
+ for(const slot of slots){const last=groups[groups.length-1];if(!last||last.task!==slot.task)groups.push({task:slot.task,slots:[slot]});else last.slots.push(slot)}
+ return groups;
+}
+function experimentIgnored(doc){
+ const names=['analysis','success_rate','score','leaderboard','cost_total'].filter(key=>Object.prototype.hasOwnProperty.call(doc,key));
+ return names.length?`<p class="small">已忽略 ${esc(names.join('、'))}。本页不把这些字段显示成成绩。</p>`:'';
+}
+function findExperimentSlot(id){
+ if(!experimentBoard)return null;
+ return [...experimentBoard.smoke,...experimentBoard.comparison,...experimentBoard.extras].find(slot=>slot.slot_id===id)||null;
+}
+function openExperimentDetail(slotId){
+ const slot=slotId?findExperimentSlot(slotId):null;
+ const version=experimentDoc&&isObject(experimentDoc.version)?experimentDoc.version:null;
+ const slotBody=slot?`<h3>${esc(slot.slot_id)}</h3><p>${experimentStatePill(slot.state)}</p><p class="small">${esc(slot.task)} · ${esc(experimentPlaceLabel(slot))} · ${esc(experimentRepeatLabel(slot))}</p><p class="small">执行状态 ${esc(slot.state)} · 业务状态 ${experimentBusinessHtml(slot.business_status)}</p><p>耗时 ${experimentResourceHtml(slot.elapsed_seconds, slot.resource_unknown_reason)} · 费用 ${experimentResourceHtml(slot.cost_usd, slot.resource_unknown_reason)}</p>${experimentReasonLine(slot)}<h3>这一格的版本</h3>${experimentSlotFingerprint(slot)}<h3>证据引用</h3>${evidenceBlock(slot.evidence)}<p class="small">只显示 path 和 sha256。页面不读取证据文件正文。</p>`:`<p>尚未选中某一格。下方是整板的版本指纹。</p>`;
+ $('#detailContent').innerHTML=`<h2>版本与证据 · 不是成绩</h2><p class="sub">${esc(EXPERIMENT_CLASS)}。占位指纹，不是已测量的运行，也不是排行榜。</p>${slotBody}<h3>整板版本指纹</h3>${experimentFingerprint(version)}<p class="small">schema_version ${esc(experimentDoc&&experimentDoc.schema_version)} · protocol_status ${esc(experimentDoc&&experimentDoc.protocol_status)}。null 和缺失显示为「未知」，不显示成 0。</p>`;
+ $('#detail').showModal();
+}
+function experimentBody(doc, board){
+ const label=typeof doc.label==='string'?`<p class="sub">${esc(doc.label)}</p>`:'';
+ const groups=experimentTaskGroups(board.comparison).map(group=>`<h4>${esc(group.task)} · ${group.slots.length} 槽</h4><div class="experiment-grid">${group.slots.map(experimentCard).join('')}</div>`).join('');
+ const extras=board.extras.length?`<div id="experimentExtras" class="experiment-extra" aria-label="名册外条目"><p class="boardkicker">OUTSIDE THE ROSTER</p><h3>名册外条目</h3><p class="sub">这些记录不隐藏，但也不进入冒烟区，不占预定的 12 格。</p><div class="experiment-grid">${board.extras.map(experimentCard).join('')}</div></div>`:'';
+ return `${label}${experimentIgnored(doc)}<div id="smokeBoard" class="experiment-smoke" aria-label="冒烟"><p class="boardkicker">SMOKE · 不计入对照</p><h3>冒烟</h3><p class="sub">单独一区。冒烟不计入下面 12 个对照槽，也不进入成绩。</p>${experimentLegend(board.smoke)}<div class="experiment-grid">${board.smoke.map(experimentCard).join('')}</div></div><div id="comparisonBoard" class="experiment-comparison" aria-label="对照" data-planned="12"><p class="boardkicker">COMPARISON · 预定 12 槽</p><h3>对照</h3><p class="sub">对照臂 no-skill 与处理臂 workflow 都在这一区。12 个预定格始终留下，包括失败、取消、缺失、基础设施失败和未运行。</p>${experimentLegend(board.comparison)}${groups}</div>${extras}<details id="experimentVersion"><summary>版本指纹（未冻结占位）</summary>${experimentFingerprint(doc.version)}<p class="small">字段说明见仓库 docs/samples/real-experiment-board.md。正式格式确定前，这里只读这份占位样例。</p></details>`;
+}
+async function loadExperimentSample(){
+ if(experimentLoading)return;
+ const token=++experimentToken;
+ experimentLoading=true;experimentError=false;experimentMessage='正在读取占位样例…';
+ if(view==='experiment')renderExperiment();
+ let failure='未能读取占位样例。';
+ try{
+  for(const [url,label] of EXPERIMENT_SAMPLE_URLS){
+   try{
+    const res=await fetch(url);
+    if(!res.ok){failure=label+' 不可用（HTTP '+res.status+'）。';continue}
+    const doc=validateExperimentBoard(await res.json());
+    if(token!==experimentToken)return;
+    experimentDoc=doc;experimentSource=label;experimentError=false;experimentMessage='已打开占位样例。这不是模型成绩，也没有进入「结果与证据」。';
+    return;
+   }catch(err){failure=err.message||failure}
+  }
+  if(token!==experimentToken)return;
+  experimentError=true;experimentMessage=failure+' 请改用文件选择占位样例。本页只接受 provisional-real-experiment-board-0。';
+ }finally{
+  if(token===experimentToken){experimentLoading=false;if(view==='experiment')renderExperiment()}
+ }
+}
+async function onExperimentFile(e){
+ const input=e.target, file=input.files&&input.files[0];
+ if(!file)return;
+ const token=++experimentToken;experimentLoading=false;
+ try{
+  if(file.size>2*1024*1024)throw Error('已拒绝：文件超过 2 MB。本页没有把该文件写入「结果与证据」。');
+  let parsed;try{parsed=JSON.parse(await file.text())}catch{throw Error('已拒绝：不是合法 JSON。结果列表没有变化。')}
+  if(token!==experimentToken)return;
+  experimentDoc=validateExperimentBoard(parsed);experimentSource=file.name;experimentError=false;experimentMessage='已打开 '+file.name+'。这不是模型成绩，也没有进入「结果与证据」。';
+ }catch(err){if(token!==experimentToken)return;experimentError=true;experimentDoc=null;experimentMessage=err.message||'已拒绝该文件。'}
+ finally{input.value='';if(token===experimentToken&&view==='experiment')renderExperiment()}
+}
+function renderExperiment(){
+ const banner=`<div class="experiment-banner" id="experimentBanner"><b>${esc(EXPERIMENT_CLASS)}</b><p>占位样例。不是模型试点，不是 Java 验收分数，也不是排行榜。未运行表示启动条件待确认，不是失败，也不是 0 分。正式格式尚未冻结。</p></div>`;
+ let body='<p class="empty">尚未打开占位样例。</p>';
+ experimentBoard=null;
+ if(experimentDoc){
+  try{experimentBoard=adaptExperimentBoard(experimentDoc);body=experimentBody(experimentDoc, experimentBoard)}
+  catch(err){experimentError=true;experimentMessage=err.message||'占位样例无法显示。';body='<p class="empty">这份文件不能按预定槽位显示。</p>'}
+ }
+ $('#content').innerHTML=`${banner}<div class="sectionhead"><div><h2>真实实验 · 占位槽位</h2><p class="sub">冒烟与对照分成两个区。对照区固定 12 格。失败、取消、缺失和未运行留在默认视图。未知费用显示「未知」。</p></div></div><div class="panel"><h3>打开占位样例或本地文件</h3><p class="sub">本地预览会先读 docs/samples/real-experiment-board.placeholder.json。从 dist 目录单独打开站点时，改读同内容的 samples 副本。schema 是 provisional-real-experiment-board-0，不是已冻结的结果协议，也不能导入「结果与证据」。</p><div class="actions"><button type="button" class="secondary" id="loadExperimentSample" ${experimentLoading?'disabled':''}>重新加载占位样例</button><button type="button" class="secondary" id="openExperimentVersion" ${experimentDoc?'':'disabled'}>打开版本指纹</button></div><label for="experimentFile"><b>或选择占位 JSON</b></label><input id="experimentFile" type="file" accept=".json,application/json" aria-label="选择真实实验占位样例"><p class="small">当前来源：${esc(experimentSource||'尚未打开')}</p><p id="experimentStatus" class="${experimentError?'error':''}" role="status" aria-live="polite">${esc(experimentMessage)}</p></div>${body}`;
+ $('#loadExperimentSample').onclick=()=>{loadExperimentSample()};
+ if($('#openExperimentVersion'))$('#openExperimentVersion').onclick=()=>{openExperimentDetail(null)};
+ $('#experimentFile').onchange=onExperimentFile;
+ document.querySelectorAll('[data-slot-detail]').forEach(button=>button.onclick=()=>openExperimentDetail(button.dataset.slotDetail));
+ if(!experimentDoc&&!experimentLoading&&!experimentAttempted){experimentAttempted=true;loadExperimentSample()}
+}
+function render(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));({start:renderStart,catalog:renderCatalog,planner:renderPlanner,results:renderResults,experiment:renderExperiment,synthetic:renderSynthetic,protocol:renderProtocol,roadmap:renderRoadmap}[view])()}
 function card(t){const impls=implementations.filter(x=>x.id===t.id);const secured=impls.find(x=>x.security);const security=t.status==='runnable'?securityMeaning(t.security||t.environment?.security):(secured?`切片 ${securityMeaning(secured.security, impls.length&&impls.every(x=>x.model_evaluated===false)?false:undefined)}`:'');return `<article class="card"><div class="cardtop"><span class="tier ${esc(t.tier)}">${esc(tiers[t.tier]||'机制预实验')} · 暂定</span><span class="id">${esc(t.id)}</span></div><h3>${esc(t.title)}</h3><p>${esc(t.summary)}</p>${security?`<p class="securitynote">${esc(security)}</p>`:''}<div class="cardbottom"><span>${sliceStateLabel(t,impls)}</span><button data-detail="${esc(t.id)}">查看任务 ↗</button></div></article>`}
 function renderCatalog(){const filtered=[...runnables,...tasks].filter(t=>(tier==='all'||t.tier===tier)&&(!query||JSON.stringify(t).toLowerCase().includes(query.toLowerCase())));$('#content').innerHTML=`<div class="startbanner"><div><b>第一次使用？从 Codex CLI / Claude Code 开始。</b><p>选变体 → 克隆仓库并 prepare → 仅对可信代码验收 → 导入证据</p></div><button class="primary" id="catalogStart">快速开始 →</button></div><div class="sectionhead"><div><h2>任务实验室</h2><p class="sub">业务边界、跨模块约束与独立验收，让难度来自真实复杂性。</p></div><span class="small">${filtered.length} 个任务</span></div><div class="toolbar"><div class="tiers"><button data-tier="all" class="${tier==='all'?'active':''}">全部</button>${Object.entries(tiers).map(([k,v])=>`<button data-tier="${k}" class="${tier===k?'active':''}">${v}</button>`).join('')}</div><input id="search" aria-label="搜索任务" placeholder="搜索任务、能力或场景…" value="${esc(query)}"></div><div class="grid">${filtered.map(card).join('')||'<p class="empty">没有匹配的任务。试试其他关键词。</p>'}</div><div class="notice">状态说明：25 个分级场景的原设计仍是 design_only，工程切片只覆盖其中声明的部分；R 系列是独立机制预实验。M1 四门通过的切片标为 gates_green，不是完整目录就绪。难度尚未经多模型实测校准，不能据此声称达到任何模型段位。</div>`;$('#catalogStart').onclick=()=>{view='start';render()};$('#search').oninput=e=>{query=e.target.value;const pos=e.target.selectionStart;renderCatalog();$('#search').focus();$('#search').setSelectionRange(pos,pos)};document.querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{tier=b.dataset.tier;renderCatalog()});bindDetails()}
 function bindDetails(){document.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>detail(b.dataset.detail))}
@@ -281,7 +518,7 @@ function renderPlanner(){const saved=sanitizePlan(planDraft||savedPlan());$('#co
 function renderResults(){
  const groups=[...new Set(results.map(resultGroup))];if(resultFilter&&!groups.includes(resultFilter))resultFilter='';
  const visible=results.map((r,i)=>({r,i})).filter(({r})=>!resultFilter||resultGroup(r)===resultFilter);
- $('#content').innerHTML=`<h2>结果与证据</h2><p class="sub">本地验收记录，不是模型排行榜。按同一任务、同一版本检查证据，不推断模型能力。</p><div class="panel"><label for="resultFile"><b>导入结果 JSON（可多选）</b></label><input id="resultFile" type="file" accept=".json,application/json" multiple ${importing?'disabled':''}><p class="small">支持当前目录版本的 R 系列 / 工程变体验收结果；单次结果或本站导出的 JSON 数组；单次记录文件最多 2 MB，备份数组文件 / 每批 / 本地保存最多 8 MB，最多 ${MAX_RESULTS} 条。整批通过才导入，重复内容跳过。文件只在浏览器读取，不上传。</p><p id="resultError" role="status" aria-live="polite">${esc(resultMessage||storageMessage)}</p><div class="toolbar"><label for="resultFilter">限定任务与版本</label><select id="resultFilter"><option value="">全部记录（不合并统计）</option>${groups.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('')}</select></div><div class="actions"><button class="secondary" id="saveResults" ${!results.length?'disabled':''}>保存全部到此浏览器</button><button class="secondary" id="exportResults" ${!results.length?'disabled':''}>导出全部备份</button><button class="secondary" id="compareResults">对比所选证据</button><button class="secondary" id="deleteResults">删除所选</button></div><p class="small">勾选记录后对比或删除；删除同步更新已保存副本。日志可能包含敏感信息，保存前请检查。浏览器存储不跨设备，清理网站数据会丢失。</p><div id="resultList">${visible.length?visible.map(({r,i})=>`<div class="resultrow"><label class="resultselect"><input type="checkbox" data-pick="${i}" ${resultSelection.has(i)?'checked':''} aria-label="选择记录 ${i+1} ${esc(r.task_id||r.implementation_id)}"><span><b>${esc(r.task_id||r.implementation_id)}</b> <span class="tag">${esc(r.status)} · 未认证</span><span class="small resultmeta">${esc(r.timestamp_utc)}<br>版本 ${esc(r.task_version||r.manifest_sha256)}<br>提交 ${esc(r.patch_sha256||r.submission_sha256)}</span></span></label><button class="secondary" data-result="${i}">查看原始证据</button></div>`).join(''):'<div class="empty"><h3>等第一份真实结果。</h3><p>完成本地验收后导入 result.json。这里不会预填模型名称、成功率或虚构排名。</p><button class="secondary" id="resultsStart">查看快速开始</button></div>'}</div></div><div class="notice">导入仅检查字段与状态一致性，未做签名或来源认证。参考解与故障基线是验收器自检，不是 AI 模型分数；同任务同版本也不保证相同环境、预算或提示词。</div>`;
+ $('#content').innerHTML=`<h2>结果与证据</h2><p class="sub">本地验收记录，不是模型排行榜。按同一任务、同一版本检查证据，不推断模型能力。预定的冒烟与 12 个对照槽在「真实实验」，不从这里导入，也不计入本页。</p><div class="panel"><label for="resultFile"><b>导入结果 JSON（可多选）</b></label><input id="resultFile" type="file" accept=".json,application/json" multiple ${importing?'disabled':''}><p class="small">支持当前目录版本的 R 系列 / 工程变体验收结果；单次结果或本站导出的 JSON 数组；单次记录文件最多 2 MB，备份数组文件 / 每批 / 本地保存最多 8 MB，最多 ${MAX_RESULTS} 条。整批通过才导入，重复内容跳过。文件只在浏览器读取，不上传。</p><p id="resultError" role="status" aria-live="polite">${esc(resultMessage||storageMessage)}</p><div class="toolbar"><label for="resultFilter">限定任务与版本</label><select id="resultFilter"><option value="">全部记录（不合并统计）</option>${groups.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('')}</select></div><div class="actions"><button class="secondary" id="saveResults" ${!results.length?'disabled':''}>保存全部到此浏览器</button><button class="secondary" id="exportResults" ${!results.length?'disabled':''}>导出全部备份</button><button class="secondary" id="compareResults">对比所选证据</button><button class="secondary" id="deleteResults">删除所选</button></div><p class="small">勾选记录后对比或删除；删除同步更新已保存副本。日志可能包含敏感信息，保存前请检查。浏览器存储不跨设备，清理网站数据会丢失。</p><div id="resultList">${visible.length?visible.map(({r,i})=>`<div class="resultrow"><label class="resultselect"><input type="checkbox" data-pick="${i}" ${resultSelection.has(i)?'checked':''} aria-label="选择记录 ${i+1} ${esc(r.task_id||r.implementation_id)}"><span><b>${esc(r.task_id||r.implementation_id)}</b> <span class="tag">${esc(r.status)} · 未认证</span><span class="small resultmeta">${esc(r.timestamp_utc)}<br>版本 ${esc(r.task_version||r.manifest_sha256)}<br>提交 ${esc(r.patch_sha256||r.submission_sha256)}</span></span></label><button class="secondary" data-result="${i}">查看原始证据</button></div>`).join(''):'<div class="empty"><h3>等第一份真实结果。</h3><p>完成本地验收后导入 result.json。这里不会预填模型名称、成功率或虚构排名。</p><button class="secondary" id="resultsStart">查看快速开始</button></div>'}</div></div><div class="notice">导入仅检查字段与状态一致性，未做签名或来源认证。参考解与故障基线是验收器自检，不是 AI 模型分数；同任务同版本也不保证相同环境、预算或提示词。</div>`;
  $('#resultError').textContent=resultMessage||storageMessage;$('#resultFilter').value=resultFilter;$('#resultFilter').onchange=e=>{resultFilter=e.target.value;resultSelection.clear();renderResults()};
  if($('#resultsStart'))$('#resultsStart').onclick=()=>{view='start';render()};
  $('#resultFile').onchange=async e=>{
