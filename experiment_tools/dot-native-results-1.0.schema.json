@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dot-native-results-1.0.schema.json",
+  "title": "Exploratory dot-native comparison display (not synthetic or engineering direct import)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "data_class", "plan_sha256", "backend_model", "backend_version", "limitations", "smoke_included", "slots"],
+  "properties": {
+    "schema_version": {"const": "dot-native-results-1.0"},
+    "data_class": {"const": "actual_dot_exploratory"},
+    "plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "backend_model": {"type": "null"},
+    "backend_version": {"type": "null"},
+    "limitations": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "smoke_included": {"const": false},
+    "slots": {
+      "type": "array", "minItems": 12, "maxItems": 12,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["slot_id", "task", "arm", "repeat", "input_sha256", "prompt_sha256", "execution_status", "business_status", "elapsed_seconds", "cost_usd", "evidence_path", "evidence_sha256"],
+        "properties": {
+          "slot_id": {"type": "string", "pattern": "^(B02|S01)-r[123]-(no-skill|workflow)$"},
+          "task": {"enum": ["B02", "S01"]},
+          "arm": {"enum": ["no-skill", "workflow"]},
+          "repeat": {"enum": [1, 2, 3]},
+          "input_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "prompt_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "execution_status": {"enum": ["completed", "failed", "cancelled", "timeout", "missing"]},
+          "business_status": {"enum": ["not_evaluated", "passed", "failed", "timeout", "output_limit", "invalid_report"]},
+          "elapsed_seconds": {"type": ["number", "null"], "minimum": 0},
+          "cost_usd": {"type": ["number", "null"], "minimum": 0},
+          "evidence_path": {"type": ["string", "null"], "pattern": "^records/(B02|S01)-r[123]-(no-skill|workflow)\\.json$"},
+          "evidence_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    }
+  }
+}

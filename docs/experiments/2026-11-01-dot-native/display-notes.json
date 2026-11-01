@@ -1,0 +1,30 @@
+{
+  "schema_version": "dot-native-display-notes-1",
+  "not_a_result_protocol": true,
+  "plan_sha256": "9f882dba01fa6588add61b3164ac52a0328917d43f6dc88c2ff2e67fc0c6b50a",
+  "source": "docs/experiments/2026-11-01-dot-native/README.md",
+  "smoke": {
+    "included_in_comparison": false,
+    "summary": "一次 B02 冒烟的验收器结果是 10/10。它不在 display.json 的 12 格里（smoke_included 为 false），不进入对照分母，也不是模型排名。"
+  },
+  "adjudication": {
+    "applies_to": "S01",
+    "changes_raw_scores": false,
+    "claims_workflow_efficacy": false,
+    "title": "独立裁定：响应 / 回执策略争议",
+    "paragraphs": [
+      "独立裁定不改任何一格的 execution_status 或 business_status，也不声称 workflow 更有效。",
+      "S01 的失败集中在没有写清的响应 / 回执策略：序号 1 的旧回执换了载荷时，候选返回 conflict，验收器期望 stale。公开的同序号、不同正文规则可以支持另一种解释。",
+      "新序号、同一终态的更新：候选返回 applied，验收器期望 stale。题面没有规定这些响应标签，起始代码用的是 applied。",
+      "对照臂第 2 次还对受保护的 processing / cancelled 更新返回 applied，同时保留终态投影。",
+      "有些后续断言没有跑到，因为夹具先在准备阶段失败。那些结果仍未验证。检查数差异不能当成金额状态被工作流改进的证据。",
+      "workflow 产物存在并经过独立查看，但阶段文档本身不能证明完整执行、独立评审或真正的顺序编排。这次运行保持原样，不把含糊的失败改成通过。"
+    ]
+  },
+  "version": {
+    "skill_revision": "80e15acdf61d2cecf1ff79e9088a8149e64ffc1a",
+    "implementation_remote": "83c3d711e223789c1508c6edfd1ab6ada503d601",
+    "implementation_local": "5a583b79b9268035da298c1d47a924e30d22ec94",
+    "git_tree": "d62b1cfff1a5cf86aa559048cd1c6ce31c175a0e"
+  }
+}

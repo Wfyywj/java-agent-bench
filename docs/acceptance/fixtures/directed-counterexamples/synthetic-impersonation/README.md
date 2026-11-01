@@ -77,7 +77,7 @@ synthetic_records_without_opt_in_exit: 1
 website_check_exit: 0
 results_after_r01: 1
 results_after_display: 1
-display_import_error: display.json：不是支持的单次验收结果：需要已知 R 系列任务与 schema_version 1.0。本批未导入任何记录，已有结果保持不变。
+display_import_error: display.json：已拒绝：这是合成演练 display，不是单次验收结果。请到「合成演练」打开，不要导入「结果与证据」。。本批未导入任何记录，已有结果保持不变。
 verdict: blocks
 ```
 
