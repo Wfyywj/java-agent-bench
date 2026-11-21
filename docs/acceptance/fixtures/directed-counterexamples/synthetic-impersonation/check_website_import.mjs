@@ -83,6 +83,7 @@ const nav = ['start', 'catalog', 'planner', 'results', 'synthetic', 'protocol', 
   return element;
 });
 const ctx = vm.createContext({
+  window: {addEventListener() {}}, location: {hash: ''},
   console, Blob, Date, setTimeout: fn => { fn(); return 0; },
   URL: {createObjectURL() { return 'blob:test'; }, revokeObjectURL() {}},
   document: {
