@@ -4,6 +4,15 @@
 
 网站：[工程测评实验室](https://java-agent-bench-lab.sound-acorn-0952.chatgpt.site)（公开访问，任何持有链接的人可查看；浏览器本地保存的实验记录不会同步公开）。
 
+## 从真实的 GitHub 问题开始
+
+| 练习 | 修复目标 | 上游问题 |
+| --- | --- | --- |
+| GH01 · Gson | 让 JSON 数字 `-0` 经过流式读取后保留负号，并检查普通整数与浮点数的行为。 | [google/gson #1053](https://github.com/google/gson/issues/1053) |
+| GH02 · Resilience4j | 重试策略要求停止时，向调用方传回最后一次业务调用抛出的异常。 | [resilience4j/resilience4j #1843](https://github.com/resilience4j/resilience4j/issues/1843) |
+
+两题均使用修复前的真实 Java 源文件。用 `python3 upstream/bench.py prepare GH01 /tmp/gh01-work` 创建工作区，按其中的 `PROMPT.md` 修改代码，再运行 `python3 upstream/bench.py evaluate GH01 /tmp/gh01-work --trusted-code` 查看逐项结果。也可以用 `selfcheck GH01` 子命令自动对照上游修复前后的结果。[实战使用说明](upstream/README.md) · [网站与工具包](https://java-agent-bench-lab.sound-acorn-0952.chatgpt.site/#upstream)
+
 ## 目前真正完成了什么
 
 - 25 个原创复杂场景设计，青铜/白银/黄金/钻石/王者各 5 题；覆盖需求澄清、跨仓库定位、实现、测试、Review、事故诊断。完整原设计全部标记 `design_only`。`design_only` 只说明原设计还不是完整目录就绪，不表示对应切片不可执行。
@@ -55,7 +64,7 @@ python3 harness/bench.py evaluate R01 /tmp/r01-work/src --output /tmp/r01-result
 
 ## 许可证
 
-沿用仓库所有者创建的 MIT LICENSE。当前题目与实现为原创；上游项目只作研究引用，没有把其代码/题目自动纳入 MIT 范围。引入外部任务时必须逐项记录来源、提交和原始许可证。
+本仓库原创题目、工具与独立验收程序采用 MIT 许可证。GitHub 实战练习按需下载的上游源码和依赖保留各自的许可证。每道练习的 `upstream/GH*/task.json` 记录了来源、固定提交、上游许可证及文件校验值。
 
 ## 验证与 CI
 
@@ -83,3 +92,5 @@ CLI/分析/实验工作区工具使用独立快速 CI；仅修改这些目录或
 参见 [阶段设计与验收标准](docs/TRUSTWORTHY_EXPERIMENTS.md)。B02/S01 新增审计发现的业务反例和永久 mutant；M1 门禁按源码指纹和最新运行选择证据，保留历史，不把超时/启动错误当作杀死错误变体。完整可信自检及 M1 使用 Linux subreaper/pidfd 监督器，超时/取消时回收本次后代进程；不支持的平台拒绝启动。这是 Linux 本地可信代码运行条件，**不是恶意代码隔离**；离线准备/分析不需要该监督器。
 
 新增 [B01 合成 Recipe 回放](experiment_tools/RECIPE.md)：冻结 A/B 配置 → 独立槽位工作区 → 合成证据 → 严格分析。保留缺失与执行前取消，费用/时间未知保持 null。所有产物明确标为 synthetic；不执行模型或 Java 验收、不导入真实 trial、不冒充网站现有结果格式。此入口用于验收实验协议，不用于判断模型或 Skill 优劣。
+
+GitHub 实战工具由 `python3 upstream/build.py` 打包。此命令从各题清单生成 `dist/upstream.json` 和可独立解压运行的 `dist/packages/github-issues.zip`。
