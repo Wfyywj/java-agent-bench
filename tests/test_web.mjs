@@ -14,7 +14,7 @@ const runnable = [{id:'R01',tier:'T2',status:'runnable',title:'Gamma runnable',s
 const key='jab-planner-v1';
 const validResult = JSON.parse(await readFile(new URL('../harness/results/R01-selfcheck.json', import.meta.url),'utf8')).reference;
 const decode = s => s.replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-async function app({saved, taskData=catalog, runData=runnable, implData=[], storage=new Map()}={}) {
+async function app({saved, taskData=catalog, runData=runnable, implData=[], storage=new Map(), initialHash='', upstreamResponse}={}) {
  if(saved!==undefined)storage.set(key,JSON.stringify(saved));
  const ids=new Map(), groups=new Map(), downloads=[];
  class Element {
@@ -37,14 +37,16 @@ async function app({saved, taskData=catalog, runData=runnable, implData=[], stor
   addEventListener(){} focus(){} setSelectionRange(){} showModal(){this.open=true} close(){this.open=false}
  }
  for(const id of ['content','detail','detailContent','closeDetail','total','runnable','repoLink'])ids.set('#'+id,new Element());
- const nav=['start','catalog','planner','results','protocol','roadmap'].map(view=>{const e=new Element();e.dataset.view=view;return e});
- const ctx=vm.createContext({console,Blob,Date,setTimeout:fn=>{fn();return 0},
+ const nav=['start','catalog','upstream','planner','results','protocol','roadmap'].map(view=>{const e=new Element();e.dataset.view=view;return e});
+ const location={hash:initialHash}, windowEvents={};
+ const ctx=vm.createContext({console,Blob,Date,location,history:{pushState(_state,_title,hash){location.hash=hash}},
+  window:{addEventListener(type,fn){windowEvents[type]=fn}},setTimeout:fn=>{fn();return 0},
   URL:{createObjectURL(blob){downloads.push({blob});return 'blob:test'},revokeObjectURL(){}},
   document:{querySelector:s=>ids.get(s),querySelectorAll:s=>s==='nav button'?nav:(groups.get(s)||[]),createElement(){return {click(){downloads.at(-1).name=this.download}}}},
   localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)},
-  fetch:async name=>({ok:true,json:async()=>name==='tasks.json'?taskData:(name==='runnable.json'?runData:implData)})});
+  fetch:async name=>name==='upstream.json'&&upstreamResponse?upstreamResponse():({ok:true,json:async()=>name==='tasks.json'?taskData:(name==='runnable.json'?runData:implData)})});
  vm.runInContext(source,ctx,{filename:'dist/app.js'});await new Promise(setImmediate);
- return {ctx,storage,downloads,get:s=>ids.get(s),all:s=>groups.get(s)||[],run:s=>vm.runInContext(s,ctx),
+ return {ctx,storage,downloads,nav,hash(value){location.hash=value;windowEvents.hashchange()},get:s=>ids.get(s),all:s=>groups.get(s)||[],run:s=>vm.runInContext(s,ctx),
   async exported(){return JSON.parse(await downloads.at(-1).blob.text())},
   async import(value){const text=JSON.stringify(value);await ids.get('#resultFile').onchange({target:{files:[{name:'result.json',size:Buffer.byteLength(text),text:async()=>text}]}})}};
 }
@@ -652,4 +654,43 @@ test('an earlier synthetic file read that finishes later does not replace the la
  assert.equal(a.run('syntheticSource'),'selection-b.json');
  assert.equal(a.run('syntheticDoc.slots[0].slot_id'),'slot-B');
  assert.equal(a.run('syntheticError'),false);
+});
+
+test('GitHub issue deep link renders sources, acceptance criteria and both local commands',async()=>{
+ const entry={id:'GH89',title:'Case <89>',repository:'example/project',issue:40,
+  issue_url:'https://github.com/example/project/issues/40',fix_url:'https://github.com/example/project/pull/42',
+  baseline_commit:'a'.repeat(40),fixed_commit:'b'.repeat(40),license:'Apache-2.0',
+  scenario:'Exercise a public Java API',acceptance:['Preserve the caller’s input']};
+ let reads=0;
+ const a=await app({initialHash:'#upstream',upstreamResponse:()=>{reads++;return {ok:true,json:async()=>[entry]}}});
+ const html=a.get('#content').innerHTML;
+ for(const value of ['href="packages/github-issues.zip" download','/tree/62a4226d2a9fdbb6b3ee8529e823997aabf4f41a','Case &lt;89&gt;',entry.issue_url,entry.fix_url,entry.acceptance[0],entry.baseline_commit,entry.fixed_commit,
+  'prepare GH89 /tmp/gh89-work','evaluate GH89 /tmp/gh89-work --trusted-code']) assert.ok(html.includes(value),value);
+ a.nav.find(button=>button.dataset.view==='catalog').onclick();
+ assert.equal(a.ctx.location.hash,'#catalog');
+ assert.match(a.get('#content').innerHTML,/href="#upstream"/);
+ a.hash('#upstream');
+ assert.equal(a.run('view'),'upstream');
+ assert.equal(reads,1);
+});
+
+test('GitHub catalog load failure stays local, can retry, and a late response preserves navigation',async()=>{
+ let reads=0,resolveResponse;
+ const a=await app({upstreamResponse:async()=>{
+  if(++reads===1) return {ok:false};
+  return new Promise(resolve=>{resolveResponse=resolve});
+ }});
+ assert.equal(reads,0);
+ a.hash('#upstream');
+ await new Promise(setImmediate);
+ assert.match(a.get('#content').innerHTML,/案例清单读取失败/);
+ a.get('#retryUpstream').onclick();
+ assert.match(a.get('#content').innerHTML,/正在读取/);
+ a.hash('#catalog');
+ resolveResponse({ok:true,json:async()=>[]});
+ await new Promise(setImmediate);
+ assert.match(a.get('#content').innerHTML,/Alpha checkout/);
+ a.hash('#upstream');
+ assert.match(a.get('#content').innerHTML,/暂时没有收录/);
+ assert.equal(reads,2);
 });

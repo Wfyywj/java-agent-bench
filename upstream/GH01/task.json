@@ -1,0 +1,31 @@
+{
+  "id": "GH01",
+  "title": "Gson 在 JSON 数字往返中丢失负零符号",
+  "repository": "google/gson",
+  "issue": 1053,
+  "issue_url": "https://github.com/google/gson/issues/1053",
+  "fix_url": "https://github.com/google/gson/pull/1069",
+  "license": "Apache-2.0",
+  "license_url": "https://github.com/google/gson/blob/41e48f7aa3a686778e95328693b830856538e9e3/LICENSE",
+  "baseline_commit": "41e48f7aa3a686778e95328693b830856538e9e3",
+  "fixed_commit": "9a2421997e83ec803c88ea370a2d102052699d3b",
+  "scenario": "调用方使用严格模式的 JsonReader 读取 JSON 数字的原始文本。读取 [-0] 时，nextString() 返回了 \"0\"，调用方再次输出 JSON 时丢失了负号。请在给定的 Gson 上游源码中修复这个行为。",
+  "acceptance": [
+    "读取 [-0] 时，peek() 报告 NUMBER，nextString() 返回原文 \"-0\"，随后可以正常读到数组和文档结尾。",
+    "读取普通零、正负整数、带小数点或指数的负零，以及 long 边界内外的整数时，保留数字文本。",
+    "用 nextDouble() 读取 -0 时保留浮点符号，用 nextLong() 读取 -0 时得到整数 0；两种读取方式都能继续消费后续元素。"
+  ],
+  "sources": [
+    {
+      "path": "gson/src/main/java/com/google/gson/stream/JsonReader.java",
+      "baseline_sha256": "ce4aa1b277f74753c4e52d43d175ba1577937952defa264bfa0726d7b8d2949e",
+      "fixed_sha256": "0e10717b116ec2486ffab33eae799756724c7ba9defe1bb488affece6d21ba35"
+    }
+  ],
+  "dependencies": [
+    {
+      "url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar",
+      "sha256": "c6221763bd79c4f1c3dc7f750b5f29a0bb38b367b81314c4f71896e340c40825"
+    }
+  ]
+}

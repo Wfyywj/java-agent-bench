@@ -1,0 +1,36 @@
+{
+  "id": "GH02",
+  "title": "重试停止时保留原始业务异常",
+  "repository": "resilience4j/resilience4j",
+  "issue": 1843,
+  "issue_url": "https://github.com/resilience4j/resilience4j/issues/1843",
+  "fix_url": "https://github.com/resilience4j/resilience4j/pull/1846",
+  "license": "Apache-2.0",
+  "license_url": "https://github.com/resilience4j/resilience4j/blob/8d6dbda9519fa7ee86190b33b93206591fb6c681/LICENSE.txt",
+  "baseline_commit": "8d6dbda9519fa7ee86190b33b93206591fb6c681",
+  "fixed_commit": "bb639b7d231ea6cf7e5a7a598c5749dddb3a30fc",
+  "scenario": "上游用户用返回负数的重试间隔函数停止后续调用。业务 Callable 抛出异常时，调用方却收到 NullPointerException，丢失了判断失败原因所需的业务异常。请修复同步重试，让调用方拿到最后一次业务调用抛出的异常。",
+  "acceptance": [
+    "Callable 抛出 IOException 且间隔为 -1 时，仅调用一次，向调用方抛出同一个异常对象。",
+    "第一次间隔为 0、第二次为 -1 时，调用两次并抛出第二次的原始异常。",
+    "Supplier 在负间隔下仍执行一次并传播原始运行时异常。",
+    "间隔为 0 且第二次调用恢复时，正常返回第二次的结果。"
+  ],
+  "sources": [
+    {
+      "path": "resilience4j-retry/src/main/java/io/github/resilience4j/retry/internal/RetryImpl.java",
+      "baseline_sha256": "4041ec4e467af77a3b9ea33f1c6b08d3cf2c251ada35f4f29efe5c59c82688bf",
+      "fixed_sha256": "9401dd01b2d726effaf280e117993c70c396078cc222c5d1ede0c48fc5d6dbf0"
+    }
+  ],
+  "dependencies": [
+    {
+      "url": "https://repo.maven.apache.org/maven2/io/github/resilience4j/resilience4j-retry/2.0.2/resilience4j-retry-2.0.2.jar",
+      "sha256": "a3dd1f86906862bf2837ef35be0e3c75119cea2287de8ffe00ee68481696221d"
+    },
+    {
+      "url": "https://repo.maven.apache.org/maven2/io/github/resilience4j/resilience4j-core/2.0.2/resilience4j-core-2.0.2.jar",
+      "sha256": "2426811d8f6db3a462f2e9a1ad5203cbb1d7a733c8d42848183b075f976c3684"
+    }
+  ]
+}
